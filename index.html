@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>Microbiome Warrior – FINAL BOSS MODE</title>
+<meta name="theme-color" content="#e2aa54">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+*{
+   margin:0;
+   padding:0;
+   box-sizing:border-box;
+}
+body{
+   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
+   min-height:100vh;
+   display:flex;
+   justify-content:center;
+   padding:10px;
+   background:
+       radial-gradient(circle at 15% 20%, rgba(226,170,84,0.3), transparent 40%),
+       radial-gradient(circle at 85% 25%, rgba(143,170,74,0.25), transparent 45%),
+       linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);
+   background-size:200% 200%;
+   animation:bgMove 20s ease infinite;
+}
+@keyframes bgMove{
+   0%{background-position:0% 50%}
+   50%{background-position:100% 50%}
+   100%{background-position:0% 50%}
+}
+.container{max-width:520px;width:100%;margin:0 auto;}
+.card{
+   background:rgba(255,255,255,0.75);
+   backdrop-filter:blur(16px);
+   -webkit-backdrop-filter:blur(16px);
+   border-radius:24px;
+   padding:16px;
+   margin-bottom:12px;
+   border:1px solid rgba(255,255,255,0.5);
+   box-shadow:0 8px 32px rgba(0,0,0,0.08);
+}
+h1{
+   font-size:1.5rem;
+   color:#b87a2a;
+   font-weight:900;
+   letter-spacing:-0.3px;
+}
+h1::before{content:"🧬 ";}
+h2{
+   font-size:1.1rem;
+   color:#8a5e20;
+   margin-bottom:10px;
+   font-weight:800;
+}
+h3{
+   font-size:0.85rem;
+   color:#9b6e2c;
+   margin:12px 0 6px 0;
+   font-weight:700;
+}
+label{
+   font-size:0.75rem;
+   font-weight:700;
+   display:block;
+   margin-top:10px;
+   margin-bottom:2px;
+   color:#6b4a1c;
+}
+input,select{
+   width:100%;
+   padding:10px 14px;
+   border-radius:28px;
+   border:1px solid #e0d0a0;
+   background:white;
+   font-size:0.85rem;
+   margin-top:4px;
+}
+input:focus,select:focus{
+   outline:none;
+   border-color:#e2aa54;
+   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
+}
+.checkbox-group{
+   background:rgba(255,255,255,0.5);
+   padding:8px 12px;
+   border-radius:28px;
+   margin-top:8px;
+}
+.checkbox-group label{
+   margin:0;
+   display:flex;
+   align-items:center;
+   gap:8px;
+   cursor:pointer;
+}
+.checkbox-group input{
+   width:18px;
+   height:18px;
+   margin:0;
+}
+button{
+   width:100%;
+   padding:12px;
+   margin-top:12px;
+   border-radius:28px;
+   border:none;
+   font-weight:900;
+   font-size:0.9rem;
+   background:linear-gradient(135deg,#f2b357,#d6993a);
+   color:#2a1a08;
+   cursor:pointer;
+   transition:all 0.2s ease;
+   box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+button:active{transform:scale(0.97);}
+.btn-reset{background:#d4c090;margin-top:8px;}
+.btn-screenshot{
+   background:linear-gradient(135deg,#6c8ebf,#4a6f9e);
+   color:white;
+   width:auto;
+   padding:8px 16px;
+   margin:0;
+   font-size:0.75rem;
+}
+.btn-screenshot:active{transform:scale(0.97);}
+table{
+   width:100%;
+   border-collapse:collapse;
+   font-size:0.7rem;
+   background:white;
+   border-radius:16px;
+   overflow:hidden;
+   margin:8px 0;
+}
+th{
+   padding:8px 4px;
+   font-weight:800;
+   color:#2a1a08;
+}
+th.bread-th{background:#e2aa54;}
+th.hummus-th{background:#8faa4a;color:white;}
+td{
+   padding:8px 4px;
+   text-align:center;
+   border-bottom:1px solid #f0e2c8;
+}
+.scrollable{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.badge-time{background:#c9a256;color:white;padding:3px 10px;border-radius:20px;font-size:0.65rem;display:inline-block;}
+.badge-pcs{background:#e2a743;color:#2c1e08;padding:3px 10px;border-radius:20px;font-size:0.65rem;display:inline-block;}
+.water-cell{background:#f0e8d4;font-weight:700;}
+.total-flex{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+.total-flex > div{flex:1;background:#fff8e8;padding:10px;border-radius:16px;text-align:center;}
+.total-sum{font-weight:800;font-size:1rem;background:#ecdba8;padding:4px 14px;border-radius:30px;display:inline-block;}
+.info-text{font-size:0.6rem;text-align:center;color:#b88c48;margin-top:8px;padding:6px;background:#fff8e8;border-radius:20px;}
+.delete-btn{background:#eeddbb;border:none;border-radius:20px;padding:4px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;}
+.hummus-tag{
+   display:inline-block;
+   background:#8faa4a;
+   color:white;
+   padding:2px 8px;
+   border-radius:12px;
+   font-size:0.6rem;
+}
+.yingyang-tag{
+   display:inline-block;
+   background:#d4a843;
+   color:white;
+   padding:2px 8px;
+   border-radius:12px;
+   font-size:0.6rem;
+   font-weight:700;
+}
+.hummus-section{
+   border-left:4px solid #8faa4a;
+   margin-top:12px;
+   padding-top:8px;
+   border-top:2px dashed #d4c090;
+}
+.hummus-section label{
+   color:#6d8a30;
+}
+.table-title{
+   font-size:0.8rem;
+   font-weight:800;
+   margin-top:8px;
+   display:flex;
+   align-items:center;
+   gap:6px;
+}
+.table-title.bread-title{color:#b87a2a;}
+.table-title.hummus-title{color:#6d8a30;}
+.yingyang-available{
+   background:#f5edd8;
+   border-radius:16px;
+   padding:4px 12px;
+   font-size:0.65rem;
+   color:#8a6a2a;
+   display:none;
+   margin-top:4px;
+   border:1px solid #d4a843;
+}
+.yingyang-available.show{
+   display:block;
+}
+.header-row{
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
+   margin-bottom:8px;
+   flex-wrap:wrap;
+   gap:8px;
+}
+.header-left{
+   display:flex;
+   align-items:center;
+   gap:8px;
+}
+.header-right{
+   display:flex;
+   align-items:center;
+   gap:8px;
+}
+.week-selector{
+   display:flex;
+   align-items:center;
+   gap:6px;
+   background:rgba(255,255,255,0.6);
+   padding:4px 10px 4px 14px;
+   border-radius:28px;
+   border:1px solid #e0d0a0;
+}
+.week-selector label{
+   margin:0;
+   font-size:0.7rem;
+   color:#6b4a1c;
+}
+.week-selector input{
+   width:46px;
+   padding:4px 6px;
+   border-radius:16px;
+   border:1px solid #e0d0a0;
+   text-align:center;
+   font-size:0.85rem;
+   font-weight:700;
+   margin:0;
+}
+.week-selector input:focus{
+   outline:none;
+   border-color:#e2aa54;
+   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
+}
+.week-badge{
+   background:#e2aa54;
+   color:#2a1a08;
+   padding:2px 12px;
+   border-radius:20px;
+   font-size:0.7rem;
+   font-weight:800;
+}
+.screenshot-btn-wrap{
+   display:flex;
+   gap:6px;
+}
+#screenshotStatus{
+   font-size:0.6rem;
+   color:#4a6f9e;
+   padding:4px 8px;
+   border-radius:12px;
+   background:rgba(255,255,255,0.5);
+   display:none;
+}
+</style>
+</head>
+<body>
+<div class="container" id="captureArea">
+<!-- Order Card -->
+<div class="card">
+   <div class="header-row">
+      <div class="header-left">
+         <h1>Microbiome Warrior</h1>
+      </div>
+      <div class="header-right">
+         <div class="week-selector">
+            <label>📅 W</label>
+            <input type="number" id="weekNumber" value="27" min="1" max="53">
+         </div>
+         <div class="screenshot-btn-wrap">
+            <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
+         </div>
+      </div>
+   </div>
+   <div id="screenshotStatus">✅ Screenshot saved!</div>
+   
+   <label>Customer Name</label>
+   <input id="customerName" placeholder="e.g. Ms. Zhang" autocomplete="off">
+
+   <!-- Bread Section -->
+   <div style="border-bottom:2px dashed #d4c090;padding-bottom:8px;margin-bottom:8px;">
+      <div style="font-size:0.8rem;font-weight:800;color:#b87a2a;margin-bottom:4px;">🥖 BREAD</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+         <div>
+            <label>Variety</label>
+            <select id="breadType">
+               <option value="88er">88er</option>
+               <option value="150er">150er</option>
+               <option value="188er">188er</option>
+               <option value="200er">200er</option>
+               <option value="208er">208er</option>
+            </select>
+         </div>
+         <div>
+            <label>Size</label>
+            <select id="breadSize">
+               <option value="S">S (2 pcs)</option>
+               <option value="M">M (5 pcs)</option>
+               <option value="L">L (8 pcs)</option>
+               <option value="XM">XM (9 pcs)</option>
+               <option value="XL">XL (11 pcs)</option>
+            </select>
+         </div>
+      </div>
+      <div class="checkbox-group">
+         <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
+      </div>
+   </div>
+
+   <!-- Hummus Section -->
+   <div class="hummus-section">
+      <div style="font-size:0.8rem;font-weight:800;color:#6d8a30;margin-bottom:4px;">🫒 HUMMUS (free)</div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+         <div>
+            <label>Type</label>
+            <select id="hummusType">
+               <option value="none">❌ No Hummus</option>
+               <option value="hummus">🫒 Hummus</option>
+               <option value="yingyang">☯️ Ying & Yang</option>
+            </select>
+         </div>
+         <div>
+            <label>Size</label>
+            <select id="hummusSize">
+               <option value="S">S</option>
+               <option value="M">M</option>
+               <option value="L">L</option>
+               <option value="XM">XM</option>
+               <option value="XL">XL</option>
+            </select>
+         </div>
+      </div>
+      
+      <div id="yingYangInfo" class="yingyang-available">
+         ✅ ☯️ Ying & Yang available for 188er & 208er
+      </div>
+      <div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">
+         ⚠️ Ying & Yang only available for 188er & 208er! Please change variety to 188er or 208er.
+      </div>
+   </div>
+
+   <button id="addBtn">➕ Add Order</button>
+   <button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
+</div>
+
+<!-- Order Overview -->
+<div class="card">
+   <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2>📋 Orders (CNY)</h2>
+      <span class="week-badge" id="weekBadge">Week 27</span>
+   </div>
+
+   <!-- Bread Table -->
+   <div class="table-title bread-title">🥖 Bread Orders</div>
+   <div class="scrollable">
+   <table>
+   <thead>
+   <th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Total</th><th class="bread-th"></th>
+   </thead>
+   <tbody id="breadTableBody">
+   <tr><td colspan="7" style="text-align:center">No bread orders 🥖</td></tr>
+   </tbody>
+   </table>
+   </div>
+
+   <!-- Hummus Table -->
+   <div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders (free)</div>
+   <div class="scrollable">
+   <table>
+   <thead>
+   <th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th>
+   </thead>
+   <tbody id="hummusTableBody">
+   <tr><td colspan="5" style="text-align:center">No hummus orders 🫒</td></tr>
+   </tbody>
+   </table>
+   </div>
+
+   <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
+      <span class="total-sum" id="hummusCount" style="background:#8faa4a;padding:2px 16px;color:white;">🫒 0</span>
+      <span class="total-sum" id="totalPriceSum">0 CNY</span>
+   </div>
+</div>
+
+<!-- PREPARATION -->
+<div class="card">
+<h2>📦 PREPARATION</h2>
+
+<h3>🥣 88er Base Mix</h3>
+<div class="scrollable">
+<table>
+<thead><th>Required 88er Mix</th><th>Grams</th><th>Boxes (1400g)</th></thead>
+<tbody id="preparationRow"><tr><td colspan="3">calculating...</td></tr></tbody>
+</table>
+</div>
+
+<h3>🔥 THERMOMIX MAX · per 1 time (13 pcs)</h3>
+<div class="scrollable">
+<table>
+<thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
+<tbody>
+<tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr>
+<tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr>
+<tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr>
+<tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr>
+<tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>📦 REST QUANTITY · per 1 pcs</h3>
+<div class="scrollable">
+<table id="perPcsTable">
+<thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
+<tbody id="perPcsRow"></tbody>
+</table>
+</div>
+
+<h3>📊 TOTAL · times / pcs</h3>
+<div class="total-flex">
+<div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div>
+<div><strong>🔢 pcs (Rest)</strong><table><tbody id="pcsTableBody"></tbody></table></div>
+</div>
+
+<h3>🔥 CALCULATED THERMOMIX CHARGE</h3>
+<div class="scrollable">
+<table>
+<thead><th>Variety</th><th>time</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
+<tbody id="calculatedThermomixTable"></tbody>
+</table>
+</div>
+
+<h3>📦 CALCULATED REST QUANTITY</h3>
+<div class="scrollable">
+<table>
+<thead><th>Variety</th><th>pcs</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
+<tbody id="calculatedRestTable"></tbody>
+<tfoot id="calculatedRestFooter"></tfoot>
+</table>
+</div>
+<div class="info-text">💡 1 time = 13 pcs (full batch) | Mini: half price & half pcs | Hummus: free</div>
+</div>
+<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY</footer>
+</div>
+
+<script>
+// Price Database - Updated with correct prices from your table
+const priceDB = {
+    "88er": { "S": 102, "M": 190, "L": 278, "XM": 308, "XL": 350 },
+    "150er": { "S": 208, "M": 402, "L": 596, "XM": 658, "XL": 766 },
+    "188er": { "S": 288, "M": 588, "L": 888, "XM": 988, "XL": 1138 },
+    "200er": { "S": 308, "M": 688, "L": 968, "XM": 1080, "XL": 1288 },
+    "208er": { "S": 328, "M": 788, "L": 1108, "XM": 1288, "XL": 1468 }
+};
+
+const sizeToPcs = { "S":2, "M":5, "L":8, "XM":9, "XL":11 };
+
+// Recipe per 13 pcs - Updated for new varieties
+const recipeFor13 = {
+    "88er": { mix88:745, mix150:0, mix188:0, mix200:0, water:360 },
+    "150er": { mix88:650, mix150:97, mix188:0, mix200:0, water:360 },
+    "188er": { mix88:630, mix150:97, mix188:15, mix200:0, water:360 },
+    "200er": { mix88:620, mix150:97, mix188:15, mix200:13, water:360 },
+    "208er": { mix88:620, mix150:97, mix188:15, mix200:13, water:360 }
+};
+
+function getPerPcs(btype) {
+    let r = recipeFor13[btype];
+    return { mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13 };
+}
+
+let breadOrders = [];
+let hummusOrders = [];
+let nextId = 1;
+let currentWeek = 27;
+
+// DOM Elements
+const customerName = document.getElementById("customerName");
+const breadType = document.getElementById("breadType");
+const breadSize = document.getElementById("breadSize");
+const miniCheckbox = document.getElementById("miniCheckbox");
+const hummusType = document.getElementById("hummusType");
+const hummusSize = document.getElementById("hummusSize");
+const yingYangInfo = document.getElementById("yingYangInfo");
+const yingYangWarning = document.getElementById("yingYangWarning");
+const breadTableBody = document.getElementById("breadTableBody");
+const hummusTableBody = document.getElementById("hummusTableBody");
+const totalSpan = document.getElementById("totalPriceSum");
+const hummusCountSpan = document.getElementById("hummusCount");
+const weekNumber = document.getElementById("weekNumber");
+const weekBadge = document.getElementById("weekBadge");
+const screenshotBtn = document.getElementById("screenshotBtn");
+const screenshotStatus = document.getElementById("screenshotStatus");
+
+// Week number handling
+function updateWeek() {
+    let val = parseInt(weekNumber.value);
+    if (isNaN(val) || val < 1) val = 1;
+    if (val > 53) val = 53;
+    weekNumber.value = val;
+    currentWeek = val;
+    weekBadge.textContent = 'Week ' + val;
+    localStorage.setItem("microbiome_week", val);
+}
+
+weekNumber.addEventListener('change', updateWeek);
+weekNumber.addEventListener('input', function() {
+    let val = parseInt(this.value);
+    if (!isNaN(val) && val >= 1 && val <= 53) {
+        currentWeek = val;
+        weekBadge.textContent = 'Week ' + val;
+    }
+});
+
+// Load week from localStorage
+function loadWeek() {
+    let saved = localStorage.getItem("microbiome_week");
+    if (saved) {
+        let val = parseInt(saved);
+        if (!isNaN(val) && val >= 1 && val <= 53) {
+            currentWeek = val;
+            weekNumber.value = val;
+            weekBadge.textContent = 'Week ' + val;
+        }
+    }
+}
+
+// Screenshot function - saves to gallery
+async function takeScreenshot() {
+    const element = document.getElementById('captureArea');
+    const status = document.getElementById('screenshotStatus');
+    
+    try {
+        status.style.display = 'block';
+        status.textContent = '⏳ Taking screenshot...';
+        status.style.background = '#fff8e8';
+        
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: null,
+            logging: false,
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight
+        });
+        
+        // Try to save to gallery using Web Share API (mobile)
+        canvas.toBlob(async function(blob) {
+            try {
+                // Try Web Share API first (saves to gallery on mobile)
+                if (navigator.share && navigator.canShare) {
+                    const file = new File([blob], `microbiome_warrior_week_${currentWeek}.png`, { type: 'image/png' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            title: 'Microbiome Warrior',
+                            text: `Week ${currentWeek}`,
+                            files: [file]
+                        });
+                        status.textContent = '✅ Saved to gallery!';
+                        status.style.background = '#e8f5e9';
+                        setTimeout(() => { status.style.display = 'none'; }, 3000);
+                        return;
+                    }
+                }
+                
+                // Fallback: download as file
+                const link = document.createElement('a');
+                link.download = `microbiome_warrior_week_${currentWeek}.png`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                
+                status.textContent = '✅ Screenshot downloaded!';
+                status.style.background = '#e8f5e9';
+                setTimeout(() => { status.style.display = 'none'; }, 3000);
+                
+            } catch (error) {
+                // Fallback: download as file
+                const link = document.createElement('a');
+                link.download = `microbiome_warrior_week_${currentWeek}.png`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                
+                status.textContent = '✅ Screenshot downloaded!';
+                status.style.background = '#e8f5e9';
+                setTimeout(() => { status.style.display = 'none'; }, 3000);
+            }
+        }, 'image/png');
+        
+    } catch (error) {
+        console.error('Screenshot error:', error);
+        status.textContent = '❌ Error taking screenshot';
+        status.style.background = '#fde8e8';
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 3000);
+    }
+}
+
+screenshotBtn.addEventListener('click', takeScreenshot);
+
+// Show/hide Ying & Yang info based on bread variety
+breadType.addEventListener('change', function() {
+    const val = this.value;
+    if (val === '188er' || val === '208er') {
+        yingYangInfo.classList.add('show');
+        yingYangWarning.style.display = 'none';
+    } else {
+        yingYangInfo.classList.remove('show');
+        if (hummusType.value === 'yingyang') {
+            yingYangWarning.style.display = 'block';
+        } else {
+            yingYangWarning.style.display = 'none';
+        }
+    }
+});
+breadType.dispatchEvent(new Event('change'));
+
+// Ying & Yang validation on change
+hummusType.addEventListener('change', function() {
+    if (this.value === 'yingyang') {
+        const val = breadType.value;
+        if (val !== '188er' && val !== '208er') {
+            yingYangWarning.style.display = 'block';
+            alert('Ying & Yang is only available for 188er and 208er! Please change variety to 188er or 208er.');
+            this.value = 'hummus';
+            yingYangWarning.style.display = 'none';
+        } else {
+            yingYangWarning.style.display = 'none';
+        }
+    } else {
+        yingYangWarning.style.display = 'none';
+    }
+});
+
+// Helper Functions
+function getPcsForOrder(order) {
+    let base = sizeToPcs[order.size];
+    return order.isMini ? base/2 : base;
+}
+
+function getPriceForOrder(order) {
+    let basePrice = priceDB[order.breadType]?.[order.size] || 0;
+    return order.isMini ? basePrice / 2 : basePrice;
+}
+
+function totalPriceAll() {
+    let sum = 0;
+    breadOrders.forEach(o => sum += getPriceForOrder(o));
+    return sum;
+}
+
+function totalHummusCount() {
+    return hummusOrders.length;
+}
+
+function getTotalPcsPerType() {
+    let totals = { "88er":0,"150er":0,"188er":0,"200er":0,"208er":0 };
+    breadOrders.forEach(o => {
+        let base = sizeToPcs[o.size];
+        let pcs = o.isMini ? base/2 : base;
+        totals[o.breadType] += pcs;
+    });
+    return totals;
+}
+
+function getTotalRequirements() {
+    let pcs = getTotalPcsPerType();
+    let total88=0,total150=0,total188=0,total200=0,totalWater=0;
+    for(let [type, p] of Object.entries(pcs)) {
+        if(p===0) continue;
+        let per = getPerPcs(type);
+        total88 += per.mix88 * p;
+        total150 += per.mix150 * p;
+        total188 += per.mix188 * p;
+        total200 += per.mix200 * p;
+        totalWater += per.water * p;
+    }
+    return { mix88:total88, mix150:total150, mix188:total188, mix200:total200, water:totalWater };
+}
+
+function getTimesPcsBreakdown() {
+    let pcs = getTotalPcsPerType();
+    let res = [];
+    for(let [type, total] of Object.entries(pcs)) {
+        if(total===0) continue;
+        let full = Math.floor(total / 13);
+        let rest = total % 13;
+        res.push({ type, fullCharges: full, restPcs: rest });
+    }
+    return res;
+}
+
+function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+        if(m === '&') return '&amp;';
+        if(m === '<') return '&lt;';
+        if(m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function saveToLocal() {
+    localStorage.setItem("microbiome_bread", JSON.stringify({ orders: breadOrders, nextId }));
+    localStorage.setItem("microbiome_hummus", JSON.stringify({ orders: hummusOrders }));
+}
+
+function loadFromLocal() {
+    let breadData = localStorage.getItem("microbiome_bread");
+    if(breadData) {
+        try {
+            let parsed = JSON.parse(breadData);
+            if(parsed.orders) breadOrders = parsed.orders;
+            if(parsed.nextId) nextId = parsed.nextId;
+        } catch(e) {}
+    }
+    let hummusData = localStorage.getItem("microbiome_hummus");
+    if(hummusData) {
+        try {
+            let parsed = JSON.parse(hummusData);
+            if(parsed.orders) hummusOrders = parsed.orders;
+        } catch(e) {}
+    }
+    render();
+}
+
+// Main Render Function
+function render() {
+    // Bread Table
+    if(breadOrders.length === 0) {
+        breadTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No bread orders 🥖</td></tr>';
+    } else {
+        breadTableBody.innerHTML = "";
+        breadOrders.forEach(order => {
+            let row = document.createElement("tr");
+            let sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
+            let price = getPriceForOrder(order);
+            let pcs = getPcsForOrder(order);
+            
+            row.innerHTML = `
+                <td style="text-align:left">${escapeHtml(order.name)}</td>
+                <td>${order.breadType}</td>
+                <td>${sizeDisplay}</td>
+                <td>${pcs}</td>
+                <td>${price.toFixed(2)} ¥</td>
+                <td>${price.toFixed(2)} ¥</td>
+                <td><button class="delete-btn" data-id="${order.id}" data-type="bread">✖</button></td>
+            `;
+            breadTableBody.appendChild(row);
+        });
+    }
+    
+    // Hummus Table
+    if(hummusOrders.length === 0) {
+        hummusTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center">No hummus orders 🫒</td></tr>';
+    } else {
+        hummusTableBody.innerHTML = "";
+        hummusOrders.forEach(order => {
+            let row = document.createElement("tr");
+            let hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+            let hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
+            
+            row.innerHTML = `
+                <td style="text-align:left">${escapeHtml(order.name)}</td>
+                <td>${order.breadType}</td>
+                <td>${order.size}</td>
+                <td><span class="${hummusClass}">${hummusLabel}</span></td>
+                <td><button class="delete-btn" data-id="${order.id}" data-type="hummus">✖</button></td>
+            `;
+            hummusTableBody.appendChild(row);
+        });
+    }
+    
+    // Delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            let id = parseInt(btn.getAttribute('data-id'));
+            let type = btn.getAttribute('data-type');
+            if(type === 'bread') {
+                breadOrders = breadOrders.filter(o => o.id !== id);
+            } else {
+                hummusOrders = hummusOrders.filter(o => o.id !== id);
+            }
+            render();
+            saveToLocal();
+        });
+    });
+    
+    totalSpan.innerText = totalPriceAll().toFixed(2) + " ¥";
+    hummusCountSpan.innerText = "🫒 " + totalHummusCount();
+
+    let req = getTotalRequirements();
+    let breakdown = getTimesPcsBreakdown();
+    
+    // Preparation Boxes
+    let needed88 = req.mix88;
+    let boxes = Math.ceil(needed88 / 1400);
+    if(boxes === 0 && needed88 > 0) boxes = 1;
+    document.getElementById("preparationRow").innerHTML = `<tr><td>88er Base Mix</td><td>${needed88.toFixed(1)} g</td><td>${boxes} Boxes</td></tr>`;
+    
+    // Per Pcs Table
+    document.getElementById("perPcsRow").innerHTML = `
+        <tr><td>88er</td><td>${(745/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
+        <tr><td>150er</td><td>${(650/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
+        <tr><td>188er</td><td>${(630/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
+        <tr><td>200er</td><td>${(620/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>${(13/13).toFixed(1)}g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
+        <tr><td>208er</td><td>${(620/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>${(13/13).toFixed(1)}g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
+    `;
+    
+    // Times/Pcs Overview
+    let timesHtml = "", pcsHtml = "";
+    if(breakdown.length === 0 || breakdown.every(b=>b.fullCharges===0)) timesHtml = '<tr><td colspan="2">No times</td></tr>';
+    else timesHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>`<tr><td>${b.type}</td><td><span class="badge-time">${b.fullCharges} time</span></td></tr>`).join('');
+    if(breakdown.length === 0 || !breakdown.some(b=>b.restPcs>0)) pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
+    else pcsHtml = breakdown.filter(b=>b.restPcs>0).map(b=>`<tr><td>${b.type}</td><td><span class="badge-pcs">${b.restPcs} pcs</span></td></tr>`).join('');
+    document.getElementById("timesTableBody").innerHTML = timesHtml;
+    document.getElementById("pcsTableBody").innerHTML = pcsHtml;
+    
+    // Calculated Thermomix
+    let thermHtml = "";
+    if(breakdown.some(b=>b.fullCharges>0)) {
+        thermHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>{
+            let r = recipeFor13[b.type];
+            return `<tr><td>${b.type}</td><td>${b.fullCharges} time</td><td>${r.mix88}g</td><td>${r.mix150}g</td><td>${r.mix188}g</td><td>${r.mix200}g</td><td class="water-cell">${r.water}g</td></tr>`;
+        }).join('');
+    } else thermHtml = '<tr><td colspan="7">No times</td></tr>';
+    document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
+    
+    // Calculated Rest Quantity
+    let restHtml = "", sum88=0, sum150=0, sum188=0, sum200=0, sumW=0;
+    if(breakdown.some(b=>b.restPcs>0)) {
+        restHtml = breakdown.filter(b=>b.restPcs>0).map(b=>{
+            let per = getPerPcs(b.type);
+            let t88 = per.mix88 * b.restPcs;
+            let t150 = per.mix150 * b.restPcs;
+            let t188 = per.mix188 * b.restPcs;
+            let t200 = per.mix200 * b.restPcs;
+            let tw = per.water * b.restPcs;
+            sum88+=t88; sum150+=t150; sum188+=t188; sum200+=t200; sumW+=tw;
+            return `<tr><td>${b.type}</td><td>${b.restPcs} pcs</td><td>${t88.toFixed(1)}g</td><td>${t150.toFixed(1)}g</td><td>${t188.toFixed(1)}g</td><td>${t200.toFixed(1)}g</td><td class="water-cell">${tw.toFixed(1)}g</td></tr>`;
+        }).join('');
+        document.getElementById("calculatedRestFooter").innerHTML = `<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>${sum88.toFixed(1)}g</td><td>${sum150.toFixed(1)}g</td><td>${sum188.toFixed(1)}g</td><td>${sum200.toFixed(1)}g</td><td class="water-cell">${sumW.toFixed(1)}g</td></tr>`;
+    } else {
+        restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
+        document.getElementById("calculatedRestFooter").innerHTML = "";
+    }
+    document.getElementById("calculatedRestTable").innerHTML = restHtml;
+}
+
+function addOrder() {
+    let name = customerName.value.trim();
+    if(!name) { alert("Please enter a name."); return; }
+    
+    const breadVal = breadType.value;
+    const sizeVal = breadSize.value;
+    const isMini = miniCheckbox.checked;
+    const hummusVal = hummusType.value;
+    const hummusSizeVal = hummusSize.value;
+    
+    // Validate Ying & Yang
+    if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '208er') {
+        alert('❌ Ying & Yang is only available for 188er and 208er! Please change variety to 188er or 208er.');
+        return;
+    }
+    
+    // Add bread order
+    breadOrders.push({
+        id: nextId++,
+        name: name,
+        breadType: breadVal,
+        size: sizeVal,
+        isMini: isMini,
+        week: currentWeek
+    });
+    
+    // Add hummus order if not "No Hummus"
+    if (hummusVal !== 'none') {
+        hummusOrders.push({
+            id: nextId++,
+            name: name,
+            breadType: breadVal,
+            size: hummusSizeVal,
+            hummusType: hummusVal,
+            week: currentWeek
+        });
+    }
+    
+    render();
+    saveToLocal();
+    
+    // Reset form
+    customerName.value = "";
+    miniCheckbox.checked = false;
+    hummusType.value = 'none';
+    yingYangWarning.style.display = 'none';
+    customerName.focus();
+}
+
+function resetAll() {
+    if((breadOrders.length || hummusOrders.length) && confirm("Delete all orders?")) {
+        breadOrders = [];
+        hummusOrders = [];
+        render();
+        saveToLocal();
+        nextId = 1;
+    } else if(!breadOrders.length && !hummusOrders.length) alert("No orders");
+}
+
+document.getElementById("addBtn").addEventListener("click", addOrder);
+document.getElementById("resetTableBtn").addEventListener("click", resetAll);
+
+// Load everything
+loadWeek();
+loadFromLocal();
+</script>
+</body>
+</html>
