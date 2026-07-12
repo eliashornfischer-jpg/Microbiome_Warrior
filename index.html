@@ -272,6 +272,59 @@ td{
    background:rgba(255,255,255,0.5);
    display:none;
 }
+/* Cut Styles */
+.cut-container{
+   background:rgba(255,255,255,0.5);
+   padding:12px 16px;
+   border-radius:16px;
+   margin-top:12px;
+   border:2px solid #e2aa54;
+}
+.cut-row{
+   display:flex;
+   justify-content:space-between;
+   align-items:center;
+   padding:4px 0;
+   font-size:0.8rem;
+}
+.cut-row .cut-label{
+   font-weight:700;
+   color:#6b4a1c;
+}
+.cut-row .cut-amount{
+   font-weight:800;
+   color:#b87a2a;
+   font-size:0.9rem;
+}
+.cut-commission-row{
+   background:rgba(226,170,84,0.15);
+   padding:6px 12px;
+   border-radius:12px;
+   margin-top:4px;
+}
+.cut-commission-row label{
+   display:flex;
+   align-items:center;
+   gap:8px;
+   font-size:0.7rem;
+   margin:0;
+   cursor:pointer;
+   color:#6b4a1c;
+}
+.cut-commission-row input[type="checkbox"]{
+   width:18px;
+   height:18px;
+   margin:0;
+}
+.commission-badge{
+   display:inline-block;
+   background:#c0392b;
+   color:white;
+   padding:0px 8px;
+   border-radius:10px;
+   font-size:0.55rem;
+   font-weight:700;
+}
 </style>
 </head>
 <body>
@@ -353,10 +406,10 @@ td{
       </div>
       
       <div id="yingYangInfo" class="yingyang-available">
-         ✅ ☯️ Ying & Yang available for 188er & 208er
+         ✅ ☯️ Ying & Yang available for 188er, 200er & 208er
       </div>
       <div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">
-         ⚠️ Ying & Yang only available for 188er & 208er! Please change variety to 188er or 208er.
+         ⚠️ Ying & Yang only available for 188er, 200er & 208er! Please change variety to 188er, 200er or 208er.
       </div>
    </div>
 
@@ -400,6 +453,32 @@ td{
    <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
       <span class="total-sum" id="hummusCount" style="background:#8faa4a;padding:2px 16px;color:white;">🫒 0</span>
       <span class="total-sum" id="totalPriceSum">0 CNY</span>
+   </div>
+   
+   <!-- CUT SECTION: 2 x 15% (with Commission option) -->
+   <div class="cut-container">
+      <div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">
+         ✂️ CUT 
+         <span id="cutPercentageDisplay" style="font-size:0.7rem;color:#8a5e20;">(2 × 15%)</span>
+      </div>
+      
+      <!-- Commission Checkbox -->
+      <div class="cut-commission-row">
+         <label>
+            <input type="checkbox" id="commissionCheckbox">
+            💰 Commission active 
+            <span class="commission-badge">15% → 13.5%</span>
+         </label>
+      </div>
+      
+      <div class="cut-row">
+         <span class="cut-label">👤 Person 1 <span id="cutPercent1" style="font-size:0.6rem;color:#8a5e20;">(15%)</span></span>
+         <span class="cut-amount" id="cutPerson1">0.00 ¥</span>
+      </div>
+      <div class="cut-row">
+         <span class="cut-label">👤 Person 2 <span id="cutPercent2" style="font-size:0.6rem;color:#8a5e20;">(15%)</span></span>
+         <span class="cut-amount" id="cutPerson2">0.00 ¥</span>
+      </div>
    </div>
 </div>
 
@@ -512,6 +591,14 @@ const weekNumber = document.getElementById("weekNumber");
 const weekBadge = document.getElementById("weekBadge");
 const screenshotBtn = document.getElementById("screenshotBtn");
 const screenshotStatus = document.getElementById("screenshotStatus");
+const commissionCheckbox = document.getElementById("commissionCheckbox");
+
+// Cut DOM Elements
+const cutPerson1 = document.getElementById("cutPerson1");
+const cutPerson2 = document.getElementById("cutPerson2");
+const cutPercent1 = document.getElementById("cutPercent1");
+const cutPercent2 = document.getElementById("cutPercent2");
+const cutPercentageDisplay = document.getElementById("cutPercentageDisplay");
 
 // Week number handling
 function updateWeek() {
@@ -624,20 +711,26 @@ async function takeScreenshot() {
 
 screenshotBtn.addEventListener('click', takeScreenshot);
 
-// Show/hide Ying & Yang info based on bread variety
-breadType.addEventListener('change', function() {
-    const val = this.value;
-    if (val === '188er' || val === '208er') {
+// --- AUTO HUMMUS SELECTION ---
+function autoSelectHummus() {
+    const val = breadType.value;
+    const hummusSelect = hummusType;
+    
+    if (val === '88er' || val === '150er') {
+        hummusSelect.value = 'hummus';
+        yingYangInfo.classList.remove('show');
+        yingYangWarning.style.display = 'none';
+    } else if (val === '188er' || val === '200er' || val === '208er') {
+        hummusSelect.value = 'yingyang';
         yingYangInfo.classList.add('show');
         yingYangWarning.style.display = 'none';
-    } else {
-        yingYangInfo.classList.remove('show');
-        if (hummusType.value === 'yingyang') {
-            yingYangWarning.style.display = 'block';
-        } else {
-            yingYangWarning.style.display = 'none';
-        }
     }
+}
+
+// Show/hide Ying & Yang info based on bread variety + AUTO SELECT
+breadType.addEventListener('change', function() {
+    const val = this.value;
+    autoSelectHummus();
 });
 breadType.dispatchEvent(new Event('change'));
 
@@ -645,9 +738,9 @@ breadType.dispatchEvent(new Event('change'));
 hummusType.addEventListener('change', function() {
     if (this.value === 'yingyang') {
         const val = breadType.value;
-        if (val !== '188er' && val !== '208er') {
+        if (val !== '188er' && val !== '200er' && val !== '208er') {
             yingYangWarning.style.display = 'block';
-            alert('Ying & Yang is only available for 188er and 208er! Please change variety to 188er or 208er.');
+            alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
             this.value = 'hummus';
             yingYangWarning.style.display = 'none';
         } else {
@@ -656,6 +749,11 @@ hummusType.addEventListener('change', function() {
     } else {
         yingYangWarning.style.display = 'none';
     }
+});
+
+// Commission checkbox event
+commissionCheckbox.addEventListener('change', function() {
+    updateCutDisplay();
 });
 
 // Helper Functions
@@ -728,6 +826,7 @@ function escapeHtml(str) {
 function saveToLocal() {
     localStorage.setItem("microbiome_bread", JSON.stringify({ orders: breadOrders, nextId }));
     localStorage.setItem("microbiome_hummus", JSON.stringify({ orders: hummusOrders }));
+    localStorage.setItem("microbiome_commission", JSON.stringify({ active: commissionCheckbox.checked }));
 }
 
 function loadFromLocal() {
@@ -746,7 +845,32 @@ function loadFromLocal() {
             if(parsed.orders) hummusOrders = parsed.orders;
         } catch(e) {}
     }
+    let commissionData = localStorage.getItem("microbiome_commission");
+    if(commissionData) {
+        try {
+            let parsed = JSON.parse(commissionData);
+            if(parsed.active !== undefined) commissionCheckbox.checked = parsed.active;
+        } catch(e) {}
+    }
     render();
+}
+
+// Update Cut display
+function updateCutDisplay() {
+    const total = totalPriceAll();
+    const isCommission = commissionCheckbox.checked;
+    
+    // Calculate percentage
+    const percent = isCommission ? 13.5 : 15;
+    const cutAmount = total * (percent / 100);
+    
+    // Update display
+    cutPerson1.textContent = cutAmount.toFixed(2) + ' ¥';
+    cutPerson2.textContent = cutAmount.toFixed(2) + ' ¥';
+    
+    cutPercent1.textContent = `(${percent}%)`;
+    cutPercent2.textContent = `(${percent}%)`;
+    cutPercentageDisplay.textContent = `(2 × ${percent}%)`;
 }
 
 // Main Render Function
@@ -811,8 +935,12 @@ function render() {
         });
     });
     
-    totalSpan.innerText = totalPriceAll().toFixed(2) + " ¥";
+    const total = totalPriceAll();
+    totalSpan.innerText = total.toFixed(2) + " ¥";
     hummusCountSpan.innerText = "🫒 " + totalHummusCount();
+    
+    // Update Cut
+    updateCutDisplay();
 
     let req = getTotalRequirements();
     let breakdown = getTimesPcsBreakdown();
@@ -882,9 +1010,9 @@ function addOrder() {
     const hummusVal = hummusType.value;
     const hummusSizeVal = hummusSize.value;
     
-    // Validate Ying & Yang
-    if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '208er') {
-        alert('❌ Ying & Yang is only available for 188er and 208er! Please change variety to 188er or 208er.');
+    // Validate Ying & Yang - 188er, 200er & 208er allowed
+    if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
+        alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
         return;
     }
     
@@ -913,11 +1041,11 @@ function addOrder() {
     render();
     saveToLocal();
     
-    // Reset form
+    // Reset form - keep auto-selection
     customerName.value = "";
     miniCheckbox.checked = false;
-    hummusType.value = 'none';
-    yingYangWarning.style.display = 'none';
+    // Hummus type will be auto-set by autoSelectHummus()
+    autoSelectHummus();
     customerName.focus();
 }
 
