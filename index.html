@@ -301,26 +301,6 @@ td{
    color:#b87a2a;
    font-size:0.9rem;
 }
-.cut-commission-row{
-   background:rgba(226,170,84,0.15);
-   padding:6px 12px;
-   border-radius:12px;
-   margin-top:4px;
-}
-.cut-commission-row label{
-   display:flex;
-   align-items:center;
-   gap:8px;
-   font-size:0.7rem;
-   margin:0;
-   cursor:pointer;
-   color:#6b4a1c;
-}
-.cut-commission-row input[type="checkbox"]{
-   width:18px;
-   height:18px;
-   margin:0;
-}
 .commission-badge{
    display:inline-block;
    background:#c0392b;
@@ -340,107 +320,150 @@ td{
    font-weight:700;
    margin-left:4px;
 }
-/* Bread Adjustment Styles */
-.bread-adjust-group{
+/* ADD Section Styles */
+.add-section{
+   background:rgba(226,170,84,0.08);
+   border-radius:16px;
+   padding:12px;
+   margin-top:8px;
+   border:2px dashed #d4c090;
+}
+.add-section .add-title{
+   font-size:0.7rem;
+   font-weight:800;
+   color:#b87a2a;
+   margin-bottom:6px;
    display:flex;
-   gap:4px;
-   margin-top:6px;
-   background:rgba(255,255,255,0.4);
-   padding:4px 8px;
-   border-radius:28px;
+   align-items:center;
+   gap:6px;
+}
+.add-section .add-row{
+   display:flex;
+   gap:6px;
    align-items:center;
    flex-wrap:wrap;
 }
-.bread-adjust-group label{
+.add-section .add-row select{
+   flex:1;
+   min-width:100px;
+   padding:6px 10px;
+   font-size:0.7rem;
    margin:0;
-   font-size:0.65rem;
-   color:#6b4a1c;
-   font-weight:700;
+}
+.add-section .add-row .add-btn{
+   padding:6px 16px;
+   border-radius:20px;
+   border:none;
+   font-weight:800;
+   font-size:0.7rem;
+   background:linear-gradient(135deg,#f2b357,#d6993a);
+   color:#2a1a08;
+   cursor:pointer;
+   margin:0;
    white-space:nowrap;
 }
-.bread-adjust-group .adjust-input-wrap{
-   display:flex;
-   align-items:center;
-   gap:3px;
+.add-section .add-row .add-btn:active{
+   transform:scale(0.95);
 }
-.bread-adjust-group .adjust-btn{
-   width:28px;
-   height:28px;
+.add-section .add-row .add-count{
+   font-size:0.9rem;
+   font-weight:900;
+   color:#b87a2a;
+   min-width:35px;
+   text-align:center;
+}
+.add-section .add-row .add-count-btn{
+   width:34px;
+   height:34px;
    border-radius:50%;
    border:none;
-   font-size:1.1rem;
+   font-size:1.2rem;
    font-weight:900;
    cursor:pointer;
    display:flex;
    align-items:center;
    justify-content:center;
-   transition:all 0.15s ease;
    padding:0;
    margin:0;
-   flex-shrink:0;
 }
-.bread-adjust-group .adjust-btn:active{
+.add-section .add-row .add-count-btn:active{
    transform:scale(0.9);
 }
-.bread-adjust-group .adjust-btn-minus{
+.add-section .add-row .add-count-btn-minus{
    background:#e67e22;
    color:white;
 }
-.bread-adjust-group .adjust-btn-minus:hover{
-   background:#d35400;
-}
-.bread-adjust-group .adjust-btn-plus{
+.add-section .add-row .add-count-btn-plus{
    background:#27ae60;
    color:white;
 }
-.bread-adjust-group .adjust-btn-plus:hover{
-   background:#1e8449;
+.add-orders-list{
+   margin-top:8px;
+   font-size:0.6rem;
 }
-.bread-adjust-group .adjust-btn:disabled{
-   opacity:0.4;
-   cursor:not-allowed;
-}
-.bread-adjust-group input{
-   width:40px;
-   padding:3px 2px;
-   border-radius:12px;
-   font-size:0.8rem;
-   font-weight:700;
-   text-align:center;
-   border:1px solid #e0d0a0;
-   margin:0;
-   background:white;
-}
-.bread-adjust-group input:focus{
-   outline:none;
-   border-color:#e2aa54;
-   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
-}
-.bread-adjust-group .adjust-hint{
-   font-size:0.5rem;
-   color:#8a6a2a;
-   white-space:nowrap;
-}
-.adjust-badge{
+.add-orders-list .add-item{
    display:inline-block;
-   padding:0px 8px;
-   border-radius:8px;
-   font-size:0.55rem;
-   font-weight:700;
-   min-width:28px;
-   text-align:center;
+   background:rgba(255,255,255,0.6);
+   padding:2px 8px;
+   border-radius:12px;
+   margin:2px;
 }
-.adjust-plus{
+.add-orders-list .add-item .qty{
+   font-weight:800;
+   color:#b87a2a;
+}
+.add-orders-list .add-item .del{
+   cursor:pointer;
+   color:#c0392b;
+   margin-left:4px;
+   font-weight:700;
+}
+/* Commission per order */
+.commission-order-row{
+   display:flex;
+   align-items:center;
+   gap:8px;
+   background:rgba(226,170,84,0.1);
+   padding:6px 12px;
+   border-radius:16px;
+   margin-top:6px;
+}
+.commission-order-row label{
+   margin:0;
+   font-size:0.7rem;
+   display:flex;
+   align-items:center;
+   gap:5px;
+   cursor:pointer;
+   color:#6b4a1c;
+}
+.commission-order-row input{
+   width:16px;
+   height:16px;
+   margin:0;
+}
+.comm-tag{
+   font-size:0.5rem;
+   padding:0px 6px;
+   border-radius:8px;
+   font-weight:700;
+}
+.comm-yes{
+   background:#c0392b;
+   color:white;
+}
+.comm-no{
    background:#27ae60;
    color:white;
 }
-.adjust-minus{
-   background:#e67e22;
+.add-tag{
+   display:inline-block;
+   background:#b87a2a;
    color:white;
-}
-.adjust-normal{
-   background:#95a5a6;
-   color:white;
+   padding:0px 6px;
+   border-radius:8px;
+   font-size:0.5rem;
+   font-weight:700;
 }
 </style>
 </head>
@@ -464,53 +487,48 @@ td{
       </div>
    </div>
    <div id="screenshotStatus">✅ Screenshot saved!</div>
-   
+
    <label>Customer Name</label>
    <input id="customerName" placeholder="e.g. Ms. Zhang" autocomplete="off">
 
-   <!-- Bread Section -->
-   <div style="border-bottom:2px dashed #d4c090;padding-bottom:8px;margin-bottom:8px;">
-      <div style="font-size:0.8rem;font-weight:800;color:#b87a2a;margin-bottom:4px;">🥖 BREAD</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-         <div>
-            <label>Variety</label>
-            <select id="breadType">
-               <option value="88er">88er</option>
-               <option value="150er">150er</option>
-               <option value="188er">188er</option>
-               <option value="200er">200er</option>
-               <option value="208er">208er</option>
-            </select>
-         </div>
-         <div>
-            <label>Size</label>
-            <select id="breadSize">
-               <option value="S">S (2 pcs)</option>
-               <option value="S+">S+ (3 pcs) <span style="font-size:0.6rem;">−12.4%</span></option>
-               <option value="M">M (5 pcs)</option>
-               <option value="M+">M+ (6 pcs) <span style="font-size:0.6rem;">no hummus</span></option>
-               <option value="L">L (8 pcs)</option>
-               <option value="XM">XM (9 pcs)</option>
-               <option value="XL">XL (11 pcs)</option>
-            </select>
-         </div>
+   <!-- Bread Selection -->
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+      <div>
+         <label>Variety</label>
+         <select id="breadType">
+            <option value="88er">88er</option>
+            <option value="150er">150er</option>
+            <option value="188er">188er</option>
+            <option value="200er">200er</option>
+            <option value="208er">208er</option>
+         </select>
       </div>
-      
-      <!-- Bread Adjustment - Plus/Minus Buttons -->
-      <div class="bread-adjust-group">
-         <label>📦 Free ±:</label>
-         <div class="adjust-input-wrap">
-            <button class="adjust-btn adjust-btn-minus" id="adjustMinusBtn" title="−1 Brot">−</button>
-            <input type="number" id="breadAdjust" value="0" min="-3" max="3">
-            <button class="adjust-btn adjust-btn-plus" id="adjustPlusBtn" title="+1 Brot">+</button>
-         </div>
-         <span class="adjust-hint">(max ±3)</span>
-         <span id="adjustBadge" class="adjust-badge adjust-normal">±0</span>
+      <div>
+         <label>Size</label>
+         <select id="breadSize">
+            <option value="S">S (2 pcs)</option>
+            <option value="S+">S+ (3 pcs) −12.4%</option>
+            <option value="M">M (5 pcs)</option>
+            <option value="M+">M+ (6 pcs) no hummus</option>
+            <option value="L">L (8 pcs)</option>
+            <option value="XM">XM (9 pcs)</option>
+            <option value="XL">XL (11 pcs)</option>
+         </select>
       </div>
-      
-      <div class="checkbox-group">
-         <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
-      </div>
+   </div>
+
+   <!-- Commission per Order -->
+   <div class="commission-order-row">
+      <label>
+         <input type="checkbox" id="commissionCheckbox">
+         💰 Commission active
+      </label>
+      <span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
+   </div>
+
+   <!-- Mini Checkbox -->
+   <div class="checkbox-group" style="margin-top:4px;">
+      <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
    </div>
 
    <!-- Hummus Section -->
@@ -542,12 +560,35 @@ td{
          ✅ ☯️ Ying & Yang available for 188er, 200er & 208er
       </div>
       <div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">
-         ⚠️ Ying & Yang only available for 188er, 200er & 208er! Please change variety to 188er, 200er or 208er.
+         ⚠️ Ying & Yang only available for 188er, 200er & 208er!
       </div>
    </div>
 
-   <button id="addBtn">➕ Add Order</button>
+   <button id="addBtn">➕ Add Order (with Name)</button>
    <button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
+</div>
+
+<!-- ADD SECTION - Without Name, Commission, Hummus, Price -->
+<div class="card">
+   <div class="add-section">
+      <div class="add-title">➕ ADD (no name, no commission, no hummus, free)</div>
+      <div class="add-row">
+         <select id="addBreadType">
+            <option value="88er">88er</option>
+            <option value="150er">150er</option>
+            <option value="188er">188er</option>
+            <option value="200er">200er</option>
+            <option value="208er">208er</option>
+         </select>
+         <button class="add-count-btn add-count-btn-minus" id="addMinusBtn">−</button>
+         <span class="add-count" id="addCountDisplay">1</span>
+         <button class="add-count-btn add-count-btn-plus" id="addPlusBtn">+</button>
+         <button class="add-btn" id="addAddBtn">➕ Add</button>
+      </div>
+      <div class="add-orders-list" id="addOrdersList">
+         <span style="color:#b88c48;">No added orders yet</span>
+      </div>
+   </div>
 </div>
 
 <!-- Order Overview -->
@@ -562,10 +603,23 @@ td{
    <div class="scrollable">
    <table>
    <thead>
-   <th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Free ±</th><th class="bread-th">Price</th><th class="bread-th">Total</th><th class="bread-th"></th>
+   <th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Comm</th><th class="bread-th"></th>
    </thead>
    <tbody id="breadTableBody">
    <tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>
+   </tbody>
+   </table>
+   </div>
+
+   <!-- ADD Summary Table -->
+   <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Summary (free, no hummus)</div>
+   <div class="scrollable">
+   <table>
+   <thead>
+   <th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th>
+   </thead>
+   <tbody id="addSummaryBody">
+   <tr><td colspan="3" style="text-align:center">No ADD orders yet</td></tr>
    </tbody>
    </table>
    </div>
@@ -575,10 +629,10 @@ td{
    <div class="scrollable">
    <table>
    <thead>
-   <th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th>
+   <th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th>
    </thead>
    <tbody id="hummusTableBody">
-   <tr><td colspan="5" style="text-align:center">No hummus orders 🫒</td></tr>
+   <tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>
    </tbody>
    </table>
    </div>
@@ -588,29 +642,23 @@ td{
       <span class="total-sum" id="totalPriceSum">0 CNY</span>
    </div>
    
-   <!-- CUT SECTION: 2 x 15% (with Commission option) -->
+   <!-- CUT SECTION -->
    <div class="cut-container">
       <div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">
          ✂️ CUT 
-         <span id="cutPercentageDisplay" style="font-size:0.7rem;color:#8a5e20;">(2 × 15%)</span>
-      </div>
-      
-      <!-- Commission Checkbox -->
-      <div class="cut-commission-row">
-         <label>
-            <input type="checkbox" id="commissionCheckbox">
-            💰 Commission active 
-            <span class="commission-badge">15% → 13.5%</span>
-         </label>
+         <span id="cutPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(2 × 15%)</span>
       </div>
       
       <div class="cut-row">
-         <span class="cut-label">👤 Person 1 <span id="cutPercent1" style="font-size:0.6rem;color:#8a5e20;">(15%)</span></span>
+         <span class="cut-label">👤 Person 1</span>
          <span class="cut-amount" id="cutPerson1">0.00 ¥</span>
       </div>
       <div class="cut-row">
-         <span class="cut-label">👤 Person 2 <span id="cutPercent2" style="font-size:0.6rem;color:#8a5e20;">(15%)</span></span>
+         <span class="cut-label">👤 Person 2</span>
          <span class="cut-amount" id="cutPerson2">0.00 ¥</span>
+      </div>
+      <div style="font-size:0.55rem;color:#8a6a2a;text-align:center;margin-top:4px;">
+         ℹ️ Commission orders: 13.5% | Non-commission: 15%
       </div>
    </div>
 </div>
@@ -679,7 +727,6 @@ td{
 <script>
 // --- WEEK CALCULATION ---
 function calculateCurrentWeek() {
-    // Week 1 starts on Monday, December 22, 2025
     const startDate = new Date(2025, 11, 22);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -691,62 +738,35 @@ function calculateCurrentWeek() {
     return weekNum;
 }
 
-// Price Database - Updated with new sizes S+ and M+
+// Price Database
 const priceDB = {
     "88er": { 
-        "S": 102, 
-        "S+": (102 / 2) * 3 * 0.875817, 
-        "M": 190, 
-        "M+": 190, 
-        "L": 278, 
-        "XM": 308, 
-        "XL": 350 
+        "S": 102, "S+": (102/2)*3*0.875817, "M": 190, "M+": 190, 
+        "L": 278, "XM": 308, "XL": 350 
     },
     "150er": { 
-        "S": 208, 
-        "S+": (208 / 2) * 3 * 0.875817, 
-        "M": 402, 
-        "M+": 402, 
-        "L": 596, 
-        "XM": 658, 
-        "XL": 766 
+        "S": 208, "S+": (208/2)*3*0.875817, "M": 402, "M+": 402, 
+        "L": 596, "XM": 658, "XL": 766 
     },
     "188er": { 
-        "S": 288, 
-        "S+": (288 / 2) * 3 * 0.875817, 
-        "M": 588, 
-        "M+": 588, 
-        "L": 888, 
-        "XM": 988, 
-        "XL": 1138 
+        "S": 288, "S+": (288/2)*3*0.875817, "M": 588, "M+": 588, 
+        "L": 888, "XM": 988, "XL": 1138 
     },
     "200er": { 
-        "S": 308, 
-        "S+": (308 / 2) * 3 * 0.875817, 
-        "M": 688, 
-        "M+": 688, 
-        "L": 968, 
-        "XM": 1080, 
-        "XL": 1288 
+        "S": 308, "S+": (308/2)*3*0.875817, "M": 688, "M+": 688, 
+        "L": 968, "XM": 1080, "XL": 1288 
     },
     "208er": { 
-        "S": 328, 
-        "S+": (328 / 2) * 3 * 0.875817, 
-        "M": 788, 
-        "M+": 788, 
-        "L": 1108, 
-        "XM": 1288, 
-        "XL": 1468 
+        "S": 328, "S+": (328/2)*3*0.875817, "M": 788, "M+": 788, 
+        "L": 1108, "XM": 1288, "XL": 1468 
     }
 };
 
-// Size to pieces mapping
 const sizeToPcs = { 
     "S": 2, "S+": 3, "M": 5, "M+": 6, 
     "L": 8, "XM": 9, "XL": 11 
 };
 
-// Recipe per 13 pcs
 const recipeFor13 = {
     "88er": { mix88:745, mix150:0, mix188:0, mix200:0, water:360 },
     "150er": { mix88:650, mix150:97, mix188:0, mix200:0, water:360 },
@@ -762,23 +782,22 @@ function getPerPcs(btype) {
 
 let breadOrders = [];
 let hummusOrders = [];
+let addOrders = [];
 let nextId = 1;
 let currentWeek = calculateCurrentWeek();
+let addCount = 1;
 
 // DOM Elements
 const customerName = document.getElementById("customerName");
 const breadType = document.getElementById("breadType");
 const breadSize = document.getElementById("breadSize");
-const breadAdjust = document.getElementById("breadAdjust");
-const adjustBadge = document.getElementById("adjustBadge");
-const adjustMinusBtn = document.getElementById("adjustMinusBtn");
-const adjustPlusBtn = document.getElementById("adjustPlusBtn");
 const miniCheckbox = document.getElementById("miniCheckbox");
 const hummusType = document.getElementById("hummusType");
 const hummusSize = document.getElementById("hummusSize");
 const yingYangInfo = document.getElementById("yingYangInfo");
 const yingYangWarning = document.getElementById("yingYangWarning");
 const breadTableBody = document.getElementById("breadTableBody");
+const addSummaryBody = document.getElementById("addSummaryBody");
 const hummusTableBody = document.getElementById("hummusTableBody");
 const totalSpan = document.getElementById("totalPriceSum");
 const hummusCountSpan = document.getElementById("hummusCount");
@@ -788,67 +807,32 @@ const screenshotBtn = document.getElementById("screenshotBtn");
 const screenshotStatus = document.getElementById("screenshotStatus");
 const commissionCheckbox = document.getElementById("commissionCheckbox");
 
+// ADD DOM
+const addBreadType = document.getElementById("addBreadType");
+const addCountDisplay = document.getElementById("addCountDisplay");
+const addMinusBtn = document.getElementById("addMinusBtn");
+const addPlusBtn = document.getElementById("addPlusBtn");
+const addAddBtn = document.getElementById("addAddBtn");
+const addOrdersList = document.getElementById("addOrdersList");
+
 // Cut DOM Elements
 const cutPerson1 = document.getElementById("cutPerson1");
 const cutPerson2 = document.getElementById("cutPerson2");
-const cutPercent1 = document.getElementById("cutPercent1");
-const cutPercent2 = document.getElementById("cutPercent2");
-const cutPercentageDisplay = document.getElementById("cutPercentageDisplay");
+const cutPercentDisplay = document.getElementById("cutPercentDisplay");
 
-// Update adjust badge and input
-function updateAdjustDisplay() {
-    let val = parseInt(breadAdjust.value) || 0;
-    // Clamp to -3 to +3
-    if (val > 3) { val = 3; breadAdjust.value = 3; }
-    if (val < -3) { val = -3; breadAdjust.value = -3; }
-    
-    // Update buttons
-    adjustMinusBtn.disabled = (val <= -3);
-    adjustPlusBtn.disabled = (val >= 3);
-    
-    // Update badge
-    if (val === 0) {
-        adjustBadge.textContent = '±0';
-        adjustBadge.className = 'adjust-badge adjust-normal';
-    } else if (val > 0) {
-        adjustBadge.textContent = '+' + val;
-        adjustBadge.className = 'adjust-badge adjust-plus';
-    } else {
-        adjustBadge.textContent = val;
-        adjustBadge.className = 'adjust-badge adjust-minus';
-    }
-}
-
-// Adjust buttons
-adjustMinusBtn.addEventListener('click', function() {
-    let val = parseInt(breadAdjust.value) || 0;
-    if (val > -3) {
-        breadAdjust.value = val - 1;
-        updateAdjustDisplay();
+// ADD Count controls
+addMinusBtn.addEventListener('click', function() {
+    if (addCount > 1) {
+        addCount--;
+        addCountDisplay.textContent = addCount;
     }
 });
-
-adjustPlusBtn.addEventListener('click', function() {
-    let val = parseInt(breadAdjust.value) || 0;
-    if (val < 3) {
-        breadAdjust.value = val + 1;
-        updateAdjustDisplay();
+addPlusBtn.addEventListener('click', function() {
+    if (addCount < 99) {
+        addCount++;
+        addCountDisplay.textContent = addCount;
     }
 });
-
-// Input change
-breadAdjust.addEventListener('input', function() {
-    updateAdjustDisplay();
-});
-breadAdjust.addEventListener('blur', function() {
-    let val = parseInt(this.value) || 0;
-    if (val > 3) this.value = 3;
-    if (val < -3) this.value = -3;
-    updateAdjustDisplay();
-});
-
-// Initial update
-updateAdjustDisplay();
 
 // Update week display
 function updateWeekDisplay() {
@@ -856,8 +840,6 @@ function updateWeekDisplay() {
     weekNumber.value = currentWeek;
     weekBadge.textContent = 'Week ' + currentWeek;
 }
-
-// Initial week update
 updateWeekDisplay();
 setInterval(updateWeekDisplay, 60000);
 
@@ -925,16 +907,14 @@ async function takeScreenshot() {
         setTimeout(() => { status.style.display = 'none'; }, 3000);
     }
 }
-
 screenshotBtn.addEventListener('click', takeScreenshot);
 
-// --- AUTO HUMMUS SELECTION ---
+// AUTO HUMMUS SELECTION
 function autoSelectHummus() {
     const val = breadType.value;
     const sizeVal = breadSize.value;
     const hummusSelect = hummusType;
     
-    // M+ = no hummus as standard
     if (sizeVal === 'M+') {
         hummusSelect.value = 'none';
         yingYangInfo.classList.remove('show');
@@ -953,19 +933,12 @@ function autoSelectHummus() {
     }
 }
 
-// Show/hide Ying & Yang info based on bread variety + AUTO SELECT
-breadType.addEventListener('change', function() {
-    autoSelectHummus();
-});
-breadSize.addEventListener('change', function() {
-    autoSelectHummus();
-});
+breadType.addEventListener('change', autoSelectHummus);
+breadSize.addEventListener('change', autoSelectHummus);
 breadType.dispatchEvent(new Event('change'));
 
-// Ying & Yang validation on change
 hummusType.addEventListener('change', function() {
     const sizeVal = breadSize.value;
-    // M+ cannot have hummus
     if (sizeVal === 'M+' && this.value !== 'none') {
         alert('❌ M+ (6 pcs) comes without hummus as standard!');
         this.value = 'none';
@@ -986,18 +959,10 @@ hummusType.addEventListener('change', function() {
     }
 });
 
-// Commission checkbox event
-commissionCheckbox.addEventListener('change', function() {
-    updateCutDisplay();
-});
-
 // Helper Functions
 function getPcsForOrder(order) {
     let base = sizeToPcs[order.size] || 0;
-    let adjusted = base + order.adjust;
-    // Don't go below 0
-    if (adjusted < 0) adjusted = 0;
-    return order.isMini ? adjusted/2 : adjusted;
+    return order.isMini ? base/2 : base;
 }
 
 function getPriceForOrder(order) {
@@ -1007,7 +972,11 @@ function getPriceForOrder(order) {
 
 function totalPriceAll() {
     let sum = 0;
-    breadOrders.forEach(o => sum += getPriceForOrder(o));
+    breadOrders.forEach(o => {
+        if (!o.isAdd) {
+            sum += getPriceForOrder(o);
+        }
+    });
     return sum;
 }
 
@@ -1018,10 +987,7 @@ function totalHummusCount() {
 function getTotalPcsPerType() {
     let totals = { "88er":0,"150er":0,"188er":0,"200er":0,"208er":0 };
     breadOrders.forEach(o => {
-        let base = sizeToPcs[o.size] || 0;
-        let adjusted = base + o.adjust;
-        if (adjusted < 0) adjusted = 0;
-        let pcs = o.isMini ? adjusted/2 : adjusted;
+        let pcs = getPcsForOrder(o);
         totals[o.breadType] += pcs;
     });
     return totals;
@@ -1066,7 +1032,7 @@ function escapeHtml(str) {
 function saveToLocal() {
     localStorage.setItem("microbiome_bread", JSON.stringify({ orders: breadOrders, nextId }));
     localStorage.setItem("microbiome_hummus", JSON.stringify({ orders: hummusOrders }));
-    localStorage.setItem("microbiome_commission", JSON.stringify({ active: commissionCheckbox.checked }));
+    localStorage.setItem("microbiome_add", JSON.stringify({ orders: addOrders }));
 }
 
 function loadFromLocal() {
@@ -1085,11 +1051,11 @@ function loadFromLocal() {
             if(parsed.orders) hummusOrders = parsed.orders;
         } catch(e) {}
     }
-    let commissionData = localStorage.getItem("microbiome_commission");
-    if(commissionData) {
+    let addData = localStorage.getItem("microbiome_add");
+    if(addData) {
         try {
-            let parsed = JSON.parse(commissionData);
-            if(parsed.active !== undefined) commissionCheckbox.checked = parsed.active;
+            let parsed = JSON.parse(addData);
+            if(parsed.orders) addOrders = parsed.orders;
         } catch(e) {}
     }
     render();
@@ -1097,41 +1063,116 @@ function loadFromLocal() {
 
 // Update Cut display
 function updateCutDisplay() {
-    const total = totalPriceAll();
-    const isCommission = commissionCheckbox.checked;
-    const percent = isCommission ? 13.5 : 15;
-    const cutAmount = total * (percent / 100);
+    let totalWithComm = 0;
+    let totalWithoutComm = 0;
     
-    cutPerson1.textContent = cutAmount.toFixed(2) + ' ¥';
-    cutPerson2.textContent = cutAmount.toFixed(2) + ' ¥';
-    cutPercent1.textContent = `(${percent}%)`;
-    cutPercent2.textContent = `(${percent}%)`;
-    cutPercentageDisplay.textContent = `(2 × ${percent}%)`;
+    breadOrders.forEach(o => {
+        if (o.isAdd) return;
+        const price = getPriceForOrder(o);
+        if (o.hasCommission) {
+            totalWithComm += price;
+        } else {
+            totalWithoutComm += price;
+        }
+    });
+    
+    const cutWithComm = totalWithComm * 0.135;
+    const cutWithoutComm = totalWithoutComm * 0.15;
+    const totalCut = cutWithComm + cutWithoutComm;
+    
+    cutPerson1.textContent = totalCut.toFixed(2) + ' ¥';
+    cutPerson2.textContent = totalCut.toFixed(2) + ' ¥';
+    
+    let infoText = '';
+    if (totalWithComm > 0 && totalWithoutComm > 0) {
+        infoText = '(mix: 13.5% + 15%)';
+    } else if (totalWithComm > 0) {
+        infoText = '(2 × 13.5%)';
+    } else {
+        infoText = '(2 × 15%)';
+    }
+    cutPercentDisplay.textContent = infoText;
 }
 
-// Main Render Function
+function renderAddOrders() {
+    // ADD list
+    if (addOrders.length === 0) {
+        addOrdersList.innerHTML = '<span style="color:#b88c48;">No added orders yet</span>';
+    } else {
+        let html = '';
+        addOrders.forEach((item, index) => {
+            html += `<span class="add-item">
+                <span class="qty">${item.count}×</span> ${item.type}
+                <span class="del" data-index="${index}">✖</span>
+            </span> `;
+        });
+        addOrdersList.innerHTML = html;
+        
+        document.querySelectorAll('.add-item .del').forEach(el => {
+            el.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.index);
+                addOrders.splice(idx, 1);
+                breadOrders = breadOrders.filter(o => !o.isAdd);
+                render();
+                saveToLocal();
+            });
+        });
+    }
+    
+    // ADD Summary Table
+    if (addOrders.length === 0) {
+        addSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD orders yet</td></tr>';
+    } else {
+        addSummaryBody.innerHTML = '';
+        addOrders.forEach((item, index) => {
+            let row = document.createElement('tr');
+            // Pro ADD Eintrag = 1 Stück pro Bestellung
+            const totalPcs = item.count;
+            row.innerHTML = `
+                <td>${item.type}</td>
+                <td>${totalPcs}</td>
+                <td><button class="delete-btn" data-add-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
+            `;
+            addSummaryBody.appendChild(row);
+        });
+        
+        document.querySelectorAll('#addSummaryBody .delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.addIndex);
+                addOrders.splice(idx, 1);
+                breadOrders = breadOrders.filter(o => !o.isAdd);
+                render();
+                saveToLocal();
+            });
+        });
+    }
+}
+
 function render() {
-    // Bread Table
-    if(breadOrders.length === 0) {
+    // Bread Table - nur normale Bestellungen
+    const normalOrders = breadOrders.filter(o => !o.isAdd);
+    if(normalOrders.length === 0) {
         breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
     } else {
         breadTableBody.innerHTML = "";
-        breadOrders.forEach(order => {
+        normalOrders.forEach((order, index) => {
             let row = document.createElement("tr");
             let sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
             let price = getPriceForOrder(order);
             let pcs = getPcsForOrder(order);
-            let adjustDisplay = order.adjust === 0 ? '±0' : (order.adjust > 0 ? '+' + order.adjust : order.adjust);
-            let adjustClass = order.adjust === 0 ? 'adjust-normal' : (order.adjust > 0 ? 'adjust-plus' : 'adjust-minus');
+            let nameDisplay = order.name;
+            let commDisplay = order.hasCommission ? 
+                '<span class="comm-tag comm-yes">13.5%</span>' : 
+                '<span class="comm-tag comm-no">15%</span>';
             
             row.innerHTML = `
-                <td style="text-align:left">${escapeHtml(order.name)}</td>
+                <td>#${index + 1}</td>
+                <td style="text-align:left">${escapeHtml(nameDisplay)}</td>
                 <td>${order.breadType}</td>
                 <td>${sizeDisplay}</td>
                 <td>${pcs}</td>
-                <td><span class="adjust-badge ${adjustClass}" style="font-size:0.6rem;">${adjustDisplay}</span></td>
                 <td>${price.toFixed(2)} ¥</td>
-                <td>${price.toFixed(2)} ¥</td>
+                <td>${commDisplay}</td>
                 <td><button class="delete-btn" data-id="${order.id}" data-type="bread">✖</button></td>
             `;
             breadTableBody.appendChild(row);
@@ -1140,16 +1181,18 @@ function render() {
     
     // Hummus Table
     if(hummusOrders.length === 0) {
-        hummusTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center">No hummus orders 🫒</td></tr>';
+        hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>';
     } else {
         hummusTableBody.innerHTML = "";
-        hummusOrders.forEach(order => {
+        hummusOrders.forEach((order, index) => {
             let row = document.createElement("tr");
             let hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
             let hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
+            let nameDisplay = order.name;
             
             row.innerHTML = `
-                <td style="text-align:left">${escapeHtml(order.name)}</td>
+                <td>#${index + 1}</td>
+                <td style="text-align:left">${escapeHtml(nameDisplay)}</td>
                 <td>${order.breadType}</td>
                 <td>${order.size}</td>
                 <td><span class="${hummusClass}">${hummusLabel}</span></td>
@@ -1159,7 +1202,6 @@ function render() {
         });
     }
     
-    // Delete buttons
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             let id = parseInt(btn.getAttribute('data-id'));
@@ -1230,6 +1272,8 @@ function render() {
         document.getElementById("calculatedRestFooter").innerHTML = "";
     }
     document.getElementById("calculatedRestTable").innerHTML = restHtml;
+    
+    renderAddOrders();
 }
 
 function addOrder() {
@@ -1238,22 +1282,16 @@ function addOrder() {
     
     const breadVal = breadType.value;
     const sizeVal = breadSize.value;
-    let adjustVal = parseInt(breadAdjust.value) || 0;
-    // Clamp adjustVal
-    if (adjustVal > 3) adjustVal = 3;
-    if (adjustVal < -3) adjustVal = -3;
-    
     const isMini = miniCheckbox.checked;
     const hummusVal = hummusType.value;
     const hummusSizeVal = hummusSize.value;
+    const hasCommission = commissionCheckbox.checked;
     
-    // M+ cannot have hummus
     if (sizeVal === 'M+' && hummusVal !== 'none') {
-        alert('❌ M+ (6 pcs) comes without hummus as standard! Please select "No Hummus".');
+        alert('❌ M+ (6 pcs) comes without hummus as standard!');
         return;
     }
     
-    // Validate Ying & Yang
     if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
         alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
         return;
@@ -1266,9 +1304,10 @@ function addOrder() {
         name: name,
         breadType: breadVal,
         size: sizeVal,
-        adjust: adjustVal,
         isMini: isMini,
-        week: currentWeek
+        hasCommission: hasCommission,
+        week: currentWeek,
+        isAdd: false
     });
     
     if (hummusVal !== 'none') {
@@ -1278,29 +1317,72 @@ function addOrder() {
             breadType: breadVal,
             size: hummusSizeVal,
             hummusType: hummusVal,
-            week: currentWeek
+            week: currentWeek,
+            isAdd: false
         });
     }
     
     render();
     saveToLocal();
     
+    // Reset form fields
     customerName.value = "";
     miniCheckbox.checked = false;
-    breadAdjust.value = '0';
-    updateAdjustDisplay();
+    commissionCheckbox.checked = false;
     autoSelectHummus();
     customerName.focus();
 }
 
+// ADD Function - pro Stück, nicht pro Bestellung
+function addAddOrder() {
+    const breadVal = addBreadType.value;
+    const count = addCount;
+    
+    // Prüfen ob bereits eine ADD Order für diese Sorte existiert
+    const existing = addOrders.find(item => item.type === breadVal);
+    if (existing) {
+        existing.count += count;
+    } else {
+        addOrders.push({
+            type: breadVal,
+            count: count
+        });
+    }
+    
+    // Jedes Stück einzeln in breadOrders speichern (für Preparation)
+    // ADD verwendet immer Größe "S" und 1 Stück pro Eintrag
+    for (let i = 0; i < count; i++) {
+        breadOrders.push({
+            id: nextId++,
+            name: '⚡ Add',
+            breadType: breadVal,
+            size: 'S',
+            isMini: false,
+            hasCommission: false,
+            week: currentWeek,
+            isAdd: true
+        });
+        // KEIN Hummus für ADD!
+    }
+    
+    render();
+    saveToLocal();
+    addCount = 1;
+    addCountDisplay.textContent = addCount;
+}
+
+// ADD Button
+addAddBtn.addEventListener('click', addAddOrder);
+
 function resetAll() {
-    if((breadOrders.length || hummusOrders.length) && confirm("Delete all orders?")) {
+    if((breadOrders.length || hummusOrders.length || addOrders.length) && confirm("Delete all orders?")) {
         breadOrders = [];
         hummusOrders = [];
+        addOrders = [];
         render();
         saveToLocal();
         nextId = 1;
-    } else if(!breadOrders.length && !hummusOrders.length) alert("No orders");
+    } else if(!breadOrders.length && !hummusOrders.length && !addOrders.length) alert("No orders");
 }
 
 document.getElementById("addBtn").addEventListener("click", addOrder);
