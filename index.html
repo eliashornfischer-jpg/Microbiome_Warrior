@@ -340,15 +340,107 @@ td{
    font-weight:700;
    margin-left:4px;
 }
-.size-badge{
-   display:inline-block;
-   background:#b87a2a;
-   color:white;
-   padding:0px 6px;
-   border-radius:8px;
-   font-size:0.5rem;
+/* Bread Adjustment Styles */
+.bread-adjust-group{
+   display:flex;
+   gap:4px;
+   margin-top:6px;
+   background:rgba(255,255,255,0.4);
+   padding:4px 8px;
+   border-radius:28px;
+   align-items:center;
+   flex-wrap:wrap;
+}
+.bread-adjust-group label{
+   margin:0;
+   font-size:0.65rem;
+   color:#6b4a1c;
    font-weight:700;
-   margin-left:4px;
+   white-space:nowrap;
+}
+.bread-adjust-group .adjust-input-wrap{
+   display:flex;
+   align-items:center;
+   gap:3px;
+}
+.bread-adjust-group .adjust-btn{
+   width:28px;
+   height:28px;
+   border-radius:50%;
+   border:none;
+   font-size:1.1rem;
+   font-weight:900;
+   cursor:pointer;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   transition:all 0.15s ease;
+   padding:0;
+   margin:0;
+   flex-shrink:0;
+}
+.bread-adjust-group .adjust-btn:active{
+   transform:scale(0.9);
+}
+.bread-adjust-group .adjust-btn-minus{
+   background:#e67e22;
+   color:white;
+}
+.bread-adjust-group .adjust-btn-minus:hover{
+   background:#d35400;
+}
+.bread-adjust-group .adjust-btn-plus{
+   background:#27ae60;
+   color:white;
+}
+.bread-adjust-group .adjust-btn-plus:hover{
+   background:#1e8449;
+}
+.bread-adjust-group .adjust-btn:disabled{
+   opacity:0.4;
+   cursor:not-allowed;
+}
+.bread-adjust-group input{
+   width:40px;
+   padding:3px 2px;
+   border-radius:12px;
+   font-size:0.8rem;
+   font-weight:700;
+   text-align:center;
+   border:1px solid #e0d0a0;
+   margin:0;
+   background:white;
+}
+.bread-adjust-group input:focus{
+   outline:none;
+   border-color:#e2aa54;
+   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
+}
+.bread-adjust-group .adjust-hint{
+   font-size:0.5rem;
+   color:#8a6a2a;
+   white-space:nowrap;
+}
+.adjust-badge{
+   display:inline-block;
+   padding:0px 8px;
+   border-radius:8px;
+   font-size:0.55rem;
+   font-weight:700;
+   min-width:28px;
+   text-align:center;
+}
+.adjust-plus{
+   background:#27ae60;
+   color:white;
+}
+.adjust-minus{
+   background:#e67e22;
+   color:white;
+}
+.adjust-normal{
+   background:#95a5a6;
+   color:white;
 }
 </style>
 </head>
@@ -403,6 +495,19 @@ td{
             </select>
          </div>
       </div>
+      
+      <!-- Bread Adjustment - Plus/Minus Buttons -->
+      <div class="bread-adjust-group">
+         <label>📦 Free ±:</label>
+         <div class="adjust-input-wrap">
+            <button class="adjust-btn adjust-btn-minus" id="adjustMinusBtn" title="−1 Brot">−</button>
+            <input type="number" id="breadAdjust" value="0" min="-3" max="3">
+            <button class="adjust-btn adjust-btn-plus" id="adjustPlusBtn" title="+1 Brot">+</button>
+         </div>
+         <span class="adjust-hint">(max ±3)</span>
+         <span id="adjustBadge" class="adjust-badge adjust-normal">±0</span>
+      </div>
+      
       <div class="checkbox-group">
          <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
       </div>
@@ -457,10 +562,10 @@ td{
    <div class="scrollable">
    <table>
    <thead>
-   <th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Total</th><th class="bread-th"></th>
+   <th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Free ±</th><th class="bread-th">Price</th><th class="bread-th">Total</th><th class="bread-th"></th>
    </thead>
    <tbody id="breadTableBody">
-   <tr><td colspan="7" style="text-align:center">No bread orders 🥖</td></tr>
+   <tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>
    </tbody>
    </table>
    </div>
@@ -574,8 +679,8 @@ td{
 <script>
 // --- WEEK CALCULATION ---
 function calculateCurrentWeek() {
-    // Week 1 starts on Monday, December 29, 2025
-    const startDate = new Date(2025, 11, 29);
+    // Week 1 starts on Monday, December 22, 2025
+    const startDate = new Date(2025, 11, 22);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const diffTime = today.getTime() - startDate.getTime();
@@ -589,28 +694,53 @@ function calculateCurrentWeek() {
 // Price Database - Updated with new sizes S+ and M+
 const priceDB = {
     "88er": { 
-        "S": 102, "S+": 102 * 0.875817, "M": 190, "M+": 190, 
-        "L": 278, "XM": 308, "XL": 350 
+        "S": 102, 
+        "S+": (102 / 2) * 3 * 0.875817, 
+        "M": 190, 
+        "M+": 190, 
+        "L": 278, 
+        "XM": 308, 
+        "XL": 350 
     },
     "150er": { 
-        "S": 208, "S+": 208 * 0.875817, "M": 402, "M+": 402, 
-        "L": 596, "XM": 658, "XL": 766 
+        "S": 208, 
+        "S+": (208 / 2) * 3 * 0.875817, 
+        "M": 402, 
+        "M+": 402, 
+        "L": 596, 
+        "XM": 658, 
+        "XL": 766 
     },
     "188er": { 
-        "S": 288, "S+": 288 * 0.875817, "M": 588, "M+": 588, 
-        "L": 888, "XM": 988, "XL": 1138 
+        "S": 288, 
+        "S+": (288 / 2) * 3 * 0.875817, 
+        "M": 588, 
+        "M+": 588, 
+        "L": 888, 
+        "XM": 988, 
+        "XL": 1138 
     },
     "200er": { 
-        "S": 308, "S+": 308 * 0.875817, "M": 688, "M+": 688, 
-        "L": 968, "XM": 1080, "XL": 1288 
+        "S": 308, 
+        "S+": (308 / 2) * 3 * 0.875817, 
+        "M": 688, 
+        "M+": 688, 
+        "L": 968, 
+        "XM": 1080, 
+        "XL": 1288 
     },
     "208er": { 
-        "S": 328, "S+": 328 * 0.875817, "M": 788, "M+": 788, 
-        "L": 1108, "XM": 1288, "XL": 1468 
+        "S": 328, 
+        "S+": (328 / 2) * 3 * 0.875817, 
+        "M": 788, 
+        "M+": 788, 
+        "L": 1108, 
+        "XM": 1288, 
+        "XL": 1468 
     }
 };
 
-// Size to pieces mapping - NEW sizes
+// Size to pieces mapping
 const sizeToPcs = { 
     "S": 2, "S+": 3, "M": 5, "M+": 6, 
     "L": 8, "XM": 9, "XL": 11 
@@ -639,6 +769,10 @@ let currentWeek = calculateCurrentWeek();
 const customerName = document.getElementById("customerName");
 const breadType = document.getElementById("breadType");
 const breadSize = document.getElementById("breadSize");
+const breadAdjust = document.getElementById("breadAdjust");
+const adjustBadge = document.getElementById("adjustBadge");
+const adjustMinusBtn = document.getElementById("adjustMinusBtn");
+const adjustPlusBtn = document.getElementById("adjustPlusBtn");
 const miniCheckbox = document.getElementById("miniCheckbox");
 const hummusType = document.getElementById("hummusType");
 const hummusSize = document.getElementById("hummusSize");
@@ -660,6 +794,61 @@ const cutPerson2 = document.getElementById("cutPerson2");
 const cutPercent1 = document.getElementById("cutPercent1");
 const cutPercent2 = document.getElementById("cutPercent2");
 const cutPercentageDisplay = document.getElementById("cutPercentageDisplay");
+
+// Update adjust badge and input
+function updateAdjustDisplay() {
+    let val = parseInt(breadAdjust.value) || 0;
+    // Clamp to -3 to +3
+    if (val > 3) { val = 3; breadAdjust.value = 3; }
+    if (val < -3) { val = -3; breadAdjust.value = -3; }
+    
+    // Update buttons
+    adjustMinusBtn.disabled = (val <= -3);
+    adjustPlusBtn.disabled = (val >= 3);
+    
+    // Update badge
+    if (val === 0) {
+        adjustBadge.textContent = '±0';
+        adjustBadge.className = 'adjust-badge adjust-normal';
+    } else if (val > 0) {
+        adjustBadge.textContent = '+' + val;
+        adjustBadge.className = 'adjust-badge adjust-plus';
+    } else {
+        adjustBadge.textContent = val;
+        adjustBadge.className = 'adjust-badge adjust-minus';
+    }
+}
+
+// Adjust buttons
+adjustMinusBtn.addEventListener('click', function() {
+    let val = parseInt(breadAdjust.value) || 0;
+    if (val > -3) {
+        breadAdjust.value = val - 1;
+        updateAdjustDisplay();
+    }
+});
+
+adjustPlusBtn.addEventListener('click', function() {
+    let val = parseInt(breadAdjust.value) || 0;
+    if (val < 3) {
+        breadAdjust.value = val + 1;
+        updateAdjustDisplay();
+    }
+});
+
+// Input change
+breadAdjust.addEventListener('input', function() {
+    updateAdjustDisplay();
+});
+breadAdjust.addEventListener('blur', function() {
+    let val = parseInt(this.value) || 0;
+    if (val > 3) this.value = 3;
+    if (val < -3) this.value = -3;
+    updateAdjustDisplay();
+});
+
+// Initial update
+updateAdjustDisplay();
 
 // Update week display
 function updateWeekDisplay() {
@@ -805,7 +994,10 @@ commissionCheckbox.addEventListener('change', function() {
 // Helper Functions
 function getPcsForOrder(order) {
     let base = sizeToPcs[order.size] || 0;
-    return order.isMini ? base/2 : base;
+    let adjusted = base + order.adjust;
+    // Don't go below 0
+    if (adjusted < 0) adjusted = 0;
+    return order.isMini ? adjusted/2 : adjusted;
 }
 
 function getPriceForOrder(order) {
@@ -827,7 +1019,9 @@ function getTotalPcsPerType() {
     let totals = { "88er":0,"150er":0,"188er":0,"200er":0,"208er":0 };
     breadOrders.forEach(o => {
         let base = sizeToPcs[o.size] || 0;
-        let pcs = o.isMini ? base/2 : base;
+        let adjusted = base + o.adjust;
+        if (adjusted < 0) adjusted = 0;
+        let pcs = o.isMini ? adjusted/2 : adjusted;
         totals[o.breadType] += pcs;
     });
     return totals;
@@ -919,7 +1113,7 @@ function updateCutDisplay() {
 function render() {
     // Bread Table
     if(breadOrders.length === 0) {
-        breadTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No bread orders 🥖</td></tr>';
+        breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
     } else {
         breadTableBody.innerHTML = "";
         breadOrders.forEach(order => {
@@ -927,12 +1121,15 @@ function render() {
             let sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
             let price = getPriceForOrder(order);
             let pcs = getPcsForOrder(order);
+            let adjustDisplay = order.adjust === 0 ? '±0' : (order.adjust > 0 ? '+' + order.adjust : order.adjust);
+            let adjustClass = order.adjust === 0 ? 'adjust-normal' : (order.adjust > 0 ? 'adjust-plus' : 'adjust-minus');
             
             row.innerHTML = `
                 <td style="text-align:left">${escapeHtml(order.name)}</td>
                 <td>${order.breadType}</td>
                 <td>${sizeDisplay}</td>
                 <td>${pcs}</td>
+                <td><span class="adjust-badge ${adjustClass}" style="font-size:0.6rem;">${adjustDisplay}</span></td>
                 <td>${price.toFixed(2)} ¥</td>
                 <td>${price.toFixed(2)} ¥</td>
                 <td><button class="delete-btn" data-id="${order.id}" data-type="bread">✖</button></td>
@@ -1041,6 +1238,11 @@ function addOrder() {
     
     const breadVal = breadType.value;
     const sizeVal = breadSize.value;
+    let adjustVal = parseInt(breadAdjust.value) || 0;
+    // Clamp adjustVal
+    if (adjustVal > 3) adjustVal = 3;
+    if (adjustVal < -3) adjustVal = -3;
+    
     const isMini = miniCheckbox.checked;
     const hummusVal = hummusType.value;
     const hummusSizeVal = hummusSize.value;
@@ -1064,6 +1266,7 @@ function addOrder() {
         name: name,
         breadType: breadVal,
         size: sizeVal,
+        adjust: adjustVal,
         isMini: isMini,
         week: currentWeek
     });
@@ -1084,6 +1287,8 @@ function addOrder() {
     
     customerName.value = "";
     miniCheckbox.checked = false;
+    breadAdjust.value = '0';
+    updateAdjustDisplay();
     autoSelectHummus();
     customerName.focus();
 }
