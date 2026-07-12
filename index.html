@@ -246,11 +246,16 @@ td{
    font-size:0.85rem;
    font-weight:700;
    margin:0;
+   background:#f5f0e0;
 }
 .week-selector input:focus{
    outline:none;
    border-color:#e2aa54;
    box-shadow:0 0 0 3px rgba(226,170,84,0.2);
+}
+.week-selector input:disabled{
+   opacity:0.8;
+   cursor:not-allowed;
 }
 .week-badge{
    background:#e2aa54;
@@ -325,6 +330,26 @@ td{
    font-size:0.55rem;
    font-weight:700;
 }
+.auto-week-badge{
+   display:inline-block;
+   background:#27ae60;
+   color:white;
+   padding:0px 8px;
+   border-radius:10px;
+   font-size:0.5rem;
+   font-weight:700;
+   margin-left:4px;
+}
+.size-badge{
+   display:inline-block;
+   background:#b87a2a;
+   color:white;
+   padding:0px 6px;
+   border-radius:8px;
+   font-size:0.5rem;
+   font-weight:700;
+   margin-left:4px;
+}
 </style>
 </head>
 <body>
@@ -338,7 +363,8 @@ td{
       <div class="header-right">
          <div class="week-selector">
             <label>📅 W</label>
-            <input type="number" id="weekNumber" value="27" min="1" max="53">
+            <input type="number" id="weekNumber" value="27" min="1" max="53" disabled>
+            <span class="auto-week-badge">auto</span>
          </div>
          <div class="screenshot-btn-wrap">
             <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
@@ -368,7 +394,9 @@ td{
             <label>Size</label>
             <select id="breadSize">
                <option value="S">S (2 pcs)</option>
+               <option value="S+">S+ (3 pcs) <span style="font-size:0.6rem;">−12.4%</span></option>
                <option value="M">M (5 pcs)</option>
+               <option value="M+">M+ (6 pcs) <span style="font-size:0.6rem;">no hummus</span></option>
                <option value="L">L (8 pcs)</option>
                <option value="XM">XM (9 pcs)</option>
                <option value="XL">XL (11 pcs)</option>
@@ -544,18 +572,51 @@ td{
 </div>
 
 <script>
-// Price Database - Updated with correct prices from your table
+// --- WEEK CALCULATION ---
+function calculateCurrentWeek() {
+    // Week 1 starts on Monday, December 29, 2025
+    const startDate = new Date(2025, 11, 29);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diffTime = today.getTime() - startDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    let weekNum = Math.floor(diffDays / 7) + 1;
+    if (weekNum < 1) weekNum = 1;
+    if (weekNum > 53) weekNum = 53;
+    return weekNum;
+}
+
+// Price Database - Updated with new sizes S+ and M+
 const priceDB = {
-    "88er": { "S": 102, "M": 190, "L": 278, "XM": 308, "XL": 350 },
-    "150er": { "S": 208, "M": 402, "L": 596, "XM": 658, "XL": 766 },
-    "188er": { "S": 288, "M": 588, "L": 888, "XM": 988, "XL": 1138 },
-    "200er": { "S": 308, "M": 688, "L": 968, "XM": 1080, "XL": 1288 },
-    "208er": { "S": 328, "M": 788, "L": 1108, "XM": 1288, "XL": 1468 }
+    "88er": { 
+        "S": 102, "S+": 102 * 0.875817, "M": 190, "M+": 190, 
+        "L": 278, "XM": 308, "XL": 350 
+    },
+    "150er": { 
+        "S": 208, "S+": 208 * 0.875817, "M": 402, "M+": 402, 
+        "L": 596, "XM": 658, "XL": 766 
+    },
+    "188er": { 
+        "S": 288, "S+": 288 * 0.875817, "M": 588, "M+": 588, 
+        "L": 888, "XM": 988, "XL": 1138 
+    },
+    "200er": { 
+        "S": 308, "S+": 308 * 0.875817, "M": 688, "M+": 688, 
+        "L": 968, "XM": 1080, "XL": 1288 
+    },
+    "208er": { 
+        "S": 328, "S+": 328 * 0.875817, "M": 788, "M+": 788, 
+        "L": 1108, "XM": 1288, "XL": 1468 
+    }
 };
 
-const sizeToPcs = { "S":2, "M":5, "L":8, "XM":9, "XL":11 };
+// Size to pieces mapping - NEW sizes
+const sizeToPcs = { 
+    "S": 2, "S+": 3, "M": 5, "M+": 6, 
+    "L": 8, "XM": 9, "XL": 11 
+};
 
-// Recipe per 13 pcs - Updated for new varieties
+// Recipe per 13 pcs
 const recipeFor13 = {
     "88er": { mix88:745, mix150:0, mix188:0, mix200:0, water:360 },
     "150er": { mix88:650, mix150:97, mix188:0, mix200:0, water:360 },
@@ -572,7 +633,7 @@ function getPerPcs(btype) {
 let breadOrders = [];
 let hummusOrders = [];
 let nextId = 1;
-let currentWeek = 27;
+let currentWeek = calculateCurrentWeek();
 
 // DOM Elements
 const customerName = document.getElementById("customerName");
@@ -600,40 +661,18 @@ const cutPercent1 = document.getElementById("cutPercent1");
 const cutPercent2 = document.getElementById("cutPercent2");
 const cutPercentageDisplay = document.getElementById("cutPercentageDisplay");
 
-// Week number handling
-function updateWeek() {
-    let val = parseInt(weekNumber.value);
-    if (isNaN(val) || val < 1) val = 1;
-    if (val > 53) val = 53;
-    weekNumber.value = val;
-    currentWeek = val;
-    weekBadge.textContent = 'Week ' + val;
-    localStorage.setItem("microbiome_week", val);
+// Update week display
+function updateWeekDisplay() {
+    currentWeek = calculateCurrentWeek();
+    weekNumber.value = currentWeek;
+    weekBadge.textContent = 'Week ' + currentWeek;
 }
 
-weekNumber.addEventListener('change', updateWeek);
-weekNumber.addEventListener('input', function() {
-    let val = parseInt(this.value);
-    if (!isNaN(val) && val >= 1 && val <= 53) {
-        currentWeek = val;
-        weekBadge.textContent = 'Week ' + val;
-    }
-});
+// Initial week update
+updateWeekDisplay();
+setInterval(updateWeekDisplay, 60000);
 
-// Load week from localStorage
-function loadWeek() {
-    let saved = localStorage.getItem("microbiome_week");
-    if (saved) {
-        let val = parseInt(saved);
-        if (!isNaN(val) && val >= 1 && val <= 53) {
-            currentWeek = val;
-            weekNumber.value = val;
-            weekBadge.textContent = 'Week ' + val;
-        }
-    }
-}
-
-// Screenshot function - saves to gallery
+// Screenshot function
 async function takeScreenshot() {
     const element = document.getElementById('captureArea');
     const status = document.getElementById('screenshotStatus');
@@ -655,10 +694,8 @@ async function takeScreenshot() {
             windowHeight: element.scrollHeight
         });
         
-        // Try to save to gallery using Web Share API (mobile)
         canvas.toBlob(async function(blob) {
             try {
-                // Try Web Share API first (saves to gallery on mobile)
                 if (navigator.share && navigator.canShare) {
                     const file = new File([blob], `microbiome_warrior_week_${currentWeek}.png`, { type: 'image/png' });
                     if (navigator.canShare({ files: [file] })) {
@@ -673,39 +710,30 @@ async function takeScreenshot() {
                         return;
                     }
                 }
-                
-                // Fallback: download as file
                 const link = document.createElement('a');
                 link.download = `microbiome_warrior_week_${currentWeek}.png`;
                 link.href = URL.createObjectURL(blob);
                 link.click();
                 URL.revokeObjectURL(link.href);
-                
                 status.textContent = '✅ Screenshot downloaded!';
                 status.style.background = '#e8f5e9';
                 setTimeout(() => { status.style.display = 'none'; }, 3000);
-                
             } catch (error) {
-                // Fallback: download as file
                 const link = document.createElement('a');
                 link.download = `microbiome_warrior_week_${currentWeek}.png`;
                 link.href = URL.createObjectURL(blob);
                 link.click();
                 URL.revokeObjectURL(link.href);
-                
                 status.textContent = '✅ Screenshot downloaded!';
                 status.style.background = '#e8f5e9';
                 setTimeout(() => { status.style.display = 'none'; }, 3000);
             }
         }, 'image/png');
-        
     } catch (error) {
         console.error('Screenshot error:', error);
         status.textContent = '❌ Error taking screenshot';
         status.style.background = '#fde8e8';
-        setTimeout(() => {
-            status.style.display = 'none';
-        }, 3000);
+        setTimeout(() => { status.style.display = 'none'; }, 3000);
     }
 }
 
@@ -714,7 +742,16 @@ screenshotBtn.addEventListener('click', takeScreenshot);
 // --- AUTO HUMMUS SELECTION ---
 function autoSelectHummus() {
     const val = breadType.value;
+    const sizeVal = breadSize.value;
     const hummusSelect = hummusType;
+    
+    // M+ = no hummus as standard
+    if (sizeVal === 'M+') {
+        hummusSelect.value = 'none';
+        yingYangInfo.classList.remove('show');
+        yingYangWarning.style.display = 'none';
+        return;
+    }
     
     if (val === '88er' || val === '150er') {
         hummusSelect.value = 'hummus';
@@ -729,13 +766,22 @@ function autoSelectHummus() {
 
 // Show/hide Ying & Yang info based on bread variety + AUTO SELECT
 breadType.addEventListener('change', function() {
-    const val = this.value;
+    autoSelectHummus();
+});
+breadSize.addEventListener('change', function() {
     autoSelectHummus();
 });
 breadType.dispatchEvent(new Event('change'));
 
 // Ying & Yang validation on change
 hummusType.addEventListener('change', function() {
+    const sizeVal = breadSize.value;
+    // M+ cannot have hummus
+    if (sizeVal === 'M+' && this.value !== 'none') {
+        alert('❌ M+ (6 pcs) comes without hummus as standard!');
+        this.value = 'none';
+        return;
+    }
     if (this.value === 'yingyang') {
         const val = breadType.value;
         if (val !== '188er' && val !== '200er' && val !== '208er') {
@@ -758,7 +804,7 @@ commissionCheckbox.addEventListener('change', function() {
 
 // Helper Functions
 function getPcsForOrder(order) {
-    let base = sizeToPcs[order.size];
+    let base = sizeToPcs[order.size] || 0;
     return order.isMini ? base/2 : base;
 }
 
@@ -780,7 +826,7 @@ function totalHummusCount() {
 function getTotalPcsPerType() {
     let totals = { "88er":0,"150er":0,"188er":0,"200er":0,"208er":0 };
     breadOrders.forEach(o => {
-        let base = sizeToPcs[o.size];
+        let base = sizeToPcs[o.size] || 0;
         let pcs = o.isMini ? base/2 : base;
         totals[o.breadType] += pcs;
     });
@@ -859,15 +905,11 @@ function loadFromLocal() {
 function updateCutDisplay() {
     const total = totalPriceAll();
     const isCommission = commissionCheckbox.checked;
-    
-    // Calculate percentage
     const percent = isCommission ? 13.5 : 15;
     const cutAmount = total * (percent / 100);
     
-    // Update display
     cutPerson1.textContent = cutAmount.toFixed(2) + ' ¥';
     cutPerson2.textContent = cutAmount.toFixed(2) + ' ¥';
-    
     cutPercent1.textContent = `(${percent}%)`;
     cutPercent2.textContent = `(${percent}%)`;
     cutPercentageDisplay.textContent = `(2 × ${percent}%)`;
@@ -938,20 +980,16 @@ function render() {
     const total = totalPriceAll();
     totalSpan.innerText = total.toFixed(2) + " ¥";
     hummusCountSpan.innerText = "🫒 " + totalHummusCount();
-    
-    // Update Cut
     updateCutDisplay();
 
     let req = getTotalRequirements();
     let breakdown = getTimesPcsBreakdown();
     
-    // Preparation Boxes
     let needed88 = req.mix88;
     let boxes = Math.ceil(needed88 / 1400);
     if(boxes === 0 && needed88 > 0) boxes = 1;
     document.getElementById("preparationRow").innerHTML = `<tr><td>88er Base Mix</td><td>${needed88.toFixed(1)} g</td><td>${boxes} Boxes</td></tr>`;
     
-    // Per Pcs Table
     document.getElementById("perPcsRow").innerHTML = `
         <tr><td>88er</td><td>${(745/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
         <tr><td>150er</td><td>${(650/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
@@ -960,7 +998,6 @@ function render() {
         <tr><td>208er</td><td>${(620/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>${(13/13).toFixed(1)}g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
     `;
     
-    // Times/Pcs Overview
     let timesHtml = "", pcsHtml = "";
     if(breakdown.length === 0 || breakdown.every(b=>b.fullCharges===0)) timesHtml = '<tr><td colspan="2">No times</td></tr>';
     else timesHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>`<tr><td>${b.type}</td><td><span class="badge-time">${b.fullCharges} time</span></td></tr>`).join('');
@@ -969,7 +1006,6 @@ function render() {
     document.getElementById("timesTableBody").innerHTML = timesHtml;
     document.getElementById("pcsTableBody").innerHTML = pcsHtml;
     
-    // Calculated Thermomix
     let thermHtml = "";
     if(breakdown.some(b=>b.fullCharges>0)) {
         thermHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>{
@@ -979,7 +1015,6 @@ function render() {
     } else thermHtml = '<tr><td colspan="7">No times</td></tr>';
     document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
     
-    // Calculated Rest Quantity
     let restHtml = "", sum88=0, sum150=0, sum188=0, sum200=0, sumW=0;
     if(breakdown.some(b=>b.restPcs>0)) {
         restHtml = breakdown.filter(b=>b.restPcs>0).map(b=>{
@@ -1010,13 +1045,20 @@ function addOrder() {
     const hummusVal = hummusType.value;
     const hummusSizeVal = hummusSize.value;
     
-    // Validate Ying & Yang - 188er, 200er & 208er allowed
+    // M+ cannot have hummus
+    if (sizeVal === 'M+' && hummusVal !== 'none') {
+        alert('❌ M+ (6 pcs) comes without hummus as standard! Please select "No Hummus".');
+        return;
+    }
+    
+    // Validate Ying & Yang
     if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
         alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
         return;
     }
     
-    // Add bread order
+    updateWeekDisplay();
+    
     breadOrders.push({
         id: nextId++,
         name: name,
@@ -1026,7 +1068,6 @@ function addOrder() {
         week: currentWeek
     });
     
-    // Add hummus order if not "No Hummus"
     if (hummusVal !== 'none') {
         hummusOrders.push({
             id: nextId++,
@@ -1041,10 +1082,8 @@ function addOrder() {
     render();
     saveToLocal();
     
-    // Reset form - keep auto-selection
     customerName.value = "";
     miniCheckbox.checked = false;
-    // Hummus type will be auto-set by autoSelectHummus()
     autoSelectHummus();
     customerName.focus();
 }
@@ -1062,8 +1101,6 @@ function resetAll() {
 document.getElementById("addBtn").addEventListener("click", addOrder);
 document.getElementById("resetTableBtn").addEventListener("click", resetAll);
 
-// Load everything
-loadWeek();
 loadFromLocal();
 </script>
 </body>
