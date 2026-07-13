@@ -90,6 +90,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .comm-yes{background:#c0392b;color:white;}
 .comm-no{background:#27ae60;color:white;}
 .no-hummus-tag{display:inline-block;background:#95a5a6;color:white;padding:0px 6px;border-radius:8px;font-size:0.5rem;font-weight:700;}
+.comm-toggle{display:inline-flex;align-items:center;gap:4px;cursor:pointer;padding:2px 8px;border-radius:12px;font-size:0.55rem;font-weight:700;transition:all 0.2s;border:1px solid transparent;user-select:none;background:#e8e8e8;color:#555;}
+.comm-toggle.active{background:#c0392b;color:white;border-color:#a93226;}
+.comm-toggle.inactive{background:#e8e8e8;color:#555;border-color:#ccc;}
+.comm-toggle .toggle-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+.comm-toggle.active .toggle-dot{background:#2ecc71;}
+.comm-toggle.inactive .toggle-dot{background:#95a5a6;}
+.comm-toggle .toggle-label{font-size:0.5rem;}
 </style>
 </head>
 <body>
@@ -215,7 +222,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 
 <script>
-// ============ WEEK CALCULATION ============
+// WEEK CALCULATION
 function calculateCurrentWeek() {
     var startDate = new Date(2025, 11, 22);
     var today = new Date();
@@ -228,7 +235,7 @@ function calculateCurrentWeek() {
     return weekNum;
 }
 
-// ============ PRICE DATABASE ============
+// PRICE DATABASE
 var priceDB = {
     "88er": {"S":102, "S+":(102/2)*3*0.875817, "M":190, "M+":190, "L":278, "XM":308, "XL":350, "XL+":350},
     "150er": {"S":208, "S+":(208/2)*3*0.875817, "M":402, "M+":402, "L":596, "XM":658, "XL":766, "XL+":766},
@@ -237,10 +244,10 @@ var priceDB = {
     "208er": {"S":328, "S+":(328/2)*3*0.875817, "M":788, "M+":788, "L":1108, "XM":1288, "XL":1468, "XL+":1468}
 };
 
-// ============ SIZE TO PIECES ============
+// SIZE TO PIECES
 var sizeToPcs = {"S":2, "S+":3, "M":5, "M+":6, "L":8, "XM":9, "XL":11, "XL+":12};
 
-// ============ RECIPE ============
+// RECIPE
 var recipeFor13 = {
     "88er": {mix88:745, mix150:0, mix188:0, mix200:0, water:360},
     "150er": {mix88:650, mix150:97, mix188:0, mix200:0, water:360},
@@ -254,7 +261,7 @@ function getPerPcs(type) {
     return {mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13};
 }
 
-// ============ DATA STORE ============
+// DATA STORE
 var breadOrders = [];
 var hummusOrders = [];
 var addBreadOrders = [];
@@ -264,7 +271,7 @@ var currentWeek = calculateCurrentWeek();
 var addBreadCount = 1;
 var addHummusCount = 1;
 
-// ============ DOM REFS ============
+// DOM REFS
 var customerName = document.getElementById("customerName");
 var breadType = document.getElementById("breadType");
 var breadSize = document.getElementById("breadSize");
@@ -298,10 +305,8 @@ var addHummusAddBtn = document.getElementById("addHummusAddBtn");
 var addHummusOrdersList = document.getElementById("addHummusOrdersList");
 var salaryAmount = document.getElementById("salaryAmount");
 var salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
-var addBtn = document.getElementById("addBtn");
-var resetTableBtn = document.getElementById("resetTableBtn");
 
-// ============ ADD BREAD COUNT CONTROLS ============
+// ADD BREAD COUNT CONTROLS
 addBreadMinusBtn.addEventListener('click', function() {
     if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; }
 });
@@ -309,7 +314,7 @@ addBreadPlusBtn.addEventListener('click', function() {
     if (addBreadCount < 99) { addBreadCount++; addBreadCountDisplay.textContent = addBreadCount; }
 });
 
-// ============ ADD HUMMUS COUNT CONTROLS ============
+// ADD HUMMUS COUNT CONTROLS
 addHummusMinusBtn.addEventListener('click', function() {
     if (addHummusCount > 1) { addHummusCount--; addHummusCountDisplay.textContent = addHummusCount; }
 });
@@ -317,7 +322,7 @@ addHummusPlusBtn.addEventListener('click', function() {
     if (addHummusCount < 99) { addHummusCount++; addHummusCountDisplay.textContent = addHummusCount; }
 });
 
-// ============ WEEK DISPLAY ============
+// WEEK DISPLAY
 function updateWeekDisplay() {
     currentWeek = calculateCurrentWeek();
     weekNumber.value = currentWeek;
@@ -325,7 +330,7 @@ function updateWeekDisplay() {
 }
 updateWeekDisplay();
 
-// ============ SCREENSHOT ============
+// SCREENSHOT
 screenshotBtn.addEventListener('click', function() {
     var element = document.getElementById('captureArea');
     var status = document.getElementById('screenshotStatus');
@@ -357,12 +362,9 @@ screenshotBtn.addEventListener('click', function() {
     });
 });
 
-// ============ AUTO HUMMUS SELECTION ============
+// AUTO HUMMUS SELECTION
 function getHummusSizeForBreadSize(breadSizeVal) {
-    // S+ → S, alles andere bleibt gleich
-    if (breadSizeVal === 'S+') {
-        return 'S';
-    }
+    if (breadSizeVal === 'S+') return 'S';
     return breadSizeVal;
 }
 
@@ -372,7 +374,6 @@ function autoSelectHummus() {
     var hummusSelect = hummusType;
     var hummusSizeSelect = hummusSize;
     
-    // M+ and XL+ have no hummus
     if (sizeVal === 'M+' || sizeVal === 'XL+') {
         hummusSelect.value = 'none';
         yingYangInfo.classList.remove('show');
@@ -380,7 +381,6 @@ function autoSelectHummus() {
         return;
     }
     
-    // Set hummus size based on bread size (S+ → S)
     var hummusSizeVal = getHummusSizeForBreadSize(sizeVal);
     hummusSizeSelect.value = hummusSizeVal;
     
@@ -421,7 +421,7 @@ hummusType.addEventListener('change', function() {
     }
 });
 
-// ============ HELPERS ============
+// HELPERS
 function getPcsForOrder(order) {
     var base = sizeToPcs[order.size] || 0;
     return order.isMini ? base / 2 : base;
@@ -493,7 +493,7 @@ function escapeHtml(str) {
     });
 }
 
-// ============ LOCAL STORAGE ============
+// LOCAL STORAGE
 function saveToLocal() {
     localStorage.setItem("microbiome_bread", JSON.stringify({orders: breadOrders, nextId: nextId}));
     localStorage.setItem("microbiome_hummus", JSON.stringify({orders: hummusOrders}));
@@ -534,7 +534,7 @@ function loadFromLocal() {
     render();
 }
 
-// ============ SALARY DISPLAY ============
+// SALARY DISPLAY
 function updateSalaryDisplay() {
     var totalWithComm = 0;
     var totalWithoutComm = 0;
@@ -566,7 +566,17 @@ function updateSalaryDisplay() {
     salaryPercentDisplay.textContent = infoText;
 }
 
-// ============ RENDER ADD ORDERS ============
+// TOGGLE COMMISSION
+function toggleCommission(orderId) {
+    var order = breadOrders.find(function(o) { return o.id === orderId; });
+    if (order && !order.isAdd && !order.isAddBread) {
+        order.hasCommission = !order.hasCommission;
+        render();
+        saveToLocal();
+    }
+}
+
+// RENDER ADD ORDERS
 function renderAddOrders() {
     // ADD Bread list
     if (addBreadOrders.length === 0) {
@@ -685,21 +695,19 @@ function renderAddOrders() {
     }
 }
 
-// ============ DELETE BREAD WITH HUMMUS ============
+// DELETE BREAD WITH HUMMUS
 function deleteBreadAndHummus(breadId) {
     var breadToDelete = breadOrders.find(function(o) { return o.id === breadId; });
     if (!breadToDelete) return;
     
-    // Delete bread
     breadOrders = breadOrders.filter(function(o) { return o.id !== breadId; });
     
-    // Delete corresponding hummus (same name + same breadType)
     hummusOrders = hummusOrders.filter(function(o) {
         return !(o.name === breadToDelete.name && o.breadType === breadToDelete.breadType);
     });
 }
 
-// ============ MAIN RENDER ============
+// MAIN RENDER
 function render() {
     // Bread Table - only normal orders
     var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
@@ -713,10 +721,11 @@ function render() {
             var price = getPriceForOrder(order);
             var pcs = getPcsForOrder(order);
             var nameDisplay = order.name;
-            var commDisplay = order.hasCommission ? '<span class="comm-tag comm-yes">13.5%</span>' : '<span class="comm-tag comm-no">15%</span>';
             var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
+            var commClass = order.hasCommission ? 'active' : 'inactive';
+            var commLabel = order.hasCommission ? '13.5%' : '15%';
             
-            row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td>' + commDisplay + '</td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
+            row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
             breadTableBody.appendChild(row);
         });
     }
@@ -736,6 +745,14 @@ function render() {
             hummusTableBody.appendChild(row);
         });
     }
+    
+    // Commission Toggle
+    document.querySelectorAll('.comm-toggle').forEach(function(el) {
+        el.addEventListener('click', function() {
+            var id = parseInt(this.getAttribute('data-id'));
+            toggleCommission(id);
+        });
+    });
     
     // Delete buttons - Bread deletes matching Hummus
     document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
@@ -829,7 +846,7 @@ function render() {
     renderAddOrders();
 }
 
-// ============ RESET FORM ============
+// RESET FORM
 function resetForm() {
     customerName.value = "";
     miniCheckbox.checked = false;
@@ -838,7 +855,7 @@ function resetForm() {
     customerName.focus();
 }
 
-// ============ ADD ORDER WITH NAME ============
+// ADD ORDER WITH NAME
 function addOrder() {
     var name = customerName.value.trim();
     if (!name) { alert("Please enter a name."); return; }
@@ -892,7 +909,7 @@ function addOrder() {
     resetForm();
 }
 
-// ============ ADD BREAD ============
+// ADD BREAD
 function addAddBreadOrder() {
     var breadVal = addBreadType.value;
     var count = addBreadCount;
@@ -924,7 +941,7 @@ function addAddBreadOrder() {
     addBreadCountDisplay.textContent = addBreadCount;
 }
 
-// ============ ADD HUMMUS ============
+// ADD HUMMUS
 function addAddHummusOrder() {
     var hummusVal = addHummusType.value;
     var count = addHummusCount;
@@ -955,10 +972,10 @@ function addAddHummusOrder() {
     addHummusCountDisplay.textContent = addHummusCount;
 }
 
-// ============ EVENT LISTENERS ============
-addBtn.addEventListener('click', addOrder);
+// EVENT LISTENERS
+document.getElementById("addBtn").addEventListener("click", addOrder);
 
-resetTableBtn.addEventListener('click', function() {
+document.getElementById("resetTableBtn").addEventListener("click", function() {
     if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length) && confirm("Delete all orders?")) {
         breadOrders = [];
         hummusOrders = [];
@@ -972,10 +989,10 @@ resetTableBtn.addEventListener('click', function() {
     }
 });
 
-addBreadAddBtn.addEventListener('click', addAddBreadOrder);
-addHummusAddBtn.addEventListener('click', addAddHummusOrder);
+document.getElementById("addBreadAddBtn").addEventListener("click", addAddBreadOrder);
+document.getElementById("addHummusAddBtn").addEventListener("click", addAddHummusOrder);
 
-// ============ LOAD DATA ============
+// LOAD DATA
 loadFromLocal();
 </script>
 </body>
