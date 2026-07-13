@@ -163,6 +163,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
 <div class="add-row">
 <select id="addHummusType"><option value="hummus">🫒 Hummus</option><option value="yingyang">☯️ Ying & Yang</option></select>
+<select id="addHummusSize" style="flex:0.7;min-width:60px;"><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XM">XM</option><option value="XL">XL</option></select>
 <button class="add-count-btn add-count-btn-minus" id="addHummusMinusBtn">−</button>
 <span class="add-count" id="addHummusCountDisplay">1</span>
 <button class="add-count-btn add-count-btn-plus" id="addHummusPlusBtn">+</button>
@@ -183,7 +184,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr></tbody></table></div>
 
 <div class="table-title hummus-title" style="margin-top:12px;">🫒 ADD Hummus Summary (free)</div>
-<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th></thead><tbody id="addHummusSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr></tbody></table></div>
+<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Size</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th></thead><tbody id="addHummusSummaryBody"><tr><td colspan="4" style="text-align:center">No ADD hummus orders yet</td></tr></tbody></table></div>
 
 <div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders (free)</div>
 <div class="scrollable"><table><thead><th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th></thead><tbody id="hummusTableBody"><tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr></tbody></table></div>
@@ -298,6 +299,7 @@ var addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
 var addBreadAddBtn = document.getElementById("addBreadAddBtn");
 var addBreadOrdersList = document.getElementById("addBreadOrdersList");
 var addHummusType = document.getElementById("addHummusType");
+var addHummusSize = document.getElementById("addHummusSize");
 var addHummusCountDisplay = document.getElementById("addHummusCountDisplay");
 var addHummusMinusBtn = document.getElementById("addHummusMinusBtn");
 var addHummusPlusBtn = document.getElementById("addHummusPlusBtn");
@@ -642,7 +644,7 @@ function renderAddOrders() {
         var html = '';
         addHummusOrders.forEach(function(item, index) {
             var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + typeLabel + ' <span class="del" data-hummus-index="' + index + '">✖</span></span> ';
+            html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + typeLabel + ' (' + item.size + ') <span class="del" data-hummus-index="' + index + '">✖</span></span> ';
         });
         addHummusOrdersList.innerHTML = html;
         document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(function(el) {
@@ -652,7 +654,7 @@ function renderAddOrders() {
                 addHummusOrders.splice(idx, 1);
                 var removedCount = 0;
                 hummusOrders = hummusOrders.filter(function(o) {
-                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
+                    if (o.isAddHummus && o.hummusType === removed.type && o.size === removed.size && removedCount < removed.count) {
                         removedCount++;
                         return false;
                     }
@@ -666,13 +668,13 @@ function renderAddOrders() {
     
     // ADD Hummus Summary Table
     if (addHummusOrders.length === 0) {
-        addHummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>';
+        addHummusSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No ADD hummus orders yet</td></tr>';
     } else {
         addHummusSummaryBody.innerHTML = '';
         addHummusOrders.forEach(function(item, index) {
             var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
             var row = document.createElement('tr');
-            row.innerHTML = '<td>' + typeLabel + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-hummus-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
+            row.innerHTML = '<td>' + typeLabel + '</td><td>' + item.size + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-hummus-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
             addHummusSummaryBody.appendChild(row);
         });
         document.querySelectorAll('#addHummusSummaryBody .delete-btn').forEach(function(btn) {
@@ -682,7 +684,7 @@ function renderAddOrders() {
                 addHummusOrders.splice(idx, 1);
                 var removedCount = 0;
                 hummusOrders = hummusOrders.filter(function(o) {
-                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
+                    if (o.isAddHummus && o.hummusType === removed.type && o.size === removed.size && removedCount < removed.count) {
                         removedCount++;
                         return false;
                     }
@@ -944,13 +946,17 @@ function addAddBreadOrder() {
 // ADD HUMMUS
 function addAddHummusOrder() {
     var hummusVal = addHummusType.value;
+    var hummusSizeVal = addHummusSize.value;
     var count = addHummusCount;
     
-    var existing = addHummusOrders.find(function(item) { return item.type === hummusVal; });
+    // Prüfen ob bereits ein ADD Hummus Eintrag mit gleichem Typ und Größe existiert
+    var existing = addHummusOrders.find(function(item) { 
+        return item.type === hummusVal && item.size === hummusSizeVal; 
+    });
     if (existing) {
         existing.count += count;
     } else {
-        addHummusOrders.push({type: hummusVal, count: count});
+        addHummusOrders.push({type: hummusVal, size: hummusSizeVal, count: count});
     }
     
     for (var i = 0; i < count; i++) {
@@ -958,7 +964,7 @@ function addAddHummusOrder() {
             id: nextId++,
             name: '⚡ Add Hummus',
             breadType: '—',
-            size: 'S',
+            size: hummusSizeVal,
             hummusType: hummusVal,
             week: currentWeek,
             isAdd: true,
