@@ -277,26 +277,26 @@ td{
    background:rgba(255,255,255,0.5);
    display:none;
 }
-/* Cut Styles */
-.cut-container{
+/* Salary Styles */
+.salary-container{
    background:rgba(255,255,255,0.5);
    padding:12px 16px;
    border-radius:16px;
    margin-top:12px;
    border:2px solid #e2aa54;
 }
-.cut-row{
+.salary-row{
    display:flex;
    justify-content:space-between;
    align-items:center;
    padding:4px 0;
    font-size:0.8rem;
 }
-.cut-row .cut-label{
+.salary-row .salary-label{
    font-weight:700;
    color:#6b4a1c;
 }
-.cut-row .cut-amount{
+.salary-row .salary-amount{
    font-weight:800;
    color:#b87a2a;
    font-size:0.9rem;
@@ -456,15 +456,6 @@ td{
    background:#27ae60;
    color:white;
 }
-.add-tag{
-   display:inline-block;
-   background:#b87a2a;
-   color:white;
-   padding:0px 6px;
-   border-radius:8px;
-   font-size:0.5rem;
-   font-weight:700;
-}
 </style>
 </head>
 <body>
@@ -568,10 +559,10 @@ td{
    <button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
 </div>
 
-<!-- ADD SECTION - Without Name, Commission, Hummus, Price -->
+<!-- ADD BREAD SECTION -->
 <div class="card">
    <div class="add-section">
-      <div class="add-title">➕ ADD (no name, no commission, no hummus, free)</div>
+      <div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
       <div class="add-row">
          <select id="addBreadType">
             <option value="88er">88er</option>
@@ -580,13 +571,33 @@ td{
             <option value="200er">200er</option>
             <option value="208er">208er</option>
          </select>
-         <button class="add-count-btn add-count-btn-minus" id="addMinusBtn">−</button>
-         <span class="add-count" id="addCountDisplay">1</span>
-         <button class="add-count-btn add-count-btn-plus" id="addPlusBtn">+</button>
-         <button class="add-btn" id="addAddBtn">➕ Add</button>
+         <button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
+         <span class="add-count" id="addBreadCountDisplay">1</span>
+         <button class="add-count-btn add-count-btn-plus" id="addBreadPlusBtn">+</button>
+         <button class="add-btn" id="addBreadAddBtn">➕ Add Bread</button>
       </div>
-      <div class="add-orders-list" id="addOrdersList">
-         <span style="color:#b88c48;">No added orders yet</span>
+      <div class="add-orders-list" id="addBreadOrdersList">
+         <span style="color:#b88c48;">No added bread orders yet</span>
+      </div>
+   </div>
+</div>
+
+<!-- ADD HUMMUS SECTION -->
+<div class="card">
+   <div class="add-section" style="border-color:#8faa4a;">
+      <div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
+      <div class="add-row">
+         <select id="addHummusType">
+            <option value="hummus">🫒 Hummus</option>
+            <option value="yingyang">☯️ Ying & Yang</option>
+         </select>
+         <button class="add-count-btn add-count-btn-minus" id="addHummusMinusBtn">−</button>
+         <span class="add-count" id="addHummusCountDisplay">1</span>
+         <button class="add-count-btn add-count-btn-plus" id="addHummusPlusBtn">+</button>
+         <button class="add-btn" id="addHummusAddBtn" style="background:linear-gradient(135deg,#8faa4a,#6d8a30);color:white;">🫒 Add Hummus</button>
+      </div>
+      <div class="add-orders-list" id="addHummusOrdersList">
+         <span style="color:#b88c48;">No added hummus orders yet</span>
       </div>
    </div>
 </div>
@@ -611,15 +622,28 @@ td{
    </table>
    </div>
 
-   <!-- ADD Summary Table -->
-   <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Summary (free, no hummus)</div>
+   <!-- ADD Bread Summary Table -->
+   <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
    <div class="scrollable">
    <table>
    <thead>
    <th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th>
    </thead>
-   <tbody id="addSummaryBody">
-   <tr><td colspan="3" style="text-align:center">No ADD orders yet</td></tr>
+   <tbody id="addBreadSummaryBody">
+   <tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>
+   </tbody>
+   </table>
+   </div>
+
+   <!-- ADD Hummus Summary Table -->
+   <div class="table-title hummus-title" style="margin-top:12px;">🫒 ADD Hummus Summary (free)</div>
+   <div class="scrollable">
+   <table>
+   <thead>
+   <th class="hummus-th">Type</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th>
+   </thead>
+   <tbody id="addHummusSummaryBody">
+   <tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>
    </tbody>
    </table>
    </div>
@@ -642,20 +666,16 @@ td{
       <span class="total-sum" id="totalPriceSum">0 CNY</span>
    </div>
    
-   <!-- CUT SECTION -->
-   <div class="cut-container">
+   <!-- SALARY SECTION - NUR EINE PERSON -->
+   <div class="salary-container">
       <div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">
-         ✂️ CUT 
-         <span id="cutPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(2 × 15%)</span>
+         💰 SALARY 
+         <span id="salaryPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(15%)</span>
       </div>
       
-      <div class="cut-row">
-         <span class="cut-label">👤 Person 1</span>
-         <span class="cut-amount" id="cutPerson1">0.00 ¥</span>
-      </div>
-      <div class="cut-row">
-         <span class="cut-label">👤 Person 2</span>
-         <span class="cut-amount" id="cutPerson2">0.00 ¥</span>
+      <div class="salary-row">
+         <span class="salary-label">👤 Salary</span>
+         <span class="salary-amount" id="salaryAmount">0.00 ¥</span>
       </div>
       <div style="font-size:0.55rem;color:#8a6a2a;text-align:center;margin-top:4px;">
          ℹ️ Commission orders: 13.5% | Non-commission: 15%
@@ -782,10 +802,12 @@ function getPerPcs(btype) {
 
 let breadOrders = [];
 let hummusOrders = [];
-let addOrders = [];
+let addBreadOrders = [];
+let addHummusOrders = [];
 let nextId = 1;
 let currentWeek = calculateCurrentWeek();
-let addCount = 1;
+let addBreadCount = 1;
+let addHummusCount = 1;
 
 // DOM Elements
 const customerName = document.getElementById("customerName");
@@ -797,7 +819,8 @@ const hummusSize = document.getElementById("hummusSize");
 const yingYangInfo = document.getElementById("yingYangInfo");
 const yingYangWarning = document.getElementById("yingYangWarning");
 const breadTableBody = document.getElementById("breadTableBody");
-const addSummaryBody = document.getElementById("addSummaryBody");
+const addBreadSummaryBody = document.getElementById("addBreadSummaryBody");
+const addHummusSummaryBody = document.getElementById("addHummusSummaryBody");
 const hummusTableBody = document.getElementById("hummusTableBody");
 const totalSpan = document.getElementById("totalPriceSum");
 const hummusCountSpan = document.getElementById("hummusCount");
@@ -807,30 +830,51 @@ const screenshotBtn = document.getElementById("screenshotBtn");
 const screenshotStatus = document.getElementById("screenshotStatus");
 const commissionCheckbox = document.getElementById("commissionCheckbox");
 
-// ADD DOM
+// ADD Bread DOM
 const addBreadType = document.getElementById("addBreadType");
-const addCountDisplay = document.getElementById("addCountDisplay");
-const addMinusBtn = document.getElementById("addMinusBtn");
-const addPlusBtn = document.getElementById("addPlusBtn");
-const addAddBtn = document.getElementById("addAddBtn");
-const addOrdersList = document.getElementById("addOrdersList");
+const addBreadCountDisplay = document.getElementById("addBreadCountDisplay");
+const addBreadMinusBtn = document.getElementById("addBreadMinusBtn");
+const addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
+const addBreadAddBtn = document.getElementById("addBreadAddBtn");
+const addBreadOrdersList = document.getElementById("addBreadOrdersList");
 
-// Cut DOM Elements
-const cutPerson1 = document.getElementById("cutPerson1");
-const cutPerson2 = document.getElementById("cutPerson2");
-const cutPercentDisplay = document.getElementById("cutPercentDisplay");
+// ADD Hummus DOM
+const addHummusType = document.getElementById("addHummusType");
+const addHummusCountDisplay = document.getElementById("addHummusCountDisplay");
+const addHummusMinusBtn = document.getElementById("addHummusMinusBtn");
+const addHummusPlusBtn = document.getElementById("addHummusPlusBtn");
+const addHummusAddBtn = document.getElementById("addHummusAddBtn");
+const addHummusOrdersList = document.getElementById("addHummusOrdersList");
 
-// ADD Count controls
-addMinusBtn.addEventListener('click', function() {
-    if (addCount > 1) {
-        addCount--;
-        addCountDisplay.textContent = addCount;
+// Salary DOM Elements
+const salaryAmount = document.getElementById("salaryAmount");
+const salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
+
+// ADD Bread Count controls
+addBreadMinusBtn.addEventListener('click', function() {
+    if (addBreadCount > 1) {
+        addBreadCount--;
+        addBreadCountDisplay.textContent = addBreadCount;
     }
 });
-addPlusBtn.addEventListener('click', function() {
-    if (addCount < 99) {
-        addCount++;
-        addCountDisplay.textContent = addCount;
+addBreadPlusBtn.addEventListener('click', function() {
+    if (addBreadCount < 99) {
+        addBreadCount++;
+        addBreadCountDisplay.textContent = addBreadCount;
+    }
+});
+
+// ADD Hummus Count controls
+addHummusMinusBtn.addEventListener('click', function() {
+    if (addHummusCount > 1) {
+        addHummusCount--;
+        addHummusCountDisplay.textContent = addHummusCount;
+    }
+});
+addHummusPlusBtn.addEventListener('click', function() {
+    if (addHummusCount < 99) {
+        addHummusCount++;
+        addHummusCountDisplay.textContent = addHummusCount;
     }
 });
 
@@ -973,7 +1017,7 @@ function getPriceForOrder(order) {
 function totalPriceAll() {
     let sum = 0;
     breadOrders.forEach(o => {
-        if (!o.isAdd) {
+        if (!o.isAdd && !o.isAddBread) {
             sum += getPriceForOrder(o);
         }
     });
@@ -1032,7 +1076,8 @@ function escapeHtml(str) {
 function saveToLocal() {
     localStorage.setItem("microbiome_bread", JSON.stringify({ orders: breadOrders, nextId }));
     localStorage.setItem("microbiome_hummus", JSON.stringify({ orders: hummusOrders }));
-    localStorage.setItem("microbiome_add", JSON.stringify({ orders: addOrders }));
+    localStorage.setItem("microbiome_add_bread", JSON.stringify({ orders: addBreadOrders }));
+    localStorage.setItem("microbiome_add_hummus", JSON.stringify({ orders: addHummusOrders }));
 }
 
 function loadFromLocal() {
@@ -1051,23 +1096,30 @@ function loadFromLocal() {
             if(parsed.orders) hummusOrders = parsed.orders;
         } catch(e) {}
     }
-    let addData = localStorage.getItem("microbiome_add");
-    if(addData) {
+    let addBreadData = localStorage.getItem("microbiome_add_bread");
+    if(addBreadData) {
         try {
-            let parsed = JSON.parse(addData);
-            if(parsed.orders) addOrders = parsed.orders;
+            let parsed = JSON.parse(addBreadData);
+            if(parsed.orders) addBreadOrders = parsed.orders;
+        } catch(e) {}
+    }
+    let addHummusData = localStorage.getItem("microbiome_add_hummus");
+    if(addHummusData) {
+        try {
+            let parsed = JSON.parse(addHummusData);
+            if(parsed.orders) addHummusOrders = parsed.orders;
         } catch(e) {}
     }
     render();
 }
 
-// Update Cut display
-function updateCutDisplay() {
+// Update Salary display
+function updateSalaryDisplay() {
     let totalWithComm = 0;
     let totalWithoutComm = 0;
     
     breadOrders.forEach(o => {
-        if (o.isAdd) return;
+        if (o.isAdd || o.isAddBread) return;
         const price = getPriceForOrder(o);
         if (o.hasCommission) {
             totalWithComm += price;
@@ -1076,71 +1128,152 @@ function updateCutDisplay() {
         }
     });
     
-    const cutWithComm = totalWithComm * 0.135;
-    const cutWithoutComm = totalWithoutComm * 0.15;
-    const totalCut = cutWithComm + cutWithoutComm;
+    const salaryWithComm = totalWithComm * 0.135;
+    const salaryWithoutComm = totalWithoutComm * 0.15;
+    const totalSalary = salaryWithComm + salaryWithoutComm;
     
-    cutPerson1.textContent = totalCut.toFixed(2) + ' ¥';
-    cutPerson2.textContent = totalCut.toFixed(2) + ' ¥';
+    salaryAmount.textContent = totalSalary.toFixed(2) + ' ¥';
     
     let infoText = '';
     if (totalWithComm > 0 && totalWithoutComm > 0) {
         infoText = '(mix: 13.5% + 15%)';
     } else if (totalWithComm > 0) {
-        infoText = '(2 × 13.5%)';
+        infoText = '(13.5%)';
     } else {
-        infoText = '(2 × 15%)';
+        infoText = '(15%)';
     }
-    cutPercentDisplay.textContent = infoText;
+    salaryPercentDisplay.textContent = infoText;
 }
 
 function renderAddOrders() {
-    // ADD list
-    if (addOrders.length === 0) {
-        addOrdersList.innerHTML = '<span style="color:#b88c48;">No added orders yet</span>';
+    // ADD Bread list
+    if (addBreadOrders.length === 0) {
+        addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread orders yet</span>';
     } else {
         let html = '';
-        addOrders.forEach((item, index) => {
+        addBreadOrders.forEach((item, index) => {
             html += `<span class="add-item">
                 <span class="qty">${item.count}×</span> ${item.type}
-                <span class="del" data-index="${index}">✖</span>
+                <span class="del" data-bread-index="${index}">✖</span>
             </span> `;
         });
-        addOrdersList.innerHTML = html;
+        addBreadOrdersList.innerHTML = html;
         
-        document.querySelectorAll('.add-item .del').forEach(el => {
+        document.querySelectorAll('.add-item .del[data-bread-index]').forEach(el => {
             el.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.index);
-                addOrders.splice(idx, 1);
-                breadOrders = breadOrders.filter(o => !o.isAdd);
+                const idx = parseInt(this.dataset.breadIndex);
+                const removed = addBreadOrders[idx];
+                addBreadOrders.splice(idx, 1);
+                let removedCount = 0;
+                breadOrders = breadOrders.filter(o => {
+                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                        removedCount++;
+                        return false;
+                    }
+                    return true;
+                });
                 render();
                 saveToLocal();
             });
         });
     }
     
-    // ADD Summary Table
-    if (addOrders.length === 0) {
-        addSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD orders yet</td></tr>';
+    // ADD Bread Summary Table
+    if (addBreadOrders.length === 0) {
+        addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>';
     } else {
-        addSummaryBody.innerHTML = '';
-        addOrders.forEach((item, index) => {
+        addBreadSummaryBody.innerHTML = '';
+        addBreadOrders.forEach((item, index) => {
             let row = document.createElement('tr');
-            // Pro ADD Eintrag = 1 Stück pro Bestellung
-            const totalPcs = item.count;
             row.innerHTML = `
                 <td>${item.type}</td>
-                <td>${totalPcs}</td>
-                <td><button class="delete-btn" data-add-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
+                <td>${item.count}</td>
+                <td><button class="delete-btn" data-add-bread-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
             `;
-            addSummaryBody.appendChild(row);
+            addBreadSummaryBody.appendChild(row);
         });
         
-        document.querySelectorAll('#addSummaryBody .delete-btn').forEach(btn => {
+        document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.addIndex);
-                addOrders.splice(idx, 1);
-                breadOrders = breadOrders.filter(o => !o.isAdd);
+                const idx = parseInt(this.dataset.addBreadIndex);
+                const removed = addBreadOrders[idx];
+                addBreadOrders.splice(idx, 1);
+                let removedCount = 0;
+                breadOrders = breadOrders.filter(o => {
+                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                        removedCount++;
+                        return false;
+                    }
+                    return true;
+                });
+                render();
+                saveToLocal();
+            });
+        });
+    }
+    
+    // ADD Hummus list
+    if (addHummusOrders.length === 0) {
+        addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus orders yet</span>';
+    } else {
+        let html = '';
+        addHummusOrders.forEach((item, index) => {
+            const typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+            html += `<span class="add-item">
+                <span class="qty">${item.count}×</span> ${typeLabel}
+                <span class="del" data-hummus-index="${index}">✖</span>
+            </span> `;
+        });
+        addHummusOrdersList.innerHTML = html;
+        
+        document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(el => {
+            el.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.hummusIndex);
+                const removed = addHummusOrders[idx];
+                addHummusOrders.splice(idx, 1);
+                let removedCount = 0;
+                hummusOrders = hummusOrders.filter(o => {
+                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
+                        removedCount++;
+                        return false;
+                    }
+                    return true;
+                });
+                render();
+                saveToLocal();
+            });
+        });
+    }
+    
+    // ADD Hummus Summary Table
+    if (addHummusOrders.length === 0) {
+        addHummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>';
+    } else {
+        addHummusSummaryBody.innerHTML = '';
+        addHummusOrders.forEach((item, index) => {
+            let row = document.createElement('tr');
+            const typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+            row.innerHTML = `
+                <td>${typeLabel}</td>
+                <td>${item.count}</td>
+                <td><button class="delete-btn" data-add-hummus-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
+            `;
+            addHummusSummaryBody.appendChild(row);
+        });
+        
+        document.querySelectorAll('#addHummusSummaryBody .delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.addHummusIndex);
+                const removed = addHummusOrders[idx];
+                addHummusOrders.splice(idx, 1);
+                let removedCount = 0;
+                hummusOrders = hummusOrders.filter(o => {
+                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
+                        removedCount++;
+                        return false;
+                    }
+                    return true;
+                });
                 render();
                 saveToLocal();
             });
@@ -1150,7 +1283,7 @@ function renderAddOrders() {
 
 function render() {
     // Bread Table - nur normale Bestellungen
-    const normalOrders = breadOrders.filter(o => !o.isAdd);
+    const normalOrders = breadOrders.filter(o => !o.isAdd && !o.isAddBread);
     if(normalOrders.length === 0) {
         breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
     } else {
@@ -1179,12 +1312,13 @@ function render() {
         });
     }
     
-    // Hummus Table
-    if(hummusOrders.length === 0) {
+    // Hummus Table - nur normale Bestellungen
+    const normalHummus = hummusOrders.filter(o => !o.isAddHummus);
+    if(normalHummus.length === 0) {
         hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>';
     } else {
         hummusTableBody.innerHTML = "";
-        hummusOrders.forEach((order, index) => {
+        normalHummus.forEach((order, index) => {
             let row = document.createElement("tr");
             let hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
             let hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
@@ -1219,7 +1353,7 @@ function render() {
     const total = totalPriceAll();
     totalSpan.innerText = total.toFixed(2) + " ¥";
     hummusCountSpan.innerText = "🫒 " + totalHummusCount();
-    updateCutDisplay();
+    updateSalaryDisplay();
 
     let req = getTotalRequirements();
     let breakdown = getTimesPcsBreakdown();
@@ -1307,7 +1441,8 @@ function addOrder() {
         isMini: isMini,
         hasCommission: hasCommission,
         week: currentWeek,
-        isAdd: false
+        isAdd: false,
+        isAddBread: false
     });
     
     if (hummusVal !== 'none') {
@@ -1318,7 +1453,8 @@ function addOrder() {
             size: hummusSizeVal,
             hummusType: hummusVal,
             week: currentWeek,
-            isAdd: false
+            isAdd: false,
+            isAddHummus: false
         });
     }
     
@@ -1333,56 +1469,89 @@ function addOrder() {
     customerName.focus();
 }
 
-// ADD Function - pro Stück, nicht pro Bestellung
-function addAddOrder() {
+// ADD Bread Function
+function addAddBreadOrder() {
     const breadVal = addBreadType.value;
-    const count = addCount;
+    const count = addBreadCount;
     
-    // Prüfen ob bereits eine ADD Order für diese Sorte existiert
-    const existing = addOrders.find(item => item.type === breadVal);
+    const existing = addBreadOrders.find(item => item.type === breadVal);
     if (existing) {
         existing.count += count;
     } else {
-        addOrders.push({
+        addBreadOrders.push({
             type: breadVal,
             count: count
         });
     }
     
-    // Jedes Stück einzeln in breadOrders speichern (für Preparation)
-    // ADD verwendet immer Größe "S" und 1 Stück pro Eintrag
     for (let i = 0; i < count; i++) {
         breadOrders.push({
             id: nextId++,
-            name: '⚡ Add',
+            name: '⚡ Add Bread',
             breadType: breadVal,
             size: 'S',
             isMini: false,
             hasCommission: false,
             week: currentWeek,
-            isAdd: true
+            isAdd: true,
+            isAddBread: true
         });
-        // KEIN Hummus für ADD!
     }
     
     render();
     saveToLocal();
-    addCount = 1;
-    addCountDisplay.textContent = addCount;
+    addBreadCount = 1;
+    addBreadCountDisplay.textContent = addBreadCount;
 }
 
-// ADD Button
-addAddBtn.addEventListener('click', addAddOrder);
+// ADD Hummus Function
+function addAddHummusOrder() {
+    const hummusVal = addHummusType.value;
+    const count = addHummusCount;
+    
+    const existing = addHummusOrders.find(item => item.type === hummusVal);
+    if (existing) {
+        existing.count += count;
+    } else {
+        addHummusOrders.push({
+            type: hummusVal,
+            count: count
+        });
+    }
+    
+    for (let i = 0; i < count; i++) {
+        hummusOrders.push({
+            id: nextId++,
+            name: '⚡ Add Hummus',
+            breadType: '—',
+            size: 'S',
+            hummusType: hummusVal,
+            week: currentWeek,
+            isAdd: true,
+            isAddHummus: true
+        });
+    }
+    
+    render();
+    saveToLocal();
+    addHummusCount = 1;
+    addHummusCountDisplay.textContent = addHummusCount;
+}
+
+// ADD Buttons
+addBreadAddBtn.addEventListener('click', addAddBreadOrder);
+addHummusAddBtn.addEventListener('click', addAddHummusOrder);
 
 function resetAll() {
-    if((breadOrders.length || hummusOrders.length || addOrders.length) && confirm("Delete all orders?")) {
+    if((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length) && confirm("Delete all orders?")) {
         breadOrders = [];
         hummusOrders = [];
-        addOrders = [];
+        addBreadOrders = [];
+        addHummusOrders = [];
         render();
         saveToLocal();
         nextId = 1;
-    } else if(!breadOrders.length && !hummusOrders.length && !addOrders.length) alert("No orders");
+    } else if(!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length) alert("No orders");
 }
 
 document.getElementById("addBtn").addEventListener("click", addOrder);
