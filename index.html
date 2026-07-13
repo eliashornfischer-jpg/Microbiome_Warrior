@@ -358,17 +358,31 @@ screenshotBtn.addEventListener('click', function() {
 });
 
 // ============ AUTO HUMMUS SELECTION ============
+function getHummusSizeForBreadSize(breadSizeVal) {
+    // S+ → S, alles andere bleibt gleich
+    if (breadSizeVal === 'S+') {
+        return 'S';
+    }
+    return breadSizeVal;
+}
+
 function autoSelectHummus() {
     var val = breadType.value;
     var sizeVal = breadSize.value;
     var hummusSelect = hummusType;
+    var hummusSizeSelect = hummusSize;
     
+    // M+ and XL+ have no hummus
     if (sizeVal === 'M+' || sizeVal === 'XL+') {
         hummusSelect.value = 'none';
         yingYangInfo.classList.remove('show');
         yingYangWarning.style.display = 'none';
         return;
     }
+    
+    // Set hummus size based on bread size (S+ → S)
+    var hummusSizeVal = getHummusSizeForBreadSize(sizeVal);
+    hummusSizeSelect.value = hummusSizeVal;
     
     if (val === '88er' || val === '150er') {
         hummusSelect.value = 'hummus';
