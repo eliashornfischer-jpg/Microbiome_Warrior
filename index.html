@@ -8,1556 +8,253 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-*{
-   margin:0;
-   padding:0;
-   box-sizing:border-box;
-}
-body{
-   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
-   min-height:100vh;
-   display:flex;
-   justify-content:center;
-   padding:10px;
-   background:
-       radial-gradient(circle at 15% 20%, rgba(226,170,84,0.3), transparent 40%),
-       radial-gradient(circle at 85% 25%, rgba(143,170,74,0.25), transparent 45%),
-       linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);
-   background-size:200% 200%;
-   animation:bgMove 20s ease infinite;
-}
-@keyframes bgMove{
-   0%{background-position:0% 50%}
-   50%{background-position:100% 50%}
-   100%{background-position:0% 50%}
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite;}
+@keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .container{max-width:520px;width:100%;margin:0 auto;}
-.card{
-   background:rgba(255,255,255,0.75);
-   backdrop-filter:blur(16px);
-   -webkit-backdrop-filter:blur(16px);
-   border-radius:24px;
-   padding:16px;
-   margin-bottom:12px;
-   border:1px solid rgba(255,255,255,0.5);
-   box-shadow:0 8px 32px rgba(0,0,0,0.08);
-}
-h1{
-   font-size:1.5rem;
-   color:#b87a2a;
-   font-weight:900;
-   letter-spacing:-0.3px;
-}
+.card{background:rgba(255,255,255,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:24px;padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.5);box-shadow:0 8px 32px rgba(0,0,0,0.08);}
+h1{font-size:1.5rem;color:#b87a2a;font-weight:900;letter-spacing:-0.3px;}
 h1::before{content:"🧬 ";}
-h2{
-   font-size:1.1rem;
-   color:#8a5e20;
-   margin-bottom:10px;
-   font-weight:800;
-}
-h3{
-   font-size:0.85rem;
-   color:#9b6e2c;
-   margin:12px 0 6px 0;
-   font-weight:700;
-}
-label{
-   font-size:0.75rem;
-   font-weight:700;
-   display:block;
-   margin-top:10px;
-   margin-bottom:2px;
-   color:#6b4a1c;
-}
-input,select{
-   width:100%;
-   padding:10px 14px;
-   border-radius:28px;
-   border:1px solid #e0d0a0;
-   background:white;
-   font-size:0.85rem;
-   margin-top:4px;
-}
-input:focus,select:focus{
-   outline:none;
-   border-color:#e2aa54;
-   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
-}
-.checkbox-group{
-   background:rgba(255,255,255,0.5);
-   padding:8px 12px;
-   border-radius:28px;
-   margin-top:8px;
-}
-.checkbox-group label{
-   margin:0;
-   display:flex;
-   align-items:center;
-   gap:8px;
-   cursor:pointer;
-}
-.checkbox-group input{
-   width:18px;
-   height:18px;
-   margin:0;
-}
-button{
-   width:100%;
-   padding:12px;
-   margin-top:12px;
-   border-radius:28px;
-   border:none;
-   font-weight:900;
-   font-size:0.9rem;
-   background:linear-gradient(135deg,#f2b357,#d6993a);
-   color:#2a1a08;
-   cursor:pointer;
-   transition:all 0.2s ease;
-   box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
+h2{font-size:1.1rem;color:#8a5e20;margin-bottom:10px;font-weight:800;}
+h3{font-size:0.85rem;color:#9b6e2c;margin:12px 0 6px 0;font-weight:700;}
+label{font-size:0.75rem;font-weight:700;display:block;margin-top:10px;margin-bottom:2px;color:#6b4a1c;}
+input,select{width:100%;padding:10px 14px;border-radius:28px;border:1px solid #e0d0a0;background:white;font-size:0.85rem;margin-top:4px;}
+input:focus,select:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px rgba(226,170,84,0.2);}
+.checkbox-group{background:rgba(255,255,255,0.5);padding:8px 12px;border-radius:28px;margin-top:8px;}
+.checkbox-group label{margin:0;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.checkbox-group input{width:18px;height:18px;margin:0;}
+button{width:100%;padding:12px;margin-top:12px;border-radius:28px;border:none;font-weight:900;font-size:0.9rem;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;cursor:pointer;transition:all 0.2s ease;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
 button:active{transform:scale(0.97);}
 .btn-reset{background:#d4c090;margin-top:8px;}
-.btn-screenshot{
-   background:linear-gradient(135deg,#6c8ebf,#4a6f9e);
-   color:white;
-   width:auto;
-   padding:8px 16px;
-   margin:0;
-   font-size:0.75rem;
-}
+.btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;}
 .btn-screenshot:active{transform:scale(0.97);}
-table{
-   width:100%;
-   border-collapse:collapse;
-   font-size:0.7rem;
-   background:white;
-   border-radius:16px;
-   overflow:hidden;
-   margin:8px 0;
-}
-th{
-   padding:8px 4px;
-   font-weight:800;
-   color:#2a1a08;
-}
+table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;border-radius:16px;overflow:hidden;margin:8px 0;}
+th{padding:8px 4px;font-weight:800;color:#2a1a08;}
 th.bread-th{background:#e2aa54;}
 th.hummus-th{background:#8faa4a;color:white;}
-td{
-   padding:8px 4px;
-   text-align:center;
-   border-bottom:1px solid #f0e2c8;
-}
+td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .scrollable{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .badge-time{background:#c9a256;color:white;padding:3px 10px;border-radius:20px;font-size:0.65rem;display:inline-block;}
 .badge-pcs{background:#e2a743;color:#2c1e08;padding:3px 10px;border-radius:20px;font-size:0.65rem;display:inline-block;}
 .water-cell{background:#f0e8d4;font-weight:700;}
 .total-flex{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
-.total-flex > div{flex:1;background:#fff8e8;padding:10px;border-radius:16px;text-align:center;}
+.total-flex>div{flex:1;background:#fff8e8;padding:10px;border-radius:16px;text-align:center;}
 .total-sum{font-weight:800;font-size:1rem;background:#ecdba8;padding:4px 14px;border-radius:30px;display:inline-block;}
 .info-text{font-size:0.6rem;text-align:center;color:#b88c48;margin-top:8px;padding:6px;background:#fff8e8;border-radius:20px;}
 .delete-btn{background:#eeddbb;border:none;border-radius:20px;padding:4px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;}
-.hummus-tag{
-   display:inline-block;
-   background:#8faa4a;
-   color:white;
-   padding:2px 8px;
-   border-radius:12px;
-   font-size:0.6rem;
-}
-.yingyang-tag{
-   display:inline-block;
-   background:#d4a843;
-   color:white;
-   padding:2px 8px;
-   border-radius:12px;
-   font-size:0.6rem;
-   font-weight:700;
-}
-.hummus-section{
-   border-left:4px solid #8faa4a;
-   margin-top:12px;
-   padding-top:8px;
-   border-top:2px dashed #d4c090;
-}
-.hummus-section label{
-   color:#6d8a30;
-}
-.table-title{
-   font-size:0.8rem;
-   font-weight:800;
-   margin-top:8px;
-   display:flex;
-   align-items:center;
-   gap:6px;
-}
+.hummus-tag{display:inline-block;background:#8faa4a;color:white;padding:2px 8px;border-radius:12px;font-size:0.6rem;}
+.yingyang-tag{display:inline-block;background:#d4a843;color:white;padding:2px 8px;border-radius:12px;font-size:0.6rem;font-weight:700;}
+.hummus-section{border-left:4px solid #8faa4a;margin-top:12px;padding-top:8px;border-top:2px dashed #d4c090;}
+.hummus-section label{color:#6d8a30;}
+.table-title{font-size:0.8rem;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:6px;}
 .table-title.bread-title{color:#b87a2a;}
 .table-title.hummus-title{color:#6d8a30;}
-.yingyang-available{
-   background:#f5edd8;
-   border-radius:16px;
-   padding:4px 12px;
-   font-size:0.65rem;
-   color:#8a6a2a;
-   display:none;
-   margin-top:4px;
-   border:1px solid #d4a843;
-}
-.yingyang-available.show{
-   display:block;
-}
-.header-row{
-   display:flex;
-   justify-content:space-between;
-   align-items:center;
-   margin-bottom:8px;
-   flex-wrap:wrap;
-   gap:8px;
-}
-.header-left{
-   display:flex;
-   align-items:center;
-   gap:8px;
-}
-.header-right{
-   display:flex;
-   align-items:center;
-   gap:8px;
-}
-.week-selector{
-   display:flex;
-   align-items:center;
-   gap:6px;
-   background:rgba(255,255,255,0.6);
-   padding:4px 10px 4px 14px;
-   border-radius:28px;
-   border:1px solid #e0d0a0;
-}
-.week-selector label{
-   margin:0;
-   font-size:0.7rem;
-   color:#6b4a1c;
-}
-.week-selector input{
-   width:46px;
-   padding:4px 6px;
-   border-radius:16px;
-   border:1px solid #e0d0a0;
-   text-align:center;
-   font-size:0.85rem;
-   font-weight:700;
-   margin:0;
-   background:#f5f0e0;
-}
-.week-selector input:focus{
-   outline:none;
-   border-color:#e2aa54;
-   box-shadow:0 0 0 3px rgba(226,170,84,0.2);
-}
-.week-selector input:disabled{
-   opacity:0.8;
-   cursor:not-allowed;
-}
-.week-badge{
-   background:#e2aa54;
-   color:#2a1a08;
-   padding:2px 12px;
-   border-radius:20px;
-   font-size:0.7rem;
-   font-weight:800;
-}
-.screenshot-btn-wrap{
-   display:flex;
-   gap:6px;
-}
-#screenshotStatus{
-   font-size:0.6rem;
-   color:#4a6f9e;
-   padding:4px 8px;
-   border-radius:12px;
-   background:rgba(255,255,255,0.5);
-   display:none;
-}
-/* Salary Styles */
-.salary-container{
-   background:rgba(255,255,255,0.5);
-   padding:12px 16px;
-   border-radius:16px;
-   margin-top:12px;
-   border:2px solid #e2aa54;
-}
-.salary-row{
-   display:flex;
-   justify-content:space-between;
-   align-items:center;
-   padding:4px 0;
-   font-size:0.8rem;
-}
-.salary-row .salary-label{
-   font-weight:700;
-   color:#6b4a1c;
-}
-.salary-row .salary-amount{
-   font-weight:800;
-   color:#b87a2a;
-   font-size:0.9rem;
-}
-.commission-badge{
-   display:inline-block;
-   background:#c0392b;
-   color:white;
-   padding:0px 8px;
-   border-radius:10px;
-   font-size:0.55rem;
-   font-weight:700;
-}
-.auto-week-badge{
-   display:inline-block;
-   background:#27ae60;
-   color:white;
-   padding:0px 8px;
-   border-radius:10px;
-   font-size:0.5rem;
-   font-weight:700;
-   margin-left:4px;
-}
-/* ADD Section Styles */
-.add-section{
-   background:rgba(226,170,84,0.08);
-   border-radius:16px;
-   padding:12px;
-   margin-top:8px;
-   border:2px dashed #d4c090;
-}
-.add-section .add-title{
-   font-size:0.7rem;
-   font-weight:800;
-   color:#b87a2a;
-   margin-bottom:6px;
-   display:flex;
-   align-items:center;
-   gap:6px;
-}
-.add-section .add-row{
-   display:flex;
-   gap:6px;
-   align-items:center;
-   flex-wrap:wrap;
-}
-.add-section .add-row select{
-   flex:1;
-   min-width:100px;
-   padding:6px 10px;
-   font-size:0.7rem;
-   margin:0;
-}
-.add-section .add-row .add-btn{
-   padding:6px 16px;
-   border-radius:20px;
-   border:none;
-   font-weight:800;
-   font-size:0.7rem;
-   background:linear-gradient(135deg,#f2b357,#d6993a);
-   color:#2a1a08;
-   cursor:pointer;
-   margin:0;
-   white-space:nowrap;
-}
-.add-section .add-row .add-btn:active{
-   transform:scale(0.95);
-}
-.add-section .add-row .add-count{
-   font-size:0.9rem;
-   font-weight:900;
-   color:#b87a2a;
-   min-width:35px;
-   text-align:center;
-}
-.add-section .add-row .add-count-btn{
-   width:34px;
-   height:34px;
-   border-radius:50%;
-   border:none;
-   font-size:1.2rem;
-   font-weight:900;
-   cursor:pointer;
-   display:flex;
-   align-items:center;
-   justify-content:center;
-   padding:0;
-   margin:0;
-}
-.add-section .add-row .add-count-btn:active{
-   transform:scale(0.9);
-}
-.add-section .add-row .add-count-btn-minus{
-   background:#e67e22;
-   color:white;
-}
-.add-section .add-row .add-count-btn-plus{
-   background:#27ae60;
-   color:white;
-}
-.add-orders-list{
-   margin-top:8px;
-   font-size:0.6rem;
-}
-.add-orders-list .add-item{
-   display:inline-block;
-   background:rgba(255,255,255,0.6);
-   padding:2px 8px;
-   border-radius:12px;
-   margin:2px;
-}
-.add-orders-list .add-item .qty{
-   font-weight:800;
-   color:#b87a2a;
-}
-.add-orders-list .add-item .del{
-   cursor:pointer;
-   color:#c0392b;
-   margin-left:4px;
-   font-weight:700;
-}
-/* Commission per order */
-.commission-order-row{
-   display:flex;
-   align-items:center;
-   gap:8px;
-   background:rgba(226,170,84,0.1);
-   padding:6px 12px;
-   border-radius:16px;
-   margin-top:6px;
-}
-.commission-order-row label{
-   margin:0;
-   font-size:0.7rem;
-   display:flex;
-   align-items:center;
-   gap:5px;
-   cursor:pointer;
-   color:#6b4a1c;
-}
-.commission-order-row input{
-   width:16px;
-   height:16px;
-   margin:0;
-}
-.comm-tag{
-   font-size:0.5rem;
-   padding:0px 6px;
-   border-radius:8px;
-   font-weight:700;
-}
-.comm-yes{
-   background:#c0392b;
-   color:white;
-}
-.comm-no{
-   background:#27ae60;
-   color:white;
-}
+.yingyang-available{background:#f5edd8;border-radius:16px;padding:4px 12px;font-size:0.65rem;color:#8a6a2a;display:none;margin-top:4px;border:1px solid #d4a843;}
+.yingyang-available.show{display:block;}
+.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+.header-left{display:flex;align-items:center;gap:8px;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.week-selector{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.6);padding:4px 10px 4px 14px;border-radius:28px;border:1px solid #e0d0a0;}
+.week-selector label{margin:0;font-size:0.7rem;color:#6b4a1c;}
+.week-selector input{width:46px;padding:4px 6px;border-radius:16px;border:1px solid #e0d0a0;text-align:center;font-size:0.85rem;font-weight:700;margin:0;background:#f5f0e0;}
+.week-selector input:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px rgba(226,170,84,0.2);}
+.week-selector input:disabled{opacity:0.8;cursor:not-allowed;}
+.week-badge{background:#e2aa54;color:#2a1a08;padding:2px 12px;border-radius:20px;font-size:0.7rem;font-weight:800;}
+.screenshot-btn-wrap{display:flex;gap:6px;}
+#screenshotStatus{font-size:0.6rem;color:#4a6f9e;padding:4px 8px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;}
+.salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54;}
+.salary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:0.8rem;}
+.salary-row .salary-label{font-weight:700;color:#6b4a1c;}
+.salary-row .salary-amount{font-weight:800;color:#b87a2a;font-size:0.9rem;}
+.commission-badge{display:inline-block;background:#c0392b;color:white;padding:0px 8px;border-radius:10px;font-size:0.55rem;font-weight:700;}
+.auto-week-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700;margin-left:4px;}
+.add-section{background:rgba(226,170,84,0.08);border-radius:16px;padding:12px;margin-top:8px;border:2px dashed #d4c090;}
+.add-section .add-title{font-size:0.7rem;font-weight:800;color:#b87a2a;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.add-section .add-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.add-section .add-row select{flex:1;min-width:100px;padding:6px 10px;font-size:0.7rem;margin:0;}
+.add-section .add-row .add-btn{padding:6px 16px;border-radius:20px;border:none;font-weight:800;font-size:0.7rem;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;cursor:pointer;margin:0;white-space:nowrap;}
+.add-section .add-row .add-btn:active{transform:scale(0.95);}
+.add-section .add-row .add-count{font-size:0.9rem;font-weight:900;color:#b87a2a;min-width:35px;text-align:center;}
+.add-section .add-row .add-count-btn{width:34px;height:34px;border-radius:50%;border:none;font-size:1.2rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;margin:0;}
+.add-section .add-row .add-count-btn:active{transform:scale(0.9);}
+.add-section .add-row .add-count-btn-minus{background:#e67e22;color:white;}
+.add-section .add-row .add-count-btn-plus{background:#27ae60;color:white;}
+.add-orders-list{margin-top:8px;font-size:0.6rem;}
+.add-orders-list .add-item{display:inline-block;background:rgba(255,255,255,0.6);padding:2px 8px;border-radius:12px;margin:2px;}
+.add-orders-list .add-item .qty{font-weight:800;color:#b87a2a;}
+.add-orders-list .add-item .del{cursor:pointer;color:#c0392b;margin-left:4px;font-weight:700;}
+.commission-order-row{display:flex;align-items:center;gap:8px;background:rgba(226,170,84,0.1);padding:6px 12px;border-radius:16px;margin-top:6px;}
+.commission-order-row label{margin:0;font-size:0.7rem;display:flex;align-items:center;gap:5px;cursor:pointer;color:#6b4a1c;}
+.commission-order-row input{width:16px;height:16px;margin:0;}
+.comm-tag{font-size:0.5rem;padding:0px 6px;border-radius:8px;font-weight:700;}
+.comm-yes{background:#c0392b;color:white;}
+.comm-no{background:#27ae60;color:white;}
+.no-hummus-tag{display:inline-block;background:#95a5a6;color:white;padding:0px 6px;border-radius:8px;font-size:0.5rem;font-weight:700;}
 </style>
 </head>
 <body>
 <div class="container" id="captureArea">
-<!-- Order Card -->
 <div class="card">
-   <div class="header-row">
-      <div class="header-left">
-         <h1>Microbiome Warrior</h1>
-      </div>
-      <div class="header-right">
-         <div class="week-selector">
-            <label>📅 W</label>
-            <input type="number" id="weekNumber" value="27" min="1" max="53" disabled>
-            <span class="auto-week-badge">auto</span>
-         </div>
-         <div class="screenshot-btn-wrap">
-            <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
-         </div>
-      </div>
-   </div>
-   <div id="screenshotStatus">✅ Screenshot saved!</div>
+<div class="header-row">
+<div class="header-left"><h1>Microbiome Warrior</h1></div>
+<div class="header-right">
+<div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
+<div class="screenshot-btn-wrap"><button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button></div>
+</div>
+</div>
+<div id="screenshotStatus">✅ Screenshot saved!</div>
 
-   <label>Customer Name</label>
-   <input id="customerName" placeholder="e.g. Ms. Zhang" autocomplete="off">
+<label>Customer Name</label>
+<input id="customerName" placeholder="e.g. Ms. Zhang" autocomplete="off">
 
-   <!-- Bread Selection -->
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-      <div>
-         <label>Variety</label>
-         <select id="breadType">
-            <option value="88er">88er</option>
-            <option value="150er">150er</option>
-            <option value="188er">188er</option>
-            <option value="200er">200er</option>
-            <option value="208er">208er</option>
-         </select>
-      </div>
-      <div>
-         <label>Size</label>
-         <select id="breadSize">
-            <option value="S">S (2 pcs)</option>
-            <option value="S+">S+ (3 pcs) −12.4%</option>
-            <option value="M">M (5 pcs)</option>
-            <option value="M+">M+ (6 pcs) no hummus</option>
-            <option value="L">L (8 pcs)</option>
-            <option value="XM">XM (9 pcs)</option>
-            <option value="XL">XL (11 pcs)</option>
-         </select>
-      </div>
-   </div>
-
-   <!-- Commission per Order -->
-   <div class="commission-order-row">
-      <label>
-         <input type="checkbox" id="commissionCheckbox">
-         💰 Commission active
-      </label>
-      <span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
-   </div>
-
-   <!-- Mini Checkbox -->
-   <div class="checkbox-group" style="margin-top:4px;">
-      <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
-   </div>
-
-   <!-- Hummus Section -->
-   <div class="hummus-section">
-      <div style="font-size:0.8rem;font-weight:800;color:#6d8a30;margin-bottom:4px;">🫒 HUMMUS (free)</div>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-         <div>
-            <label>Type</label>
-            <select id="hummusType">
-               <option value="none">❌ No Hummus</option>
-               <option value="hummus">🫒 Hummus</option>
-               <option value="yingyang">☯️ Ying & Yang</option>
-            </select>
-         </div>
-         <div>
-            <label>Size</label>
-            <select id="hummusSize">
-               <option value="S">S</option>
-               <option value="M">M</option>
-               <option value="L">L</option>
-               <option value="XM">XM</option>
-               <option value="XL">XL</option>
-            </select>
-         </div>
-      </div>
-      
-      <div id="yingYangInfo" class="yingyang-available">
-         ✅ ☯️ Ying & Yang available for 188er, 200er & 208er
-      </div>
-      <div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">
-         ⚠️ Ying & Yang only available for 188er, 200er & 208er!
-      </div>
-   </div>
-
-   <button id="addBtn">➕ Add Order (with Name)</button>
-   <button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+<div><label>Variety</label><select id="breadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select></div>
+<div><label>Size</label><select id="breadSize"><option value="S">S (2 pcs)</option><option value="S+">S+ (3 pcs) −12.4%</option><option value="M">M (5 pcs)</option><option value="M+">M+ (6 pcs) no hummus</option><option value="L">L (8 pcs)</option><option value="XM">XM (9 pcs)</option><option value="XL">XL (11 pcs)</option><option value="XL+">XL+ (12 pcs) no hummus</option></select></div>
 </div>
 
-<!-- ADD BREAD SECTION -->
-<div class="card">
-   <div class="add-section">
-      <div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
-      <div class="add-row">
-         <select id="addBreadType">
-            <option value="88er">88er</option>
-            <option value="150er">150er</option>
-            <option value="188er">188er</option>
-            <option value="200er">200er</option>
-            <option value="208er">208er</option>
-         </select>
-         <button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
-         <span class="add-count" id="addBreadCountDisplay">1</span>
-         <button class="add-count-btn add-count-btn-plus" id="addBreadPlusBtn">+</button>
-         <button class="add-btn" id="addBreadAddBtn">➕ Add Bread</button>
-      </div>
-      <div class="add-orders-list" id="addBreadOrdersList">
-         <span style="color:#b88c48;">No added bread orders yet</span>
-      </div>
-   </div>
+<div class="commission-order-row">
+<label><input type="checkbox" id="commissionCheckbox"> 💰 Commission active</label>
+<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
 </div>
 
-<!-- ADD HUMMUS SECTION -->
+<div class="checkbox-group" style="margin-top:4px;">
+<label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
+</div>
+
+<div class="hummus-section">
+<div style="font-size:0.8rem;font-weight:800;color:#6d8a30;margin-bottom:4px;">🫒 HUMMUS (free)</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div><label>Type</label><select id="hummusType"><option value="none">❌ No Hummus</option><option value="hummus">🫒 Hummus</option><option value="yingyang">☯️ Ying & Yang</option></select></div>
+<div><label>Size</label><select id="hummusSize"><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XM">XM</option><option value="XL">XL</option></select></div>
+</div>
+<div id="yingYangInfo" class="yingyang-available">✅ ☯️ Ying & Yang available for 188er, 200er & 208er</div>
+<div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">⚠️ Ying & Yang only available for 188er, 200er & 208er!</div>
+</div>
+
+<button id="addBtn">➕ Add Order (with Name)</button>
+<button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
+</div>
+
+<!-- ADD BREAD -->
 <div class="card">
-   <div class="add-section" style="border-color:#8faa4a;">
-      <div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
-      <div class="add-row">
-         <select id="addHummusType">
-            <option value="hummus">🫒 Hummus</option>
-            <option value="yingyang">☯️ Ying & Yang</option>
-         </select>
-         <button class="add-count-btn add-count-btn-minus" id="addHummusMinusBtn">−</button>
-         <span class="add-count" id="addHummusCountDisplay">1</span>
-         <button class="add-count-btn add-count-btn-plus" id="addHummusPlusBtn">+</button>
-         <button class="add-btn" id="addHummusAddBtn" style="background:linear-gradient(135deg,#8faa4a,#6d8a30);color:white;">🫒 Add Hummus</button>
-      </div>
-      <div class="add-orders-list" id="addHummusOrdersList">
-         <span style="color:#b88c48;">No added hummus orders yet</span>
-      </div>
-   </div>
+<div class="add-section">
+<div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
+<div class="add-row">
+<select id="addBreadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select>
+<button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
+<span class="add-count" id="addBreadCountDisplay">1</span>
+<button class="add-count-btn add-count-btn-plus" id="addBreadPlusBtn">+</button>
+<button class="add-btn" id="addBreadAddBtn">➕ Add Bread</button>
+</div>
+<div class="add-orders-list" id="addBreadOrdersList"><span style="color:#b88c48;">No added bread orders yet</span></div>
+</div>
+</div>
+
+<!-- ADD HUMMUS -->
+<div class="card">
+<div class="add-section" style="border-color:#8faa4a;">
+<div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
+<div class="add-row">
+<select id="addHummusType"><option value="hummus">🫒 Hummus</option><option value="yingyang">☯️ Ying & Yang</option></select>
+<button class="add-count-btn add-count-btn-minus" id="addHummusMinusBtn">−</button>
+<span class="add-count" id="addHummusCountDisplay">1</span>
+<button class="add-count-btn add-count-btn-plus" id="addHummusPlusBtn">+</button>
+<button class="add-btn" id="addHummusAddBtn" style="background:linear-gradient(135deg,#8faa4a,#6d8a30);color:white;">🫒 Add Hummus</button>
+</div>
+<div class="add-orders-list" id="addHummusOrdersList"><span style="color:#b88c48;">No added hummus orders yet</span></div>
+</div>
 </div>
 
 <!-- Order Overview -->
 <div class="card">
-   <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h2>📋 Orders (CNY)</h2>
-      <span class="week-badge" id="weekBadge">Week 27</span>
-   </div>
+<div style="display:flex;justify-content:space-between;align-items:center;"><h2>📋 Orders (CNY)</h2><span class="week-badge" id="weekBadge">Week 27</span></div>
 
-   <!-- Bread Table -->
-   <div class="table-title bread-title">🥖 Bread Orders</div>
-   <div class="scrollable">
-   <table>
-   <thead>
-   <th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Comm</th><th class="bread-th"></th>
-   </thead>
-   <tbody id="breadTableBody">
-   <tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>
-   </tbody>
-   </table>
-   </div>
+<div class="table-title bread-title">🥖 Bread Orders</div>
+<div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Comm</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
 
-   <!-- ADD Bread Summary Table -->
-   <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
-   <div class="scrollable">
-   <table>
-   <thead>
-   <th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th>
-   </thead>
-   <tbody id="addBreadSummaryBody">
-   <tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>
-   </tbody>
-   </table>
-   </div>
+<div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
+<div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr></tbody></table></div>
 
-   <!-- ADD Hummus Summary Table -->
-   <div class="table-title hummus-title" style="margin-top:12px;">🫒 ADD Hummus Summary (free)</div>
-   <div class="scrollable">
-   <table>
-   <thead>
-   <th class="hummus-th">Type</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th>
-   </thead>
-   <tbody id="addHummusSummaryBody">
-   <tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>
-   </tbody>
-   </table>
-   </div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 ADD Hummus Summary (free)</div>
+<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th></thead><tbody id="addHummusSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr></tbody></table></div>
 
-   <!-- Hummus Table -->
-   <div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders (free)</div>
-   <div class="scrollable">
-   <table>
-   <thead>
-   <th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th>
-   </thead>
-   <tbody id="hummusTableBody">
-   <tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>
-   </tbody>
-   </table>
-   </div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders (free)</div>
+<div class="scrollable"><table><thead><th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th></thead><tbody id="hummusTableBody"><tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr></tbody></table></div>
 
-   <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
-      <span class="total-sum" id="hummusCount" style="background:#8faa4a;padding:2px 16px;color:white;">🫒 0</span>
-      <span class="total-sum" id="totalPriceSum">0 CNY</span>
-   </div>
-   
-   <!-- SALARY SECTION - NUR EINE PERSON -->
-   <div class="salary-container">
-      <div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">
-         💰 SALARY 
-         <span id="salaryPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(15%)</span>
-      </div>
-      
-      <div class="salary-row">
-         <span class="salary-label">👤 Salary</span>
-         <span class="salary-amount" id="salaryAmount">0.00 ¥</span>
-      </div>
-      <div style="font-size:0.55rem;color:#8a6a2a;text-align:center;margin-top:4px;">
-         ℹ️ Commission orders: 13.5% | Non-commission: 15%
-      </div>
-   </div>
+<div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
+<span class="total-sum" id="hummusCount" style="background:#8faa4a;padding:2px 16px;color:white;">🫒 0</span>
+<span class="total-sum" id="totalPriceSum">0 CNY</span>
+</div>
+
+<!-- SALARY -->
+<div class="salary-container">
+<div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">💰 SALARY <span id="salaryPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(15%)</span></div>
+<div class="salary-row"><span class="salary-label">👤 Salary</span><span class="salary-amount" id="salaryAmount">0.00 ¥</span></div>
+<div style="font-size:0.55rem;color:#8a6a2a;text-align:center;margin-top:4px;">ℹ️ Commission orders: 13.5% | Non-commission: 15%</div>
+</div>
 </div>
 
 <!-- PREPARATION -->
 <div class="card">
 <h2>📦 PREPARATION</h2>
-
 <h3>🥣 88er Base Mix</h3>
-<div class="scrollable">
-<table>
-<thead><th>Required 88er Mix</th><th>Grams</th><th>Boxes (1400g)</th></thead>
-<tbody id="preparationRow"><tr><td colspan="3">calculating...</td></tr></tbody>
-</table>
-</div>
-
+<div class="scrollable"><table><thead><th>Required 88er Mix</th><th>Grams</th><th>Boxes (1400g)</th></thead><tbody id="preparationRow"><tr><td colspan="3">calculating...</td></tr></tbody></table></div>
 <h3>🔥 THERMOMIX MAX · per 1 time (13 pcs)</h3>
-<div class="scrollable">
-<table>
-<thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
-<tbody>
-<tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr>
-<tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr>
-<tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr>
-<tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr>
-<tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr>
-</tbody>
-</table>
-</div>
-
+<div class="scrollable"><table><thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody><tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr><tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr></tbody></table></div>
 <h3>📦 REST QUANTITY · per 1 pcs</h3>
-<div class="scrollable">
-<table id="perPcsTable">
-<thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
-<tbody id="perPcsRow"></tbody>
-</table>
-</div>
-
+<div class="scrollable"><table id="perPcsTable"><thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="perPcsRow"></tbody></table></div>
 <h3>📊 TOTAL · times / pcs</h3>
-<div class="total-flex">
-<div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div>
-<div><strong>🔢 pcs (Rest)</strong><table><tbody id="pcsTableBody"></tbody></table></div>
-</div>
-
+<div class="total-flex"><div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div><div><strong>🔢 pcs (Rest)</strong><table><tbody id="pcsTableBody"></tbody></table></div></div>
 <h3>🔥 CALCULATED THERMOMIX CHARGE</h3>
-<div class="scrollable">
-<table>
-<thead><th>Variety</th><th>time</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
-<tbody id="calculatedThermomixTable"></tbody>
-</table>
-</div>
-
+<div class="scrollable"><table><thead><th>Variety</th><th>time</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="calculatedThermomixTable"></tbody></table></div>
 <h3>📦 CALCULATED REST QUANTITY</h3>
-<div class="scrollable">
-<table>
-<thead><th>Variety</th><th>pcs</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead>
-<tbody id="calculatedRestTable"></tbody>
-<tfoot id="calculatedRestFooter"></tfoot>
-</table>
-</div>
+<div class="scrollable"><table><thead><th>Variety</th><th>pcs</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="calculatedRestTable"></tbody><tfoot id="calculatedRestFooter"></tfoot></table></div>
 <div class="info-text">💡 1 time = 13 pcs (full batch) | Mini: half price & half pcs | Hummus: free</div>
 </div>
 <footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY</footer>
 </div>
 
 <script>
-// --- WEEK CALCULATION ---
-function calculateCurrentWeek() {
-    const startDate = new Date(2025, 11, 22);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const diffTime = today.getTime() - startDate.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    let weekNum = Math.floor(diffDays / 7) + 1;
-    if (weekNum < 1) weekNum = 1;
-    if (weekNum > 53) weekNum = 53;
-    return weekNum;
-}
+function calculateCurrentWeek(){var e=new Date(2025,11,22),t=new Date;t.setHours(0,0,0,0);var n=t.getTime()-e.getTime(),a=Math.floor(n/(864e5)),r=Math.floor(a/7)+1;return r<1&&(r=1),r>53&&(r=53),r}
+var priceDB={"88er":{"S":102,"S+":(102/2)*3*.875817,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},"150er":{"S":208,"S+":(208/2)*3*.875817,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},"188er":{"S":288,"S+":(288/2)*3*.875817,"M":588,"M+":588,"L":888,"XM":988,"XL":1138,"XL+":1138},"200er":{"S":308,"S+":(308/2)*3*.875817,"M":688,"M+":688,"L":968,"XM":1080,"XL":1288,"XL+":1288},"208er":{"S":328,"S+":(328/2)*3*.875817,"M":788,"M+":788,"L":1108,"XM":1288,"XL":1468,"XL+":1468}},sizeToPcs={S:2,"S+":3,M:5,"M+":6,L:8,XM:9,XL:11,"XL+":12},recipeFor13={88er:{mix88:745,mix150:0,mix188:0,mix200:0,water:360},150er:{mix88:650,mix150:97,mix188:0,mix200:0,water:360},188er:{mix88:630,mix150:97,mix188:15,mix200:0,water:360},200er:{mix88:620,mix150:97,mix188:15,mix200:13,water:360},208er:{mix88:620,mix150:97,mix188:15,mix200:13,water:360}};
+function getPerPcs(e){var t=recipeFor13[e];return{mix88:t.mix88/13,mix150:t.mix150/13,mix188:t.mix188/13,mix200:t.mix200/13,water:t.water/13}}
+var breadOrders=[],hummusOrders=[],addBreadOrders=[],addHummusOrders=[],nextId=1,currentWeek=calculateCurrentWeek(),addBreadCount=1,addHummusCount=1;
+var customerName=document.getElementById("customerName"),breadType=document.getElementById("breadType"),breadSize=document.getElementById("breadSize"),miniCheckbox=document.getElementById("miniCheckbox"),hummusType=document.getElementById("hummusType"),hummusSize=document.getElementById("hummusSize"),yingYangInfo=document.getElementById("yingYangInfo"),yingYangWarning=document.getElementById("yingYangWarning"),breadTableBody=document.getElementById("breadTableBody"),addBreadSummaryBody=document.getElementById("addBreadSummaryBody"),addHummusSummaryBody=document.getElementById("addHummusSummaryBody"),hummusTableBody=document.getElementById("hummusTableBody"),totalSpan=document.getElementById("totalPriceSum"),hummusCountSpan=document.getElementById("hummusCount"),weekNumber=document.getElementById("weekNumber"),weekBadge=document.getElementById("weekBadge"),screenshotBtn=document.getElementById("screenshotBtn"),screenshotStatus=document.getElementById("screenshotStatus"),commissionCheckbox=document.getElementById("commissionCheckbox"),addBreadType=document.getElementById("addBreadType"),addBreadCountDisplay=document.getElementById("addBreadCountDisplay"),addBreadMinusBtn=document.getElementById("addBreadMinusBtn"),addBreadPlusBtn=document.getElementById("addBreadPlusBtn"),addBreadAddBtn=document.getElementById("addBreadAddBtn"),addBreadOrdersList=document.getElementById("addBreadOrdersList"),addHummusType=document.getElementById("addHummusType"),addHummusCountDisplay=document.getElementById("addHummusCountDisplay"),addHummusMinusBtn=document.getElementById("addHummusMinusBtn"),addHummusPlusBtn=document.getElementById("addHummusPlusBtn"),addHummusAddBtn=document.getElementById("addHummusAddBtn"),addHummusOrdersList=document.getElementById("addHummusOrdersList"),salaryAmount=document.getElementById("salaryAmount"),salaryPercentDisplay=document.getElementById("salaryPercentDisplay");
 
-// Price Database
-const priceDB = {
-    "88er": { 
-        "S": 102, "S+": (102/2)*3*0.875817, "M": 190, "M+": 190, 
-        "L": 278, "XM": 308, "XL": 350 
-    },
-    "150er": { 
-        "S": 208, "S+": (208/2)*3*0.875817, "M": 402, "M+": 402, 
-        "L": 596, "XM": 658, "XL": 766 
-    },
-    "188er": { 
-        "S": 288, "S+": (288/2)*3*0.875817, "M": 588, "M+": 588, 
-        "L": 888, "XM": 988, "XL": 1138 
-    },
-    "200er": { 
-        "S": 308, "S+": (308/2)*3*0.875817, "M": 688, "M+": 688, 
-        "L": 968, "XM": 1080, "XL": 1288 
-    },
-    "208er": { 
-        "S": 328, "S+": (328/2)*3*0.875817, "M": 788, "M+": 788, 
-        "L": 1108, "XM": 1288, "XL": 1468 
-    }
-};
+addBreadMinusBtn.addEventListener('click',function(){addBreadCount>1&&(addBreadCount--,addBreadCountDisplay.textContent=addBreadCount)});
+addBreadPlusBtn.addEventListener('click',function(){addBreadCount<99&&(addBreadCount++,addBreadCountDisplay.textContent=addBreadCount)});
+addHummusMinusBtn.addEventListener('click',function(){addHummusCount>1&&(addHummusCount--,addHummusCountDisplay.textContent=addHummusCount)});
+addHummusPlusBtn.addEventListener('click',function(){addHummusCount<99&&(addHummusCount++,addHummusCountDisplay.textContent=addHummusCount)});
 
-const sizeToPcs = { 
-    "S": 2, "S+": 3, "M": 5, "M+": 6, 
-    "L": 8, "XM": 9, "XL": 11 
-};
+function updateWeekDisplay(){currentWeek=calculateCurrentWeek();weekNumber.value=currentWeek;weekBadge.textContent='Week '+currentWeek}
+updateWeekDisplay();setInterval(updateWeekDisplay,6e4);
 
-const recipeFor13 = {
-    "88er": { mix88:745, mix150:0, mix188:0, mix200:0, water:360 },
-    "150er": { mix88:650, mix150:97, mix188:0, mix200:0, water:360 },
-    "188er": { mix88:630, mix150:97, mix188:15, mix200:0, water:360 },
-    "200er": { mix88:620, mix150:97, mix188:15, mix200:13, water:360 },
-    "208er": { mix88:620, mix150:97, mix188:15, mix200:13, water:360 }
-};
+async function takeScreenshot(){var e=document.getElementById('captureArea'),t=document.getElementById('screenshotStatus');try{t.style.display='block';t.textContent='⏳ Taking screenshot...';t.style.background='#fff8e8';var n=await html2canvas(e,{scale:2,useCORS:!0,allowTaint:!0,backgroundColor:null,logging:!1,width:e.scrollWidth,height:e.scrollHeight,windowWidth:e.scrollWidth,windowHeight:e.scrollHeight});n.toBlob(async function(e){try{if(navigator.share&&navigator.canShare){var a=new File([e],'microbiome_warrior_week_'+currentWeek+'.png',{type:'image/png'});if(navigator.canShare({files:[a]})){await navigator.share({title:'Microbiome Warrior',text:'Week '+currentWeek,files:[a]});t.textContent='✅ Saved to gallery!';t.style.background='#e8f5e9';setTimeout(function(){t.style.display='none'},3e3);return}}var r=document.createElement('a');r.download='microbiome_warrior_week_'+currentWeek+'.png';r.href=URL.createObjectURL(e);r.click();URL.revokeObjectURL(r.href);t.textContent='✅ Screenshot downloaded!';t.style.background='#e8f5e9';setTimeout(function(){t.style.display='none'},3e3)}catch(a){var r=document.createElement('a');r.download='microbiome_warrior_week_'+currentWeek+'.png';r.href=URL.createObjectURL(e);r.click();URL.revokeObjectURL(r.href);t.textContent='✅ Screenshot downloaded!';t.style.background='#e8f5e9';setTimeout(function(){t.style.display='none'},3e3)}},'image/png')}catch(e){console.error('Screenshot error:',e);t.textContent='❌ Error taking screenshot';t.style.background='#fde8e8';setTimeout(function(){t.style.display='none'},3e3)}}
+screenshotBtn.addEventListener('click',takeScreenshot);
 
-function getPerPcs(btype) {
-    let r = recipeFor13[btype];
-    return { mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13 };
-}
+function autoSelectHummus(){var e=breadType.value,t=breadSize.value,n=hummusType;if(t==='M+'||t==='XL+'){n.value='none';yingYangInfo.classList.remove('show');yingYangWarning.style.display='none';return}if(e==='88er'||e==='150er'){n.value='hummus';yingYangInfo.classList.remove('show');yingYangWarning.style.display='none'}else if(e==='188er'||e==='200er'||e==='208er'){n.value='yingyang';yingYangInfo.classList.add('show');yingYangWarning.style.display='none'}}
+breadType.addEventListener('change',autoSelectHummus);breadSize.addEventListener('change',autoSelectHummus);breadType.dispatchEvent(new Event('change'));
+hummusType.addEventListener('change',function(){var e=breadSize.value;if((e==='M+'||e==='XL+')&&this.value!=='none'){alert('❌ '+e+' comes without hummus as standard!');this.value='none';return}if(this.value==='yingyang'){var t=breadType.value;if(t!=='188er'&&t!=='200er'&&t!=='208er'){yingYangWarning.style.display='block';alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');this.value='hummus';yingYangWarning.style.display='none'}else yingYangWarning.style.display='none'}else yingYangWarning.style.display='none'});
 
-let breadOrders = [];
-let hummusOrders = [];
-let addBreadOrders = [];
-let addHummusOrders = [];
-let nextId = 1;
-let currentWeek = calculateCurrentWeek();
-let addBreadCount = 1;
-let addHummusCount = 1;
-
-// DOM Elements
-const customerName = document.getElementById("customerName");
-const breadType = document.getElementById("breadType");
-const breadSize = document.getElementById("breadSize");
-const miniCheckbox = document.getElementById("miniCheckbox");
-const hummusType = document.getElementById("hummusType");
-const hummusSize = document.getElementById("hummusSize");
-const yingYangInfo = document.getElementById("yingYangInfo");
-const yingYangWarning = document.getElementById("yingYangWarning");
-const breadTableBody = document.getElementById("breadTableBody");
-const addBreadSummaryBody = document.getElementById("addBreadSummaryBody");
-const addHummusSummaryBody = document.getElementById("addHummusSummaryBody");
-const hummusTableBody = document.getElementById("hummusTableBody");
-const totalSpan = document.getElementById("totalPriceSum");
-const hummusCountSpan = document.getElementById("hummusCount");
-const weekNumber = document.getElementById("weekNumber");
-const weekBadge = document.getElementById("weekBadge");
-const screenshotBtn = document.getElementById("screenshotBtn");
-const screenshotStatus = document.getElementById("screenshotStatus");
-const commissionCheckbox = document.getElementById("commissionCheckbox");
-
-// ADD Bread DOM
-const addBreadType = document.getElementById("addBreadType");
-const addBreadCountDisplay = document.getElementById("addBreadCountDisplay");
-const addBreadMinusBtn = document.getElementById("addBreadMinusBtn");
-const addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
-const addBreadAddBtn = document.getElementById("addBreadAddBtn");
-const addBreadOrdersList = document.getElementById("addBreadOrdersList");
-
-// ADD Hummus DOM
-const addHummusType = document.getElementById("addHummusType");
-const addHummusCountDisplay = document.getElementById("addHummusCountDisplay");
-const addHummusMinusBtn = document.getElementById("addHummusMinusBtn");
-const addHummusPlusBtn = document.getElementById("addHummusPlusBtn");
-const addHummusAddBtn = document.getElementById("addHummusAddBtn");
-const addHummusOrdersList = document.getElementById("addHummusOrdersList");
-
-// Salary DOM Elements
-const salaryAmount = document.getElementById("salaryAmount");
-const salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
-
-// ADD Bread Count controls
-addBreadMinusBtn.addEventListener('click', function() {
-    if (addBreadCount > 1) {
-        addBreadCount--;
-        addBreadCountDisplay.textContent = addBreadCount;
-    }
-});
-addBreadPlusBtn.addEventListener('click', function() {
-    if (addBreadCount < 99) {
-        addBreadCount++;
-        addBreadCountDisplay.textContent = addBreadCount;
-    }
-});
-
-// ADD Hummus Count controls
-addHummusMinusBtn.addEventListener('click', function() {
-    if (addHummusCount > 1) {
-        addHummusCount--;
-        addHummusCountDisplay.textContent = addHummusCount;
-    }
-});
-addHummusPlusBtn.addEventListener('click', function() {
-    if (addHummusCount < 99) {
-        addHummusCount++;
-        addHummusCountDisplay.textContent = addHummusCount;
-    }
-});
-
-// Update week display
-function updateWeekDisplay() {
-    currentWeek = calculateCurrentWeek();
-    weekNumber.value = currentWeek;
-    weekBadge.textContent = 'Week ' + currentWeek;
-}
-updateWeekDisplay();
-setInterval(updateWeekDisplay, 60000);
-
-// Screenshot function
-async function takeScreenshot() {
-    const element = document.getElementById('captureArea');
-    const status = document.getElementById('screenshotStatus');
-    
-    try {
-        status.style.display = 'block';
-        status.textContent = '⏳ Taking screenshot...';
-        status.style.background = '#fff8e8';
-        
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: null,
-            logging: false,
-            width: element.scrollWidth,
-            height: element.scrollHeight,
-            windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight
-        });
-        
-        canvas.toBlob(async function(blob) {
-            try {
-                if (navigator.share && navigator.canShare) {
-                    const file = new File([blob], `microbiome_warrior_week_${currentWeek}.png`, { type: 'image/png' });
-                    if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            title: 'Microbiome Warrior',
-                            text: `Week ${currentWeek}`,
-                            files: [file]
-                        });
-                        status.textContent = '✅ Saved to gallery!';
-                        status.style.background = '#e8f5e9';
-                        setTimeout(() => { status.style.display = 'none'; }, 3000);
-                        return;
-                    }
-                }
-                const link = document.createElement('a');
-                link.download = `microbiome_warrior_week_${currentWeek}.png`;
-                link.href = URL.createObjectURL(blob);
-                link.click();
-                URL.revokeObjectURL(link.href);
-                status.textContent = '✅ Screenshot downloaded!';
-                status.style.background = '#e8f5e9';
-                setTimeout(() => { status.style.display = 'none'; }, 3000);
-            } catch (error) {
-                const link = document.createElement('a');
-                link.download = `microbiome_warrior_week_${currentWeek}.png`;
-                link.href = URL.createObjectURL(blob);
-                link.click();
-                URL.revokeObjectURL(link.href);
-                status.textContent = '✅ Screenshot downloaded!';
-                status.style.background = '#e8f5e9';
-                setTimeout(() => { status.style.display = 'none'; }, 3000);
-            }
-        }, 'image/png');
-    } catch (error) {
-        console.error('Screenshot error:', error);
-        status.textContent = '❌ Error taking screenshot';
-        status.style.background = '#fde8e8';
-        setTimeout(() => { status.style.display = 'none'; }, 3000);
-    }
-}
-screenshotBtn.addEventListener('click', takeScreenshot);
-
-// AUTO HUMMUS SELECTION
-function autoSelectHummus() {
-    const val = breadType.value;
-    const sizeVal = breadSize.value;
-    const hummusSelect = hummusType;
-    
-    if (sizeVal === 'M+') {
-        hummusSelect.value = 'none';
-        yingYangInfo.classList.remove('show');
-        yingYangWarning.style.display = 'none';
-        return;
-    }
-    
-    if (val === '88er' || val === '150er') {
-        hummusSelect.value = 'hummus';
-        yingYangInfo.classList.remove('show');
-        yingYangWarning.style.display = 'none';
-    } else if (val === '188er' || val === '200er' || val === '208er') {
-        hummusSelect.value = 'yingyang';
-        yingYangInfo.classList.add('show');
-        yingYangWarning.style.display = 'none';
-    }
-}
-
-breadType.addEventListener('change', autoSelectHummus);
-breadSize.addEventListener('change', autoSelectHummus);
-breadType.dispatchEvent(new Event('change'));
-
-hummusType.addEventListener('change', function() {
-    const sizeVal = breadSize.value;
-    if (sizeVal === 'M+' && this.value !== 'none') {
-        alert('❌ M+ (6 pcs) comes without hummus as standard!');
-        this.value = 'none';
-        return;
-    }
-    if (this.value === 'yingyang') {
-        const val = breadType.value;
-        if (val !== '188er' && val !== '200er' && val !== '208er') {
-            yingYangWarning.style.display = 'block';
-            alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
-            this.value = 'hummus';
-            yingYangWarning.style.display = 'none';
-        } else {
-            yingYangWarning.style.display = 'none';
-        }
-    } else {
-        yingYangWarning.style.display = 'none';
-    }
-});
-
-// Helper Functions
-function getPcsForOrder(order) {
-    let base = sizeToPcs[order.size] || 0;
-    return order.isMini ? base/2 : base;
-}
-
-function getPriceForOrder(order) {
-    let basePrice = priceDB[order.breadType]?.[order.size] || 0;
-    return order.isMini ? basePrice / 2 : basePrice;
-}
-
-function totalPriceAll() {
-    let sum = 0;
-    breadOrders.forEach(o => {
-        if (!o.isAdd && !o.isAddBread) {
-            sum += getPriceForOrder(o);
-        }
-    });
-    return sum;
-}
-
-function totalHummusCount() {
-    return hummusOrders.length;
-}
-
-function getTotalPcsPerType() {
-    let totals = { "88er":0,"150er":0,"188er":0,"200er":0,"208er":0 };
-    breadOrders.forEach(o => {
-        let pcs = getPcsForOrder(o);
-        totals[o.breadType] += pcs;
-    });
-    return totals;
-}
-
-function getTotalRequirements() {
-    let pcs = getTotalPcsPerType();
-    let total88=0,total150=0,total188=0,total200=0,totalWater=0;
-    for(let [type, p] of Object.entries(pcs)) {
-        if(p===0) continue;
-        let per = getPerPcs(type);
-        total88 += per.mix88 * p;
-        total150 += per.mix150 * p;
-        total188 += per.mix188 * p;
-        total200 += per.mix200 * p;
-        totalWater += per.water * p;
-    }
-    return { mix88:total88, mix150:total150, mix188:total188, mix200:total200, water:totalWater };
-}
-
-function getTimesPcsBreakdown() {
-    let pcs = getTotalPcsPerType();
-    let res = [];
-    for(let [type, total] of Object.entries(pcs)) {
-        if(total===0) continue;
-        let full = Math.floor(total / 13);
-        let rest = total % 13;
-        res.push({ type, fullCharges: full, restPcs: rest });
-    }
-    return res;
-}
-
-function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-        if(m === '&') return '&amp;';
-        if(m === '<') return '&lt;';
-        if(m === '>') return '&gt;';
-        return m;
-    });
-}
-
-function saveToLocal() {
-    localStorage.setItem("microbiome_bread", JSON.stringify({ orders: breadOrders, nextId }));
-    localStorage.setItem("microbiome_hummus", JSON.stringify({ orders: hummusOrders }));
-    localStorage.setItem("microbiome_add_bread", JSON.stringify({ orders: addBreadOrders }));
-    localStorage.setItem("microbiome_add_hummus", JSON.stringify({ orders: addHummusOrders }));
-}
-
-function loadFromLocal() {
-    let breadData = localStorage.getItem("microbiome_bread");
-    if(breadData) {
-        try {
-            let parsed = JSON.parse(breadData);
-            if(parsed.orders) breadOrders = parsed.orders;
-            if(parsed.nextId) nextId = parsed.nextId;
-        } catch(e) {}
-    }
-    let hummusData = localStorage.getItem("microbiome_hummus");
-    if(hummusData) {
-        try {
-            let parsed = JSON.parse(hummusData);
-            if(parsed.orders) hummusOrders = parsed.orders;
-        } catch(e) {}
-    }
-    let addBreadData = localStorage.getItem("microbiome_add_bread");
-    if(addBreadData) {
-        try {
-            let parsed = JSON.parse(addBreadData);
-            if(parsed.orders) addBreadOrders = parsed.orders;
-        } catch(e) {}
-    }
-    let addHummusData = localStorage.getItem("microbiome_add_hummus");
-    if(addHummusData) {
-        try {
-            let parsed = JSON.parse(addHummusData);
-            if(parsed.orders) addHummusOrders = parsed.orders;
-        } catch(e) {}
-    }
-    render();
-}
-
-// Update Salary display
-function updateSalaryDisplay() {
-    let totalWithComm = 0;
-    let totalWithoutComm = 0;
-    
-    breadOrders.forEach(o => {
-        if (o.isAdd || o.isAddBread) return;
-        const price = getPriceForOrder(o);
-        if (o.hasCommission) {
-            totalWithComm += price;
-        } else {
-            totalWithoutComm += price;
-        }
-    });
-    
-    const salaryWithComm = totalWithComm * 0.135;
-    const salaryWithoutComm = totalWithoutComm * 0.15;
-    const totalSalary = salaryWithComm + salaryWithoutComm;
-    
-    salaryAmount.textContent = totalSalary.toFixed(2) + ' ¥';
-    
-    let infoText = '';
-    if (totalWithComm > 0 && totalWithoutComm > 0) {
-        infoText = '(mix: 13.5% + 15%)';
-    } else if (totalWithComm > 0) {
-        infoText = '(13.5%)';
-    } else {
-        infoText = '(15%)';
-    }
-    salaryPercentDisplay.textContent = infoText;
-}
-
-function renderAddOrders() {
-    // ADD Bread list
-    if (addBreadOrders.length === 0) {
-        addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread orders yet</span>';
-    } else {
-        let html = '';
-        addBreadOrders.forEach((item, index) => {
-            html += `<span class="add-item">
-                <span class="qty">${item.count}×</span> ${item.type}
-                <span class="del" data-bread-index="${index}">✖</span>
-            </span> `;
-        });
-        addBreadOrdersList.innerHTML = html;
-        
-        document.querySelectorAll('.add-item .del[data-bread-index]').forEach(el => {
-            el.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.breadIndex);
-                const removed = addBreadOrders[idx];
-                addBreadOrders.splice(idx, 1);
-                let removedCount = 0;
-                breadOrders = breadOrders.filter(o => {
-                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Bread Summary Table
-    if (addBreadOrders.length === 0) {
-        addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>';
-    } else {
-        addBreadSummaryBody.innerHTML = '';
-        addBreadOrders.forEach((item, index) => {
-            let row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.type}</td>
-                <td>${item.count}</td>
-                <td><button class="delete-btn" data-add-bread-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
-            `;
-            addBreadSummaryBody.appendChild(row);
-        });
-        
-        document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.addBreadIndex);
-                const removed = addBreadOrders[idx];
-                addBreadOrders.splice(idx, 1);
-                let removedCount = 0;
-                breadOrders = breadOrders.filter(o => {
-                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Hummus list
-    if (addHummusOrders.length === 0) {
-        addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus orders yet</span>';
-    } else {
-        let html = '';
-        addHummusOrders.forEach((item, index) => {
-            const typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            html += `<span class="add-item">
-                <span class="qty">${item.count}×</span> ${typeLabel}
-                <span class="del" data-hummus-index="${index}">✖</span>
-            </span> `;
-        });
-        addHummusOrdersList.innerHTML = html;
-        
-        document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(el => {
-            el.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.hummusIndex);
-                const removed = addHummusOrders[idx];
-                addHummusOrders.splice(idx, 1);
-                let removedCount = 0;
-                hummusOrders = hummusOrders.filter(o => {
-                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Hummus Summary Table
-    if (addHummusOrders.length === 0) {
-        addHummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>';
-    } else {
-        addHummusSummaryBody.innerHTML = '';
-        addHummusOrders.forEach((item, index) => {
-            let row = document.createElement('tr');
-            const typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            row.innerHTML = `
-                <td>${typeLabel}</td>
-                <td>${item.count}</td>
-                <td><button class="delete-btn" data-add-hummus-index="${index}" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>
-            `;
-            addHummusSummaryBody.appendChild(row);
-        });
-        
-        document.querySelectorAll('#addHummusSummaryBody .delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const idx = parseInt(this.dataset.addHummusIndex);
-                const removed = addHummusOrders[idx];
-                addHummusOrders.splice(idx, 1);
-                let removedCount = 0;
-                hummusOrders = hummusOrders.filter(o => {
-                    if (o.isAddHummus && o.hummusType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-}
-
-function render() {
-    // Bread Table - nur normale Bestellungen
-    const normalOrders = breadOrders.filter(o => !o.isAdd && !o.isAddBread);
-    if(normalOrders.length === 0) {
-        breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
-    } else {
-        breadTableBody.innerHTML = "";
-        normalOrders.forEach((order, index) => {
-            let row = document.createElement("tr");
-            let sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
-            let price = getPriceForOrder(order);
-            let pcs = getPcsForOrder(order);
-            let nameDisplay = order.name;
-            let commDisplay = order.hasCommission ? 
-                '<span class="comm-tag comm-yes">13.5%</span>' : 
-                '<span class="comm-tag comm-no">15%</span>';
-            
-            row.innerHTML = `
-                <td>#${index + 1}</td>
-                <td style="text-align:left">${escapeHtml(nameDisplay)}</td>
-                <td>${order.breadType}</td>
-                <td>${sizeDisplay}</td>
-                <td>${pcs}</td>
-                <td>${price.toFixed(2)} ¥</td>
-                <td>${commDisplay}</td>
-                <td><button class="delete-btn" data-id="${order.id}" data-type="bread">✖</button></td>
-            `;
-            breadTableBody.appendChild(row);
-        });
-    }
-    
-    // Hummus Table - nur normale Bestellungen
-    const normalHummus = hummusOrders.filter(o => !o.isAddHummus);
-    if(normalHummus.length === 0) {
-        hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>';
-    } else {
-        hummusTableBody.innerHTML = "";
-        normalHummus.forEach((order, index) => {
-            let row = document.createElement("tr");
-            let hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            let hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
-            let nameDisplay = order.name;
-            
-            row.innerHTML = `
-                <td>#${index + 1}</td>
-                <td style="text-align:left">${escapeHtml(nameDisplay)}</td>
-                <td>${order.breadType}</td>
-                <td>${order.size}</td>
-                <td><span class="${hummusClass}">${hummusLabel}</span></td>
-                <td><button class="delete-btn" data-id="${order.id}" data-type="hummus">✖</button></td>
-            `;
-            hummusTableBody.appendChild(row);
-        });
-    }
-    
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            let id = parseInt(btn.getAttribute('data-id'));
-            let type = btn.getAttribute('data-type');
-            if(type === 'bread') {
-                breadOrders = breadOrders.filter(o => o.id !== id);
-            } else {
-                hummusOrders = hummusOrders.filter(o => o.id !== id);
-            }
-            render();
-            saveToLocal();
-        });
-    });
-    
-    const total = totalPriceAll();
-    totalSpan.innerText = total.toFixed(2) + " ¥";
-    hummusCountSpan.innerText = "🫒 " + totalHummusCount();
-    updateSalaryDisplay();
-
-    let req = getTotalRequirements();
-    let breakdown = getTimesPcsBreakdown();
-    
-    let needed88 = req.mix88;
-    let boxes = Math.ceil(needed88 / 1400);
-    if(boxes === 0 && needed88 > 0) boxes = 1;
-    document.getElementById("preparationRow").innerHTML = `<tr><td>88er Base Mix</td><td>${needed88.toFixed(1)} g</td><td>${boxes} Boxes</td></tr>`;
-    
-    document.getElementById("perPcsRow").innerHTML = `
-        <tr><td>88er</td><td>${(745/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
-        <tr><td>150er</td><td>${(650/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>0g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
-        <tr><td>188er</td><td>${(630/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>0g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
-        <tr><td>200er</td><td>${(620/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>${(13/13).toFixed(1)}g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
-        <tr><td>208er</td><td>${(620/13).toFixed(1)}g</td><td>${(97/13).toFixed(1)}g</td><td>${(15/13).toFixed(1)}g</td><td>${(13/13).toFixed(1)}g</td><td class="water-cell">${(360/13).toFixed(1)}g</td></tr>
-    `;
-    
-    let timesHtml = "", pcsHtml = "";
-    if(breakdown.length === 0 || breakdown.every(b=>b.fullCharges===0)) timesHtml = '<tr><td colspan="2">No times</td></tr>';
-    else timesHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>`<tr><td>${b.type}</td><td><span class="badge-time">${b.fullCharges} time</span></td></tr>`).join('');
-    if(breakdown.length === 0 || !breakdown.some(b=>b.restPcs>0)) pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
-    else pcsHtml = breakdown.filter(b=>b.restPcs>0).map(b=>`<tr><td>${b.type}</td><td><span class="badge-pcs">${b.restPcs} pcs</span></td></tr>`).join('');
-    document.getElementById("timesTableBody").innerHTML = timesHtml;
-    document.getElementById("pcsTableBody").innerHTML = pcsHtml;
-    
-    let thermHtml = "";
-    if(breakdown.some(b=>b.fullCharges>0)) {
-        thermHtml = breakdown.filter(b=>b.fullCharges>0).map(b=>{
-            let r = recipeFor13[b.type];
-            return `<tr><td>${b.type}</td><td>${b.fullCharges} time</td><td>${r.mix88}g</td><td>${r.mix150}g</td><td>${r.mix188}g</td><td>${r.mix200}g</td><td class="water-cell">${r.water}g</td></tr>`;
-        }).join('');
-    } else thermHtml = '<tr><td colspan="7">No times</td></tr>';
-    document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
-    
-    let restHtml = "", sum88=0, sum150=0, sum188=0, sum200=0, sumW=0;
-    if(breakdown.some(b=>b.restPcs>0)) {
-        restHtml = breakdown.filter(b=>b.restPcs>0).map(b=>{
-            let per = getPerPcs(b.type);
-            let t88 = per.mix88 * b.restPcs;
-            let t150 = per.mix150 * b.restPcs;
-            let t188 = per.mix188 * b.restPcs;
-            let t200 = per.mix200 * b.restPcs;
-            let tw = per.water * b.restPcs;
-            sum88+=t88; sum150+=t150; sum188+=t188; sum200+=t200; sumW+=tw;
-            return `<tr><td>${b.type}</td><td>${b.restPcs} pcs</td><td>${t88.toFixed(1)}g</td><td>${t150.toFixed(1)}g</td><td>${t188.toFixed(1)}g</td><td>${t200.toFixed(1)}g</td><td class="water-cell">${tw.toFixed(1)}g</td></tr>`;
-        }).join('');
-        document.getElementById("calculatedRestFooter").innerHTML = `<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>${sum88.toFixed(1)}g</td><td>${sum150.toFixed(1)}g</td><td>${sum188.toFixed(1)}g</td><td>${sum200.toFixed(1)}g</td><td class="water-cell">${sumW.toFixed(1)}g</td></tr>`;
-    } else {
-        restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
-        document.getElementById("calculatedRestFooter").innerHTML = "";
-    }
-    document.getElementById("calculatedRestTable").innerHTML = restHtml;
-    
-    renderAddOrders();
-}
-
-function addOrder() {
-    let name = customerName.value.trim();
-    if(!name) { alert("Please enter a name."); return; }
-    
-    const breadVal = breadType.value;
-    const sizeVal = breadSize.value;
-    const isMini = miniCheckbox.checked;
-    const hummusVal = hummusType.value;
-    const hummusSizeVal = hummusSize.value;
-    const hasCommission = commissionCheckbox.checked;
-    
-    if (sizeVal === 'M+' && hummusVal !== 'none') {
-        alert('❌ M+ (6 pcs) comes without hummus as standard!');
-        return;
-    }
-    
-    if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
-        alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
-        return;
-    }
-    
-    updateWeekDisplay();
-    
-    breadOrders.push({
-        id: nextId++,
-        name: name,
-        breadType: breadVal,
-        size: sizeVal,
-        isMini: isMini,
-        hasCommission: hasCommission,
-        week: currentWeek,
-        isAdd: false,
-        isAddBread: false
-    });
-    
-    if (hummusVal !== 'none') {
-        hummusOrders.push({
-            id: nextId++,
-            name: name,
-            breadType: breadVal,
-            size: hummusSizeVal,
-            hummusType: hummusVal,
-            week: currentWeek,
-            isAdd: false,
-            isAddHummus: false
-        });
-    }
-    
-    render();
-    saveToLocal();
-    
-    // Reset form fields
-    customerName.value = "";
-    miniCheckbox.checked = false;
-    commissionCheckbox.checked = false;
-    autoSelectHummus();
-    customerName.focus();
-}
-
-// ADD Bread Function
-function addAddBreadOrder() {
-    const breadVal = addBreadType.value;
-    const count = addBreadCount;
-    
-    const existing = addBreadOrders.find(item => item.type === breadVal);
-    if (existing) {
-        existing.count += count;
-    } else {
-        addBreadOrders.push({
-            type: breadVal,
-            count: count
-        });
-    }
-    
-    for (let i = 0; i < count; i++) {
-        breadOrders.push({
-            id: nextId++,
-            name: '⚡ Add Bread',
-            breadType: breadVal,
-            size: 'S',
-            isMini: false,
-            hasCommission: false,
-            week: currentWeek,
-            isAdd: true,
-            isAddBread: true
-        });
-    }
-    
-    render();
-    saveToLocal();
-    addBreadCount = 1;
-    addBreadCountDisplay.textContent = addBreadCount;
-}
-
-// ADD Hummus Function
-function addAddHummusOrder() {
-    const hummusVal = addHummusType.value;
-    const count = addHummusCount;
-    
-    const existing = addHummusOrders.find(item => item.type === hummusVal);
-    if (existing) {
-        existing.count += count;
-    } else {
-        addHummusOrders.push({
-            type: hummusVal,
-            count: count
-        });
-    }
-    
-    for (let i = 0; i < count; i++) {
-        hummusOrders.push({
-            id: nextId++,
-            name: '⚡ Add Hummus',
-            breadType: '—',
-            size: 'S',
-            hummusType: hummusVal,
-            week: currentWeek,
-            isAdd: true,
-            isAddHummus: true
-        });
-    }
-    
-    render();
-    saveToLocal();
-    addHummusCount = 1;
-    addHummusCountDisplay.textContent = addHummusCount;
-}
-
-// ADD Buttons
-addBreadAddBtn.addEventListener('click', addAddBreadOrder);
-addHummusAddBtn.addEventListener('click', addAddHummusOrder);
-
-function resetAll() {
-    if((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length) && confirm("Delete all orders?")) {
-        breadOrders = [];
-        hummusOrders = [];
-        addBreadOrders = [];
-        addHummusOrders = [];
-        render();
-        saveToLocal();
-        nextId = 1;
-    } else if(!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length) alert("No orders");
-}
-
-document.getElementById("addBtn").addEventListener("click", addOrder);
-document.getElementById("resetTableBtn").addEventListener("click", resetAll);
-
-loadFromLocal();
+function getPcsForOrder(e){var t=sizeToPcs[e.size]||0;return e.isMini?t/2:t}
+function getPriceForOrder(e){var t=priceDB[e.breadType]?.[e.size]||0;return e.isMini?t/2:t}
+function totalPriceAll(){var e=0;return breadOrders.forEach(function(t){t.isAdd||t.isAddBread||(e+=getPriceForOrder(t))}),e}
+function totalHummusCount(){return hummusOrders.length}
+function getTotalPcsPerType(){var e={88er:0,150er:0,188er:0,200er:0,208er:0};return breadOrders.forEach(function(t){var n=getPcsForOrder(t);e[t.breadType]+=n}),e}
+function getTotalRequirements(){var e=getTotalPcsPerType(),t=0,n=0,a=0,r=0,o=0;for(let[s,i]of Object.entries(e)){if(i===0)continue;var l=getPerPcs(s);t+=l.mix88*i;n+=l.mix150*i;a+=l.mix188*i;r+=l.mix200*i;o+=l.water*i}return{mix88:t,mix150:n,mix188:a,mix200:r,water:o}}
+function getTimesPcsBreakdown(){var e=getTotalPcsPerType(),t=[];for(let[n,a]of Object.entries(e)){if(a===0)continue;var r=Math.floor(a/13),o=a%13;t.push({type:n,fullCharges:r,restPcs:o})}return t}
+function escapeHtml(e){return e.replace(/[&<>]/g,function(e){return e==='&'?'&amp;':e==='<'?'&lt;':e==='>'?'&gt;':e})}
+function saveToLocal(){localStorage.setItem("microbiome_bread",JSON.stringify({orders:breadOrders,nextId:nextId}));localStorage.setItem("microbiome_hummus",JSON.stringify({orders:hummusOrders}));localStorage.setItem("microbiome_add_bread",JSON.stringify({orders:addBreadOrders}));localStorage.setItem("microbiome_add_hummus",JSON.stringify({orders:addHummusOrders}))}
+function loadFromLocal(){var e=localStorage.getItem("microbiome_bread");if(e)try{var t=JSON.parse(e);t.orders&&(breadOrders=t.orders),t.nextId&&(nextId=t.nextId)}catch(e){}var n=localStorage.getItem("microbiome_hummus");if(n)try{var a=JSON.parse(n);a.orders&&(hummusOrders=a.orders)}catch(e){}var r=localStorage.getItem("microbiome_add_bread");if(r)try{var o=JSON.parse(r);o.orders&&(addBreadOrders=o.orders)}catch(e){}var l=localStorage.getItem("microbiome_add_hummus");if(l)try{var s=JSON.parse(l);s.orders&&(addHummusOrders=s.orders)}catch(e){}render()}
+function updateSalaryDisplay(){var e=0,t=0;breadOrders.forEach(function(n){if(n.isAdd||n.isAddBread)return;var a=getPriceForOrder(n);n.hasCommission?e+=a:t+=a});var n=e*.135+t*.15;salaryAmount.textContent=n.toFixed(2)+' ¥';var a='';a=e>0&&t>0?'(mix: 13.5% + 15%)':e>0?'(13.5%)':'(15%)';salaryPercentDisplay.textContent=a}
+function renderAddOrders(){if(addBreadOrders.length===0){addBreadOrdersList.innerHTML='<span style="color:#b88c48;">No added bread orders yet</span>'}else{var e='';addBreadOrders.forEach(function(t,n){e+='<span class="add-item"><span class="qty">'+t.count+'×</span> '+t.type+' <span class="del" data-bread-index="'+n+'">✖</span></span> '});addBreadOrdersList.innerHTML=e;document.querySelectorAll('.add-item .del[data-bread-index]').forEach(function(e){e.addEventListener('click',function(){var e=parseInt(this.dataset.breadIndex),t=addBreadOrders[e];addBreadOrders.splice(e,1);var n=0;breadOrders=breadOrders.filter(function(e){if(e.isAddBread&&e.breadType===t.type&&n<t.count){n++;return false}return true});render();saveToLocal()})})}if(addBreadOrders.length===0){addBreadSummaryBody.innerHTML='<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>'}else{addBreadSummaryBody.innerHTML='';addBreadOrders.forEach(function(e,t){var n=document.createElement('tr');n.innerHTML='<td>'+e.type+'</td><td>'+e.count+'</td><td><button class="delete-btn" data-add-bread-index="'+t+'" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';addBreadSummaryBody.appendChild(n)});document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(function(e){e.addEventListener('click',function(){var e=parseInt(this.dataset.addBreadIndex),t=addBreadOrders[e];addBreadOrders.splice(e,1);var n=0;breadOrders=breadOrders.filter(function(e){if(e.isAddBread&&e.breadType===t.type&&n<t.count){n++;return false}return true});render();saveToLocal()})})}if(addHummusOrders.length===0){addHummusOrdersList.innerHTML='<span style="color:#b88c48;">No added hummus orders yet</span>'}else{var e='';addHummusOrders.forEach(function(t,n){var a=t.type==='yingyang'?'☯️ Ying&Yang':'🫒 Hummus';e+='<span class="add-item"><span class="qty">'+t.count+'×</span> '+a+' <span class="del" data-hummus-index="'+n+'">✖</span></span> '});addHummusOrdersList.innerHTML=e;document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(function(e){e.addEventListener('click',function(){var e=parseInt(this.dataset.hummusIndex),t=addHummusOrders[e];addHummusOrders.splice(e,1);var n=0;hummusOrders=hummusOrders.filter(function(e){if(e.isAddHummus&&e.hummusType===t.type&&n<t.count){n++;return false}return true});render();saveToLocal()})})}if(addHummusOrders.length===0){addHummusSummaryBody.innerHTML='<tr><td colspan="3" style="text-align:center">No ADD hummus orders yet</td></tr>'}else{addHummusSummaryBody.innerHTML='';addHummusOrders.forEach(function(e,t){var n=e.type==='yingyang'?'☯️ Ying&Yang':'🫒 Hummus',a=document.createElement('tr');a.innerHTML='<td>'+n+'</td><td>'+e.count+'</td><td><button class="delete-btn" data-add-hummus-index="'+t+'" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';addHummusSummaryBody.appendChild(a)});document.querySelectorAll('#addHummusSummaryBody .delete-btn').forEach(function(e){e.addEventListener('click',function(){var e=parseInt(this.dataset.addHummusIndex),t=addHummusOrders[e];addHummusOrders.splice(e,1);var n=0;hummusOrders=hummusOrders.filter(function(e){if(e.isAddHummus&&e.hummusType===t.type&&n<t.count){n++;return false}return true});render();saveToLocal()})})}}
+function render(){var e=breadOrders.filter(function(e){return!e.isAdd&&!e.isAddBread});if(e.length===0){breadTableBody.innerHTML='<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>'}else{breadTableBody.innerHTML='';e.forEach(function(e,t){var n=document.createElement('tr'),a=e.isMini?e.size+' (Mini)':e.size,r=getPriceForOrder(e),o=getPcsForOrder(e),l=e.name,s=e.hasCommission?'<span class="comm-tag comm-yes">13.5%</span>':'<span class="comm-tag comm-no">15%</span>',i=e.size==='XL+'||e.size==='M+'?' <span class="no-hummus-tag">no hummus</span>':'';n.innerHTML='<td>#'+(t+1)+'</td><td style="text-align:left">'+escapeHtml(l)+'</td><td>'+e.breadType+'</td><td>'+a+i+'</td><td>'+o+'</td><td>'+r.toFixed(2)+' ¥</td><td>'+s+'</td><td><button class="delete-btn" data-id="'+e.id+'" data-type="bread">✖</button></td>';breadTableBody.appendChild(n)})}var t=hummusOrders.filter(function(e){return!e.isAddHummus});if(t.length===0){hummusTableBody.innerHTML='<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>'}else{hummusTableBody.innerHTML='';t.forEach(function(e,t){var n=document.createElement('tr'),a=e.hummusType==='yingyang'?'☯️ Ying&Yang':'🫒 Hummus',r=e.hummusType==='yingyang'?'yingyang-tag':'hummus-tag',o=e.name;n.innerHTML='<td>#'+(t+1)+'</td><td style="text-align:left">'+escapeHtml(o)+'</td><td>'+e.breadType+'</td><td>'+e.size+'</td><td><span class="'+r+'">'+a+'</span></td><td><button class="delete-btn" data-id="'+e.id+'" data-type="hummus">✖</button></td>';hummusTableBody.appendChild(n)})}document.querySelectorAll('.delete-btn').forEach(function(e){e.addEventListener('click',function(){var t=parseInt(e.getAttribute('data-id')),n=e.getAttribute('data-type');n==='bread'?breadOrders=breadOrders.filter(function(e){return e.id!==t}):hummusOrders=hummusOrders.filter(function(e){return e.id!==t});render();saveToLocal()})});var n=totalPriceAll();totalSpan.innerText=n.toFixed(2)+' ¥';hummusCountSpan.innerText='🫒 '+totalHummusCount();updateSalaryDisplay();var a=getTotalRequirements(),r=getTimesPcsBreakdown(),o=a.mix88,l=Math.ceil(o/1400);(l===0&&o>0)&&(l=1);document.getElementById("preparationRow").innerHTML='<tr><td>88er Base Mix</td><td>'+o.toFixed(1)+' g</td><td>'+l+' Boxes</td></tr>';document.getElementById("perPcsRow").innerHTML='<tr><td>88er</td><td>'+(745/13).toFixed(1)+'g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">'+(360/13).toFixed(1)+'g</td></tr><tr><td>150er</td><td>'+(650/13).toFixed(1)+'g</td><td>'+(97/13).toFixed(1)+'g</td><td>0g</td><td>0g</td><td class="water-cell">'+(360/13).toFixed(1)+'g</td></tr><tr><td>188er</td><td>'+(630/13).toFixed(1)+'g</td><td>'+(97/13).toFixed(1)+'g</td><td>'+(15/13).toFixed(1)+'g</td><td>0g</td><td class="water-cell">'+(360/13).toFixed(1)+'g</td></tr><tr><td>200er</td><td>'+(620/13).toFixed(1)+'g</td><td>'+(97/13).toFixed(1)+'g</td><td>'+(15/13).toFixed(1)+'g</td><td>'+(13/13).toFixed(1)+'g</td><td class="water-cell">'+(360/13).toFixed(1)+'g</td></tr><tr><td>208er</td><td>'+(620/13).toFixed(1)+'g</td><td>'+(97/13).toFixed(1)+'g</td><td>'+(15/13).toFixed(1)+'g</td><td>'+(13/13).toFixed(1)+'g</td><td class="water-cell">'+(360/13).toFixed(1)+'g</td></tr>';var s='',i='';r.length===0||r.every(function(e){return e.fullCharges===0})?s='<tr><td colspan="2">No times</td></tr>':s=r.filter(function(e){return e.fullCharges>0}).map(function(e){return'<tr><td>'+e.type+'</td><td><span class="badge-time">'+e.fullCharges+' time</span></td></tr>'}).join('');r.length===0||!r.some(function(e){return e.restPcs>0})?i='<tr><td colspan="2">No rest pcs</td></tr>':i=r.filter(function(e){return e.restPcs>0}).map(function(e){return'<tr><td>'+e.type+'</td><td><span class="badge-pcs">'+e.restPcs+' pcs</span></td></tr>'}).join('');document.getElementById("timesTableBody").innerHTML=s;document.getElementById("pcsTableBody").innerHTML=i;var u='';r.some(function(e){return e.fullCharges>0})?u=r.filter(function(e){return e.fullCharges>0}).map(function(e){var t=recipeFor13[e.type];return'<tr><td>'+e.type+'</td><td>'+e.fullCharges+' time</td><td>'+t.mix88+'g</td><td>'+t.mix150+'g</td><td>'+t.mix188+'g</td><td>'+t.mix200+'g</td><td class="water-cell">'+t.water+'g</td></tr>'}).join(''):u='<tr><td colspan="7">No times</td></tr>';document.getElementById("calculatedThermomixTable").innerHTML=u;var d='',c=0,h=0,p=0,g=0,m=0;if(r.some(function(e){return e.restPcs>0})){d=r.filter(function(e){return e.restPcs>0}).map(function(e){var t=getPerPcs(e.type),n=t.mix88*e.restPcs,a=t.mix150*e.restPcs,r=t.mix188*e.restPcs,o=t.mix200*e.restPcs,l=t.water*e.restPcs;return c+=n,h+=a,p+=r,g+=o,m+=l,'<tr><td>'+e.type+'</td><td>'+e.restPcs+' pcs</td><td>'+n.toFixed(1)+'g</td><td>'+a.toFixed(1)+'g</td><td>'+r.toFixed(1)+'g</td><td>'+o.toFixed(1)+'g</td><td class="water-cell">'+l.toFixed(1)+'g</td></tr>'}).join('');document.getElementById("calculatedRestFooter").innerHTML='<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>'+c.toFixed(1)+'g</td><td>'+h.toFixed(1)+'g</td><td>'+p.toFixed(1)+'g</td><td>'+g.toFixed(1)+'g</td><td class="water-cell">'+m.toFixed(1)+'g</td></tr>'}else d='<tr><td colspan="7">No rest pcs</td></tr>',document.getElementById("calculatedRestFooter").innerHTML='';document.getElementById("calculatedRestTable").innerHTML=d;renderAddOrders()}
+function addOrder(){var e=customerName.value.trim();if(!e){alert("Please enter a name.");return}var t=breadType.value,n=breadSize.value,a=miniCheckbox.checked,r=hummusType.value,o=hummusSize.value,l=commissionCheckbox.checked;if((n==='M+'||n==='XL+')&&r!=='none'){alert('❌ '+n+' comes without hummus as standard!');return}if(r==='yingyang'&&t!=='188er'&&t!=='200er'&&t!=='208er'){alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');return}updateWeekDisplay();breadOrders.push({id:nextId++,name:e,breadType:t,size:n,isMini:a,hasCommission:l,week:currentWeek,isAdd:false,isAddBread:false});if(r!=='none'){hummusOrders.push({id:nextId++,name:e,breadType:t,size:o,hummusType:r,week:currentWeek,isAdd:false,isAddHummus:false})}render();saveToLocal();customerName.value="";miniCheckbox.checked=false;commissionCheckbox.checked=false;autoSelectHummus();customerName.focus()}
+function addAddBreadOrder(){var e=addBreadType.value,t=addBreadCount,n=addBreadOrders.find(function(t){return t.type===e});n?n.count+=t:addBreadOrders.push({type:e,count:t});for(var a=0;a<t;a++)breadOrders.push({id:nextId++,name:'⚡ Add Bread',breadType:e,size:'S',isMini:false,hasCommission:false,week:currentWeek,isAdd:true,isAddBread:true});render();saveToLocal();addBreadCount=1;addBreadCountDisplay.textContent=addBreadCount}
+function addAddHummusOrder(){var e=addHummusType.value,t=addHummusCount,n=addHummusOrders.find(function(t){return t.type===e});n?n.count+=t:addHummusOrders.push({type:e,count:t});for(var a=0;a<t;a++)hummusOrders.push({id:nextId++,name:'⚡ Add Hummus',breadType:'—',size:'S',hummusType:e,week:currentWeek,isAdd:true,isAddHummus:true});render();saveToLocal();addHummusCount=1;addHummusCountDisplay.textContent=addHummusCount}
+addBreadAddBtn.addEventListener('click',addAddBreadOrder);addHummusAddBtn.addEventListener('click',addAddHummusOrder);
+function resetAll(){(breadOrders.length||hummusOrders.length||addBreadOrders.length||addHummusOrders.length)&&confirm("Delete all orders?")?(breadOrders=[],hummusOrders=[],addBreadOrders=[],addHummusOrders=[],render(),saveToLocal(),nextId=1):breadOrders.length||hummusOrders.length||addBreadOrders.length||addHummusOrders.length||alert("No orders")}
+document.getElementById("addBtn").addEventListener("click",addOrder);document.getElementById("resetTableBtn").addEventListener("click",resetAll);loadFromLocal();
 </script>
 </body>
 </html>
