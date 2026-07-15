@@ -97,10 +97,52 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .comm-toggle.active .toggle-dot{background:#2ecc71;}
 .comm-toggle.inactive .toggle-dot{background:#95a5a6;}
 .comm-toggle .toggle-label{font-size:0.5rem;}
+/* Route Planning */
+.route-container{background:rgba(46,204,113,0.08);border-radius:16px;padding:12px;margin-top:12px;border:2px solid #27ae60;}
+.route-step{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(39,174,96,0.15);font-size:0.65rem;}
+.route-step:last-child{border-bottom:none;}
+.route-step .step-num{background:#27ae60;color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:800;flex-shrink:0;}
+.route-step .step-name{flex:1;font-weight:600;color:#2a1a08;word-break:break-all;font-size:0.6rem;}
+.route-step .step-detail{color:#6b4a1c;font-size:0.55rem;flex-shrink:0;}
+.route-empty{color:#b88c48;font-size:0.6rem;text-align:center;padding:8px;}
+.route-input-group{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px;}
+.route-input-group input{width:100%;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;}
+.route-input-group input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2);}
+.route-result{margin-top:10px;}
+.route-apple-btn{width:100%;padding:14px;margin-top:8px;border-radius:20px;border:none;font-weight:700;font-size:0.8rem;background:linear-gradient(135deg,#007aff,#0055cc);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,122,255,0.3);}
+.route-apple-btn:active{transform:scale(0.97);}
+.route-apple-btn svg{width:20px;height:20px;fill:white;}
+.route-apple-btn:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none;}
+.route-apple-btn .btn-icon{display:flex;align-items:center;justify-content:center;}
+.route-apple-btn .btn-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;}
+.route-apple-btn .btn-text .sub{font-weight:400;font-size:0.55rem;opacity:0.8;}
+/* Address Manager */
+.address-manager{font-size:0.6rem;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px dashed #d4c090;}
+.address-manager .am-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:2px 0;}
+.address-manager .am-header .am-label{font-weight:700;color:#6b4a1c;font-size:0.55rem;}
+.address-manager .am-header .am-toggle{background:none;border:none;color:#8a6a2a;font-size:0.5rem;cursor:pointer;padding:2px 6px;}
+.address-manager .am-body{display:none;margin-top:4px;}
+.address-manager .am-body.open{display:block;}
+.address-manager .am-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:3px;}
+.address-manager .am-row input{flex:1;min-width:60px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0;}
+.address-manager .am-row button{padding:4px 10px;font-size:0.55rem;margin:0;border-radius:12px;width:auto;}
+.address-manager .am-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0;}
+.address-manager .am-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700;}
+.address-manager .am-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px;}
+.auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center;}
+.route-no-distance{font-size:0.55rem;color:#8a6a2a;margin-top:4px;text-align:center;}
+.address-stats{font-size:0.5rem;color:#8a6a2a;}
+.route-start-container{position:relative;}
+.route-start-container input{padding-right:70px;}
+.route-start-container .start-badge{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:0.5rem;background:#27ae60;color:white;padding:2px 8px;border-radius:10px;}
+.optimized-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.45rem;font-weight:700;margin-left:4px;}
+.route-optimized{background:rgba(39,174,96,0.08);border-radius:10px;padding:4px 10px;margin-top:4px;font-size:0.55rem;color:#27ae60;text-align:center;border:1px solid rgba(39,174,96,0.15);}
+.route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2);}
 </style>
 </head>
 <body>
 <div class="container" id="captureArea">
+<!-- ====== ORDER CARD ====== -->
 <div class="card">
 <div class="header-row">
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
@@ -112,7 +154,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div id="screenshotStatus">✅ Screenshot saved!</div>
 
 <label>Customer Name</label>
-<input id="customerName" placeholder="e.g. Ms. Zhang" autocomplete="off">
+<input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div><label>Variety</label><select id="breadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select></div>
@@ -138,11 +180,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">⚠️ Ying & Yang only available for 188er, 200er & 208er!</div>
 </div>
 
-<button id="addBtn">➕ Add Order (with Name)</button>
+<button id="addBtn">➕ Add Order</button>
 <button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
 </div>
 
-<!-- ADD BREAD -->
+<!-- ====== ADD BREAD ====== -->
 <div class="card">
 <div class="add-section">
 <div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
@@ -157,7 +199,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 </div>
 
-<!-- ADD HUMMUS -->
+<!-- ====== ADD HUMMUS ====== -->
 <div class="card">
 <div class="add-section" style="border-color:#8faa4a;">
 <div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
@@ -173,7 +215,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 </div>
 
-<!-- Order Overview -->
+<!-- ====== ORDER OVERVIEW ====== -->
 <div class="card">
 <div style="display:flex;justify-content:space-between;align-items:center;"><h2>📋 Orders (CNY)</h2><span class="week-badge" id="weekBadge">Week 27</span></div>
 
@@ -183,10 +225,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
 <div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr></tbody></table></div>
 
-<div class="table-title hummus-title" style="margin-top:12px;">🫒 ADD Hummus Summary (free)</div>
-<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Size</th><th class="hummus-th">Total pcs</th><th class="hummus-th"></th></thead><tbody id="addHummusSummaryBody"><tr><td colspan="4" style="text-align:center">No ADD hummus orders yet</td></tr></tbody></table></div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 HUMMUS SUMMARY (all orders)</div>
+<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Size</th><th class="hummus-th">Total pcs</th></thead><tbody id="hummusSummaryBody"><tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr></tbody></table></div>
 
-<div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders (free)</div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders Detail (free)</div>
 <div class="scrollable"><table><thead><th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th></thead><tbody id="hummusTableBody"><tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr></tbody></table></div>
 
 <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
@@ -202,7 +244,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 </div>
 
-<!-- PREPARATION -->
+<!-- ====== PREPARATION ====== -->
 <div class="card">
 <h2>📦 PREPARATION</h2>
 <h3>🥣 88er Base Mix</h3>
@@ -219,787 +261,1367 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="scrollable"><table><thead><th>Variety</th><th>pcs</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="calculatedRestTable"></tbody><tfoot id="calculatedRestFooter"></tfoot></table></div>
 <div class="info-text">💡 1 time = 13 pcs (full batch) | Mini: half price & half pcs | Hummus: free</div>
 </div>
+
+<!-- ====== ROUTE PLANNING ====== -->
+<div class="card">
+<div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">🧠 AI OPTIMIZED</span></div>
+
+<!-- ADDRESS MANAGER -->
+<div class="address-manager">
+    <div class="am-header" id="addressToggle">
+        <span class="am-label">📌 Address Book <span class="address-stats" id="addressCount">(0 entries)</span></span>
+        <span class="am-toggle" id="addressToggleBtn">▼ Show</span>
+    </div>
+    <div class="am-body" id="addressBody">
+        <div id="addressList">
+            <div class="am-empty">No addresses saved yet</div>
+        </div>
+        <div class="am-row">
+            <input id="addressNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
+            <input id="addressAddrInput" placeholder="Address" style="flex:1.2;">
+            <button id="addAddressBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
+        </div>
+    </div>
+</div>
+
+<div class="route-input-group">
+<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">🏠 Your Start Address</label>
+<div class="route-start-container">
+    <input id="routeStart" placeholder="e.g. 中国上海市青浦区湖畔佳苑391号" value="中国上海市青浦区湖畔佳苑391号">
+    <span class="start-badge">📍 fixed</span>
+</div>
+</div>
+
+<div style="margin-top:8px;background:rgba(46,204,113,0.06);border-radius:12px;padding:8px;border:1px solid #d4c090;">
+    <div style="font-weight:700;font-size:0.7rem;color:#27ae60;">📋 ORDERS FOR DELIVERY <span class="optimized-badge">🧠 AI sorted</span></div>
+    <div id="autoRouteList" style="font-size:0.6rem;padding:4px 0;color:#6b4a1c;">No orders yet</div>
+</div>
+
+<div class="route-container route-result" id="routeResult">
+<div class="route-empty">Add orders → AI will find shortest route</div>
+</div>
+
+<div class="route-optimized" id="routeOptimizedInfo">🧠 AI using Branch & Bound algorithm for optimal route</div>
+<div class="route-compare" id="routeCompareInfo"></div>
+
+<button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
+    <span class="btn-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    </span>
+    <span class="btn-text">
+        <span>🗺️ Open in Apple Maps</span>
+        <span class="sub">📍 AI-optimized route · real-time navigation</span>
+    </span>
+</button>
+
+<div class="auto-route-info">✅ AI finds shortest route automatically</div>
+</div>
+
 <footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY</footer>
 </div>
 
 <script>
-// WEEK CALCULATION
-function calculateCurrentWeek() {
-    var startDate = new Date(2025, 11, 22);
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var diffTime = today.getTime() - startDate.getTime();
-    var diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    var weekNum = Math.floor(diffDays / 7) + 1;
-    if (weekNum < 1) weekNum = 1;
-    if (weekNum > 53) weekNum = 53;
-    return weekNum;
-}
+(function() {
+    // ============ WEEK CALCULATION ============
+    function calculateCurrentWeek() {
+        var startDate = new Date(2025, 11, 22);
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var diffTime = today.getTime() - startDate.getTime();
+        var diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        var weekNum = Math.floor(diffDays / 7) + 1;
+        if (weekNum < 1) weekNum = 1;
+        if (weekNum > 53) weekNum = 53;
+        return weekNum;
+    }
 
-// PRICE DATABASE
-var priceDB = {
-    "88er": {"S":102, "S+":(102/2)*3*0.875817, "M":190, "M+":190, "L":278, "XM":308, "XL":350, "XL+":350},
-    "150er": {"S":208, "S+":(208/2)*3*0.875817, "M":402, "M+":402, "L":596, "XM":658, "XL":766, "XL+":766},
-    "188er": {"S":288, "S+":(288/2)*3*0.875817, "M":588, "M+":588, "L":888, "XM":988, "XL":1138, "XL+":1138},
-    "200er": {"S":308, "S+":(308/2)*3*0.875817, "M":688, "M+":688, "L":968, "XM":1080, "XL":1288, "XL+":1288},
-    "208er": {"S":328, "S+":(328/2)*3*0.875817, "M":788, "M+":788, "L":1108, "XM":1288, "XL":1468, "XL+":1468}
-};
+    // ============ PRICE DATABASE ============
+    var priceDB = {
+        "88er": {"S":102, "S+":(102/2)*3*0.875817, "M":190, "M+":190, "L":278, "XM":308, "XL":350, "XL+":350},
+        "150er": {"S":208, "S+":(208/2)*3*0.875817, "M":402, "M+":402, "L":596, "XM":658, "XL":766, "XL+":766},
+        "188er": {"S":288, "S+":(288/2)*3*0.875817, "M":588, "M+":588, "L":888, "XM":988, "XL":1138, "XL+":1138},
+        "200er": {"S":308, "S+":(308/2)*3*0.875817, "M":688, "M+":688, "L":968, "XM":1080, "XL":1288, "XL+":1288},
+        "208er": {"S":328, "S+":(328/2)*3*0.875817, "M":788, "M+":788, "L":1108, "XM":1288, "XL":1468, "XL+":1468}
+    };
 
-// SIZE TO PIECES
-var sizeToPcs = {"S":2, "S+":3, "M":5, "M+":6, "L":8, "XM":9, "XL":11, "XL+":12};
+    var sizeToPcs = {"S":2, "S+":3, "M":5, "M+":6, "L":8, "XM":9, "XL":11, "XL+":12};
 
-// RECIPE
-var recipeFor13 = {
-    "88er": {mix88:745, mix150:0, mix188:0, mix200:0, water:360},
-    "150er": {mix88:650, mix150:97, mix188:0, mix200:0, water:360},
-    "188er": {mix88:630, mix150:97, mix188:15, mix200:0, water:360},
-    "200er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360},
-    "208er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360}
-};
+    var recipeFor13 = {
+        "88er": {mix88:745, mix150:0, mix188:0, mix200:0, water:360},
+        "150er": {mix88:650, mix150:97, mix188:0, mix200:0, water:360},
+        "188er": {mix88:630, mix150:97, mix188:15, mix200:0, water:360},
+        "200er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360},
+        "208er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360}
+    };
 
-function getPerPcs(type) {
-    var r = recipeFor13[type];
-    return {mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13};
-}
+    function getPerPcs(type) {
+        var r = recipeFor13[type];
+        return {mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13};
+    }
 
-// DATA STORE
-var breadOrders = [];
-var hummusOrders = [];
-var addBreadOrders = [];
-var addHummusOrders = [];
-var nextId = 1;
-var currentWeek = calculateCurrentWeek();
-var addBreadCount = 1;
-var addHummusCount = 1;
+    // ============ DATA STORE ============
+    var breadOrders = [];
+    var hummusOrders = [];
+    var addBreadOrders = [];
+    var addHummusOrders = [];
+    var addressBook = {};
+    var nextId = 1;
+    var currentWeek = calculateCurrentWeek();
+    var addBreadCount = 1;
+    var addHummusCount = 1;
+    var addressBookOpen = false;
 
-// DOM REFS
-var customerName = document.getElementById("customerName");
-var breadType = document.getElementById("breadType");
-var breadSize = document.getElementById("breadSize");
-var miniCheckbox = document.getElementById("miniCheckbox");
-var hummusType = document.getElementById("hummusType");
-var hummusSize = document.getElementById("hummusSize");
-var yingYangInfo = document.getElementById("yingYangInfo");
-var yingYangWarning = document.getElementById("yingYangWarning");
-var breadTableBody = document.getElementById("breadTableBody");
-var addBreadSummaryBody = document.getElementById("addBreadSummaryBody");
-var addHummusSummaryBody = document.getElementById("addHummusSummaryBody");
-var hummusTableBody = document.getElementById("hummusTableBody");
-var totalSpan = document.getElementById("totalPriceSum");
-var hummusCountSpan = document.getElementById("hummusCount");
-var weekNumber = document.getElementById("weekNumber");
-var weekBadge = document.getElementById("weekBadge");
-var screenshotBtn = document.getElementById("screenshotBtn");
-var screenshotStatus = document.getElementById("screenshotStatus");
-var commissionCheckbox = document.getElementById("commissionCheckbox");
-var addBreadType = document.getElementById("addBreadType");
-var addBreadCountDisplay = document.getElementById("addBreadCountDisplay");
-var addBreadMinusBtn = document.getElementById("addBreadMinusBtn");
-var addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
-var addBreadAddBtn = document.getElementById("addBreadAddBtn");
-var addBreadOrdersList = document.getElementById("addBreadOrdersList");
-var addHummusType = document.getElementById("addHummusType");
-var addHummusSize = document.getElementById("addHummusSize");
-var addHummusCountDisplay = document.getElementById("addHummusCountDisplay");
-var addHummusMinusBtn = document.getElementById("addHummusMinusBtn");
-var addHummusPlusBtn = document.getElementById("addHummusPlusBtn");
-var addHummusAddBtn = document.getElementById("addHummusAddBtn");
-var addHummusOrdersList = document.getElementById("addHummusOrdersList");
-var salaryAmount = document.getElementById("salaryAmount");
-var salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
+    // Traffic state
+    var trafficSimulationInterval = null;
+    var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 0.9 };
 
-// ADD BREAD COUNT CONTROLS
-addBreadMinusBtn.addEventListener('click', function() {
-    if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; }
-});
-addBreadPlusBtn.addEventListener('click', function() {
-    if (addBreadCount < 99) { addBreadCount++; addBreadCountDisplay.textContent = addBreadCount; }
-});
+    // Optimized route
+    var optimizedRoute = [];
 
-// ADD HUMMUS COUNT CONTROLS
-addHummusMinusBtn.addEventListener('click', function() {
-    if (addHummusCount > 1) { addHummusCount--; addHummusCountDisplay.textContent = addHummusCount; }
-});
-addHummusPlusBtn.addEventListener('click', function() {
-    if (addHummusCount < 99) { addHummusCount++; addHummusCountDisplay.textContent = addHummusCount; }
-});
+    // ============ DOM REFS ============
+    var customerName = document.getElementById("customerName");
+    var breadType = document.getElementById("breadType");
+    var breadSize = document.getElementById("breadSize");
+    var miniCheckbox = document.getElementById("miniCheckbox");
+    var hummusType = document.getElementById("hummusType");
+    var hummusSize = document.getElementById("hummusSize");
+    var yingYangInfo = document.getElementById("yingYangInfo");
+    var yingYangWarning = document.getElementById("yingYangWarning");
+    var breadTableBody = document.getElementById("breadTableBody");
+    var addBreadSummaryBody = document.getElementById("addBreadSummaryBody");
+    var hummusSummaryBody = document.getElementById("hummusSummaryBody");
+    var hummusTableBody = document.getElementById("hummusTableBody");
+    var totalSpan = document.getElementById("totalPriceSum");
+    var hummusCountSpan = document.getElementById("hummusCount");
+    var weekNumber = document.getElementById("weekNumber");
+    var weekBadge = document.getElementById("weekBadge");
+    var screenshotBtn = document.getElementById("screenshotBtn");
+    var screenshotStatus = document.getElementById("screenshotStatus");
+    var commissionCheckbox = document.getElementById("commissionCheckbox");
+    var addBreadType = document.getElementById("addBreadType");
+    var addBreadCountDisplay = document.getElementById("addBreadCountDisplay");
+    var addBreadMinusBtn = document.getElementById("addBreadMinusBtn");
+    var addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
+    var addBreadAddBtn = document.getElementById("addBreadAddBtn");
+    var addBreadOrdersList = document.getElementById("addBreadOrdersList");
+    var addHummusType = document.getElementById("addHummusType");
+    var addHummusSize = document.getElementById("addHummusSize");
+    var addHummusCountDisplay = document.getElementById("addHummusCountDisplay");
+    var addHummusMinusBtn = document.getElementById("addHummusMinusBtn");
+    var addHummusPlusBtn = document.getElementById("addHummusPlusBtn");
+    var addHummusAddBtn = document.getElementById("addHummusAddBtn");
+    var addHummusOrdersList = document.getElementById("addHummusOrdersList");
+    var salaryAmount = document.getElementById("salaryAmount");
+    var salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
 
-// WEEK DISPLAY
-function updateWeekDisplay() {
-    currentWeek = calculateCurrentWeek();
-    weekNumber.value = currentWeek;
-    weekBadge.textContent = 'Week ' + currentWeek;
-}
-updateWeekDisplay();
+    var routeStart = document.getElementById("routeStart");
+    var routeResult = document.getElementById("routeResult");
+    var appleMapsBtn = document.getElementById("appleMapsBtn");
+    var autoRouteList = document.getElementById("autoRouteList");
+    var addressList = document.getElementById("addressList");
+    var addressNameInput = document.getElementById("addressNameInput");
+    var addressAddrInput = document.getElementById("addressAddrInput");
+    var addAddressBtn = document.getElementById("addAddressBtn");
+    var addressCount = document.getElementById("addressCount");
+    var addressToggleBtn = document.getElementById("addressToggleBtn");
+    var addressBody = document.getElementById("addressBody");
+    var addressToggle = document.getElementById("addressToggle");
+    var routeOptimizedInfo = document.getElementById("routeOptimizedInfo");
+    var routeCompareInfo = document.getElementById("routeCompareInfo");
 
-// SCREENSHOT
-screenshotBtn.addEventListener('click', function() {
-    var element = document.getElementById('captureArea');
-    var status = document.getElementById('screenshotStatus');
-    html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        logging: false,
-        width: element.scrollWidth,
-        height: element.scrollHeight,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight
-    }).then(function(canvas) {
-        var link = document.createElement('a');
-        link.download = 'microbiome_warrior_week_' + currentWeek + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        status.style.display = 'block';
-        status.textContent = '✅ Screenshot downloaded!';
-        status.style.background = '#e8f5e9';
-        setTimeout(function() { status.style.display = 'none'; }, 3000);
-    }).catch(function(error) {
-        console.error('Screenshot error:', error);
-        status.style.display = 'block';
-        status.textContent = '❌ Error taking screenshot';
-        status.style.background = '#fde8e8';
-        setTimeout(function() { status.style.display = 'none'; }, 3000);
+    // ============ ADDRESS TOGGLE ============
+    addressToggle.addEventListener('click', function() {
+        addressBookOpen = !addressBookOpen;
+        addressBody.classList.toggle('open');
+        addressToggleBtn.textContent = addressBookOpen ? '▲ Hide' : '▼ Show';
     });
-});
 
-// AUTO HUMMUS SELECTION
-function getHummusSizeForBreadSize(breadSizeVal) {
-    if (breadSizeVal === 'S+') return 'S';
-    return breadSizeVal;
-}
-
-function autoSelectHummus() {
-    var val = breadType.value;
-    var sizeVal = breadSize.value;
-    var hummusSelect = hummusType;
-    var hummusSizeSelect = hummusSize;
-    
-    if (sizeVal === 'M+' || sizeVal === 'XL+') {
-        hummusSelect.value = 'none';
-        yingYangInfo.classList.remove('show');
-        yingYangWarning.style.display = 'none';
-        return;
+    // ============ AUTO CAPITALIZE ============
+    function capitalizeName(input) {
+        if (!input) return '';
+        return input.charAt(0).toUpperCase() + input.slice(1);
     }
-    
-    var hummusSizeVal = getHummusSizeForBreadSize(sizeVal);
-    hummusSizeSelect.value = hummusSizeVal;
-    
-    if (val === '88er' || val === '150er') {
-        hummusSelect.value = 'hummus';
-        yingYangInfo.classList.remove('show');
-        yingYangWarning.style.display = 'none';
-    } else if (val === '188er' || val === '200er' || val === '208er') {
-        hummusSelect.value = 'yingyang';
-        yingYangInfo.classList.add('show');
-        yingYangWarning.style.display = 'none';
-    }
-}
 
-breadType.addEventListener('change', autoSelectHummus);
-breadSize.addEventListener('change', autoSelectHummus);
-autoSelectHummus();
-
-hummusType.addEventListener('change', function() {
-    var sizeVal = breadSize.value;
-    if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') {
-        alert('❌ ' + sizeVal + ' comes without hummus as standard!');
-        this.value = 'none';
-        return;
-    }
-    if (this.value === 'yingyang') {
-        var val = breadType.value;
-        if (val !== '188er' && val !== '200er' && val !== '208er') {
-            yingYangWarning.style.display = 'block';
-            alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
-            this.value = 'hummus';
-            yingYangWarning.style.display = 'none';
-        } else {
-            yingYangWarning.style.display = 'none';
-        }
-    } else {
-        yingYangWarning.style.display = 'none';
-    }
-});
-
-// HELPERS
-function getPcsForOrder(order) {
-    var base = sizeToPcs[order.size] || 0;
-    return order.isMini ? base / 2 : base;
-}
-
-function getPriceForOrder(order) {
-    var basePrice = priceDB[order.breadType]?.[order.size] || 0;
-    return order.isMini ? basePrice / 2 : basePrice;
-}
-
-function totalPriceAll() {
-    var sum = 0;
-    breadOrders.forEach(function(o) {
-        if (!o.isAdd && !o.isAddBread) {
-            sum += getPriceForOrder(o);
-        }
+    customerName.addEventListener('blur', function() {
+        this.value = capitalizeName(this.value.trim());
     });
-    return sum;
-}
 
-function totalHummusCount() {
-    return hummusOrders.length;
-}
-
-function getTotalPcsPerType() {
-    var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
-    breadOrders.forEach(function(o) {
-        var pcs = getPcsForOrder(o);
-        totals[o.breadType] += pcs;
+    addressNameInput.addEventListener('blur', function() {
+        this.value = capitalizeName(this.value.trim());
     });
-    return totals;
-}
 
-function getTotalRequirements() {
-    var pcs = getTotalPcsPerType();
-    var total88 = 0, total150 = 0, total188 = 0, total200 = 0, totalWater = 0;
-    for (var type in pcs) {
-        var p = pcs[type];
-        if (p === 0) continue;
-        var per = getPerPcs(type);
-        total88 += per.mix88 * p;
-        total150 += per.mix150 * p;
-        total188 += per.mix188 * p;
-        total200 += per.mix200 * p;
-        totalWater += per.water * p;
-    }
-    return {mix88: total88, mix150: total150, mix188: total188, mix200: total200, water: totalWater};
-}
-
-function getTimesPcsBreakdown() {
-    var pcs = getTotalPcsPerType();
-    var res = [];
-    for (var type in pcs) {
-        var total = pcs[type];
-        if (total === 0) continue;
-        var full = Math.floor(total / 13);
-        var rest = total % 13;
-        res.push({type: type, fullCharges: full, restPcs: rest});
-    }
-    return res;
-}
-
-function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
+    // ============ ADD BREAD COUNT CONTROLS ============
+    addBreadMinusBtn.addEventListener('click', function() {
+        if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; }
     });
-}
-
-// LOCAL STORAGE
-function saveToLocal() {
-    localStorage.setItem("microbiome_bread", JSON.stringify({orders: breadOrders, nextId: nextId}));
-    localStorage.setItem("microbiome_hummus", JSON.stringify({orders: hummusOrders}));
-    localStorage.setItem("microbiome_add_bread", JSON.stringify({orders: addBreadOrders}));
-    localStorage.setItem("microbiome_add_hummus", JSON.stringify({orders: addHummusOrders}));
-}
-
-function loadFromLocal() {
-    var breadData = localStorage.getItem("microbiome_bread");
-    if (breadData) {
-        try {
-            var parsed = JSON.parse(breadData);
-            if (parsed.orders) breadOrders = parsed.orders;
-            if (parsed.nextId) nextId = parsed.nextId;
-        } catch(e) {}
-    }
-    var hummusData = localStorage.getItem("microbiome_hummus");
-    if (hummusData) {
-        try {
-            var parsed = JSON.parse(hummusData);
-            if (parsed.orders) hummusOrders = parsed.orders;
-        } catch(e) {}
-    }
-    var addBreadData = localStorage.getItem("microbiome_add_bread");
-    if (addBreadData) {
-        try {
-            var parsed = JSON.parse(addBreadData);
-            if (parsed.orders) addBreadOrders = parsed.orders;
-        } catch(e) {}
-    }
-    var addHummusData = localStorage.getItem("microbiome_add_hummus");
-    if (addHummusData) {
-        try {
-            var parsed = JSON.parse(addHummusData);
-            if (parsed.orders) addHummusOrders = parsed.orders;
-        } catch(e) {}
-    }
-    render();
-}
-
-// SALARY DISPLAY
-function updateSalaryDisplay() {
-    var totalWithComm = 0;
-    var totalWithoutComm = 0;
-    
-    breadOrders.forEach(function(o) {
-        if (o.isAdd || o.isAddBread) return;
-        var price = getPriceForOrder(o);
-        if (o.hasCommission) {
-            totalWithComm += price;
-        } else {
-            totalWithoutComm += price;
-        }
+    addBreadPlusBtn.addEventListener('click', function() {
+        if (addBreadCount < 99) { addBreadCount++; addBreadCountDisplay.textContent = addBreadCount; }
     });
-    
-    var salaryWithComm = totalWithComm * 0.135;
-    var salaryWithoutComm = totalWithoutComm * 0.15;
-    var totalSalary = salaryWithComm + salaryWithoutComm;
-    
-    salaryAmount.textContent = totalSalary.toFixed(2) + ' ¥';
-    
-    var infoText = '';
-    if (totalWithComm > 0 && totalWithoutComm > 0) {
-        infoText = '(mix: 13.5% + 15%)';
-    } else if (totalWithComm > 0) {
-        infoText = '(13.5%)';
-    } else {
-        infoText = '(15%)';
-    }
-    salaryPercentDisplay.textContent = infoText;
-}
 
-// TOGGLE COMMISSION
-function toggleCommission(orderId) {
-    var order = breadOrders.find(function(o) { return o.id === orderId; });
-    if (order && !order.isAdd && !order.isAddBread) {
-        order.hasCommission = !order.hasCommission;
-        render();
-        saveToLocal();
-    }
-}
-
-// RENDER ADD ORDERS
-function renderAddOrders() {
-    // ADD Bread list
-    if (addBreadOrders.length === 0) {
-        addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread orders yet</span>';
-    } else {
-        var html = '';
-        addBreadOrders.forEach(function(item, index) {
-            html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + item.type + ' <span class="del" data-bread-index="' + index + '">✖</span></span> ';
-        });
-        addBreadOrdersList.innerHTML = html;
-        document.querySelectorAll('.add-item .del[data-bread-index]').forEach(function(el) {
-            el.addEventListener('click', function() {
-                var idx = parseInt(this.dataset.breadIndex);
-                var removed = addBreadOrders[idx];
-                addBreadOrders.splice(idx, 1);
-                var removedCount = 0;
-                breadOrders = breadOrders.filter(function(o) {
-                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Bread Summary Table
-    if (addBreadOrders.length === 0) {
-        addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>';
-    } else {
-        addBreadSummaryBody.innerHTML = '';
-        addBreadOrders.forEach(function(item, index) {
-            var row = document.createElement('tr');
-            row.innerHTML = '<td>' + item.type + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
-            addBreadSummaryBody.appendChild(row);
-        });
-        document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var idx = parseInt(this.dataset.addBreadIndex);
-                var removed = addBreadOrders[idx];
-                addBreadOrders.splice(idx, 1);
-                var removedCount = 0;
-                breadOrders = breadOrders.filter(function(o) {
-                    if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Hummus list
-    if (addHummusOrders.length === 0) {
-        addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus orders yet</span>';
-    } else {
-        var html = '';
-        addHummusOrders.forEach(function(item, index) {
-            var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + typeLabel + ' (' + item.size + ') <span class="del" data-hummus-index="' + index + '">✖</span></span> ';
-        });
-        addHummusOrdersList.innerHTML = html;
-        document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(function(el) {
-            el.addEventListener('click', function() {
-                var idx = parseInt(this.dataset.hummusIndex);
-                var removed = addHummusOrders[idx];
-                addHummusOrders.splice(idx, 1);
-                var removedCount = 0;
-                hummusOrders = hummusOrders.filter(function(o) {
-                    if (o.isAddHummus && o.hummusType === removed.type && o.size === removed.size && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-    
-    // ADD Hummus Summary Table
-    if (addHummusOrders.length === 0) {
-        addHummusSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No ADD hummus orders yet</td></tr>';
-    } else {
-        addHummusSummaryBody.innerHTML = '';
-        addHummusOrders.forEach(function(item, index) {
-            var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            var row = document.createElement('tr');
-            row.innerHTML = '<td>' + typeLabel + '</td><td>' + item.size + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-hummus-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
-            addHummusSummaryBody.appendChild(row);
-        });
-        document.querySelectorAll('#addHummusSummaryBody .delete-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var idx = parseInt(this.dataset.addHummusIndex);
-                var removed = addHummusOrders[idx];
-                addHummusOrders.splice(idx, 1);
-                var removedCount = 0;
-                hummusOrders = hummusOrders.filter(function(o) {
-                    if (o.isAddHummus && o.hummusType === removed.type && o.size === removed.size && removedCount < removed.count) {
-                        removedCount++;
-                        return false;
-                    }
-                    return true;
-                });
-                render();
-                saveToLocal();
-            });
-        });
-    }
-}
-
-// DELETE BREAD WITH HUMMUS
-function deleteBreadAndHummus(breadId) {
-    var breadToDelete = breadOrders.find(function(o) { return o.id === breadId; });
-    if (!breadToDelete) return;
-    
-    breadOrders = breadOrders.filter(function(o) { return o.id !== breadId; });
-    
-    hummusOrders = hummusOrders.filter(function(o) {
-        return !(o.name === breadToDelete.name && o.breadType === breadToDelete.breadType);
+    addHummusMinusBtn.addEventListener('click', function() {
+        if (addHummusCount > 1) { addHummusCount--; addHummusCountDisplay.textContent = addHummusCount; }
     });
-}
-
-// MAIN RENDER
-function render() {
-    // Bread Table - only normal orders
-    var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
-    if (normalOrders.length === 0) {
-        breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
-    } else {
-        breadTableBody.innerHTML = '';
-        normalOrders.forEach(function(order, index) {
-            var row = document.createElement('tr');
-            var sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
-            var price = getPriceForOrder(order);
-            var pcs = getPcsForOrder(order);
-            var nameDisplay = order.name;
-            var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
-            var commClass = order.hasCommission ? 'active' : 'inactive';
-            var commLabel = order.hasCommission ? '13.5%' : '15%';
-            
-            row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
-            breadTableBody.appendChild(row);
-        });
-    }
-    
-    // Hummus Table - only normal orders (non-ADD)
-    var normalHummus = hummusOrders.filter(function(o) { return !o.isAddHummus; });
-    if (normalHummus.length === 0) {
-        hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>';
-    } else {
-        hummusTableBody.innerHTML = '';
-        normalHummus.forEach(function(order, index) {
-            var row = document.createElement('tr');
-            var hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-            var hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
-            var nameDisplay = order.name;
-            row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + order.size + '</td><td><span class="' + hummusClass + '">' + hummusLabel + '</span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="hummus">✖</button></td>';
-            hummusTableBody.appendChild(row);
-        });
-    }
-    
-    // Commission Toggle
-    document.querySelectorAll('.comm-toggle').forEach(function(el) {
-        el.addEventListener('click', function() {
-            var id = parseInt(this.getAttribute('data-id'));
-            toggleCommission(id);
-        });
+    addHummusPlusBtn.addEventListener('click', function() {
+        if (addHummusCount < 99) { addHummusCount++; addHummusCountDisplay.textContent = addHummusCount; }
     });
-    
-    // Delete buttons - Bread deletes matching Hummus
-    document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var id = parseInt(this.getAttribute('data-id'));
-            deleteBreadAndHummus(id);
-            render();
-            saveToLocal();
-        });
-    });
-    
-    // Delete buttons - Hummus only (deletes itself)
-    document.querySelectorAll('.delete-btn[data-type="hummus"]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var id = parseInt(this.getAttribute('data-id'));
-            hummusOrders = hummusOrders.filter(function(o) { return o.id !== id; });
-            render();
-            saveToLocal();
-        });
-    });
-    
-    var total = totalPriceAll();
-    totalSpan.innerText = total.toFixed(2) + ' ¥';
-    hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
-    updateSalaryDisplay();
-    
-    // PREPARATION
-    var req = getTotalRequirements();
-    var breakdown = getTimesPcsBreakdown();
-    
-    var needed88 = req.mix88;
-    var boxes = Math.ceil(needed88 / 1400);
-    if (boxes === 0 && needed88 > 0) boxes = 1;
-    document.getElementById("preparationRow").innerHTML = '<tr><td>88er Base Mix</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
-    
-    document.getElementById("perPcsRow").innerHTML = 
-        '<tr><td>88er</td><td>' + (745/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-        '<tr><td>150er</td><td>' + (650/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-        '<tr><td>188er</td><td>' + (630/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-        '<tr><td>200er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-        '<tr><td>208er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>';
-    
-    var timesHtml = '', pcsHtml = '';
-    if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) {
-        timesHtml = '<tr><td colspan="2">No times</td></tr>';
-    } else {
-        timesHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
-            return '<tr><td>' + b.type + '</td><td><span class="badge-time">' + b.fullCharges + ' time</span></td></tr>';
-        }).join('');
-    }
-    if (breakdown.length === 0 || !breakdown.some(function(b) { return b.restPcs > 0; })) {
-        pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
-    } else {
-        pcsHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
-            return '<tr><td>' + b.type + '</td><td><span class="badge-pcs">' + b.restPcs + ' pcs</span></td></tr>';
-        }).join('');
-    }
-    document.getElementById("timesTableBody").innerHTML = timesHtml;
-    document.getElementById("pcsTableBody").innerHTML = pcsHtml;
-    
-    var thermHtml = '';
-    if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
-        thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
-            var r = recipeFor13[b.type];
-            return '<tr><td>' + b.type + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188 + 'g</td><td>' + r.mix200 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
-        }).join('');
-    } else {
-        thermHtml = '<tr><td colspan="7">No times</td></tr>';
-    }
-    document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
-    
-    var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
-    if (breakdown.some(function(b) { return b.restPcs > 0; })) {
-        restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
-            var per = getPerPcs(b.type);
-            var t88 = per.mix88 * b.restPcs;
-            var t150 = per.mix150 * b.restPcs;
-            var t188 = per.mix188 * b.restPcs;
-            var t200 = per.mix200 * b.restPcs;
-            var tw = per.water * b.restPcs;
-            sum88 += t88; sum150 += t150; sum188 += t188; sum200 += t200; sumW += tw;
-            return '<tr><td>' + b.type + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188.toFixed(1) + 'g</td><td>' + t200.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
-        }).join('');
-        document.getElementById("calculatedRestFooter").innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188.toFixed(1) + 'g</td><td>' + sum200.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
-    } else {
-        restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
-        document.getElementById("calculatedRestFooter").innerHTML = '';
-    }
-    document.getElementById("calculatedRestTable").innerHTML = restHtml;
-    
-    renderAddOrders();
-}
 
-// RESET FORM
-function resetForm() {
-    customerName.value = "";
-    miniCheckbox.checked = false;
-    commissionCheckbox.checked = false;
-    autoSelectHummus();
-    customerName.focus();
-}
-
-// ADD ORDER WITH NAME
-function addOrder() {
-    var name = customerName.value.trim();
-    if (!name) { alert("Please enter a name."); return; }
-    
-    var breadVal = breadType.value;
-    var sizeVal = breadSize.value;
-    var isMini = miniCheckbox.checked;
-    var hummusVal = hummusType.value;
-    var hummusSizeVal = hummusSize.value;
-    var hasCommission = commissionCheckbox.checked;
-    
-    if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') {
-        alert('❌ ' + sizeVal + ' comes without hummus as standard!');
-        return;
+    // ============ WEEK DISPLAY ============
+    function updateWeekDisplay() {
+        currentWeek = calculateCurrentWeek();
+        weekNumber.value = currentWeek;
+        weekBadge.textContent = 'Week ' + currentWeek;
     }
-    
-    if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
-        alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
-        return;
-    }
-    
     updateWeekDisplay();
-    
-    breadOrders.push({
-        id: nextId++,
-        name: name,
-        breadType: breadVal,
-        size: sizeVal,
-        isMini: isMini,
-        hasCommission: hasCommission,
-        week: currentWeek,
-        isAdd: false,
-        isAddBread: false
+
+    // ============ SCREENSHOT ============
+    screenshotBtn.addEventListener('click', function() {
+        var element = document.getElementById('captureArea');
+        var status = document.getElementById('screenshotStatus');
+        html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: null,
+            logging: false,
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight
+        }).then(function(canvas) {
+            var link = document.createElement('a');
+            link.download = 'microbiome_warrior_week_' + currentWeek + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            status.style.display = 'block';
+            status.textContent = '✅ Screenshot downloaded!';
+            status.style.background = '#e8f5e9';
+            setTimeout(function() { status.style.display = 'none'; }, 3000);
+        }).catch(function(error) {
+            console.error('Screenshot error:', error);
+            status.style.display = 'block';
+            status.textContent = '❌ Error taking screenshot';
+            status.style.background = '#fde8e8';
+            setTimeout(function() { status.style.display = 'none'; }, 3000);
+        });
     });
-    
-    if (hummusVal !== 'none') {
-        hummusOrders.push({
+
+    // ============ AUTO HUMMUS SELECTION ============
+    function getHummusSizeForBreadSize(breadSizeVal) {
+        if (breadSizeVal === 'S+') return 'S';
+        return breadSizeVal;
+    }
+
+    function autoSelectHummus() {
+        var val = breadType.value;
+        var sizeVal = breadSize.value;
+        var hummusSelect = hummusType;
+        var hummusSizeSelect = hummusSize;
+        
+        if (sizeVal === 'M+' || sizeVal === 'XL+') {
+            hummusSelect.value = 'none';
+            yingYangInfo.classList.remove('show');
+            yingYangWarning.style.display = 'none';
+            return;
+        }
+        
+        var hummusSizeVal = getHummusSizeForBreadSize(sizeVal);
+        hummusSizeSelect.value = hummusSizeVal;
+        
+        if (val === '88er' || val === '150er') {
+            hummusSelect.value = 'hummus';
+            yingYangInfo.classList.remove('show');
+            yingYangWarning.style.display = 'none';
+        } else if (val === '188er' || val === '200er' || val === '208er') {
+            hummusSelect.value = 'yingyang';
+            yingYangInfo.classList.add('show');
+            yingYangWarning.style.display = 'none';
+        }
+    }
+
+    breadType.addEventListener('change', autoSelectHummus);
+    breadSize.addEventListener('change', autoSelectHummus);
+    autoSelectHummus();
+
+    hummusType.addEventListener('change', function() {
+        var sizeVal = breadSize.value;
+        if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') {
+            alert('❌ ' + sizeVal + ' comes without hummus as standard!');
+            this.value = 'none';
+            return;
+        }
+        if (this.value === 'yingyang') {
+            var val = breadType.value;
+            if (val !== '188er' && val !== '200er' && val !== '208er') {
+                yingYangWarning.style.display = 'block';
+                alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
+                this.value = 'hummus';
+                yingYangWarning.style.display = 'none';
+            } else {
+                yingYangWarning.style.display = 'none';
+            }
+        } else {
+            yingYangWarning.style.display = 'none';
+        }
+    });
+
+    // ============ ADDRESS BOOK ============
+    function loadAddressBook() {
+        var data = localStorage.getItem("microbiome_address_book");
+        if (data) {
+            try { addressBook = JSON.parse(data); } catch(e) { addressBook = {}; }
+        } else {
+            addressBook = {
+                "Sarah": "上海市静安区愚园路218号",
+                "Michael": "上海市黄浦区外滩中山东一路18号",
+                "Emma": "上海市徐汇区武康路113号",
+                "David": "上海市浦东新区世纪大道100号"
+            };
+            saveAddressBook();
+        }
+        renderAddressBook();
+    }
+
+    function saveAddressBook() {
+        localStorage.setItem("microbiome_address_book", JSON.stringify(addressBook));
+        renderAddressBook();
+    }
+
+    function renderAddressBook() {
+        var keys = Object.keys(addressBook);
+        addressCount.textContent = '(' + keys.length + ' entries)';
+        
+        if (keys.length === 0) {
+            addressList.innerHTML = '<div class="am-empty">No addresses saved yet</div>';
+        } else {
+            var html = '';
+            keys.forEach(function(name) {
+                var addr = addressBook[name] || '';
+                html += '<span class="am-tag">' + escapeHtml(name) + ' → ' + escapeHtml(addr) + ' <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
+            });
+            addressList.innerHTML = html;
+            document.querySelectorAll('.am-tag .del').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var name = this.dataset.name;
+                    delete addressBook[name];
+                    saveAddressBook();
+                    updateRoute();
+                });
+            });
+        }
+    }
+
+    function addAddressToBook(name, addr) {
+        name = capitalizeName(name.trim());
+        if (!name) { alert('Please enter a name.'); return; }
+        addressBook[name] = addr || '';
+        saveAddressBook();
+        addressNameInput.value = '';
+        addressAddrInput.value = '';
+        addressNameInput.focus();
+        updateRoute();
+    }
+
+    // ============ HELPERS ============
+    function getPcsForOrder(order) {
+        var base = sizeToPcs[order.size] || 0;
+        return order.isMini ? base / 2 : base;
+    }
+
+    function getPriceForOrder(order) {
+        var basePrice = priceDB[order.breadType]?.[order.size] || 0;
+        return order.isMini ? basePrice / 2 : basePrice;
+    }
+
+    function totalPriceAll() {
+        var sum = 0;
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread) {
+                sum += getPriceForOrder(o);
+            }
+        });
+        return sum;
+    }
+
+    function totalHummusCount() {
+        return hummusOrders.length;
+    }
+
+    function getTotalPcsPerType() {
+        var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
+        breadOrders.forEach(function(o) {
+            var pcs = getPcsForOrder(o);
+            totals[o.breadType] += pcs;
+        });
+        return totals;
+    }
+
+    function getTotalRequirements() {
+        var pcs = getTotalPcsPerType();
+        var total88 = 0, total150 = 0, total188 = 0, total200 = 0, totalWater = 0;
+        for (var type in pcs) {
+            var p = pcs[type];
+            if (p === 0) continue;
+            var per = getPerPcs(type);
+            total88 += per.mix88 * p;
+            total150 += per.mix150 * p;
+            total188 += per.mix188 * p;
+            total200 += per.mix200 * p;
+            totalWater += per.water * p;
+        }
+        return {mix88: total88, mix150: total150, mix188: total188, mix200: total200, water: totalWater};
+    }
+
+    function getTimesPcsBreakdown() {
+        var pcs = getTotalPcsPerType();
+        var res = [];
+        for (var type in pcs) {
+            var total = pcs[type];
+            if (total === 0) continue;
+            var full = Math.floor(total / 13);
+            var rest = total % 13;
+            res.push({type: type, fullCharges: full, restPcs: rest});
+        }
+        return res;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // ============ LOCAL STORAGE ============
+    function saveToLocal() {
+        localStorage.setItem("microbiome_bread", JSON.stringify({orders: breadOrders, nextId: nextId}));
+        localStorage.setItem("microbiome_hummus", JSON.stringify({orders: hummusOrders}));
+        localStorage.setItem("microbiome_add_bread", JSON.stringify({orders: addBreadOrders}));
+        localStorage.setItem("microbiome_add_hummus", JSON.stringify({orders: addHummusOrders}));
+    }
+
+    function loadFromLocal() {
+        var breadData = localStorage.getItem("microbiome_bread");
+        if (breadData) {
+            try {
+                var parsed = JSON.parse(breadData);
+                if (parsed.orders) breadOrders = parsed.orders;
+                if (parsed.nextId) nextId = parsed.nextId;
+            } catch(e) {}
+        }
+        var hummusData = localStorage.getItem("microbiome_hummus");
+        if (hummusData) {
+            try {
+                var parsed = JSON.parse(hummusData);
+                if (parsed.orders) hummusOrders = parsed.orders;
+            } catch(e) {}
+        }
+        var addBreadData = localStorage.getItem("microbiome_add_bread");
+        if (addBreadData) {
+            try {
+                var parsed = JSON.parse(addBreadData);
+                if (parsed.orders) addBreadOrders = parsed.orders;
+            } catch(e) {}
+        }
+        var addHummusData = localStorage.getItem("microbiome_add_hummus");
+        if (addHummusData) {
+            try {
+                var parsed = JSON.parse(addHummusData);
+                if (parsed.orders) addHummusOrders = parsed.orders;
+            } catch(e) {}
+        }
+        render();
+    }
+
+    // ============ SALARY DISPLAY ============
+    function updateSalaryDisplay() {
+        var totalWithComm = 0;
+        var totalWithoutComm = 0;
+        
+        breadOrders.forEach(function(o) {
+            if (o.isAdd || o.isAddBread) return;
+            var price = getPriceForOrder(o);
+            if (o.hasCommission) {
+                totalWithComm += price;
+            } else {
+                totalWithoutComm += price;
+            }
+        });
+        
+        var salaryWithComm = totalWithComm * 0.135;
+        var salaryWithoutComm = totalWithoutComm * 0.15;
+        var totalSalary = salaryWithComm + salaryWithoutComm;
+        
+        salaryAmount.textContent = totalSalary.toFixed(2) + ' ¥';
+        
+        var infoText = '';
+        if (totalWithComm > 0 && totalWithoutComm > 0) {
+            infoText = '(mix: 13.5% + 15%)';
+        } else if (totalWithComm > 0) {
+            infoText = '(13.5%)';
+        } else {
+            infoText = '(15%)';
+        }
+        salaryPercentDisplay.textContent = infoText;
+    }
+
+    // ============ TOGGLE COMMISSION ============
+    function toggleCommission(orderId) {
+        var order = breadOrders.find(function(o) { return o.id === orderId; });
+        if (order && !order.isAdd && !order.isAddBread) {
+            order.hasCommission = !order.hasCommission;
+            render();
+            saveToLocal();
+            updateRoute();
+        }
+    }
+
+    // ============ RENDER ADD ORDERS ============
+    function renderAddOrders() {
+        if (addBreadOrders.length === 0) {
+            addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread orders yet</span>';
+        } else {
+            var html = '';
+            addBreadOrders.forEach(function(item, index) {
+                html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + item.type + ' <span class="del" data-bread-index="' + index + '">✖</span></span> ';
+            });
+            addBreadOrdersList.innerHTML = html;
+            document.querySelectorAll('.add-item .del[data-bread-index]').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var idx = parseInt(this.dataset.breadIndex);
+                    var removed = addBreadOrders[idx];
+                    addBreadOrders.splice(idx, 1);
+                    var removedCount = 0;
+                    breadOrders = breadOrders.filter(function(o) {
+                        if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                            removedCount++;
+                            return false;
+                        }
+                        return true;
+                    });
+                    render();
+                    saveToLocal();
+                    updateRoute();
+                });
+            });
+        }
+        
+        if (addBreadOrders.length === 0) {
+            addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>';
+        } else {
+            addBreadSummaryBody.innerHTML = '';
+            addBreadOrders.forEach(function(item, index) {
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>' + item.type + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
+                addBreadSummaryBody.appendChild(row);
+            });
+            document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var idx = parseInt(this.dataset.addBreadIndex);
+                    var removed = addBreadOrders[idx];
+                    addBreadOrders.splice(idx, 1);
+                    var removedCount = 0;
+                    breadOrders = breadOrders.filter(function(o) {
+                        if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                            removedCount++;
+                            return false;
+                        }
+                        return true;
+                    });
+                    render();
+                    saveToLocal();
+                    updateRoute();
+                });
+            });
+        }
+        
+        if (addHummusOrders.length === 0) {
+            addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus orders yet</span>';
+        } else {
+            var html = '';
+            addHummusOrders.forEach(function(item, index) {
+                var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+                html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + typeLabel + ' (' + item.size + ') <span class="del" data-hummus-index="' + index + '">✖</span></span> ';
+            });
+            addHummusOrdersList.innerHTML = html;
+            document.querySelectorAll('.add-item .del[data-hummus-index]').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var idx = parseInt(this.dataset.hummusIndex);
+                    var removed = addHummusOrders[idx];
+                    addHummusOrders.splice(idx, 1);
+                    var removedCount = 0;
+                    hummusOrders = hummusOrders.filter(function(o) {
+                        if (o.isAddHummus && o.hummusType === removed.type && o.size === removed.size && removedCount < removed.count) {
+                            removedCount++;
+                            return false;
+                        }
+                        return true;
+                    });
+                    render();
+                    saveToLocal();
+                    updateRoute();
+                });
+            });
+        }
+    }
+
+    // ============ RENDER HUMMUS SUMMARY ============
+    function renderHummusSummary() {
+        var allHummus = [];
+        
+        hummusOrders.forEach(function(o) {
+            if (!o.isAddHummus) {
+                allHummus.push(o);
+            }
+        });
+        
+        addHummusOrders.forEach(function(item) {
+            for (var i = 0; i < item.count; i++) {
+                allHummus.push({
+                    hummusType: item.type,
+                    size: item.size,
+                    isAdd: true
+                });
+            }
+        });
+        
+        var summary = {};
+        allHummus.forEach(function(o) {
+            var key = o.hummusType + '|' + o.size;
+            if (!summary[key]) {
+                summary[key] = { type: o.hummusType, size: o.size, count: 0 };
+            }
+            summary[key].count++;
+        });
+        
+        var keys = Object.keys(summary);
+        if (keys.length === 0) {
+            hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr>';
+        } else {
+            hummusSummaryBody.innerHTML = '';
+            keys.forEach(function(key) {
+                var item = summary[key];
+                var row = document.createElement('tr');
+                var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+                row.innerHTML = '<td>' + typeLabel + '</td><td>' + item.size + '</td><td>' + item.count + '</td>';
+                hummusSummaryBody.appendChild(row);
+            });
+        }
+    }
+
+    // ============ DELETE BREAD WITH HUMMUS ============
+    function deleteBreadAndHummus(breadId) {
+        var breadToDelete = breadOrders.find(function(o) { return o.id === breadId; });
+        if (!breadToDelete) return;
+        
+        breadOrders = breadOrders.filter(function(o) { return o.id !== breadId; });
+        
+        hummusOrders = hummusOrders.filter(function(o) {
+            return !(o.name === breadToDelete.name && o.breadType === breadToDelete.breadType);
+        });
+    }
+
+    // ============ TRAFFIC SIMULATION ============
+    function getTrafficForTime() {
+        var now = new Date();
+        var hour = now.getHours();
+        var day = now.getDay();
+        var isWeekend = (day === 0 || day === 6);
+        var isRushHour = !isWeekend && ((hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19));
+        var isEvening = hour >= 18 && hour <= 22;
+        var isNight = hour >= 22 || hour <= 5;
+        
+        if (isNight) {
+            return { level: 'light', label: 'Light (night)', color: '#27ae60', delay: 0.7 };
+        } else if (isRushHour) {
+            return { level: 'heavy', label: 'Heavy (rush hour)', color: '#e74c3c', delay: 1.8 };
+        } else if (isEvening) {
+            return { level: 'moderate', label: 'Moderate (evening)', color: '#f39c12', delay: 1.3 };
+        } else if (isWeekend) {
+            return { level: 'light', label: 'Light (weekend)', color: '#27ae60', delay: 0.85 };
+        } else {
+            return { level: 'moderate', label: 'Moderate', color: '#f39c12', delay: 1.15 };
+        }
+    }
+
+    function startTrafficSimulation() {
+        if (trafficSimulationInterval) {
+            clearInterval(trafficSimulationInterval);
+        }
+        trafficSimulationInterval = setInterval(function() {
+            updateTrafficDisplay();
+        }, 30000);
+        updateTrafficDisplay();
+    }
+
+    function updateTrafficDisplay() {
+        currentTraffic = getTrafficForTime();
+        updateRouteTraffic();
+    }
+
+    function updateRouteTraffic() {
+        var trafficInfo = document.querySelector('.traffic-info-display');
+        if (trafficInfo) {
+            trafficInfo.textContent = '🚦 ' + currentTraffic.label;
+            trafficInfo.style.color = currentTraffic.color;
+        }
+        var routeNoDist = document.querySelector('.route-no-distance');
+        if (routeNoDist) {
+            var span = routeNoDist.querySelector('span:last-child');
+            if (span) {
+                span.textContent = '🚦 ' + currentTraffic.label;
+                span.style.color = currentTraffic.color;
+            }
+        }
+    }
+
+    // ============ DISTANZMATRIX FÜR SHANGHAI ============
+    function getBezirk(adresse) {
+        if (adresse.includes('青浦')) return 'qingpu';
+        if (adresse.includes('静安')) return 'jingan';
+        if (adresse.includes('黄浦')) return 'huangpu';
+        if (adresse.includes('徐汇')) return 'xuhui';
+        if (adresse.includes('浦东')) return 'pudong';
+        if (adresse.includes('长宁')) return 'changning';
+        if (adresse.includes('虹口')) return 'hongkou';
+        if (adresse.includes('杨浦')) return 'yangpu';
+        if (adresse.includes('闵行')) return 'minhang';
+        if (adresse.includes('宝山')) return 'baoshan';
+        if (adresse.includes('嘉定')) return 'jiading';
+        if (adresse.includes('松江')) return 'songjiang';
+        if (adresse.includes('普陀')) return 'putuo';
+        if (adresse.includes('闸北')) return 'zhabei';
+        if (adresse.includes('卢湾')) return 'luwan';
+        return 'unknown';
+    }
+
+    function getDistance(addr1, addr2) {
+        var bez1 = getBezirk(addr1);
+        var bez2 = getBezirk(addr2);
+        
+        var distMatrix = {
+            'qingpu': {'qingpu':1, 'jingan':32, 'huangpu':38, 'xuhui':35, 'pudong':45, 'changning':28, 'hongkou':40, 'yangpu':42, 'minhang':22, 'baoshan':50, 'jiading':30, 'songjiang':18, 'putuo':30, 'zhabei':35, 'luwan':36, 'unknown':30},
+            'jingan': {'qingpu':32, 'jingan':1, 'huangpu':5, 'xuhui':6, 'pudong':12, 'changning':4, 'hongkou':5, 'yangpu':8, 'minhang':15, 'baoshan':18, 'jiading':25, 'songjiang':28, 'putuo':5, 'zhabei':4, 'luwan':4, 'unknown':12},
+            'huangpu': {'qingpu':38, 'jingan':5, 'huangpu':1, 'xuhui':4, 'pudong':8, 'changning':6, 'hongkou':4, 'yangpu':7, 'minhang':16, 'baoshan':20, 'jiading':28, 'songjiang':30, 'putuo':6, 'zhabei':5, 'luwan':2, 'unknown':12},
+            'xuhui': {'qingpu':35, 'jingan':6, 'huangpu':4, 'xuhui':1, 'pudong':10, 'changning':5, 'hongkou':7, 'yangpu':9, 'minhang':12, 'baoshan':22, 'jiading':26, 'songjiang':22, 'putuo':6, 'zhabei':7, 'luwan':3, 'unknown':12},
+            'pudong': {'qingpu':45, 'jingan':12, 'huangpu':8, 'xuhui':10, 'pudong':1, 'changning':14, 'hongkou':10, 'yangpu':8, 'minhang':20, 'baoshan':25, 'jiading':32, 'songjiang':35, 'putuo':14, 'zhabei':12, 'luwan':9, 'unknown':16},
+            'changning': {'qingpu':28, 'jingan':4, 'huangpu':6, 'xuhui':5, 'pudong':14, 'changning':1, 'hongkou':6, 'yangpu':9, 'minhang':12, 'baoshan':20, 'jiading':22, 'songjiang':24, 'putuo':4, 'zhabei':5, 'luwan':5, 'unknown':12},
+            'hongkou': {'qingpu':40, 'jingan':5, 'huangpu':4, 'xuhui':7, 'pudong':10, 'changning':6, 'hongkou':1, 'yangpu':4, 'minhang':18, 'baoshan':15, 'jiading':26, 'songjiang':32, 'putuo':6, 'zhabei':3, 'luwan':4, 'unknown':12},
+            'yangpu': {'qingpu':42, 'jingan':8, 'huangpu':7, 'xuhui':9, 'pudong':8, 'changning':9, 'hongkou':4, 'yangpu':1, 'minhang':20, 'baoshan':12, 'jiading':28, 'songjiang':34, 'putuo':9, 'zhabei':6, 'luwan':8, 'unknown':14},
+            'minhang': {'qingpu':22, 'jingan':15, 'huangpu':16, 'xuhui':12, 'pudong':20, 'changning':12, 'hongkou':18, 'yangpu':20, 'minhang':1, 'baoshan':28, 'jiading':18, 'songjiang':12, 'putuo':14, 'zhabei':16, 'luwan':15, 'unknown':14},
+            'baoshan': {'qingpu':50, 'jingan':18, 'huangpu':20, 'xuhui':22, 'pudong':25, 'changning':20, 'hongkou':15, 'yangpu':12, 'minhang':28, 'baoshan':1, 'jiading':15, 'songjiang':38, 'putuo':18, 'zhabei':14, 'luwan':20, 'unknown':18},
+            'jiading': {'qingpu':30, 'jingan':25, 'huangpu':28, 'xuhui':26, 'pudong':32, 'changning':22, 'hongkou':26, 'yangpu':28, 'minhang':18, 'baoshan':15, 'jiading':1, 'songjiang':25, 'putuo':20, 'zhabei':22, 'luwan':27, 'unknown':20},
+            'songjiang': {'qingpu':18, 'jingan':28, 'huangpu':30, 'xuhui':22, 'pudong':35, 'changning':24, 'hongkou':32, 'yangpu':34, 'minhang':12, 'baoshan':38, 'jiading':25, 'songjiang':1, 'putuo':26, 'zhabei':30, 'luwan':28, 'unknown':22},
+            'putuo': {'qingpu':30, 'jingan':5, 'huangpu':6, 'xuhui':6, 'pudong':14, 'changning':4, 'hongkou':6, 'yangpu':9, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':26, 'putuo':1, 'zhabei':4, 'luwan':5, 'unknown':12},
+            'zhabei': {'qingpu':35, 'jingan':4, 'huangpu':5, 'xuhui':7, 'pudong':12, 'changning':5, 'hongkou':3, 'yangpu':6, 'minhang':16, 'baoshan':14, 'jiading':22, 'songjiang':30, 'putuo':4, 'zhabei':1, 'luwan':5, 'unknown':12},
+            'luwan': {'qingpu':36, 'jingan':4, 'huangpu':2, 'xuhui':3, 'pudong':9, 'changning':5, 'hongkou':4, 'yangpu':8, 'minhang':15, 'baoshan':20, 'jiading':27, 'songjiang':28, 'putuo':5, 'zhabei':5, 'luwan':1, 'unknown':12},
+            'unknown': {'qingpu':25, 'jingan':12, 'huangpu':12, 'xuhui':12, 'pudong':16, 'changning':12, 'hongkou':12, 'yangpu':14, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':22, 'putuo':12, 'zhabei':12, 'luwan':12, 'unknown':10}
+        };
+        
+        if (distMatrix[bez1] && distMatrix[bez1][bez2] !== undefined) {
+            return distMatrix[bez1][bez2];
+        }
+        return 12;
+    }
+
+    // ============ INTELLIGENTE ROUTENOPTIMIERUNG (BRANCH AND BOUND) ============
+    function findOptimalRoute(startAddr, customers) {
+        if (!customers || customers.length === 0) return [];
+        if (customers.length === 1) return customers;
+        
+        var n = customers.length;
+        var bestRoute = null;
+        var bestDist = Infinity;
+        
+        // Distanzmatrix erstellen
+        var distMatrix = [];
+        for (var i = 0; i < n; i++) {
+            distMatrix[i] = [];
+            for (var j = 0; j < n; j++) {
+                if (i === j) {
+                    distMatrix[i][j] = 0;
+                } else {
+                    distMatrix[i][j] = getDistance(customers[i].address, customers[j].address);
+                }
+            }
+        }
+        
+        // Distanz vom Start zu jedem Kunden
+        var startDist = [];
+        for (var i = 0; i < n; i++) {
+            startDist[i] = getDistance(startAddr, customers[i].address);
+        }
+        
+        // Branch and Bound - optimierte Suche
+        function branchAndBound(currentPos, visited, currentDist, route) {
+            // Pruning: Wenn aktuelle Distanz schon schlechter als beste, abbrechen
+            if (currentDist >= bestDist) return;
+            
+            // Alle besucht -> Lösung gefunden
+            if (visited.length === n) {
+                if (currentDist < bestDist) {
+                    bestDist = currentDist;
+                    bestRoute = route.slice();
+                }
+                return;
+            }
+            
+            // Mögliche nächste Ziele nach Distanz sortieren (Heuristik)
+            var candidates = [];
+            for (var i = 0; i < n; i++) {
+                if (visited.indexOf(i) === -1) {
+                    var dist = distMatrix[currentPos][i];
+                    candidates.push({ index: i, dist: dist });
+                }
+            }
+            
+            // Nach Distanz sortieren (am nächsten zuerst)
+            candidates.sort(function(a, b) { return a.dist - b.dist; });
+            
+            // Max 8 Verzweigungen für Performance
+            var maxBranches = Math.min(candidates.length, 8);
+            for (var b = 0; b < maxBranches; b++) {
+                var next = candidates[b];
+                var newVisited = visited.concat([next.index]);
+                var newRoute = route.concat([customers[next.index]]);
+                branchAndBound(next.index, newVisited, currentDist + next.dist, newRoute);
+            }
+        }
+        
+        // Starte Suche von jedem möglichen Startpunkt
+        for (var start = 0; start < n; start++) {
+            branchAndBound(start, [start], startDist[start], [customers[start]]);
+        }
+        
+        // Fallback: Wenn keine Route gefunden (sollte nicht passieren), Nearest Neighbor
+        if (!bestRoute || bestRoute.length === 0) {
+            return nearestNeighborRoute(startAddr, customers);
+        }
+        
+        return bestRoute;
+    }
+
+    // ============ NEAREST NEIGHBOR (FALLBACK) ============
+    function nearestNeighborRoute(startAddr, customers) {
+        var unvisited = customers.slice();
+        var route = [];
+        var current = { address: startAddr };
+        
+        while (unvisited.length > 0) {
+            var nearest = null;
+            var nearestDist = Infinity;
+            
+            for (var i = 0; i < unvisited.length; i++) {
+                var dist = getDistance(current.address, unvisited[i].address);
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearest = i;
+                }
+            }
+            
+            if (nearest !== null) {
+                route.push(unvisited[nearest]);
+                current = unvisited[nearest];
+                unvisited.splice(nearest, 1);
+            }
+        }
+        
+        return route;
+    }
+
+    // ============ ROUTE PLANNING ============
+    function updateRoute() {
+        var start = routeStart.value.trim();
+        if (!start) {
+            routeResult.innerHTML = '<div class="route-empty">⚠️ Please enter your start address.</div>';
+            autoRouteList.innerHTML = 'No start address set';
+            appleMapsBtn.disabled = true;
+            routeOptimizedInfo.textContent = '🧠 Waiting for start address...';
+            routeCompareInfo.textContent = '';
+            return;
+        }
+        
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        
+        if (normalOrders.length === 0) {
+            routeResult.innerHTML = '<div class="route-empty">No orders yet → add some!</div>';
+            autoRouteList.innerHTML = 'No orders yet';
+            appleMapsBtn.disabled = true;
+            routeOptimizedInfo.textContent = '🧠 Add orders to optimize route';
+            routeCompareInfo.textContent = '';
+            return;
+        }
+        
+        var customers = [];
+        var noAddress = [];
+        
+        normalOrders.forEach(function(order) {
+            var addr = addressBook[order.name] || '';
+            if (addr && addr.trim()) {
+                customers.push({ name: order.name, address: addr, order: order });
+            } else {
+                noAddress.push(order.name);
+            }
+        });
+        
+        // AutoRouteList
+        var listHtml = '';
+        normalOrders.forEach(function(order) {
+            var addr = addressBook[order.name] || '';
+            var hasAddr = addr && addr.trim();
+            var statusIcon = hasAddr ? '✅' : '⚠️';
+            var statusText = hasAddr ? '📍 ' + addr : 'no address';
+            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;">' +
+                '<span>' + escapeHtml(order.name) + ' (' + order.breadType + ' ' + order.size + ')</span>' +
+                '<span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span>' +
+            '</div>';
+        });
+        autoRouteList.innerHTML = listHtml;
+        
+        if (customers.length === 0) {
+            routeResult.innerHTML = '<div class="route-empty">⚠️ No customers with address found. Add addresses in Address Book.</div>';
+            appleMapsBtn.disabled = true;
+            routeOptimizedInfo.textContent = '🧠 No valid addresses found';
+            routeCompareInfo.textContent = '';
+            return;
+        }
+        
+        // ============ AI OPTIMIERUNG ============
+        var startTime = performance.now();
+        var optimizedCustomers = findOptimalRoute(start, customers);
+        var endTime = performance.now();
+        var calcTime = (endTime - startTime).toFixed(1);
+        
+        // Vergleich: Random Route
+        var randomCustomers = customers.slice();
+        // Shuffle
+        for (var i = randomCustomers.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = randomCustomers[i];
+            randomCustomers[i] = randomCustomers[j];
+            randomCustomers[j] = temp;
+        }
+        
+        // Distanzen berechnen
+        var optimizedDist = 0;
+        var currentAddr = start;
+        optimizedCustomers.forEach(function(c) {
+            optimizedDist += getDistance(currentAddr, c.address);
+            currentAddr = c.address;
+        });
+        
+        var randomDist = 0;
+        currentAddr = start;
+        randomCustomers.forEach(function(c) {
+            randomDist += getDistance(currentAddr, c.address);
+            currentAddr = c.address;
+        });
+        
+        var traffic = currentTraffic;
+        var optDistWithTraffic = optimizedDist * traffic.delay;
+        var randomDistWithTraffic = randomDist * traffic.delay;
+        var savings = Math.round((randomDistWithTraffic - optDistWithTraffic) * 10) / 10;
+        var savingsPercent = Math.round(((randomDistWithTraffic - optDistWithTraffic) / randomDistWithTraffic) * 100);
+        
+        var timeMin = Math.round(optimizedDist * 3.2 * (traffic.delay > 1.2 ? 1.3 : 1));
+        
+        var routeDeliveries = optimizedCustomers.map(function(c) { return c.address; });
+        
+        var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 AI-Optimized Route (' + optimizedCustomers.length + ' stops) <span class="optimized-badge">' + savingsPercent + '% shorter</span></div>';
+        
+        optimizedCustomers.forEach(function(c, index) {
+            var distFromPrev = index === 0 ? getDistance(start, c.address) : getDistance(optimizedCustomers[index-1].address, c.address);
+            html += '<div class="route-step">' +
+                '<span class="step-num">' + (index + 1) + '</span>' +
+                '<span class="step-name">' + escapeHtml(c.name) + ' (' + c.order.breadType + ' ' + c.order.size + ')</span>' +
+                '<span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:#27ae60;font-size:0.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span>' +
+            '</div>';
+        });
+        
+        if (noAddress.length > 0) {
+            html += '<div style="margin-top:4px;padding:4px 8px;background:#fde8e8;border-radius:8px;font-size:0.55rem;color:#c0392b;">⚠️ No address for: ' + noAddress.join(', ') + ' (not in route)</div>';
+        }
+        
+        html += '<div class="route-no-distance" style="margin-top:6px;padding:6px 10px;background:rgba(46,204,113,0.1);border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:0.6rem;">';
+        html += '<span>📏 <strong>' + optDistWithTraffic.toFixed(1) + ' km</strong> (AI optimized)</span>';
+        html += '<span>⏱️ <strong>~' + timeMin + ' min</strong></span>';
+        html += '<span style="color:' + traffic.color + ';">🚦 ' + traffic.label + '</span>';
+        html += '</div>';
+        
+        html += '<div class="traffic-info-display" style="margin-top:4px;font-size:0.55rem;color:' + traffic.color + ';text-align:center;">🚦 ' + traffic.label + ' (auto-updates every 30s)</div>';
+        
+        routeResult.innerHTML = html;
+        appleMapsBtn.disabled = false;
+        
+        window._routeDeliveries = routeDeliveries;
+        window._routeStart = start;
+        
+        // Optimierungs-Info
+        routeOptimizedInfo.textContent = '🧠 AI found optimal route in ' + calcTime + 'ms using Branch & Bound algorithm';
+        if (savings > 0) {
+            routeCompareInfo.innerHTML = '📊 Compared to random order: <strong>' + savings.toFixed(1) + ' km saved</strong> (' + savingsPercent + '% shorter)';
+        } else {
+            routeCompareInfo.innerHTML = '📊 Route is already optimal (all orders perfectly ordered)';
+        }
+    }
+
+    // ============ APPLE MAPS ============
+    window.openAppleMapsDirect = function() {
+        var start = window._routeStart || routeStart.value.trim();
+        var deliveries = window._routeDeliveries || [];
+        
+        if (!start || deliveries.length === 0) {
+            alert('Please add orders with addresses first.');
+            return;
+        }
+        
+        var appUrl = 'maps://maps.apple.com/?';
+        var params = [];
+        params.push('saddr=' + encodeURIComponent(start));
+        deliveries.forEach(function(addr) {
+            params.push('daddr=' + encodeURIComponent(addr));
+        });
+        params.push('dirflg=d');
+        appUrl += params.join('&');
+        
+        window.location.href = appUrl;
+    };
+
+    // ============ MAIN RENDER ============
+    function render() {
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        if (normalOrders.length === 0) {
+            breadTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr>';
+        } else {
+            breadTableBody.innerHTML = '';
+            normalOrders.forEach(function(order, index) {
+                var row = document.createElement('tr');
+                var sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
+                var price = getPriceForOrder(order);
+                var pcs = getPcsForOrder(order);
+                var nameDisplay = order.name;
+                var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
+                var commClass = order.hasCommission ? 'active' : 'inactive';
+                var commLabel = order.hasCommission ? '13.5%' : '15%';
+                
+                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
+                breadTableBody.appendChild(row);
+            });
+        }
+        
+        var normalHummus = hummusOrders.filter(function(o) { return !o.isAddHummus; });
+        if (normalHummus.length === 0) {
+            hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus orders 🫒</td></tr>';
+        } else {
+            hummusTableBody.innerHTML = '';
+            normalHummus.forEach(function(order, index) {
+                var row = document.createElement('tr');
+                var hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
+                var hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
+                var nameDisplay = order.name;
+                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + order.size + '</td><td><span class="' + hummusClass + '">' + hummusLabel + '</span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="hummus">✖</button></td>';
+                hummusTableBody.appendChild(row);
+            });
+        }
+        
+        document.querySelectorAll('.comm-toggle').forEach(function(el) {
+            el.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                toggleCommission(id);
+            });
+        });
+        
+        document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                deleteBreadAndHummus(id);
+                render();
+                saveToLocal();
+                updateRoute();
+            });
+        });
+        
+        document.querySelectorAll('.delete-btn[data-type="hummus"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                hummusOrders = hummusOrders.filter(function(o) { return o.id !== id; });
+                render();
+                saveToLocal();
+                updateRoute();
+            });
+        });
+        
+        var total = totalPriceAll();
+        totalSpan.innerText = total.toFixed(2) + ' ¥';
+        hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
+        updateSalaryDisplay();
+        renderHummusSummary();
+        
+        var req = getTotalRequirements();
+        var breakdown = getTimesPcsBreakdown();
+        
+        var needed88 = req.mix88;
+        var boxes = Math.ceil(needed88 / 1400);
+        if (boxes === 0 && needed88 > 0) boxes = 1;
+        document.getElementById("preparationRow").innerHTML = '<tr><td>88er Base Mix</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
+        
+        document.getElementById("perPcsRow").innerHTML = 
+            '<tr><td>88er</td><td>' + (745/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
+            '<tr><td>150er</td><td>' + (650/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
+            '<tr><td>188er</td><td>' + (630/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
+            '<tr><td>200er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
+            '<tr><td>208er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>';
+        
+        var timesHtml = '', pcsHtml = '';
+        if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) {
+            timesHtml = '<tr><td colspan="2">No times</td></tr>';
+        } else {
+            timesHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
+                return '<tr><td>' + b.type + '</td><td><span class="badge-time">' + b.fullCharges + ' time</span></td></tr>';
+            }).join('');
+        }
+        if (breakdown.length === 0 || !breakdown.some(function(b) { return b.restPcs > 0; })) {
+            pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
+        } else {
+            pcsHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
+                return '<tr><td>' + b.type + '</td><td><span class="badge-pcs">' + b.restPcs + ' pcs</span></td></tr>';
+            }).join('');
+        }
+        document.getElementById("timesTableBody").innerHTML = timesHtml;
+        document.getElementById("pcsTableBody").innerHTML = pcsHtml;
+        
+        var thermHtml = '';
+        if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
+            thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
+                var r = recipeFor13[b.type];
+                return '<tr><td>' + b.type + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188 + 'g</td><td>' + r.mix200 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
+            }).join('');
+        } else {
+            thermHtml = '<tr><td colspan="7">No times</td></tr>';
+        }
+        document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
+        
+        var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
+        if (breakdown.some(function(b) { return b.restPcs > 0; })) {
+            restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
+                var per = getPerPcs(b.type);
+                var t88 = per.mix88 * b.restPcs;
+                var t150 = per.mix150 * b.restPcs;
+                var t188 = per.mix188 * b.restPcs;
+                var t200 = per.mix200 * b.restPcs;
+                var tw = per.water * b.restPcs;
+                sum88 += t88; sum150 += t150; sum188 += t188; sum200 += t200; sumW += tw;
+                return '<tr><td>' + b.type + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188.toFixed(1) + 'g</td><td>' + t200.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
+            }).join('');
+            document.getElementById("calculatedRestFooter").innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188.toFixed(1) + 'g</td><td>' + sum200.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
+        } else {
+            restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
+            document.getElementById("calculatedRestFooter").innerHTML = '';
+        }
+        document.getElementById("calculatedRestTable").innerHTML = restHtml;
+        
+        renderAddOrders();
+        updateRoute();
+    }
+
+    // ============ RESET FORM ============
+    function resetForm() {
+        customerName.value = "";
+        miniCheckbox.checked = false;
+        commissionCheckbox.checked = false;
+        autoSelectHummus();
+        customerName.focus();
+    }
+
+    // ============ ADD ORDER ============
+    function addOrder() {
+        var name = capitalizeName(customerName.value.trim());
+        if (!name) { alert("Please enter a name."); return; }
+        
+        var breadVal = breadType.value;
+        var sizeVal = breadSize.value;
+        var isMini = miniCheckbox.checked;
+        var hummusVal = hummusType.value;
+        var hummusSizeVal = hummusSize.value;
+        var hasCommission = commissionCheckbox.checked;
+        
+        if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') {
+            alert('❌ ' + sizeVal + ' comes without hummus as standard!');
+            return;
+        }
+        
+        if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') {
+            alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
+            return;
+        }
+        
+        updateWeekDisplay();
+        
+        breadOrders.push({
             id: nextId++,
             name: name,
             breadType: breadVal,
-            size: hummusSizeVal,
-            hummusType: hummusVal,
+            size: sizeVal,
+            isMini: isMini,
+            hasCommission: hasCommission,
             week: currentWeek,
             isAdd: false,
-            isAddHummus: false
+            isAddBread: false
         });
-    }
-    
-    render();
-    saveToLocal();
-    resetForm();
-}
-
-// ADD BREAD
-function addAddBreadOrder() {
-    var breadVal = addBreadType.value;
-    var count = addBreadCount;
-    
-    var existing = addBreadOrders.find(function(item) { return item.type === breadVal; });
-    if (existing) {
-        existing.count += count;
-    } else {
-        addBreadOrders.push({type: breadVal, count: count});
-    }
-    
-    for (var i = 0; i < count; i++) {
-        breadOrders.push({
-            id: nextId++,
-            name: '⚡ Add Bread',
-            breadType: breadVal,
-            size: 'S',
-            isMini: false,
-            hasCommission: false,
-            week: currentWeek,
-            isAdd: true,
-            isAddBread: true
-        });
-    }
-    
-    render();
-    saveToLocal();
-    addBreadCount = 1;
-    addBreadCountDisplay.textContent = addBreadCount;
-}
-
-// ADD HUMMUS
-function addAddHummusOrder() {
-    var hummusVal = addHummusType.value;
-    var hummusSizeVal = addHummusSize.value;
-    var count = addHummusCount;
-    
-    // Prüfen ob bereits ein ADD Hummus Eintrag mit gleichem Typ und Größe existiert
-    var existing = addHummusOrders.find(function(item) { 
-        return item.type === hummusVal && item.size === hummusSizeVal; 
-    });
-    if (existing) {
-        existing.count += count;
-    } else {
-        addHummusOrders.push({type: hummusVal, size: hummusSizeVal, count: count});
-    }
-    
-    for (var i = 0; i < count; i++) {
-        hummusOrders.push({
-            id: nextId++,
-            name: '⚡ Add Hummus',
-            breadType: '—',
-            size: hummusSizeVal,
-            hummusType: hummusVal,
-            week: currentWeek,
-            isAdd: true,
-            isAddHummus: true
-        });
-    }
-    
-    render();
-    saveToLocal();
-    addHummusCount = 1;
-    addHummusCountDisplay.textContent = addHummusCount;
-}
-
-// EVENT LISTENERS
-document.getElementById("addBtn").addEventListener("click", addOrder);
-
-document.getElementById("resetTableBtn").addEventListener("click", function() {
-    if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length) && confirm("Delete all orders?")) {
-        breadOrders = [];
-        hummusOrders = [];
-        addBreadOrders = [];
-        addHummusOrders = [];
+        
+        if (hummusVal !== 'none') {
+            hummusOrders.push({
+                id: nextId++,
+                name: name,
+                breadType: breadVal,
+                size: hummusSizeVal,
+                hummusType: hummusVal,
+                week: currentWeek,
+                isAdd: false,
+                isAddHummus: false
+            });
+        }
+        
         render();
         saveToLocal();
-        nextId = 1;
-    } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length) {
-        alert("No orders");
+        resetForm();
     }
-});
 
-document.getElementById("addBreadAddBtn").addEventListener("click", addAddBreadOrder);
-document.getElementById("addHummusAddBtn").addEventListener("click", addAddHummusOrder);
+    // ============ ADD BREAD ============
+    function addAddBreadOrder() {
+        var breadVal = addBreadType.value;
+        var count = addBreadCount;
+        
+        var existing = addBreadOrders.find(function(item) { return item.type === breadVal; });
+        if (existing) {
+            existing.count += count;
+        } else {
+            addBreadOrders.push({type: breadVal, count: count});
+        }
+        
+        for (var i = 0; i < count; i++) {
+            breadOrders.push({
+                id: nextId++,
+                name: '⚡ Add Bread',
+                breadType: breadVal,
+                size: 'S',
+                isMini: false,
+                hasCommission: false,
+                week: currentWeek,
+                isAdd: true,
+                isAddBread: true
+            });
+        }
+        
+        render();
+        saveToLocal();
+        addBreadCount = 1;
+        addBreadCountDisplay.textContent = addBreadCount;
+    }
 
-// LOAD DATA
-loadFromLocal();
+    // ============ ADD HUMMUS ============
+    function addAddHummusOrder() {
+        var hummusVal = addHummusType.value;
+        var hummusSizeVal = addHummusSize.value;
+        var count = addHummusCount;
+        
+        var existing = addHummusOrders.find(function(item) { 
+            return item.type === hummusVal && item.size === hummusSizeVal; 
+        });
+        if (existing) {
+            existing.count += count;
+        } else {
+            addHummusOrders.push({type: hummusVal, size: hummusSizeVal, count: count});
+        }
+        
+        for (var i = 0; i < count; i++) {
+            hummusOrders.push({
+                id: nextId++,
+                name: '⚡ Add Hummus',
+                breadType: '—',
+                size: hummusSizeVal,
+                hummusType: hummusVal,
+                week: currentWeek,
+                isAdd: true,
+                isAddHummus: true
+            });
+        }
+        
+        render();
+        saveToLocal();
+        addHummusCount = 1;
+        addHummusCountDisplay.textContent = addHummusCount;
+    }
+
+    // ============ EVENT LISTENERS ============
+    document.getElementById("addBtn").addEventListener("click", addOrder);
+    document.getElementById("addBreadAddBtn").addEventListener("click", addAddBreadOrder);
+    document.getElementById("addHummusAddBtn").addEventListener("click", addAddHummusOrder);
+
+    document.getElementById("resetTableBtn").addEventListener("click", function() {
+        if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length) && confirm("Delete all orders?")) {
+            breadOrders = [];
+            hummusOrders = [];
+            addBreadOrders = [];
+            addHummusOrders = [];
+            render();
+            saveToLocal();
+            nextId = 1;
+            updateRoute();
+        } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length) {
+            alert("No orders");
+        }
+    });
+
+    routeStart.addEventListener('change', updateRoute);
+    routeStart.addEventListener('input', updateRoute);
+
+    // Address Book Add
+    document.getElementById("addAddressBtn").addEventListener("click", function() {
+        var name = capitalizeName(addressNameInput.value.trim());
+        var addr = addressAddrInput.value.trim();
+        if (!name) { 
+            alert('Please enter a name.'); 
+            return; 
+        }
+        addressBook[name] = addr || '';
+        saveAddressBook();
+        addressNameInput.value = '';
+        addressAddrInput.value = '';
+        addressNameInput.focus();
+        updateRoute();
+    });
+
+    addressAddrInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            var name = capitalizeName(addressNameInput.value.trim());
+            var addr = addressAddrInput.value.trim();
+            if (!name) { 
+                alert('Please enter a name.'); 
+                return; 
+            }
+            addressBook[name] = addr || '';
+            saveAddressBook();
+            addressNameInput.value = '';
+            addressAddrInput.value = '';
+            addressNameInput.focus();
+            updateRoute();
+        }
+    });
+
+    // ============ INIT ============
+    loadAddressBook();
+    loadFromLocal();
+    startTrafficSimulation();
+    updateRoute();
+    appleMapsBtn.disabled = true;
+
+    console.log("✅ Microbiome Warrior started!");
+    console.log("🧠 AI Route Optimizer active (Branch & Bound)");
+})();
 </script>
 </body>
 </html>
