@@ -148,6 +148,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2);}
 .mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block;}
 .mini-badge-prep{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.45rem;font-weight:700;margin-left:4px;display:inline-block;}
+.mini-label{font-size:0.65rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:6px;padding:0 4px;}
 
 /* PICKUP LIST */
 .pickup-container{background:rgba(231,76,60,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(231,76,60,0.15);}
@@ -236,7 +237,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
 <div class="add-row">
 <select id="addBreadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select>
-<label style="display:flex;align-items:center;gap:6px;font-size:0.65rem;margin:0;padding:4px 0;">
+<label class="mini-label">
     <input type="checkbox" id="addBreadMiniCheckbox"> 🥖 Mini
 </label>
 <button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
@@ -603,6 +604,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     screenshotBtn.addEventListener('click', function() {
         var element = document.getElementById('captureArea');
         var status = document.getElementById('screenshotStatus');
+        
+        // Status zurücksetzen
+        status.style.display = 'block';
+        status.textContent = '⏳ Generating screenshot...';
+        status.style.background = '#fff8e8';
+        
         html2canvas(element, {
             scale: 2,
             useCORS: true,
@@ -612,22 +619,35 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             width: element.scrollWidth,
             height: element.scrollHeight,
             windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight
+            windowHeight: element.scrollHeight,
+            onclone: function(clonedDoc) {
+                // Stelle sicher, dass alle Elemente sichtbar sind
+                var clonedElement = clonedDoc.getElementById('captureArea');
+                if (clonedElement) {
+                    clonedElement.style.transform = 'none';
+                    clonedElement.style.overflow = 'visible';
+                }
+            }
         }).then(function(canvas) {
             var link = document.createElement('a');
             link.download = 'microbiome_warrior_week_' + currentWeek + '.png';
             link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
             link.click();
-            status.style.display = 'block';
-            status.textContent = '✅ Screenshot downloaded!';
+            document.body.removeChild(link);
+            
+            status.textContent = '✅ Screenshot downloaded! Week ' + currentWeek;
             status.style.background = '#e8f5e9';
-            setTimeout(function() { status.style.display = 'none'; }, 3000);
+            setTimeout(function() { 
+                status.style.display = 'none'; 
+            }, 4000);
         }).catch(function(error) {
             console.error('Screenshot error:', error);
-            status.style.display = 'block';
-            status.textContent = '❌ Error taking screenshot';
+            status.textContent = '❌ Error: ' + error.message;
             status.style.background = '#fde8e8';
-            setTimeout(function() { status.style.display = 'none'; }, 3000);
+            setTimeout(function() { 
+                status.style.display = 'none'; 
+            }, 4000);
         });
     });
 
@@ -900,12 +920,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     function getTotalPcsPerType() {
         var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
         breadOrders.forEach(function(o) {
-            var pcs = getPcsForOrder(o); // Mini ist hier schon berücksichtigt!
+            var pcs = getPcsForOrder(o);
             totals[o.breadType] += pcs;
         });
-        // Add Bread Orders auch berücksichtigen
         addBreadOrders.forEach(function(item) {
-            var pcsPerItem = item.isMini ? 1 : 2; // Mini = 1 pcs, Normal = 2 pcs (S Größe)
+            var pcsPerItem = item.isMini ? 1 : 2;
             totals[item.type] += item.count * pcsPerItem;
         });
         return totals;
