@@ -33,6 +33,7 @@ table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;bord
 th{padding:8px 4px;font-weight:800;color:#2a1a08;}
 th.bread-th{background:#e2aa54;}
 th.hummus-th{background:#8faa4a;color:white;}
+th.summary-th{background:#b87a2a;color:white;}
 td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .scrollable{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .badge-time{background:#c9a256;color:white;padding:3px 10px;border-radius:20px;font-size:0.65rem;display:inline-block;}
@@ -272,6 +273,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="table-title bread-title">🥖 Bread Orders</div>
 <div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Comm</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="8" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
 
+<!-- ====== BREAD SUMMARY - ALLE GLEICHEN ZUSAMMENGEFASST ====== -->
+<div class="table-title" style="color:#b87a2a;margin-top:12px;">📊 BREAD SUMMARY (grouped by variety)</div>
+<div class="scrollable"><table><thead><th class="summary-th">Variety</th><th class="summary-th">Total Orders</th><th class="summary-th">Total pcs</th><th class="summary-th">Mini</th></thead><tbody id="breadSummaryBody"><tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr></tbody></table></div>
+
 <div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
 <div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr></tbody></table></div>
 
@@ -477,6 +482,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var yingYangInfo = document.getElementById("yingYangInfo");
     var yingYangWarning = document.getElementById("yingYangWarning");
     var breadTableBody = document.getElementById("breadTableBody");
+    var breadSummaryBody = document.getElementById("breadSummaryBody");
     var addBreadSummaryBody = document.getElementById("addBreadSummaryBody");
     var hummusSummaryBody = document.getElementById("hummusSummaryBody");
     var hummusTableBody = document.getElementById("hummusTableBody");
@@ -605,7 +611,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var element = document.getElementById('captureArea');
         var status = document.getElementById('screenshotStatus');
         
-        // Status zurücksetzen
         status.style.display = 'block';
         status.textContent = '⏳ Generating screenshot...';
         status.style.background = '#fff8e8';
@@ -621,7 +626,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             windowWidth: element.scrollWidth,
             windowHeight: element.scrollHeight,
             onclone: function(clonedDoc) {
-                // Stelle sicher, dass alle Elemente sichtbar sind
                 var clonedElement = clonedDoc.getElementById('captureArea');
                 if (clonedElement) {
                     clonedElement.style.transform = 'none';
@@ -1055,6 +1059,45 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
+    // ============ RENDER BREAD SUMMARY (NACH VARIETY ZUSAMMENGEFASST) ============
+    function renderBreadSummary() {
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        
+        if (normalOrders.length === 0) {
+            breadSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr>';
+            return;
+        }
+        
+        // Nach Variety gruppieren
+        var summary = {};
+        normalOrders.forEach(function(order) {
+            var variety = order.breadType;
+            if (!summary[variety]) {
+                summary[variety] = { variety: variety, totalOrders: 0, totalPcs: 0, miniCount: 0 };
+            }
+            summary[variety].totalOrders += 1;
+            summary[variety].totalPcs += getPcsForOrder(order);
+            if (order.isMini) {
+                summary[variety].miniCount += 1;
+            }
+        });
+        
+        // Sortieren: 88er, 150er, 188er, 200er, 208er
+        var varietyOrder = ['88er', '150er', '188er', '200er', '208er'];
+        var sortedKeys = Object.keys(summary).sort(function(a, b) {
+            return varietyOrder.indexOf(a) - varietyOrder.indexOf(b);
+        });
+        
+        breadSummaryBody.innerHTML = '';
+        sortedKeys.forEach(function(key) {
+            var item = summary[key];
+            var row = document.createElement('tr');
+            var miniDisplay = item.miniCount > 0 ? '🥖 ' + item.miniCount : '—';
+            row.innerHTML = '<td>' + item.variety + '</td><td>' + item.totalOrders + '</td><td>' + item.totalPcs + '</td><td>' + miniDisplay + '</td>';
+            breadSummaryBody.appendChild(row);
+        });
+    }
+
     // ============ RENDER ADD ORDERS ============
     function renderAddOrders() {
         if (addBreadOrders.length === 0) {
@@ -1184,8 +1227,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
                 var itemB = summary[b];
                 if (itemA.type === 'yingyang' && itemB.type !== 'yingyang') return -1;
                 if (itemA.type !== 'yingyang' && itemB.type === 'yingyang') return 1;
-                var sizeOrder = {'S':0, 'M':1, 'L':2, 'XM':3, 'XL':4};
-                return sizeOrder[itemA.size] - sizeOrder[itemB.size];
+                var sizeOrderArr = {'S':0, 'M':1, 'L':2, 'XM':3, 'XL':4};
+                return sizeOrderArr[itemA.size] - sizeOrderArr[itemB.size];
             });
             
             hummusSummaryBody.innerHTML = '';
@@ -1737,6 +1780,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         totalSpan.innerText = total.toFixed(2) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
         updateSalaryDisplay();
+        renderBreadSummary();
         renderHummusSummary();
         
         renderPreparation();
@@ -1807,7 +1851,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         resetForm();
     }
 
-    // ============ ADD BREAD (MIT MINI OPTION) ============
+    // ============ ADD BREAD ============
     function addAddBreadOrder() {
         var breadVal = addBreadType.value;
         var count = addBreadCount;
@@ -1965,6 +2009,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     console.log("📊 Weekly History active (no deletion)");
     console.log("🥖 ADD Bread now has Mini option!");
     console.log("🫒 Hummus Summary sorted by type (Ying&Yang first) and size!");
+    console.log("📊 Bread Summary: grouped by variety (all sizes combined)!");
     console.log("🏷️ Mini is visible everywhere, including Preparation!");
 })();
 </script>
