@@ -111,6 +111,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .route-step.return-home{background:rgba(39,174,96,0.08);border-radius:6px;padding-left:4px;}
 .route-step.return-home .step-num{background:#2ecc71;}
 .route-step .home-badge{background:#2ecc71;color:white;padding:0px 6px;border-radius:8px;font-size:0.45rem;font-weight:700;margin-left:4px;}
+.route-step .mini-badge{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;}
 .route-empty{color:#b88c48;font-size:0.6rem;text-align:center;padding:8px;}
 .route-input-group{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px;}
 .route-input-group input{width:100%;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;}
@@ -145,6 +146,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .optimized-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.45rem;font-weight:700;margin-left:4px;}
 .route-optimized{background:rgba(39,174,96,0.08);border-radius:10px;padding:4px 10px;margin-top:4px;font-size:0.55rem;color:#27ae60;text-align:center;border:1px solid rgba(39,174,96,0.15);}
 .route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2);}
+.mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block;}
+.mini-badge-prep{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.45rem;font-weight:700;margin-left:4px;display:inline-block;}
 
 /* PICKUP LIST */
 .pickup-container{background:rgba(231,76,60,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(231,76,60,0.15);}
@@ -233,6 +236,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
 <div class="add-row">
 <select id="addBreadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select>
+<label style="display:flex;align-items:center;gap:6px;font-size:0.65rem;margin:0;padding:4px 0;">
+    <input type="checkbox" id="addBreadMiniCheckbox"> 🥖 Mini
+</label>
 <button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
 <span class="add-count" id="addBreadCountDisplay">1</span>
 <button class="add-count-btn add-count-btn-plus" id="addBreadPlusBtn">+</button>
@@ -481,6 +487,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var screenshotStatus = document.getElementById("screenshotStatus");
     var commissionCheckbox = document.getElementById("commissionCheckbox");
     var addBreadType = document.getElementById("addBreadType");
+    var addBreadMiniCheckbox = document.getElementById("addBreadMiniCheckbox");
     var addBreadCountDisplay = document.getElementById("addBreadCountDisplay");
     var addBreadMinusBtn = document.getElementById("addBreadMinusBtn");
     var addBreadPlusBtn = document.getElementById("addBreadPlusBtn");
@@ -527,6 +534,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var histTotalRevenue = document.getElementById("histTotalRevenue");
     var histTotalPickups = document.getElementById("histTotalPickups");
     var histTotalWeeks = document.getElementById("histTotalWeeks");
+
+    // Preparation refs
+    var preparationRow = document.getElementById("preparationRow");
+    var timesTableBody = document.getElementById("timesTableBody");
+    var pcsTableBody = document.getElementById("pcsTableBody");
+    var calculatedThermomixTable = document.getElementById("calculatedThermomixTable");
+    var calculatedRestTable = document.getElementById("calculatedRestTable");
+    var calculatedRestFooter = document.getElementById("calculatedRestFooter");
+    var perPcsRow = document.getElementById("perPcsRow");
 
     // ============ ADDRESS TOGGLE ============
     addressToggle.addEventListener('click', function() {
@@ -884,8 +900,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     function getTotalPcsPerType() {
         var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
         breadOrders.forEach(function(o) {
-            var pcs = getPcsForOrder(o);
+            var pcs = getPcsForOrder(o); // Mini ist hier schon berücksichtigt!
             totals[o.breadType] += pcs;
+        });
+        // Add Bread Orders auch berücksichtigen
+        addBreadOrders.forEach(function(item) {
+            var pcsPerItem = item.isMini ? 1 : 2; // Mini = 1 pcs, Normal = 2 pcs (S Größe)
+            totals[item.type] += item.count * pcsPerItem;
         });
         return totals;
     }
@@ -914,7 +935,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             if (total === 0) continue;
             var full = Math.floor(total / 13);
             var rest = total % 13;
-            res.push({type: type, fullCharges: full, restPcs: rest});
+            if (full > 0 || rest > 0) {
+                res.push({type: type, fullCharges: full, restPcs: rest});
+            }
         }
         return res;
     }
@@ -1020,7 +1043,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         } else {
             var html = '';
             addBreadOrders.forEach(function(item, index) {
-                html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + item.type + ' <span class="del" data-bread-index="' + index + '">✖</span></span> ';
+                var miniLabel = item.isMini ? ' 🥖Mini' : '';
+                html += '<span class="add-item"><span class="qty">' + item.count + '×</span> ' + item.type + miniLabel + ' <span class="del" data-bread-index="' + index + '">✖</span></span> ';
             });
             addBreadOrdersList.innerHTML = html;
             document.querySelectorAll('.add-item .del[data-bread-index]').forEach(function(el) {
@@ -1030,7 +1054,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
                     addBreadOrders.splice(idx, 1);
                     var removedCount = 0;
                     breadOrders = breadOrders.filter(function(o) {
-                        if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                        if (o.isAddBread && o.breadType === removed.type && o.isMini === removed.isMini && removedCount < removed.count) {
                             removedCount++;
                             return false;
                         }
@@ -1049,7 +1073,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             addBreadSummaryBody.innerHTML = '';
             addBreadOrders.forEach(function(item, index) {
                 var row = document.createElement('tr');
-                row.innerHTML = '<td>' + item.type + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
+                var miniLabel = item.isMini ? ' 🥖Mini' : '';
+                row.innerHTML = '<td>' + item.type + miniLabel + '</td><td>' + item.count + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
                 addBreadSummaryBody.appendChild(row);
             });
             document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(function(btn) {
@@ -1059,7 +1084,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
                     addBreadOrders.splice(idx, 1);
                     var removedCount = 0;
                     breadOrders = breadOrders.filter(function(o) {
-                        if (o.isAddBread && o.breadType === removed.type && removedCount < removed.count) {
+                        if (o.isAddBread && o.breadType === removed.type && o.isMini === removed.isMini && removedCount < removed.count) {
                             removedCount++;
                             return false;
                         }
@@ -1102,7 +1127,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
-    // ============ RENDER HUMMUS SUMMARY ============
+    // ============ RENDER HUMMUS SUMMARY (SORTIERT) ============
     function renderHummusSummary() {
         var allHummus = [];
         
@@ -1135,8 +1160,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         if (keys.length === 0) {
             hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr>';
         } else {
+            var sortedKeys = keys.sort(function(a, b) {
+                var itemA = summary[a];
+                var itemB = summary[b];
+                if (itemA.type === 'yingyang' && itemB.type !== 'yingyang') return -1;
+                if (itemA.type !== 'yingyang' && itemB.type === 'yingyang') return 1;
+                var sizeOrder = {'S':0, 'M':1, 'L':2, 'XM':3, 'XL':4};
+                return sizeOrder[itemA.size] - sizeOrder[itemB.size];
+            });
+            
             hummusSummaryBody.innerHTML = '';
-            keys.forEach(function(key) {
+            sortedKeys.forEach(function(key) {
                 var item = summary[key];
                 var row = document.createElement('tr');
                 var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
@@ -1288,10 +1322,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
         
         function branchAndBound(currentPos, visited, currentDist, route) {
-            // Pruning: Wenn aktuelle Distanz + minimale Rückfahrt schon schlechter als beste
             if (currentDist >= bestDist) return;
             if (visited.length === n) {
-                // Rückfahrt nach Hause hinzufügen
                 var returnDist = getDistance(customers[currentPos].address, startAddr);
                 var totalDist = currentDist + returnDist;
                 if (totalDist < bestDist) {
@@ -1421,8 +1453,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             var hasAddr = addr && addr.trim();
             var statusIcon = hasAddr ? '✅' : '⚠️';
             var statusText = hasAddr ? '📍 ' + addr : 'no address';
+            var miniLabel = order.isMini ? ' 🥖Mini' : '';
             listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;">' +
-                '<span>' + escapeHtml(order.name) + ' (' + order.breadType + ' ' + order.size + ')</span>' +
+                '<span>' + escapeHtml(order.name) + ' (' + order.breadType + ' ' + order.size + miniLabel + ')</span>' +
                 '<span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span>' +
             '</div>';
         });
@@ -1441,37 +1474,23 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var endTime = performance.now();
         var calcTime = (endTime - startTime).toFixed(1);
         
-        // Distanz berechnen
         var totalDist = 0;
-        var currentAddr = start;
-        var routeWithoutHome = optimizedRoute.filter(function(c) { return !c.isReturn; });
         
         optimizedRoute.forEach(function(c, index) {
             if (index === 0) {
                 totalDist += getDistance(start, c.address);
             } else {
                 var prev = optimizedRoute[index - 1];
-                if (prev.isReturn) {
-                    totalDist += getDistance(prev.address, c.address);
-                } else {
-                    totalDist += getDistance(prev.address, c.address);
-                }
+                totalDist += getDistance(prev.address, c.address);
             }
         });
-        
-        // Für den Fall dass kein Return-Eintrag existiert
-        var lastStop = optimizedRoute[optimizedRoute.length - 1];
-        if (lastStop && !lastStop.isReturn) {
-            totalDist += getDistance(lastStop.address, start);
-            optimizedRoute.push({ isReturn: true, address: start, label: '🏠 HOME' });
-        }
         
         var traffic = currentTraffic;
         var totalDistWithTraffic = totalDist * traffic.delay;
         var timeMin = Math.round(totalDist * 3.2 * (traffic.delay > 1.2 ? 1.3 : 1));
         
         var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
-        routeDeliveries.push(start); // Rückfahrt
+        routeDeliveries.push(start);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">🏠 Start & End: ' + escapeHtml(start) + '</div>';
         html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🔄 Round Trip (' + (optimizedRoute.length - 1) + ' stops) <span class="optimized-badge">optimized</span></div>';
@@ -1479,6 +1498,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         optimizedRoute.forEach(function(c, index) {
             var isReturn = c.isReturn || false;
             var isPickup = c.isPickup || false;
+            var isMini = c.order ? c.order.isMini : false;
             var distFromPrev = 0;
             
             if (index === 0) {
@@ -1492,12 +1512,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             var returnClass = isReturn ? 'return-home' : '';
             var pickupBadge = isPickup ? ' <span class="pickup-badge">📦 PICKUP</span>' : '';
             var homeBadge = isReturn ? ' <span class="home-badge">🏠 HOME</span>' : '';
+            var miniBadge = (isMini && !isReturn) ? ' <span class="mini-badge">🥖 Mini</span>' : '';
             var nameDisplay = isReturn ? '🏠 ' + c.label : (isPickup ? '📦 ' + c.name : c.name);
-            var orderInfo = c.order ? ' (' + c.order.breadType + ' ' + c.order.size + ')' : '';
+            var orderInfo = c.order ? ' (' + c.order.breadType + ' ' + c.order.size + (c.order.isMini ? ' Mini' : '') + ')' : '';
             
             html += '<div class="route-step ' + pickupClass + ' ' + returnClass + '">' +
                 '<span class="step-num">' + (index + 1) + '</span>' +
-                '<span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + homeBadge + '</span>' +
+                '<span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + homeBadge + miniBadge + '</span>' +
                 '<span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:' + (isReturn ? '#2ecc71' : (isPickup ? '#e74c3c' : '#27ae60')) + ';font-size:0.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span>' +
             '</div>';
         });
@@ -1546,6 +1567,88 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         window.location.href = appUrl;
     };
 
+    // ============ RENDER PREPARATION ============
+    function renderPreparation() {
+        var req = getTotalRequirements();
+        var breakdown = getTimesPcsBreakdown();
+        var hasMini = breadOrders.some(function(o) { return o.isMini && !o.isAdd && !o.isAddBread; });
+        var hasAddMini = addBreadOrders.some(function(item) { return item.isMini; });
+        var hasAnyMini = hasMini || hasAddMini;
+        
+        // 88er Base Mix
+        var needed88 = req.mix88;
+        var boxes = Math.ceil(needed88 / 1400);
+        if (boxes === 0 && needed88 > 0) boxes = 1;
+        var miniInfo = hasAnyMini ? ' 🥖 (includes Mini)' : '';
+        preparationRow.innerHTML = '<tr><td>88er Base Mix' + miniInfo + '</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
+        
+        // Per Pcs Tabelle
+        var perPcsHtml = '';
+        var types = ['88er', '150er', '188er', '200er', '208er'];
+        types.forEach(function(type) {
+            var per = getPerPcs(type);
+            var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+            perPcsHtml += '<tr><td>' + type + miniLabel + '</td><td>' + per.mix88.toFixed(1) + 'g</td><td>' + per.mix150.toFixed(1) + 'g</td><td>' + per.mix188.toFixed(1) + 'g</td><td>' + per.mix200.toFixed(1) + 'g</td><td class="water-cell">' + per.water.toFixed(1) + 'g</td></tr>';
+        });
+        perPcsRow.innerHTML = perPcsHtml;
+        
+        // Times / Pcs Breakdown
+        var timesHtml = '', pcsHtml = '';
+        if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) {
+            timesHtml = '<tr><td colspan="2">No times</td></tr>';
+        } else {
+            timesHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
+                var miniLabel = hasAnyMini ? ' 🥖' : '';
+                return '<tr><td>' + b.type + miniLabel + '</td><td><span class="badge-time">' + b.fullCharges + ' time</span></td></tr>';
+            }).join('');
+        }
+        if (breakdown.length === 0 || !breakdown.some(function(b) { return b.restPcs > 0; })) {
+            pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
+        } else {
+            pcsHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
+                var miniLabel = hasAnyMini ? ' 🥖' : '';
+                return '<tr><td>' + b.type + miniLabel + '</td><td><span class="badge-pcs">' + b.restPcs + ' pcs</span></td></tr>';
+            }).join('');
+        }
+        timesTableBody.innerHTML = timesHtml;
+        pcsTableBody.innerHTML = pcsHtml;
+        
+        // Thermomix Charge
+        var thermHtml = '';
+        if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
+            thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
+                var r = recipeFor13[b.type];
+                var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188 + 'g</td><td>' + r.mix200 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
+            }).join('');
+        } else {
+            thermHtml = '<tr><td colspan="7">No times</td></tr>';
+        }
+        calculatedThermomixTable.innerHTML = thermHtml;
+        
+        // Rest Quantity
+        var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
+        if (breakdown.some(function(b) { return b.restPcs > 0; })) {
+            restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
+                var per = getPerPcs(b.type);
+                var t88 = per.mix88 * b.restPcs;
+                var t150 = per.mix150 * b.restPcs;
+                var t188 = per.mix188 * b.restPcs;
+                var t200 = per.mix200 * b.restPcs;
+                var tw = per.water * b.restPcs;
+                sum88 += t88; sum150 += t150; sum188 += t188; sum200 += t200; sumW += tw;
+                var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188.toFixed(1) + 'g</td><td>' + t200.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
+            }).join('');
+            var footerMini = hasAnyMini ? ' 🥖 includes Mini' : '';
+            calculatedRestFooter.innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest' + footerMini + '</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188.toFixed(1) + 'g</td><td>' + sum200.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
+        } else {
+            restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
+            calculatedRestFooter.innerHTML = '';
+        }
+        calculatedRestTable.innerHTML = restHtml;
+    }
+
     // ============ MAIN RENDER ============
     function render() {
         var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
@@ -1560,10 +1663,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
                 var pcs = getPcsForOrder(order);
                 var nameDisplay = order.name;
                 var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
+                var miniTag = order.isMini ? ' <span class="mini-tag">🥖 Mini</span>' : '';
                 var commClass = order.hasCommission ? 'active' : 'inactive';
                 var commLabel = order.hasCommission ? '13.5%' : '15%';
                 
-                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
+                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + miniTag + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
                 breadTableBody.appendChild(row);
             });
         }
@@ -1616,69 +1720,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         updateSalaryDisplay();
         renderHummusSummary();
         
-        var req = getTotalRequirements();
-        var breakdown = getTimesPcsBreakdown();
-        
-        var needed88 = req.mix88;
-        var boxes = Math.ceil(needed88 / 1400);
-        if (boxes === 0 && needed88 > 0) boxes = 1;
-        document.getElementById("preparationRow").innerHTML = '<tr><td>88er Base Mix</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
-        
-        document.getElementById("perPcsRow").innerHTML = 
-            '<tr><td>88er</td><td>' + (745/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-            '<tr><td>150er</td><td>' + (650/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>0g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-            '<tr><td>188er</td><td>' + (630/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>0g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-            '<tr><td>200er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>' +
-            '<tr><td>208er</td><td>' + (620/13).toFixed(1) + 'g</td><td>' + (97/13).toFixed(1) + 'g</td><td>' + (15/13).toFixed(1) + 'g</td><td>' + (13/13).toFixed(1) + 'g</td><td class="water-cell">' + (360/13).toFixed(1) + 'g</td></tr>';
-        
-        var timesHtml = '', pcsHtml = '';
-        if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) {
-            timesHtml = '<tr><td colspan="2">No times</td></tr>';
-        } else {
-            timesHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
-                return '<tr><td>' + b.type + '</td><td><span class="badge-time">' + b.fullCharges + ' time</span></td></tr>';
-            }).join('');
-        }
-        if (breakdown.length === 0 || !breakdown.some(function(b) { return b.restPcs > 0; })) {
-            pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>';
-        } else {
-            pcsHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
-                return '<tr><td>' + b.type + '</td><td><span class="badge-pcs">' + b.restPcs + ' pcs</span></td></tr>';
-            }).join('');
-        }
-        document.getElementById("timesTableBody").innerHTML = timesHtml;
-        document.getElementById("pcsTableBody").innerHTML = pcsHtml;
-        
-        var thermHtml = '';
-        if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
-            thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
-                var r = recipeFor13[b.type];
-                return '<tr><td>' + b.type + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188 + 'g</td><td>' + r.mix200 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
-            }).join('');
-        } else {
-            thermHtml = '<tr><td colspan="7">No times</td></tr>';
-        }
-        document.getElementById("calculatedThermomixTable").innerHTML = thermHtml;
-        
-        var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
-        if (breakdown.some(function(b) { return b.restPcs > 0; })) {
-            restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
-                var per = getPerPcs(b.type);
-                var t88 = per.mix88 * b.restPcs;
-                var t150 = per.mix150 * b.restPcs;
-                var t188 = per.mix188 * b.restPcs;
-                var t200 = per.mix200 * b.restPcs;
-                var tw = per.water * b.restPcs;
-                sum88 += t88; sum150 += t150; sum188 += t188; sum200 += t200; sumW += tw;
-                return '<tr><td>' + b.type + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188.toFixed(1) + 'g</td><td>' + t200.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
-            }).join('');
-            document.getElementById("calculatedRestFooter").innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188.toFixed(1) + 'g</td><td>' + sum200.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
-        } else {
-            restHtml = '<tr><td colspan="7">No rest pcs</td></tr>';
-            document.getElementById("calculatedRestFooter").innerHTML = '';
-        }
-        document.getElementById("calculatedRestTable").innerHTML = restHtml;
-        
+        renderPreparation();
         renderAddOrders();
         updateRoute();
     }
@@ -1746,25 +1788,28 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         resetForm();
     }
 
-    // ============ ADD BREAD ============
+    // ============ ADD BREAD (MIT MINI OPTION) ============
     function addAddBreadOrder() {
         var breadVal = addBreadType.value;
         var count = addBreadCount;
+        var isMini = addBreadMiniCheckbox.checked;
         
-        var existing = addBreadOrders.find(function(item) { return item.type === breadVal; });
+        var existing = addBreadOrders.find(function(item) { 
+            return item.type === breadVal && item.isMini === isMini; 
+        });
         if (existing) {
             existing.count += count;
         } else {
-            addBreadOrders.push({type: breadVal, count: count});
+            addBreadOrders.push({type: breadVal, count: count, isMini: isMini});
         }
         
         for (var i = 0; i < count; i++) {
             breadOrders.push({
                 id: nextId++,
-                name: '⚡ Add Bread',
+                name: isMini ? '⚡ Add Bread (Mini)' : '⚡ Add Bread',
                 breadType: breadVal,
                 size: 'S',
-                isMini: false,
+                isMini: isMini,
                 hasCommission: false,
                 week: currentWeek,
                 isAdd: true,
@@ -1776,6 +1821,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         saveToLocal();
         addBreadCount = 1;
         addBreadCountDisplay.textContent = addBreadCount;
+        addBreadMiniCheckbox.checked = false;
     }
 
     // ============ ADD HUMMUS ============
@@ -1890,7 +1936,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     updateRoute();
     appleMapsBtn.disabled = true;
 
-    // Save current week to history when page unloads or after changes
     window.addEventListener('beforeunload', function() {
         saveCurrentWeekToHistory();
     });
@@ -1899,6 +1944,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     console.log("🔄 Round Trip Mode active - starts and ends at home!");
     console.log("📦 Pickup List active");
     console.log("📊 Weekly History active (no deletion)");
+    console.log("🥖 ADD Bread now has Mini option!");
+    console.log("🫒 Hummus Summary sorted by type (Ying&Yang first) and size!");
+    console.log("🏷️ Mini is visible everywhere, including Preparation!");
 })();
 </script>
 </body>
