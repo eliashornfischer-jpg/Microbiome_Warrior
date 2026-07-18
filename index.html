@@ -319,7 +319,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 
 <!-- ====== ROUTE PLANNING ====== -->
 <div class="card">
-<div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">🔄 ROUND TRIP</span></div>
+<div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">⚡ FAST</span></div>
 
 <!-- PICKUP LIST -->
 <div class="pickup-container">
@@ -363,15 +363,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 
 <div style="margin-top:8px;background:rgba(46,204,113,0.06);border-radius:12px;padding:8px;border:1px solid #d4c090;">
-    <div style="font-weight:700;font-size:0.7rem;color:#27ae60;">📋 ORDERS FOR DELIVERY <span class="optimized-badge">🧠 AI sorted</span></div>
+    <div style="font-weight:700;font-size:0.7rem;color:#27ae60;">📋 ORDERS FOR DELIVERY <span class="optimized-badge">⚡ Nearest</span></div>
     <div id="autoRouteList" style="font-size:0.6rem;padding:4px 0;color:#6b4a1c;">No orders yet</div>
 </div>
 
 <div class="route-container route-result" id="routeResult">
-<div class="route-empty">Add orders → AI will find shortest round trip</div>
+<div class="route-empty">Add orders → route will auto-optimize</div>
 </div>
 
-<div class="route-optimized" id="routeOptimizedInfo">🔄 AI finding optimal round trip (start & end at home)</div>
+<div class="route-optimized" id="routeOptimizedInfo">⚡ Fast Nearest-Neighbor algorithm</div>
 <div class="route-compare" id="routeCompareInfo"></div>
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
@@ -384,7 +384,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     </span>
 </button>
 
-<div class="auto-route-info">✅ AI finds shortest round trip (returns home)</div>
+<div class="auto-route-info">✅ Fast route optimization (returns home)</div>
 </div>
 
 <!-- ====== HISTORY ====== -->
@@ -471,6 +471,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     // Traffic state
     var trafficSimulationInterval = null;
     var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 0.9 };
+
+    // Distance Cache
+    var distanceCache = {};
 
     // ============ DOM REFS ============
     var customerName = document.getElementById("customerName");
@@ -1068,7 +1071,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             return;
         }
         
-        // Nach Variety gruppieren
         var summary = {};
         normalOrders.forEach(function(order) {
             var variety = order.breadType;
@@ -1082,7 +1084,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             }
         });
         
-        // Sortieren: 88er, 150er, 188er, 200er, 208er
         var varietyOrder = ['88er', '150er', '188er', '200er', '208er'];
         var sortedKeys = Object.keys(summary).sort(function(a, b) {
             return varietyOrder.indexOf(a) - varietyOrder.indexOf(b);
@@ -1308,7 +1309,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
-    // ============ DISTANZMATRIX ============
+    // ============ DISTANZMATRIX MIT CACHING ============
+    function getCacheKey(addr1, addr2) {
+        return addr1 + '|' + addr2;
+    }
+
     function getBezirk(adresse) {
         if (adresse.includes('青浦')) return 'qingpu';
         if (adresse.includes('静安')) return 'jingan';
@@ -1329,6 +1334,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     }
 
     function getDistance(addr1, addr2) {
+        var key = getCacheKey(addr1, addr2);
+        if (distanceCache[key] !== undefined) {
+            return distanceCache[key];
+        }
+        
         var bez1 = getBezirk(addr1);
         var bez2 = getBezirk(addr2);
         
@@ -1351,88 +1361,37 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             'unknown': {'qingpu':25, 'jingan':12, 'huangpu':12, 'xuhui':12, 'pudong':16, 'changning':12, 'hongkou':12, 'yangpu':14, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':22, 'putuo':12, 'zhabei':12, 'luwan':12, 'unknown':10}
         };
         
+        var result = 12;
         if (distMatrix[bez1] && distMatrix[bez1][bez2] !== undefined) {
-            return distMatrix[bez1][bez2];
+            result = distMatrix[bez1][bez2];
         }
-        return 12;
+        
+        distanceCache[key] = result;
+        return result;
     }
 
-    // ============ INTELLIGENTE ROUTENOPTIMIERUNG MIT RÜCKFAHRT ============
+    // ============ SCHNELLE ROUTENOPTIMIERUNG (NEAREST NEIGHBOR) ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
-        if (customers.length === 1) return customers;
-        
-        var n = customers.length;
-        var bestRoute = null;
-        var bestDist = Infinity;
-        
-        var distMatrix = [];
-        for (var i = 0; i < n; i++) {
-            distMatrix[i] = [];
-            for (var j = 0; j < n; j++) {
-                if (i === j) {
-                    distMatrix[i][j] = 0;
-                } else {
-                    distMatrix[i][j] = getDistance(customers[i].address, customers[j].address);
-                }
-            }
+        if (customers.length === 1) {
+            var result = customers.slice();
+            result.push({ isReturn: true, address: startAddr, label: '🏠 HOME' });
+            return result;
         }
         
-        var startDist = [];
-        for (var i = 0; i < n; i++) {
-            startDist[i] = getDistance(startAddr, customers[i].address);
-        }
-        
-        function branchAndBound(currentPos, visited, currentDist, route) {
-            if (currentDist >= bestDist) return;
-            if (visited.length === n) {
-                var returnDist = getDistance(customers[currentPos].address, startAddr);
-                var totalDist = currentDist + returnDist;
-                if (totalDist < bestDist) {
-                    bestDist = totalDist;
-                    bestRoute = route.slice();
-                    bestRoute.push({ isReturn: true, address: startAddr, label: '🏠 HOME' });
-                }
-                return;
-            }
-            
-            var candidates = [];
-            for (var i = 0; i < n; i++) {
-                if (visited.indexOf(i) === -1) {
-                    var dist = distMatrix[currentPos][i];
-                    candidates.push({ index: i, dist: dist });
-                }
-            }
-            candidates.sort(function(a, b) { return a.dist - b.dist; });
-            
-            var maxBranches = Math.min(candidates.length, 8);
-            for (var b = 0; b < maxBranches; b++) {
-                var next = candidates[b];
-                var newVisited = visited.concat([next.index]);
-                var newRoute = route.concat([customers[next.index]]);
-                branchAndBound(next.index, newVisited, currentDist + next.dist, newRoute);
-            }
-        }
-        
-        for (var start = 0; start < n; start++) {
-            branchAndBound(start, [start], startDist[start], [customers[start]]);
-        }
-        
-        if (!bestRoute || bestRoute.length === 0) {
-            var nnRoute = nearestNeighborRoundTrip(startAddr, customers);
-            return nnRoute;
-        }
-        return bestRoute;
-    }
-
-    function nearestNeighborRoundTrip(startAddr, customers) {
         var unvisited = customers.slice();
         var route = [];
         var current = { address: startAddr };
         
-        while (unvisited.length > 0) {
+        var startTime = performance.now();
+        var maxIterations = unvisited.length * 5;
+        var iteration = 0;
+        
+        while (unvisited.length > 0 && iteration < maxIterations) {
+            iteration++;
             var nearest = null;
             var nearestDist = Infinity;
+            
             for (var i = 0; i < unvisited.length; i++) {
                 var dist = getDistance(current.address, unvisited[i].address);
                 if (dist < nearestDist) {
@@ -1440,13 +1399,25 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
                     nearest = i;
                 }
             }
+            
             if (nearest !== null) {
                 route.push(unvisited[nearest]);
                 current = unvisited[nearest];
                 unvisited.splice(nearest, 1);
             }
         }
+        
+        // Falls noch unvisited übrig (sollte nicht passieren)
+        while (unvisited.length > 0) {
+            route.push(unvisited[0]);
+            unvisited.splice(0, 1);
+        }
+        
         route.push({ isReturn: true, address: startAddr, label: '🏠 HOME' });
+        
+        var endTime = performance.now();
+        console.log('Route optimization took ' + (endTime - startTime).toFixed(1) + 'ms for ' + customers.length + ' stops');
+        
         return route;
     }
 
@@ -1457,7 +1428,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             routeResult.innerHTML = '<div class="route-empty">⚠️ Please enter your home address.</div>';
             autoRouteList.innerHTML = 'No start address set';
             appleMapsBtn.disabled = true;
-            routeOptimizedInfo.textContent = '🔄 Waiting for home address...';
+            routeOptimizedInfo.textContent = '⚡ Waiting for home address...';
             routeCompareInfo.textContent = '';
             return;
         }
@@ -1468,7 +1439,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
             autoRouteList.innerHTML = 'No orders or pickups';
             appleMapsBtn.disabled = true;
-            routeOptimizedInfo.textContent = '🔄 Add orders or pickups to optimize round trip';
+            routeOptimizedInfo.textContent = '⚡ Add orders or pickups to optimize round trip';
             routeCompareInfo.textContent = '';
             return;
         }
@@ -1526,11 +1497,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         if (allCustomers.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">⚠️ No valid addresses found. Add addresses in Address Book.</div>';
             appleMapsBtn.disabled = true;
-            routeOptimizedInfo.textContent = '🔄 No valid addresses found';
+            routeOptimizedInfo.textContent = '⚡ No valid addresses found';
             routeCompareInfo.textContent = '';
             return;
         }
         
+        // Route mit Nearest-Neighbor berechnen (schnell)
         var startTime = performance.now();
         var optimizedRoute = findOptimalRoundTrip(start, allCustomers);
         var endTime = performance.now();
@@ -1555,7 +1527,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         routeDeliveries.push(start);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">🏠 Start & End: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🔄 Round Trip (' + (optimizedRoute.length - 1) + ' stops) <span class="optimized-badge">optimized</span></div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">⚡ Optimized Round Trip (' + (optimizedRoute.length - 1) + ' stops) <span class="optimized-badge">' + calcTime + 'ms</span></div>';
         
         optimizedRoute.forEach(function(c, index) {
             var isReturn = c.isReturn || false;
@@ -1603,8 +1575,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
         
-        routeOptimizedInfo.textContent = '🔄 AI found optimal round trip in ' + calcTime + 'ms (returns home)';
-        routeCompareInfo.textContent = '📍 Route starts and ends at ' + start.substring(0, 20) + '...';
+        routeOptimizedInfo.textContent = '⚡ Route optimized in ' + calcTime + 'ms (' + allCustomers.length + ' stops)';
+        routeCompareInfo.textContent = '📍 Starts and ends at home | Nearest-Neighbor algorithm';
     }
 
     // ============ APPLE MAPS ============
@@ -1637,14 +1609,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var hasAddMini = addBreadOrders.some(function(item) { return item.isMini; });
         var hasAnyMini = hasMini || hasAddMini;
         
-        // 88er Base Mix
         var needed88 = req.mix88;
         var boxes = Math.ceil(needed88 / 1400);
         if (boxes === 0 && needed88 > 0) boxes = 1;
         var miniInfo = hasAnyMini ? ' 🥖 (includes Mini)' : '';
         preparationRow.innerHTML = '<tr><td>88er Base Mix' + miniInfo + '</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
         
-        // Per Pcs Tabelle
         var perPcsHtml = '';
         var types = ['88er', '150er', '188er', '200er', '208er'];
         types.forEach(function(type) {
@@ -1654,7 +1624,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         });
         perPcsRow.innerHTML = perPcsHtml;
         
-        // Times / Pcs Breakdown
         var timesHtml = '', pcsHtml = '';
         if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) {
             timesHtml = '<tr><td colspan="2">No times</td></tr>';
@@ -1675,7 +1644,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         timesTableBody.innerHTML = timesHtml;
         pcsTableBody.innerHTML = pcsHtml;
         
-        // Thermomix Charge
         var thermHtml = '';
         if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
             thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
@@ -1688,7 +1656,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
         calculatedThermomixTable.innerHTML = thermHtml;
         
-        // Rest Quantity
         var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
         if (breakdown.some(function(b) { return b.restPcs > 0; })) {
             restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
@@ -2004,13 +1971,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     });
 
     console.log("✅ Microbiome Warrior started!");
-    console.log("🔄 Round Trip Mode active - starts and ends at home!");
+    console.log("⚡ Fast Nearest-Neighbor Route Optimizer");
     console.log("📦 Pickup List active");
     console.log("📊 Weekly History active (no deletion)");
-    console.log("🥖 ADD Bread now has Mini option!");
-    console.log("🫒 Hummus Summary sorted by type (Ying&Yang first) and size!");
     console.log("📊 Bread Summary: grouped by variety (all sizes combined)!");
-    console.log("🏷️ Mini is visible everywhere, including Preparation!");
+    console.log("🏷️ Mini is visible everywhere!");
 })();
 </script>
 </body>
