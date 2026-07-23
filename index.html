@@ -26,9 +26,12 @@ input:focus,select:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px 
 button{width:100%;padding:12px;margin-top:12px;border-radius:28px;border:none;font-weight:900;font-size:0.9rem;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;cursor:pointer;transition:all 0.2s ease;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
 button:active{transform:scale(0.97);}
 .btn-reset{background:#d4c090;margin-top:8px;}
-.btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;}
-.btn-screenshot:active{transform:scale(0.97);}
+.btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease;}
+.btn-screenshot:active{transform:scale(0.95);}
 .btn-small{width:auto;padding:4px 12px;margin:2px;font-size:0.65rem;display:inline-block;}
+.btn-save-history{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:6px 16px;margin:4px;font-size:0.65rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease;}
+.btn-save-history:active{transform:scale(0.95);}
+.btn-save-history:disabled{opacity:0.4;cursor:not-allowed;}
 .btn-copy{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:4px 12px;margin:0;font-size:0.6rem;border-radius:16px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease;flex-shrink:0;}
 .btn-copy:active{transform:scale(0.95);}
 .btn-copy.copied{background:linear-gradient(135deg,#27ae60,#1e8449);}
@@ -65,8 +68,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .week-selector input:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px rgba(226,170,84,0.2);}
 .week-selector input:disabled{opacity:0.8;cursor:not-allowed;}
 .week-badge{background:#e2aa54;color:#2a1a08;padding:2px 12px;border-radius:20px;font-size:0.7rem;font-weight:800;}
-.screenshot-btn-wrap{display:flex;gap:6px;}
-#screenshotStatus{font-size:0.6rem;color:#4a6f9e;padding:4px 8px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;}
+.screenshot-btn-wrap{display:flex;gap:6px;align-items:center;}
+#screenshotStatus{font-size:0.55rem;color:#6b4a1c;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;text-align:center;}
+#screenshotStatus.show{display:block;}
+#screenshotStatus.success{background:#d5f5e3;color:#27ae60;}
+#screenshotStatus.error{background:#fadbd8;color:#e74c3c;}
 .salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54;}
 .salary-container .salary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .salary-container .salary-header .salary-title{font-weight:800;font-size:0.8rem;color:#b87a2a;display:flex;align-items:center;gap:6px;}
@@ -158,7 +164,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2);}
 .mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block;}
 .mini-badge-prep{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.45rem;font-weight:700;margin-left:4px;display:inline-block;}
-.mini-label{font-size:0.65rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:6px;padding:0 4px;}
+.mini-label{font-size:0.75rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:8px;padding:4px 8px;background:rgba(255,255,255,0.4);border-radius:16px;border:1px solid #e0d0a0;cursor:pointer;}
+.mini-label input[type="checkbox"]{width:18px;height:18px;margin:0;flex-shrink:0;cursor:pointer;}
+.mini-label span{font-size:0.7rem;font-weight:600;color:#6b4a1c;}
 
 /* PICKUP LIST */
 .pickup-container{background:rgba(231,76,60,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(231,76,60,0.15);}
@@ -205,10 +213,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
-<div class="screenshot-btn-wrap"><button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button></div>
+<div class="screenshot-btn-wrap">
+    <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
+    <span id="screenshotStatus"></span>
 </div>
 </div>
-<div id="screenshotStatus">✅ Screenshot saved!</div>
+</div>
 
 <label>Customer Name</label>
 <input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
@@ -238,7 +248,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 </div>
 
 <button id="addBtn">➕ Add Order</button>
-<button id="resetTableBtn" class="btn-reset">🗑️ Delete All Orders</button>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+    <button id="resetTableBtn" class="btn-reset" style="flex:1;min-width:120px;">🗑️ Delete All</button>
+    <button id="saveHistoryBtn" class="btn-save-history">💾 Save History</button>
+</div>
 </div>
 
 <!-- ====== ADD BREAD ====== -->
@@ -248,7 +262,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 <div class="add-row">
 <select id="addBreadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select>
 <label class="mini-label">
-    <input type="checkbox" id="addBreadMiniCheckbox"> 🥖 Mini
+    <input type="checkbox" id="addBreadMiniCheckbox">
+    <span>🥖 Mini</span>
 </label>
 <button class="add-count-btn add-count-btn-minus" id="addBreadMinusBtn">−</button>
 <span class="add-count" id="addBreadCountDisplay">1</span>
@@ -468,6 +483,36 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         return {mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13};
     }
 
+    // ============ ECHTE DISTANZEN FÜR SHANGHAI (in km) ============
+    var realDistances = {
+        'qingpu': {'qingpu':0, 'jingan':32, 'huangpu':38, 'xuhui':35, 'pudong':45, 'changning':28, 'hongkou':40, 'yangpu':42, 'minhang':22, 'baoshan':50, 'jiading':30, 'songjiang':18, 'putuo':30, 'zhabei':35, 'luwan':36, 'unknown':30},
+        'jingan': {'qingpu':32, 'jingan':0, 'huangpu':5, 'xuhui':6, 'pudong':12, 'changning':4, 'hongkou':5, 'yangpu':8, 'minhang':15, 'baoshan':18, 'jiading':25, 'songjiang':28, 'putuo':5, 'zhabei':4, 'luwan':4, 'unknown':12},
+        'huangpu': {'qingpu':38, 'jingan':5, 'huangpu':0, 'xuhui':4, 'pudong':8, 'changning':6, 'hongkou':4, 'yangpu':7, 'minhang':16, 'baoshan':20, 'jiading':28, 'songjiang':30, 'putuo':6, 'zhabei':5, 'luwan':2, 'unknown':12},
+        'xuhui': {'qingpu':35, 'jingan':6, 'huangpu':4, 'xuhui':0, 'pudong':10, 'changning':5, 'hongkou':7, 'yangpu':9, 'minhang':12, 'baoshan':22, 'jiading':26, 'songjiang':22, 'putuo':6, 'zhabei':7, 'luwan':3, 'unknown':12},
+        'pudong': {'qingpu':45, 'jingan':12, 'huangpu':8, 'xuhui':10, 'pudong':0, 'changning':14, 'hongkou':10, 'yangpu':8, 'minhang':20, 'baoshan':25, 'jiading':32, 'songjiang':35, 'putuo':14, 'zhabei':12, 'luwan':9, 'unknown':16},
+        'changning': {'qingpu':28, 'jingan':4, 'huangpu':6, 'xuhui':5, 'pudong':14, 'changning':0, 'hongkou':6, 'yangpu':9, 'minhang':12, 'baoshan':20, 'jiading':22, 'songjiang':24, 'putuo':4, 'zhabei':5, 'luwan':5, 'unknown':12},
+        'hongkou': {'qingpu':40, 'jingan':5, 'huangpu':4, 'xuhui':7, 'pudong':10, 'changning':6, 'hongkou':0, 'yangpu':4, 'minhang':18, 'baoshan':15, 'jiading':26, 'songjiang':32, 'putuo':6, 'zhabei':3, 'luwan':4, 'unknown':12},
+        'yangpu': {'qingpu':42, 'jingan':8, 'huangpu':7, 'xuhui':9, 'pudong':8, 'changning':9, 'hongkou':4, 'yangpu':0, 'minhang':20, 'baoshan':12, 'jiading':28, 'songjiang':34, 'putuo':9, 'zhabei':6, 'luwan':8, 'unknown':14},
+        'minhang': {'qingpu':22, 'jingan':15, 'huangpu':16, 'xuhui':12, 'pudong':20, 'changning':12, 'hongkou':18, 'yangpu':20, 'minhang':0, 'baoshan':28, 'jiading':18, 'songjiang':12, 'putuo':14, 'zhabei':16, 'luwan':15, 'unknown':14},
+        'baoshan': {'qingpu':50, 'jingan':18, 'huangpu':20, 'xuhui':22, 'pudong':25, 'changning':20, 'hongkou':15, 'yangpu':12, 'minhang':28, 'baoshan':0, 'jiading':15, 'songjiang':38, 'putuo':18, 'zhabei':14, 'luwan':20, 'unknown':18},
+        'jiading': {'qingpu':30, 'jingan':25, 'huangpu':28, 'xuhui':26, 'pudong':32, 'changning':22, 'hongkou':26, 'yangpu':28, 'minhang':18, 'baoshan':15, 'jiading':0, 'songjiang':25, 'putuo':20, 'zhabei':22, 'luwan':27, 'unknown':20},
+        'songjiang': {'qingpu':18, 'jingan':28, 'huangpu':30, 'xuhui':22, 'pudong':35, 'changning':24, 'hongkou':32, 'yangpu':34, 'minhang':12, 'baoshan':38, 'jiading':25, 'songjiang':0, 'putuo':26, 'zhabei':30, 'luwan':28, 'unknown':22},
+        'putuo': {'qingpu':30, 'jingan':5, 'huangpu':6, 'xuhui':6, 'pudong':14, 'changning':4, 'hongkou':6, 'yangpu':9, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':26, 'putuo':0, 'zhabei':4, 'luwan':5, 'unknown':12},
+        'zhabei': {'qingpu':35, 'jingan':4, 'huangpu':5, 'xuhui':7, 'pudong':12, 'changning':5, 'hongkou':3, 'yangpu':6, 'minhang':16, 'baoshan':14, 'jiading':22, 'songjiang':30, 'putuo':4, 'zhabei':0, 'luwan':5, 'unknown':12},
+        'luwan': {'qingpu':36, 'jingan':4, 'huangpu':2, 'xuhui':3, 'pudong':9, 'changning':5, 'hongkou':4, 'yangpu':8, 'minhang':15, 'baoshan':20, 'jiading':27, 'songjiang':28, 'putuo':5, 'zhabei':5, 'luwan':0, 'unknown':12},
+        'unknown': {'qingpu':25, 'jingan':12, 'huangpu':12, 'xuhui':12, 'pudong':16, 'changning':12, 'hongkou':12, 'yangpu':14, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':22, 'putuo':12, 'zhabei':12, 'luwan':12, 'unknown':0}
+    };
+
+    function getDistance(addr1, addr2) {
+        var bez1 = getBezirk(addr1);
+        var bez2 = getBezirk(addr2);
+        
+        if (realDistances[bez1] && realDistances[bez1][bez2] !== undefined) {
+            return realDistances[bez1][bez2];
+        }
+        return 12;
+    }
+
     // ============ DATA STORE ============
     var breadOrders = [];
     var hummusOrders = [];
@@ -487,7 +532,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 
     // Traffic state
     var trafficSimulationInterval = null;
-    var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 0.9 };
+    var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 1 };
 
     // Distance Cache
     var distanceCache = {};
@@ -571,6 +616,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var calculatedRestTable = document.getElementById("calculatedRestTable");
     var calculatedRestFooter = document.getElementById("calculatedRestFooter");
     var perPcsRow = document.getElementById("perPcsRow");
+
+    var resetTableBtn = document.getElementById("resetTableBtn");
+    var saveHistoryBtn = document.getElementById("saveHistoryBtn");
 
     // ============ COPY SALARY ============
     window.copySalary = function() {
@@ -681,10 +729,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     screenshotBtn.addEventListener('click', function() {
         var element = document.getElementById('captureArea');
         var status = document.getElementById('screenshotStatus');
+        var btn = screenshotBtn;
         
-        status.style.display = 'block';
-        status.textContent = '⏳ Generating screenshot...';
-        status.style.background = '#fff8e8';
+        status.className = 'show';
+        status.textContent = '⏳ Generating...';
+        btn.textContent = '⏳ Loading...';
+        btn.style.opacity = '0.7';
         
         html2canvas(element, {
             scale: 2,
@@ -711,17 +761,27 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             link.click();
             document.body.removeChild(link);
             
-            status.textContent = '✅ Screenshot downloaded! Week ' + currentWeek;
-            status.style.background = '#e8f5e9';
-            setTimeout(function() { 
-                status.style.display = 'none'; 
+            status.textContent = '✅ Downloaded! Week ' + currentWeek;
+            status.className = 'show success';
+            btn.textContent = '✅ Done!';
+            btn.style.opacity = '1';
+            
+            setTimeout(function() {
+                status.className = '';
+                status.textContent = '';
+                btn.textContent = '📸 Screenshot';
             }, 4000);
         }).catch(function(error) {
             console.error('Screenshot error:', error);
             status.textContent = '❌ Error: ' + error.message;
-            status.style.background = '#fde8e8';
-            setTimeout(function() { 
-                status.style.display = 'none'; 
+            status.className = 'show error';
+            btn.textContent = '❌ Error';
+            btn.style.opacity = '1';
+            
+            setTimeout(function() {
+                status.className = '';
+                status.textContent = '';
+                btn.textContent = '📸 Screenshot';
             }, 4000);
         });
     });
@@ -912,7 +972,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var week = currentWeek;
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
         
-        if (orders.length === 0 && pickupList.length === 0) return;
+        if (orders.length === 0 && pickupList.length === 0) {
+            alert('No orders or pickups to save!');
+            return;
+        }
         
         var totalRevenue = 0;
         orders.forEach(function(o) {
@@ -930,6 +993,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         weekHistory[week].pickups += pickupCount;
         
         saveHistory();
+        alert('✅ Week ' + week + ' saved to history!\n' +
+              '📋 Orders: ' + weekHistory[week].orders + '\n' +
+              '💰 Revenue: ' + weekHistory[week].revenue.toFixed(2) + ' ¥\n' +
+              '📦 Pickups: ' + weekHistory[week].pickups);
     }
 
     function renderHistory() {
@@ -937,7 +1004,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         historyCount.textContent = weeks.length;
         
         if (weeks.length === 0) {
-            historyList.innerHTML = '<div class="history-empty">No history yet. Complete a week to save!</div>';
+            historyList.innerHTML = '<div class="history-empty">No history yet. Save a week to see it here!</div>';
         } else {
             var html = '';
             var totalOrders = 0;
@@ -968,6 +1035,25 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     }
 
     // ============ HELPERS ============
+    function getBezirk(adresse) {
+        if (adresse.includes('青浦')) return 'qingpu';
+        if (adresse.includes('静安')) return 'jingan';
+        if (adresse.includes('黄浦')) return 'huangpu';
+        if (adresse.includes('徐汇')) return 'xuhui';
+        if (adresse.includes('浦东')) return 'pudong';
+        if (adresse.includes('长宁')) return 'changning';
+        if (adresse.includes('虹口')) return 'hongkou';
+        if (adresse.includes('杨浦')) return 'yangpu';
+        if (adresse.includes('闵行')) return 'minhang';
+        if (adresse.includes('宝山')) return 'baoshan';
+        if (adresse.includes('嘉定')) return 'jiading';
+        if (adresse.includes('松江')) return 'songjiang';
+        if (adresse.includes('普陀')) return 'putuo';
+        if (adresse.includes('闸北')) return 'zhabei';
+        if (adresse.includes('卢湾')) return 'luwan';
+        return 'unknown';
+    }
+
     function getPcsForOrder(order) {
         var base = sizeToPcs[order.size] || 0;
         return order.isMini ? base / 2 : base;
@@ -1130,7 +1216,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
-    // ============ RENDER BREAD SUMMARY (NACH VARIETY ZUSAMMENGEFASST) ============
+    // ============ RENDER BREAD SUMMARY ============
     function renderBreadSummary() {
         var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
         
@@ -1258,7 +1344,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
-    // ============ RENDER HUMMUS SUMMARY (SORTIERT) ============
+    // ============ RENDER HUMMUS SUMMARY ============
     function renderHummusSummary() {
         var allHummus = [];
         
@@ -1334,15 +1420,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var isNight = hour >= 22 || hour <= 5;
         
         if (isNight) {
-            return { level: 'light', label: 'Light (night)', color: '#27ae60', delay: 0.7 };
+            return { level: 'light', label: 'Light (night)', color: '#27ae60', delay: 0.85 };
         } else if (isRushHour) {
-            return { level: 'heavy', label: 'Heavy (rush hour)', color: '#e74c3c', delay: 1.8 };
+            return { level: 'heavy', label: 'Heavy (rush hour)', color: '#e74c3c', delay: 1.6 };
         } else if (isEvening) {
-            return { level: 'moderate', label: 'Moderate (evening)', color: '#f39c12', delay: 1.3 };
+            return { level: 'moderate', label: 'Moderate (evening)', color: '#f39c12', delay: 1.2 };
         } else if (isWeekend) {
-            return { level: 'light', label: 'Light (weekend)', color: '#27ae60', delay: 0.85 };
+            return { level: 'light', label: 'Light (weekend)', color: '#27ae60', delay: 0.9 };
         } else {
-            return { level: 'moderate', label: 'Moderate', color: '#f39c12', delay: 1.15 };
+            return { level: 'moderate', label: 'Moderate', color: '#f39c12', delay: 1.1 };
         }
     }
 
@@ -1377,68 +1463,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
     }
 
-    // ============ DISTANZMATRIX MIT CACHING ============
-    function getCacheKey(addr1, addr2) {
-        return addr1 + '|' + addr2;
-    }
-
-    function getBezirk(adresse) {
-        if (adresse.includes('青浦')) return 'qingpu';
-        if (adresse.includes('静安')) return 'jingan';
-        if (adresse.includes('黄浦')) return 'huangpu';
-        if (adresse.includes('徐汇')) return 'xuhui';
-        if (adresse.includes('浦东')) return 'pudong';
-        if (adresse.includes('长宁')) return 'changning';
-        if (adresse.includes('虹口')) return 'hongkou';
-        if (adresse.includes('杨浦')) return 'yangpu';
-        if (adresse.includes('闵行')) return 'minhang';
-        if (adresse.includes('宝山')) return 'baoshan';
-        if (adresse.includes('嘉定')) return 'jiading';
-        if (adresse.includes('松江')) return 'songjiang';
-        if (adresse.includes('普陀')) return 'putuo';
-        if (adresse.includes('闸北')) return 'zhabei';
-        if (adresse.includes('卢湾')) return 'luwan';
-        return 'unknown';
-    }
-
-    function getDistance(addr1, addr2) {
-        var key = getCacheKey(addr1, addr2);
-        if (distanceCache[key] !== undefined) {
-            return distanceCache[key];
-        }
-        
-        var bez1 = getBezirk(addr1);
-        var bez2 = getBezirk(addr2);
-        
-        var distMatrix = {
-            'qingpu': {'qingpu':1, 'jingan':32, 'huangpu':38, 'xuhui':35, 'pudong':45, 'changning':28, 'hongkou':40, 'yangpu':42, 'minhang':22, 'baoshan':50, 'jiading':30, 'songjiang':18, 'putuo':30, 'zhabei':35, 'luwan':36, 'unknown':30},
-            'jingan': {'qingpu':32, 'jingan':1, 'huangpu':5, 'xuhui':6, 'pudong':12, 'changning':4, 'hongkou':5, 'yangpu':8, 'minhang':15, 'baoshan':18, 'jiading':25, 'songjiang':28, 'putuo':5, 'zhabei':4, 'luwan':4, 'unknown':12},
-            'huangpu': {'qingpu':38, 'jingan':5, 'huangpu':1, 'xuhui':4, 'pudong':8, 'changning':6, 'hongkou':4, 'yangpu':7, 'minhang':16, 'baoshan':20, 'jiading':28, 'songjiang':30, 'putuo':6, 'zhabei':5, 'luwan':2, 'unknown':12},
-            'xuhui': {'qingpu':35, 'jingan':6, 'huangpu':4, 'xuhui':1, 'pudong':10, 'changning':5, 'hongkou':7, 'yangpu':9, 'minhang':12, 'baoshan':22, 'jiading':26, 'songjiang':22, 'putuo':6, 'zhabei':7, 'luwan':3, 'unknown':12},
-            'pudong': {'qingpu':45, 'jingan':12, 'huangpu':8, 'xuhui':10, 'pudong':1, 'changning':14, 'hongkou':10, 'yangpu':8, 'minhang':20, 'baoshan':25, 'jiading':32, 'songjiang':35, 'putuo':14, 'zhabei':12, 'luwan':9, 'unknown':16},
-            'changning': {'qingpu':28, 'jingan':4, 'huangpu':6, 'xuhui':5, 'pudong':14, 'changning':1, 'hongkou':6, 'yangpu':9, 'minhang':12, 'baoshan':20, 'jiading':22, 'songjiang':24, 'putuo':4, 'zhabei':5, 'luwan':5, 'unknown':12},
-            'hongkou': {'qingpu':40, 'jingan':5, 'huangpu':4, 'xuhui':7, 'pudong':10, 'changning':6, 'hongkou':1, 'yangpu':4, 'minhang':18, 'baoshan':15, 'jiading':26, 'songjiang':32, 'putuo':6, 'zhabei':3, 'luwan':4, 'unknown':12},
-            'yangpu': {'qingpu':42, 'jingan':8, 'huangpu':7, 'xuhui':9, 'pudong':8, 'changning':9, 'hongkou':4, 'yangpu':1, 'minhang':20, 'baoshan':12, 'jiading':28, 'songjiang':34, 'putuo':9, 'zhabei':6, 'luwan':8, 'unknown':14},
-            'minhang': {'qingpu':22, 'jingan':15, 'huangpu':16, 'xuhui':12, 'pudong':20, 'changning':12, 'hongkou':18, 'yangpu':20, 'minhang':1, 'baoshan':28, 'jiading':18, 'songjiang':12, 'putuo':14, 'zhabei':16, 'luwan':15, 'unknown':14},
-            'baoshan': {'qingpu':50, 'jingan':18, 'huangpu':20, 'xuhui':22, 'pudong':25, 'changning':20, 'hongkou':15, 'yangpu':12, 'minhang':28, 'baoshan':1, 'jiading':15, 'songjiang':38, 'putuo':18, 'zhabei':14, 'luwan':20, 'unknown':18},
-            'jiading': {'qingpu':30, 'jingan':25, 'huangpu':28, 'xuhui':26, 'pudong':32, 'changning':22, 'hongkou':26, 'yangpu':28, 'minhang':18, 'baoshan':15, 'jiading':1, 'songjiang':25, 'putuo':20, 'zhabei':22, 'luwan':27, 'unknown':20},
-            'songjiang': {'qingpu':18, 'jingan':28, 'huangpu':30, 'xuhui':22, 'pudong':35, 'changning':24, 'hongkou':32, 'yangpu':34, 'minhang':12, 'baoshan':38, 'jiading':25, 'songjiang':1, 'putuo':26, 'zhabei':30, 'luwan':28, 'unknown':22},
-            'putuo': {'qingpu':30, 'jingan':5, 'huangpu':6, 'xuhui':6, 'pudong':14, 'changning':4, 'hongkou':6, 'yangpu':9, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':26, 'putuo':1, 'zhabei':4, 'luwan':5, 'unknown':12},
-            'zhabei': {'qingpu':35, 'jingan':4, 'huangpu':5, 'xuhui':7, 'pudong':12, 'changning':5, 'hongkou':3, 'yangpu':6, 'minhang':16, 'baoshan':14, 'jiading':22, 'songjiang':30, 'putuo':4, 'zhabei':1, 'luwan':5, 'unknown':12},
-            'luwan': {'qingpu':36, 'jingan':4, 'huangpu':2, 'xuhui':3, 'pudong':9, 'changning':5, 'hongkou':4, 'yangpu':8, 'minhang':15, 'baoshan':20, 'jiading':27, 'songjiang':28, 'putuo':5, 'zhabei':5, 'luwan':1, 'unknown':12},
-            'unknown': {'qingpu':25, 'jingan':12, 'huangpu':12, 'xuhui':12, 'pudong':16, 'changning':12, 'hongkou':12, 'yangpu':14, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':22, 'putuo':12, 'zhabei':12, 'luwan':12, 'unknown':10}
-        };
-        
-        var result = 12;
-        if (distMatrix[bez1] && distMatrix[bez1][bez2] !== undefined) {
-            result = distMatrix[bez1][bez2];
-        }
-        
-        distanceCache[key] = result;
-        return result;
-    }
-
-    // ============ SCHNELLE ROUTENOPTIMIERUNG (NEAREST NEIGHBOR) ============
+    // ============ SCHNELLE ROUTENOPTIMIERUNG ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
         if (customers.length === 1) {
@@ -1451,12 +1476,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var route = [];
         var current = { address: startAddr };
         
-        var startTime = performance.now();
-        var maxIterations = unvisited.length * 5;
-        var iteration = 0;
-        
-        while (unvisited.length > 0 && iteration < maxIterations) {
-            iteration++;
+        while (unvisited.length > 0) {
             var nearest = null;
             var nearestDist = Infinity;
             
@@ -1475,16 +1495,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             }
         }
         
-        while (unvisited.length > 0) {
-            route.push(unvisited[0]);
-            unvisited.splice(0, 1);
-        }
-        
         route.push({ isReturn: true, address: startAddr, label: '🏠 HOME' });
-        
-        var endTime = performance.now();
-        console.log('Route optimization took ' + (endTime - startTime).toFixed(1) + 'ms for ' + customers.length + ' stops');
-        
         return route;
     }
 
@@ -1569,13 +1580,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             return;
         }
         
-        var startTime = performance.now();
         var optimizedRoute = findOptimalRoundTrip(start, allCustomers);
-        var endTime = performance.now();
-        var calcTime = (endTime - startTime).toFixed(1);
         
+        // ECHTE DISTANZEN BERECHNEN
         var totalDist = 0;
-        
         optimizedRoute.forEach(function(c, index) {
             if (index === 0) {
                 totalDist += getDistance(start, c.address);
@@ -1587,13 +1595,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         
         var traffic = currentTraffic;
         var totalDistWithTraffic = totalDist * traffic.delay;
-        var timeMin = Math.round(totalDist * 3.2 * (traffic.delay > 1.2 ? 1.3 : 1));
+        var avgSpeed = traffic.level === 'heavy' ? 25 : traffic.level === 'moderate' ? 35 : 45;
+        var timeMin = Math.round(totalDistWithTraffic / avgSpeed * 60);
+        
+        var hours = Math.floor(timeMin / 60);
+        var minutes = timeMin % 60;
+        var timeStr = hours > 0 ? hours + 'h ' + minutes + 'min' : minutes + ' min';
         
         var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
         routeDeliveries.push(start);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">🏠 Start & End: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">⚡ Optimized Round Trip (' + (optimizedRoute.length - 1) + ' stops) <span class="optimized-badge">' + calcTime + 'ms</span></div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">⚡ Optimized Round Trip (' + (optimizedRoute.length - 1) + ' stops)</div>';
         
         optimizedRoute.forEach(function(c, index) {
             var isReturn = c.isReturn || false;
@@ -1628,8 +1641,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         }
         
         html += '<div class="route-no-distance" style="margin-top:6px;padding:6px 10px;background:rgba(46,204,113,0.1);border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:0.6rem;">';
-        html += '<span>📏 <strong>' + totalDistWithTraffic.toFixed(1) + ' km</strong> (round trip)</span>';
-        html += '<span>⏱️ <strong>~' + timeMin + ' min</strong></span>';
+        html += '<span>📏 <strong>' + totalDistWithTraffic.toFixed(1) + ' km</strong></span>';
+        html += '<span>⏱️ <strong>' + timeStr + '</strong></span>';
         html += '<span style="color:' + traffic.color + ';">🚦 ' + traffic.label + '</span>';
         html += '</div>';
         
@@ -1641,8 +1654,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
         
-        routeOptimizedInfo.textContent = '⚡ Route optimized in ' + calcTime + 'ms (' + allCustomers.length + ' stops)';
-        routeCompareInfo.textContent = '📍 Starts and ends at home | Nearest-Neighbor algorithm';
+        routeOptimizedInfo.textContent = '⚡ Route optimized (' + allCustomers.length + ' stops)';
+        routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr;
     }
 
     // ============ APPLE MAPS ============
@@ -1664,7 +1677,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         params.push('dirflg=d');
         appUrl += params.join('&');
         
-        window.location.href = appUrl;
+        var appWindow = window.open(appUrl, '_blank');
+        
+        setTimeout(function() {
+            var webUrl = 'https://maps.apple.com/?';
+            var webParams = [];
+            webParams.push('saddr=' + encodeURIComponent(start));
+            deliveries.forEach(function(addr) {
+                webParams.push('daddr=' + encodeURIComponent(addr));
+            });
+            webParams.push('dirflg=d');
+            webParams.push('hl=zh-CN');
+            webUrl += webParams.join('&');
+            window.open(webUrl, '_blank');
+        }, 800);
     };
 
     // ============ RENDER PREPARATION ============
@@ -1959,7 +1985,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     document.getElementById("addBreadAddBtn").addEventListener("click", addAddBreadOrder);
     document.getElementById("addHummusAddBtn").addEventListener("click", addAddHummusOrder);
 
-    document.getElementById("resetTableBtn").addEventListener("click", function() {
+    resetTableBtn.addEventListener("click", function() {
         if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length || pickupList.length) && confirm("Delete all orders and pickups?")) {
             breadOrders = [];
             hummusOrders = [];
@@ -1974,6 +2000,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length && !pickupList.length) {
             alert("No orders or pickups");
         }
+    });
+
+    saveHistoryBtn.addEventListener("click", function() {
+        saveCurrentWeekToHistory();
     });
 
     routeStart.addEventListener('change', updateRoute);
@@ -2032,17 +2062,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     updateRoute();
     appleMapsBtn.disabled = true;
 
-    window.addEventListener('beforeunload', function() {
-        saveCurrentWeekToHistory();
-    });
-
     console.log("✅ Microbiome Warrior started!");
-    console.log("⚡ Fast Nearest-Neighbor Route Optimizer");
-    console.log("📦 Pickup List active");
-    console.log("📊 Weekly History active (no deletion)");
-    console.log("📊 Bread Summary: grouped by variety (all sizes combined)!");
-    console.log("🏷️ Mini is visible everywhere!");
-    console.log("📋 Salary is now copyable (just the number!)");
+    console.log("📊 Real distances for Shanghai (in km)");
+    console.log("🕐 Real travel times based on avg speed");
 })();
 </script>
 </body>
