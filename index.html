@@ -29,6 +29,9 @@ button:active{transform:scale(0.97);}
 .btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;}
 .btn-screenshot:active{transform:scale(0.97);}
 .btn-small{width:auto;padding:4px 12px;margin:2px;font-size:0.65rem;display:inline-block;}
+.btn-copy{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:4px 12px;margin:0;font-size:0.6rem;border-radius:16px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease;flex-shrink:0;}
+.btn-copy:active{transform:scale(0.95);}
+.btn-copy.copied{background:linear-gradient(135deg,#27ae60,#1e8449);}
 table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;border-radius:16px;overflow:hidden;margin:8px 0;}
 th{padding:8px 4px;font-weight:800;color:#2a1a08;}
 th.bread-th{background:#e2aa54;}
@@ -65,9 +68,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 .screenshot-btn-wrap{display:flex;gap:6px;}
 #screenshotStatus{font-size:0.6rem;color:#4a6f9e;padding:4px 8px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;}
 .salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54;}
+.salary-container .salary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.salary-container .salary-header .salary-title{font-weight:800;font-size:0.8rem;color:#b87a2a;display:flex;align-items:center;gap:6px;}
+.salary-container .salary-header .salary-title .salary-percent{font-size:0.7rem;color:#8a5e20;font-weight:400;}
 .salary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:0.8rem;}
 .salary-row .salary-label{font-weight:700;color:#6b4a1c;}
 .salary-row .salary-amount{font-weight:800;color:#b87a2a;font-size:0.9rem;}
+.salary-row .salary-amount .currency{font-size:0.7rem;color:#8a6a2a;}
+.salary-copy-feedback{font-size:0.5rem;color:#27ae60;text-align:center;display:none;padding:4px 0;}
+.salary-copy-feedback.show{display:block;}
 .commission-badge{display:inline-block;background:#c0392b;color:white;padding:0px 8px;border-radius:10px;font-size:0.55rem;font-weight:700;}
 .auto-week-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700;margin-left:4px;}
 .add-section{background:rgba(226,170,84,0.08);border-radius:16px;padding:12px;margin-top:8px;border:2px dashed #d4c090;}
@@ -293,9 +302,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
 
 <!-- SALARY -->
 <div class="salary-container">
-<div style="font-weight:800;font-size:0.8rem;color:#b87a2a;margin-bottom:6px;">💰 SALARY <span id="salaryPercentDisplay" style="font-size:0.7rem;color:#8a5e20;">(15%)</span></div>
-<div class="salary-row"><span class="salary-label">👤 Salary</span><span class="salary-amount" id="salaryAmount">0.00 ¥</span></div>
-<div style="font-size:0.55rem;color:#8a6a2a;text-align:center;margin-top:4px;">ℹ️ Commission orders: 13.5% | Non-commission: 15%</div>
+    <div class="salary-header">
+        <span class="salary-title">💰 SALARY <span class="salary-percent" id="salaryPercentDisplay">(15%)</span></span>
+        <button class="btn-copy" id="salaryCopyBtn" onclick="copySalary()">📋 Copy</button>
+    </div>
+    <div id="salaryContent">
+        <div class="salary-row">
+            <span class="salary-label">👤 Salary</span>
+            <span class="salary-amount" id="salaryAmount">0.00 <span class="currency">¥</span></span>
+        </div>
+        <div id="salaryCopyFeedback" class="salary-copy-feedback">✅ Copied!</div>
+    </div>
 </div>
 </div>
 
@@ -512,6 +529,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var addHummusOrdersList = document.getElementById("addHummusOrdersList");
     var salaryAmount = document.getElementById("salaryAmount");
     var salaryPercentDisplay = document.getElementById("salaryPercentDisplay");
+    var salaryCopyFeedback = document.getElementById("salaryCopyFeedback");
 
     var routeStart = document.getElementById("routeStart");
     var routeResult = document.getElementById("routeResult");
@@ -553,6 +571,56 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     var calculatedRestTable = document.getElementById("calculatedRestTable");
     var calculatedRestFooter = document.getElementById("calculatedRestFooter");
     var perPcsRow = document.getElementById("perPcsRow");
+
+    // ============ COPY SALARY ============
+    window.copySalary = function() {
+        var salaryText = salaryAmount.textContent.trim();
+        var btn = document.getElementById('salaryCopyBtn');
+        
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(salaryText).then(function() {
+                salaryCopyFeedback.textContent = '✅ ' + salaryText + ' copied!';
+                salaryCopyFeedback.className = 'salary-copy-feedback show';
+                btn.textContent = '✅ Done';
+                btn.className = 'btn-copy copied';
+                setTimeout(function() {
+                    salaryCopyFeedback.className = 'salary-copy-feedback';
+                    btn.textContent = '📋 Copy';
+                    btn.className = 'btn-copy';
+                }, 2000);
+            }).catch(function() {
+                fallbackCopy(salaryText);
+            });
+        } else {
+            fallbackCopy(salaryText);
+        }
+    };
+
+    function fallbackCopy(text) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            salaryCopyFeedback.textContent = '✅ ' + text + ' copied!';
+            salaryCopyFeedback.className = 'salary-copy-feedback show';
+            var btn = document.getElementById('salaryCopyBtn');
+            btn.textContent = '✅ Done';
+            btn.className = 'btn-copy copied';
+            setTimeout(function() {
+                salaryCopyFeedback.className = 'salary-copy-feedback';
+                btn.textContent = '📋 Copy';
+                btn.className = 'btn-copy';
+            }, 2000);
+        } catch(e) {
+            alert('Salary: ' + text);
+        }
+        document.body.removeChild(textarea);
+    }
 
     // ============ ADDRESS TOGGLE ============
     addressToggle.addEventListener('click', function() {
@@ -1038,7 +1106,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
         var salaryWithoutComm = totalWithoutComm * 0.15;
         var totalSalary = salaryWithComm + salaryWithoutComm;
         
-        salaryAmount.textContent = totalSalary.toFixed(2) + ' ¥';
+        salaryAmount.textContent = totalSalary.toFixed(2);
         
         var infoText = '';
         if (totalWithComm > 0 && totalWithoutComm > 0) {
@@ -1407,7 +1475,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             }
         }
         
-        // Falls noch unvisited übrig (sollte nicht passieren)
         while (unvisited.length > 0) {
             route.push(unvisited[0]);
             unvisited.splice(0, 1);
@@ -1502,7 +1569,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
             return;
         }
         
-        // Route mit Nearest-Neighbor berechnen (schnell)
         var startTime = performance.now();
         var optimizedRoute = findOptimalRoundTrip(start, allCustomers);
         var endTime = performance.now();
@@ -1976,6 +2042,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8;}
     console.log("📊 Weekly History active (no deletion)");
     console.log("📊 Bread Summary: grouped by variety (all sizes combined)!");
     console.log("🏷️ Mini is visible everywhere!");
+    console.log("📋 Salary is now copyable (just the number!)");
 })();
 </script>
 </body>
