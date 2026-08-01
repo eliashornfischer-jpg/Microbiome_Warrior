@@ -8,7 +8,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-/* === KOMPLETTES CSS === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -24,16 +23,31 @@ input:focus,select:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px 
 .checkbox-group{background:rgba(255,255,255,0.5);padding:8px 12px;border-radius:28px;margin-top:8px}
 .checkbox-group label{margin:0;display:flex;align-items:center;gap:8px;cursor:pointer}
 .checkbox-group input{width:18px;height:18px;margin:0}
+.combo-section{background:rgba(226,170,84,0.12);border-radius:16px;padding:12px;margin-top:8px;border:2px solid #e2aa54}
+.combo-section .combo-title{font-size:0.8rem;font-weight:800;color:#b87a2a;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.combo-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.combo-row select{flex:1;min-width:100px;padding:6px 10px;font-size:0.7rem;margin:0}
+.combo-row .combo-btn{padding:6px 16px;border-radius:20px;border:none;font-weight:800;font-size:0.7rem;background:linear-gradient(135deg,#e2aa54,#c9943a);color:#2a1a08;cursor:pointer;margin:0;white-space:nowrap}
+.combo-row .combo-btn:active{transform:scale(0.95)}
+.combo-list{margin-top:6px;font-size:0.6rem}
+.combo-list .combo-item{display:inline-block;background:rgba(226,170,84,0.15);padding:2px 10px;border-radius:12px;margin:2px;border:1px solid #e2aa54}
+.combo-list .combo-item .del{cursor:pointer;color:#c0392b;margin-left:4px;font-weight:700}
+.combo-list .combo-item .price{font-weight:700;color:#b87a2a}
 button{width:100%;padding:12px;margin-top:12px;border-radius:28px;border:none;font-weight:900;font-size:0.9rem;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;cursor:pointer;transition:all 0.2s ease;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 button:active{transform:scale(0.97)}
 .btn-reset{background:#d4c090;margin-top:8px}
-.btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer}
-.btn-screenshot:active{transform:scale(0.95)}
-.btn-save-history{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:6px 16px;margin:4px;font-size:0.65rem;border-radius:20px;border:none;font-weight:700;cursor:pointer}
+.btn-wechat{background:linear-gradient(135deg,#07C160,#06AD56);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-wechat:active{transform:scale(0.95)}
+.btn-wechat-img{background:linear-gradient(135deg,#1AAD19,#0E8C0E);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-wechat-img:active{transform:scale(0.95)}
+.btn-save-history{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:6px 16px;margin:4px;font-size:0.65rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
 .btn-save-history:active{transform:scale(0.95)}
 .btn-copy{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:4px 12px;margin:0;font-size:0.6rem;border-radius:16px;border:none;font-weight:700;cursor:pointer;flex-shrink:0}
 .btn-copy:active{transform:scale(0.95)}
 .btn-copy.copied{background:linear-gradient(135deg,#27ae60,#1e8449)}
+.export-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.export-buttons button{flex:1;min-width:100px;padding:10px 14px;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
+.export-buttons button:active{transform:scale(0.95)}
 table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;border-radius:16px;overflow:hidden;margin:8px 0}
 th{padding:8px 4px;font-weight:800;color:#2a1a08}
 th.bread-th{background:#e2aa54}
@@ -67,11 +81,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .week-selector input:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px rgba(226,170,84,0.2)}
 .week-selector input:disabled{opacity:0.8;cursor:not-allowed}
 .week-badge{background:#e2aa54;color:#2a1a08;padding:2px 12px;border-radius:20px;font-size:0.7rem;font-weight:800}
-.screenshot-btn-wrap{display:flex;gap:6px;align-items:center}
-#screenshotStatus{font-size:0.55rem;color:#6b4a1c;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;text-align:center}
-#screenshotStatus.show{display:block}
-#screenshotStatus.success{background:#d5f5e3;color:#27ae60}
-#screenshotStatus.error{background:#fadbd8;color:#e74c3c}
+.wechat-status{font-size:0.55rem;padding:4px 10px;border-radius:12px;display:none;text-align:center}
+.wechat-status.show{display:block}
+.wechat-status.success{background:#d5f5e3;color:#27ae60}
+.wechat-status.error{background:#fadbd8;color:#e74c3c}
 .salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54}
 .salary-container .salary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .salary-container .salary-header .salary-title{font-weight:800;font-size:0.8rem;color:#b87a2a;display:flex;align-items:center;gap:6px}
@@ -191,6 +204,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .history-summary .stat{display:flex;align-items:center;gap:3px}
 .history-summary .stat .val{font-weight:700;color:#27ae60}
 .history-summary .stat .val.pickup{color:#e74c3c}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img{display:none}}
 </style>
 </head>
 <body>
@@ -202,22 +216,32 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
-<div class="screenshot-btn-wrap">
-    <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
-    <span id="screenshotStatus"></span>
-</div>
 </div>
 </div>
 
 <label>Customer Name</label>
 <input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
 
-<label>🌍 Country / Nationality</label>
-<input id="customerCountry" placeholder="e.g. Germany, China, USA" autocomplete="off" style="text-transform:capitalize;">
+<label>🌍 Country (e.g. Germany, China, USA)</label>
+<input id="customerCountry" placeholder="Type country name..." autocomplete="off" style="text-transform:capitalize;">
+<div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div><label>Variety</label><select id="breadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select></div>
 <div><label>Size</label><select id="breadSize"><option value="S">S (2 pcs)</option><option value="S+">S+ (3 pcs) −12.4%</option><option value="M">M (5 pcs)</option><option value="M+">M+ (6 pcs) no hummus</option><option value="L">L (8 pcs)</option><option value="XM">XM (9 pcs)</option><option value="XL">XL (11 pcs)</option><option value="XL+">XL+ (12 pcs) no hummus</option></select></div>
+</div>
+
+<!-- ====== COMBO SECTION ====== -->
+<div class="combo-section">
+<div class="combo-title">🧩 COMBO PACKS</div>
+<div class="combo-row">
+    <select id="comboType">
+        <option value="88-200">88-200 (2× each: 88,150,188,200) — ¥682</option>
+        <option value="150-208">150-208 (2× each: 150,188,200,208) — ¥890</option>
+    </select>
+    <button class="combo-btn" id="addComboBtn">➕ Add Combo</button>
+</div>
+<div class="combo-list" id="comboList"><span style="color:#b88c48;">No combos added yet</span></div>
 </div>
 
 <div class="commission-order-row">
@@ -306,6 +330,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <span class="total-sum" id="totalPriceSum">0 CNY</span>
 </div>
 
+<!-- WECHAT EXPORT BUTTONS -->
+<div class="export-buttons">
+    <button class="btn-wechat" id="wechatCopyBtn">💬 Copy for WeChat</button>
+    <button class="btn-wechat-img" id="wechatImageBtn">📸 WeChat Image</button>
+</div>
+<div id="wechatStatus" class="wechat-status"></div>
+
 <div class="salary-container">
     <div class="salary-header">
         <span class="salary-title">💰 SALARY <span class="salary-percent" id="salaryPercentDisplay">(15%)</span></span>
@@ -327,15 +358,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <h3>🥣 88er Base Mix</h3>
 <div class="scrollable"><table><thead><th>Required 88er Mix</th><th>Grams</th><th>Boxes (1400g)</th></thead><tbody id="preparationRow"><tr><td colspan="3">calculating...</td></tr></tbody></table></div>
 <h3>🔥 THERMOMIX MAX · per 1 time (13 pcs)</h3>
-<div class="scrollable"><table><thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody><tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr><tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr></tbody></table></div>
+<div class="scrollable"><table><thead><th>Variety</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody><tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr><tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr></tbody></table></div>
 <h3>📦 REST QUANTITY · per 1 pcs</h3>
-<div class="scrollable"><table id="perPcsTable"><thead><th>Variety</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="perPcsRow"></tbody></table></div>
+<div class="scrollable"><table id="perPcsTable"><thead><th>Variety</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="perPcsRow"></tbody></table></div>
 <h3>📊 TOTAL · times / pcs</h3>
 <div class="total-flex"><div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div><div><strong>🔢 pcs (Rest)</strong><table><tbody id="pcsTableBody"></tbody></table></div></div>
 <h3>🔥 CALCULATED THERMOMIX CHARGE</h3>
-<div class="scrollable"><table><thead><th>Variety</th><th>time</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="calculatedThermomixTable"></tbody></table></div>
+<div class="scrollable"><table><thead><th>Variety</th><th>time</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="calculatedThermomixTable"></tbody></table></div>
 <h3>📦 CALCULATED REST QUANTITY</h3>
-<div class="scrollable"><table><thead><th>Variety</th><th>pcs</th><th>88er</th><th>150er</th><th>188er</th><th>200/208er</th><th>Water</th></thead><tbody id="calculatedRestTable"></tbody><tfoot id="calculatedRestFooter"></tfoot></table></div>
+<div class="scrollable"><table><thead><th>Variety</th><th>pcs</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="calculatedRestTable"></tbody><tfoot id="calculatedRestFooter"></tfoot></table></div>
 <div class="info-text">💡 1 time = 13 pcs (full batch) | Mini: half price & half pcs | Hummus: free</div>
 </div>
 
@@ -419,6 +450,204 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <script>
 (function() {
+    // ============ LÄNDER-FLAGGEN DATENBANK ============
+    var countryFlags = {
+        'germany': '🇩🇪', 'deutschland': '🇩🇪',
+        'china': '🇨🇳',
+        'usa': '🇺🇸', 'united states': '🇺🇸', 'america': '🇺🇸',
+        'uk': '🇬🇧', 'united kingdom': '🇬🇧', 'england': '🇬🇧', 'britain': '🇬🇧',
+        'france': '🇫🇷',
+        'italy': '🇮🇹',
+        'spain': '🇪🇸',
+        'portugal': '🇵🇹',
+        'netherlands': '🇳🇱', 'holland': '🇳🇱',
+        'belgium': '🇧🇪',
+        'switzerland': '🇨🇭',
+        'austria': '🇦🇹',
+        'sweden': '🇸🇪',
+        'norway': '🇳🇴',
+        'denmark': '🇩🇰',
+        'finland': '🇫🇮',
+        'japan': '🇯🇵',
+        'south korea': '🇰🇷', 'korea': '🇰🇷',
+        'india': '🇮🇳',
+        'brazil': '🇧🇷',
+        'australia': '🇦🇺',
+        'canada': '🇨🇦',
+        'mexico': '🇲🇽',
+        'south africa': '🇿🇦',
+        'russia': '🇷🇺',
+        'turkey': '🇹🇷',
+        'greece': '🇬🇷',
+        'ireland': '🇮🇪',
+        'poland': '🇵🇱',
+        'czech': '🇨🇿', 'czech republic': '🇨🇿',
+        'hungary': '🇭🇺',
+        'uae': '🇦🇪', 'united arab emirates': '🇦🇪',
+        'saudi arabia': '🇸🇦',
+        'israel': '🇮🇱',
+        'singapore': '🇸🇬',
+        'malaysia': '🇲🇾',
+        'thailand': '🇹🇭',
+        'vietnam': '🇻🇳',
+        'philippines': '🇵🇭',
+        'indonesia': '🇮🇩',
+        'new zealand': '🇳🇿',
+        'argentina': '🇦🇷',
+        'chile': '🇨🇱',
+        'colombia': '🇨🇴',
+        'peru': '🇵🇪',
+        'egypt': '🇪🇬',
+        'morocco': '🇲🇦',
+        'nigeria': '🇳🇬',
+        'kenya': '🇰🇪'
+    };
+
+    function getCountryFlag(countryName) {
+        if (!countryName) return '';
+        var lower = countryName.toLowerCase().trim();
+        for (var key in countryFlags) {
+            if (lower === key || lower.includes(key)) {
+                return countryFlags[key];
+            }
+        }
+        return '';
+    }
+
+    // ============ COUNTRY FLAG DISPLAY ============
+    var customerCountryInput = document.getElementById('customerCountry');
+    var countryFlagDisplay = document.getElementById('countryFlagDisplay');
+
+    customerCountryInput.addEventListener('input', function() {
+        var flag = getCountryFlag(this.value);
+        if (flag) {
+            countryFlagDisplay.textContent = flag + ' ' + this.value.trim();
+        } else if (this.value.trim()) {
+            countryFlagDisplay.textContent = '🌍 ' + this.value.trim();
+        } else {
+            countryFlagDisplay.textContent = '';
+        }
+    });
+
+    // ============ COMBO PREIS ============
+    var comboPrices = {
+        '88-200': 682,
+        '150-208': 890
+    };
+
+    var combos = [];
+
+    // ============ COMBO ITEMS ============
+    function getComboItems(type) {
+        if (type === '88-200') {
+            return [
+                { variety: '88er', size: 'S', price: 102, pcs: 2 },
+                { variety: '150er', size: 'S', price: 208, pcs: 2 },
+                { variety: '188er', size: 'S', price: 288, pcs: 2 },
+                { variety: '200er', size: 'S', price: 308, pcs: 2 }
+            ];
+        } else if (type === '150-208') {
+            return [
+                { variety: '150er', size: 'S', price: 208, pcs: 2 },
+                { variety: '188er', size: 'S', price: 288, pcs: 2 },
+                { variety: '200er', size: 'S', price: 308, pcs: 2 },
+                { variety: '208er', size: 'S', price: 328, pcs: 2 }
+            ];
+        }
+        return [];
+    }
+
+    // ============ COMBO ADD ============
+    document.getElementById('addComboBtn').addEventListener('click', function() {
+        var type = document.getElementById('comboType').value;
+        var name = customerName.value.trim() || 'Combo';
+        var country = customerCountry.value.trim();
+        var isMini = document.getElementById('miniCheckbox').checked;
+        
+        var comboItems = getComboItems(type);
+        var totalPrice = comboPrices[type];
+        var totalPcs = comboItems.length * 2; // 2 Stück pro Sorte
+        
+        if (isMini) {
+            totalPrice = totalPrice / 2;
+            totalPcs = totalPcs / 2;
+        }
+        
+        // In breadOrders speichern
+        var comboId = nextId++;
+        
+        // Jedes einzelne Brot als eigene Bestellung hinzufügen
+        comboItems.forEach(function(item) {
+            var pcs = isMini ? item.pcs / 2 : item.pcs;
+            var price = isMini ? item.price / 2 : item.price;
+            breadOrders.push({
+                id: nextId++,
+                name: name + ' (Combo)',
+                country: country,
+                breadType: item.variety,
+                size: 'S',
+                isMini: isMini,
+                hasCommission: document.getElementById('commissionCheckbox').checked,
+                week: currentWeek,
+                isAdd: false,
+                isAddBread: false,
+                isCombo: true,
+                comboType: type,
+                comboPrice: totalPrice
+            });
+        });
+        
+        // Combo zur Liste hinzufügen
+        combos.push({
+            id: comboId,
+            type: type,
+            name: name,
+            country: country,
+            isMini: isMini,
+            price: totalPrice,
+            items: comboItems.length
+        });
+        
+        render();
+        saveToLocal();
+        renderCombos();
+        document.getElementById('miniCheckbox').checked = false;
+    });
+
+    function renderCombos() {
+        var list = document.getElementById('comboList');
+        if (combos.length === 0) {
+            list.innerHTML = '<span style="color:#b88c48;">No combos added yet</span>';
+            return;
+        }
+        var html = '';
+        combos.forEach(function(c, index) {
+            var miniLabel = c.isMini ? ' 🥖Mini' : '';
+            var typeLabel = c.type === '88-200' ? '88-200' : '150-208';
+            html += '<span class="combo-item">' + 
+                c.name + ' ' + (c.country ? getCountryFlag(c.country) + ' ' : '') + 
+                '🧩 ' + typeLabel + miniLabel + 
+                ' <span class="price">¥' + c.price.toFixed(2) + '</span>' +
+                ' <span class="del" data-combo-index="' + index + '">✖</span>' +
+            '</span>';
+        });
+        list.innerHTML = html;
+        document.querySelectorAll('.combo-list .del').forEach(function(el) {
+            el.addEventListener('click', function() {
+                var idx = parseInt(this.dataset.comboIndex);
+                var combo = combos[idx];
+                // Alle zugehörigen Bestellungen löschen
+                breadOrders = breadOrders.filter(function(o) {
+                    return !(o.isCombo && o.comboType === combo.type && o.name === combo.name + ' (Combo)');
+                });
+                combos.splice(idx, 1);
+                render();
+                saveToLocal();
+                renderCombos();
+            });
+        });
+    }
+
     // ============ WEEK CALCULATION ============
     function calculateCurrentWeek() {
         var startDate = new Date(2025, 11, 22);
@@ -443,17 +672,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     var sizeToPcs = {"S":2, "S+":3, "M":5, "M+":6, "L":8, "XM":9, "XL":11, "XL+":12};
 
+    // ============ REZEPTE - 4 MISCHUNGEN ============
     var recipeFor13 = {
-        "88er": {mix88:745, mix150:0, mix188:0, mix200:0, water:360},
-        "150er": {mix88:650, mix150:97, mix188:0, mix200:0, water:360},
-        "188er": {mix88:630, mix150:97, mix188:15, mix200:0, water:360},
-        "200er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360},
-        "208er": {mix88:620, mix150:97, mix188:15, mix200:13, water:360}
+        "88er": {mix88:745, mix138:0, mix150:0, mix188_200_208:0, water:360},
+        "150er": {mix88:650, mix138:97, mix150:0, mix188_200_208:0, water:360},
+        "188er": {mix88:630, mix138:97, mix150:15, mix188_200_208:0, water:360},
+        "200er": {mix88:620, mix138:97, mix150:15, mix188_200_208:13, water:360},
+        "208er": {mix88:620, mix138:97, mix150:15, mix188_200_208:13, water:360}
     };
 
     function getPerPcs(type) {
         var r = recipeFor13[type];
-        return {mix88: r.mix88/13, mix150: r.mix150/13, mix188: r.mix188/13, mix200: r.mix200/13, water: r.water/13};
+        return {
+            mix88: r.mix88/13, 
+            mix138: r.mix138/13, 
+            mix150: r.mix150/13, 
+            mix188_200_208: r.mix188_200_208/13, 
+            water: r.water/13
+        };
     }
 
     // ============ DISTANCES ============
@@ -503,8 +739,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var breadTableBody = $("breadTableBody"), breadSummaryBody = $("breadSummaryBody");
     var addBreadSummaryBody = $("addBreadSummaryBody"), hummusSummaryBody = $("hummusSummaryBody");
     var hummusTableBody = $("hummusTableBody"), totalSpan = $("totalPriceSum"), hummusCountSpan = $("hummusCount");
-    var weekNumber = $("weekNumber"), weekBadge = $("weekBadge"), screenshotBtn = $("screenshotBtn");
-    var screenshotStatus = $("screenshotStatus"), commissionCheckbox = $("commissionCheckbox");
+    var weekNumber = $("weekNumber"), weekBadge = $("weekBadge");
+    var commissionCheckbox = $("commissionCheckbox");
     var addBreadType = $("addBreadType"), addBreadMiniCheckbox = $("addBreadMiniCheckbox");
     var addBreadCountDisplay = $("addBreadCountDisplay"), addBreadMinusBtn = $("addBreadMinusBtn");
     var addBreadPlusBtn = $("addBreadPlusBtn"), addBreadAddBtn = $("addBreadAddBtn");
@@ -531,6 +767,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var calculatedThermomixTable = $("calculatedThermomixTable"), calculatedRestTable = $("calculatedRestTable");
     var calculatedRestFooter = $("calculatedRestFooter"), perPcsRow = $("perPcsRow");
     var resetTableBtn = $("resetTableBtn"), saveHistoryBtn = $("saveHistoryBtn");
+    var wechatCopyBtn = $("wechatCopyBtn"), wechatImageBtn = $("wechatImageBtn"), wechatStatus = $("wechatStatus");
 
     // ============ COPY SALARY ============
     window.copySalary = function() {
@@ -590,7 +827,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ CAPITALIZE ============
     function capitalizeName(input) { if (!input) return ''; return input.charAt(0).toUpperCase() + input.slice(1); }
     customerName.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
-    customerCountry.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
     addressNameInput.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
     pickupNameInput.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
 
@@ -603,46 +839,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ WEEK ============
     function updateWeekDisplay() { currentWeek = calculateCurrentWeek(); weekNumber.value = currentWeek; weekBadge.textContent = 'Week ' + currentWeek; }
     updateWeekDisplay();
-
-    // ============ SCREENSHOT ============
-    screenshotBtn.addEventListener('click', function() {
-        var element = document.getElementById('captureArea');
-        var status = screenshotStatus;
-        var btn = screenshotBtn;
-        status.className = 'show';
-        status.textContent = '⏳ Generating...';
-        btn.textContent = '⏳ Loading...';
-        btn.style.opacity = '0.7';
-        setTimeout(function() {
-            html2canvas(element, {
-                scale: 2, useCORS: true, allowTaint: true, backgroundColor: null, logging: false,
-                width: element.scrollWidth, height: element.scrollHeight,
-                windowWidth: element.scrollWidth, windowHeight: element.scrollHeight,
-                onclone: function(clonedDoc) {
-                    var clonedElement = clonedDoc.getElementById('captureArea');
-                    if (clonedElement) { clonedElement.style.transform = 'none'; clonedElement.style.overflow = 'visible'; }
-                }
-            }).then(function(canvas) {
-                var link = document.createElement('a');
-                link.download = 'microbiome_warrior_week_' + currentWeek + '.png';
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                status.textContent = '✅ Downloaded! Week ' + currentWeek;
-                status.className = 'show success';
-                btn.textContent = '✅ Done!';
-                btn.style.opacity = '1';
-                setTimeout(function() { status.className = ''; status.textContent = ''; btn.textContent = '📸 Screenshot'; }, 4000);
-            }).catch(function(error) {
-                status.textContent = '❌ Error: ' + error.message;
-                status.className = 'show error';
-                btn.textContent = '❌ Error';
-                btn.style.opacity = '1';
-                setTimeout(function() { status.className = ''; status.textContent = ''; btn.textContent = '📸 Screenshot'; }, 4000);
-            });
-        }, 200);
-    });
 
     // ============ HUMMUS AUTO ============
     function getHummusSizeForBreadSize(bs) { if (bs === 'S+') return 'S'; return bs; }
@@ -772,35 +968,94 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return 'unknown';
     }
 
-    function getPcsForOrder(order) { var base = sizeToPcs[order.size] || 0; return order.isMini ? base / 2 : base; }
-    function getPriceForOrder(order) { var basePrice = priceDB[order.breadType]?.[order.size] || 0; return order.isMini ? basePrice / 2 : basePrice; }
-    function totalPriceAll() { var sum = 0; breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread) { sum += getPriceForOrder(o); } }); return sum; }
-    function totalHummusCount() { return hummusOrders.length; }
+    // ============ KORREKT: Add Bread = 1 Stück, Mini = 0.5 ============
+    function getPcsForOrder(order) {
+        if (order.isAdd || order.isAddBread) {
+            return order.isMini ? 0.5 : 1;
+        }
+        var base = sizeToPcs[order.size] || 0;
+        return order.isMini ? base / 2 : base;
+    }
+
+    function getPriceForOrder(order) {
+        if (order.isAdd || order.isAddBread) {
+            return 0;
+        }
+        if (order.isCombo) {
+            return order.comboPrice / 4; // Preis pro Einzelitem
+        }
+        var basePrice = priceDB[order.breadType]?.[order.size] || 0;
+        return order.isMini ? basePrice / 2 : basePrice;
+    }
+
+    function totalPriceAll() {
+        var sum = 0;
+        var comboSet = new Set();
+        breadOrders.forEach(function(o) {
+            if (o.isAdd || o.isAddBread) return;
+            if (o.isCombo) {
+                // Nur einmal pro Combo zählen
+                var key = o.comboType + '|' + o.name;
+                if (!comboSet.has(key)) {
+                    comboSet.add(key);
+                    sum += o.comboPrice || 0;
+                }
+            } else {
+                sum += getPriceForOrder(o);
+            }
+        });
+        return sum;
+    }
+
+    function totalHummusCount() {
+        return hummusOrders.length;
+    }
 
     function getTotalPcsPerType() {
         var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
-        breadOrders.forEach(function(o) { if (o.isAdd || o.isAddBread) return; var pcs = getPcsForOrder(o); totals[o.breadType] += pcs; });
-        addBreadOrders.forEach(function(item) { var pcsPerItem = item.isMini ? 1 : 2; totals[item.type] += item.count * pcsPerItem; });
+        breadOrders.forEach(function(o) {
+            var pcs = getPcsForOrder(o);
+            if (o.isCombo) {
+                // Combo: jedes Item 2 Stück (oder 1 bei Mini)
+                var comboItems = getComboItems(o.comboType);
+                comboItems.forEach(function(item) {
+                    var p = o.isMini ? 1 : 2;
+                    totals[item.variety] += p;
+                });
+            } else {
+                totals[o.breadType] += pcs;
+            }
+        });
         return totals;
     }
 
     function getTotalRequirements() {
         var pcs = getTotalPcsPerType();
-        var total88 = 0, total150 = 0, total188 = 0, total200 = 0, totalWater = 0;
+        var total88 = 0, total138 = 0, total150 = 0, total188_200_208 = 0, totalWater = 0;
         for (var type in pcs) {
-            var p = pcs[type]; if (p === 0) continue;
+            var p = pcs[type];
+            if (p === 0) continue;
             var per = getPerPcs(type);
-            total88 += per.mix88 * p; total150 += per.mix150 * p; total188 += per.mix188 * p; total200 += per.mix200 * p; totalWater += per.water * p;
+            total88 += per.mix88 * p;
+            total138 += per.mix138 * p;
+            total150 += per.mix150 * p;
+            total188_200_208 += per.mix188_200_208 * p;
+            totalWater += per.water * p;
         }
-        return {mix88: total88, mix150: total150, mix188: total188, mix200: total200, water: totalWater};
+        return {mix88: total88, mix138: total138, mix150: total150, mix188_200_208: total188_200_208, water: totalWater};
     }
 
     function getTimesPcsBreakdown() {
-        var pcs = getTotalPcsPerType(), res = [];
+        var pcs = getTotalPcsPerType();
+        var res = [];
         for (var type in pcs) {
-            var total = pcs[type]; if (total === 0) continue;
-            var full = Math.floor(total / 13), rest = total % 13;
-            if (full > 0 || rest > 0) { res.push({type: type, fullCharges: full, restPcs: rest}); }
+            var total = pcs[type];
+            if (total === 0) continue;
+            var full = Math.floor(total / 13);
+            var rest = total % 13;
+            if (full > 0 || rest > 0) {
+                res.push({type: type, fullCharges: full, restPcs: rest});
+            }
         }
         return res;
     }
@@ -814,6 +1069,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             localStorage.setItem("microbiome_hummus", JSON.stringify({orders: hummusOrders}));
             localStorage.setItem("microbiome_add_bread", JSON.stringify({orders: addBreadOrders}));
             localStorage.setItem("microbiome_add_hummus", JSON.stringify({orders: addHummusOrders}));
+            localStorage.setItem("microbiome_combos", JSON.stringify({combos: combos}));
         } catch(e) {}
     }
     function loadFromLocal() {
@@ -826,15 +1082,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             if (addBreadData) { var parsed = JSON.parse(addBreadData); if (parsed.orders) addBreadOrders = parsed.orders; }
             var addHummusData = localStorage.getItem("microbiome_add_hummus");
             if (addHummusData) { var parsed = JSON.parse(addHummusData); if (parsed.orders) addHummusOrders = parsed.orders; }
+            var comboData = localStorage.getItem("microbiome_combos");
+            if (comboData) { var parsed = JSON.parse(comboData); if (parsed.combos) combos = parsed.combos; }
         } catch(e) {}
         render();
+        renderCombos();
     }
 
     // ============ SALARY ============
     function updateSalaryDisplay() {
         var totalWithComm = 0, totalWithoutComm = 0;
         breadOrders.forEach(function(o) {
-            if (o.isAdd || o.isAddBread) return;
+            if (o.isAdd || o.isAddBread || o.isCombo) return;
             var price = getPriceForOrder(o);
             if (o.hasCommission) { totalWithComm += price; } else { totalWithoutComm += price; }
         });
@@ -848,12 +1107,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ TOGGLE COMMISSION ============
     function toggleCommission(orderId) {
         var order = breadOrders.find(function(o) { return o.id === orderId; });
-        if (order && !order.isAdd && !order.isAddBread) { order.hasCommission = !order.hasCommission; render(); saveToLocal(); updateRoute(); }
+        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) { order.hasCommission = !order.hasCommission; render(); saveToLocal(); updateRoute(); }
     }
 
     // ============ RENDER BREAD SUMMARY ============
     function renderBreadSummary() {
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
         if (normalOrders.length === 0) { breadSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr>'; return; }
         var summary = {};
         normalOrders.forEach(function(order) {
@@ -905,7 +1164,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             addBreadOrders.forEach(function(item, index) {
                 var row = document.createElement('tr');
                 var miniLabel = item.isMini ? ' 🥖Mini' : '';
-                var pcsDisplay = item.isMini ? item.count : item.count * 2;
+                var pcsDisplay = item.isMini ? (item.count * 0.5) : item.count;
                 row.innerHTML = '<td>' + item.type + miniLabel + '</td><td>' + pcsDisplay + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
                 addBreadSummaryBody.appendChild(row);
             });
@@ -1040,7 +1299,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             routeCompareInfo.textContent = '';
             return;
         }
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
         if (normalOrders.length === 0 && pickupList.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
             autoRouteList.innerHTML = 'No orders or pickups';
@@ -1070,7 +1329,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         normalOrders.forEach(function(order) {
             var addr = addressBook[order.name] || '', hasAddr = addr && addr.trim();
             var statusIcon = hasAddr ? '✅' : '⚠️', statusText = hasAddr ? '📍 ' + addr : 'no address';
-            var miniLabel = order.isMini ? ' 🥖Mini' : '', countryLabel = order.country ? ' 🌍' + order.country : '';
+            var miniLabel = order.isMini ? ' 🥖Mini' : '', countryLabel = order.country ? ' ' + order.country : '';
             listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;"><span>' + escapeHtml(order.name) + countryLabel + ' (' + order.breadType + ' ' + order.size + miniLabel + ')</span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
         });
         autoRouteList.innerHTML = listHtml;
@@ -1154,7 +1413,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function renderPreparation() {
         var req = getTotalRequirements();
         var breakdown = getTimesPcsBreakdown();
-        var hasMini = breadOrders.some(function(o) { return o.isMini && !o.isAdd && !o.isAddBread; });
+        var hasMini = breadOrders.some(function(o) { return o.isMini && !o.isAdd && !o.isAddBread && !o.isCombo; });
         var hasAddMini = addBreadOrders.some(function(item) { return item.isMini; });
         var hasAnyMini = hasMini || hasAddMini;
         var needed88 = req.mix88;
@@ -1167,7 +1426,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         types.forEach(function(type) {
             var per = getPerPcs(type);
             var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
-            perPcsHtml += '<tr><td>' + type + miniLabel + '</td><td>' + per.mix88.toFixed(1) + 'g</td><td>' + per.mix150.toFixed(1) + 'g</td><td>' + per.mix188.toFixed(1) + 'g</td><td>' + per.mix200.toFixed(1) + 'g</td><td class="water-cell">' + per.water.toFixed(1) + 'g</td></tr>';
+            perPcsHtml += '<tr><td>' + type + miniLabel + '</td><td>' + per.mix88.toFixed(1) + 'g</td><td>' + per.mix138.toFixed(1) + 'g</td><td>' + per.mix150.toFixed(1) + 'g</td><td>' + per.mix188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + per.water.toFixed(1) + 'g</td></tr>';
         });
         perPcsRow.innerHTML = perPcsHtml;
         var timesHtml = '', pcsHtml = '';
@@ -1192,44 +1451,277 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
                 var r = recipeFor13[b.type];
                 var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
-                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188 + 'g</td><td>' + r.mix200 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
+                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix138 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188_200_208 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
             }).join('');
         } else { thermHtml = '<tr><td colspan="7">No times</td></tr>'; }
         calculatedThermomixTable.innerHTML = thermHtml;
-        var restHtml = '', sum88 = 0, sum150 = 0, sum188 = 0, sum200 = 0, sumW = 0;
+        var restHtml = '', sum88 = 0, sum138 = 0, sum150 = 0, sum188_200_208 = 0, sumW = 0;
         if (breakdown.some(function(b) { return b.restPcs > 0; })) {
             restHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
                 var per = getPerPcs(b.type);
-                var t88 = per.mix88 * b.restPcs, t150 = per.mix150 * b.restPcs, t188 = per.mix188 * b.restPcs, t200 = per.mix200 * b.restPcs, tw = per.water * b.restPcs;
-                sum88 += t88; sum150 += t150; sum188 += t188; sum200 += t200; sumW += tw;
+                var t88 = per.mix88 * b.restPcs;
+                var t138 = per.mix138 * b.restPcs;
+                var t150 = per.mix150 * b.restPcs;
+                var t188_200_208 = per.mix188_200_208 * b.restPcs;
+                var tw = per.water * b.restPcs;
+                sum88 += t88; sum138 += t138; sum150 += t150; sum188_200_208 += t188_200_208; sumW += tw;
                 var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
-                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188.toFixed(1) + 'g</td><td>' + t200.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
+                return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t138.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
             }).join('');
             var footerMini = hasAnyMini ? ' 🥖 includes Mini' : '';
-            calculatedRestFooter.innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest' + footerMini + '</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188.toFixed(1) + 'g</td><td>' + sum200.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
+            calculatedRestFooter.innerHTML = '<tr style="background:#f0e5cd;"><td colspan="2">📊 TOTAL Rest' + footerMini + '</td><td>' + sum88.toFixed(1) + 'g</td><td>' + sum138.toFixed(1) + 'g</td><td>' + sum150.toFixed(1) + 'g</td><td>' + sum188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + sumW.toFixed(1) + 'g</td></tr>';
         } else { restHtml = '<tr><td colspan="7">No rest pcs</td></tr>'; calculatedRestFooter.innerHTML = ''; }
         calculatedRestTable.innerHTML = restHtml;
     }
 
+    // ============ GENERATE WECHAT TEXT ============
+    function generateWeChatText() {
+        var lines = [];
+        var now = new Date();
+        lines.push('🧬 MICROBIOME WARRIOR');
+        lines.push('📅 Week ' + currentWeek + ' | ' + now.toLocaleDateString('zh-CN'));
+        lines.push('────────────────────────────');
+        lines.push('');
+        
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
+        var comboOrders = breadOrders.filter(function(o) { return o.isCombo; });
+        var comboSet = new Set();
+        
+        if (normalOrders.length === 0 && comboOrders.length === 0) {
+            lines.push('❌ No orders yet');
+        } else {
+            lines.push('📋 ORDERS:');
+            var index = 1;
+            // Normale Bestellungen
+            normalOrders.forEach(function(o) {
+                var country = o.country || '';
+                var flag = getCountryFlag(country);
+                var mini = o.isMini ? ' Mini' : '';
+                var pcs = getPcsForOrder(o);
+                var price = getPriceForOrder(o);
+                lines.push(index + '. ' + o.name + ' ' + flag + ' ' + country);
+                lines.push('   ' + o.breadType + ' ' + o.size + mini + ' → ' + pcs + ' pcs  ¥' + price.toFixed(2));
+                index++;
+            });
+            
+            // Combo Bestellungen
+            comboOrders.forEach(function(o) {
+                var key = o.comboType + '|' + o.name;
+                if (!comboSet.has(key)) {
+                    comboSet.add(key);
+                    var country = o.country || '';
+                    var flag = getCountryFlag(country);
+                    var mini = o.isMini ? ' Mini' : '';
+                    var price = o.comboPrice || 0;
+                    var typeLabel = o.comboType === '88-200' ? '88-200' : '150-208';
+                    lines.push(index + '. ' + o.name + ' ' + flag + ' ' + country + ' 🧩 ' + typeLabel + mini);
+                    lines.push('   Combo → 8 pcs  ¥' + price.toFixed(2));
+                    index++;
+                }
+            });
+            
+            lines.push('');
+            lines.push('💰 TOTAL: ¥' + totalPriceAll().toFixed(2));
+            lines.push('');
+            
+            // PREPARATION
+            var req = getTotalRequirements();
+            var breakdown = getTimesPcsBreakdown();
+            lines.push('📦 PREPARATION:');
+            lines.push('88er Mix: ' + req.mix88.toFixed(0) + 'g → ' + Math.ceil(req.mix88/1400) + ' boxes');
+            lines.push('138er Mix: ' + req.mix138.toFixed(0) + 'g');
+            lines.push('150er Mix: ' + req.mix150.toFixed(0) + 'g');
+            lines.push('188/200/208er Mix: ' + req.mix188_200_208.toFixed(0) + 'g');
+            lines.push('Water: ' + req.water.toFixed(0) + 'g');
+            lines.push('');
+            breakdown.forEach(function(b) {
+                if (b.fullCharges > 0) {
+                    lines.push('⏱️ ' + b.type + ': ' + b.fullCharges + '× time (13 pcs)');
+                }
+                if (b.restPcs > 0) {
+                    lines.push('🔢 ' + b.type + ': ' + b.restPcs + ' pcs rest');
+                }
+            });
+        }
+        lines.push('────────────────────────────');
+        lines.push('🌾 ' + now.toLocaleString('zh-CN'));
+        return lines.join('\n');
+    }
+
+    // ============ WECHAT COPY ============
+    wechatCopyBtn.addEventListener("click", function() {
+        var text = generateWeChatText();
+        var btn = this;
+        var originalText = btn.textContent;
+        var status = wechatStatus;
+        
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+                status.className = 'wechat-status show success';
+                status.textContent = '✅ Copied! Paste into WeChat.';
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#27ae60';
+                setTimeout(function() {
+                    status.className = 'wechat-status';
+                    status.textContent = '';
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            }).catch(function() {
+                fallbackWeChatCopy(text, btn, originalText, status);
+            });
+        } else {
+            fallbackWeChatCopy(text, btn, originalText, status);
+        }
+    });
+
+    function fallbackWeChatCopy(text, btn, originalText, status) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            status.className = 'wechat-status show success';
+            status.textContent = '✅ Copied! Paste into WeChat.';
+            btn.textContent = '✅ Copied!';
+            btn.style.background = '#27ae60';
+            setTimeout(function() {
+                status.className = 'wechat-status';
+                status.textContent = '';
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 3000);
+        } catch(e) {
+            status.className = 'wechat-status show error';
+            status.textContent = '❌ Copy failed. Please copy manually.';
+            btn.textContent = '❌ Error';
+            btn.style.background = '#e74c3c';
+            setTimeout(function() {
+                status.className = 'wechat-status';
+                status.textContent = '';
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 3000);
+            alert('Please copy manually:\n\n' + text.substring(0, 300) + '...');
+        }
+        document.body.removeChild(textarea);
+    }
+
+    // ============ WECHAT IMAGE ============
+    wechatImageBtn.addEventListener("click", function() {
+        var btn = this;
+        var originalText = btn.textContent;
+        var status = wechatStatus;
+        btn.textContent = '⏳ Generating...';
+        btn.disabled = true;
+        status.className = 'wechat-status show';
+        status.textContent = '⏳ Generating image...';
+        
+        var text = generateWeChatText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+        }
+        
+        var element = document.getElementById('captureArea');
+        html2canvas(element, {
+            scale: 1.5,
+            useCORS: true,
+            backgroundColor: '#f7f1dd',
+            logging: false,
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight,
+            onclone: function(doc) {
+                var el = doc.getElementById('captureArea');
+                if (el) {
+                    el.style.transform = 'none';
+                    el.style.overflow = 'visible';
+                }
+            }
+        }).then(function(canvas) {
+            try {
+                var link = document.createElement('a');
+                link.download = 'microbiome_week_' + currentWeek + '.png';
+                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                status.className = 'wechat-status show success';
+                status.textContent = '✅ Text copied! Image downloaded!';
+                btn.textContent = '✅ Done!';
+                btn.style.background = '#27ae60';
+                setTimeout(function() {
+                    status.className = 'wechat-status';
+                    status.textContent = '';
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 4000);
+            } catch(e) {
+                status.className = 'wechat-status show error';
+                status.textContent = '❌ Image error, but text is copied.';
+                btn.textContent = '❌ Error';
+                btn.style.background = '#e74c3c';
+                setTimeout(function() {
+                    status.className = 'wechat-status';
+                    status.textContent = '';
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }).catch(function(error) {
+            status.className = 'wechat-status show error';
+            status.textContent = '❌ Image failed. Text is copied though!';
+            btn.textContent = '❌ Error';
+            btn.style.background = '#e74c3c';
+            setTimeout(function() {
+                status.className = 'wechat-status';
+                status.textContent = '';
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        });
+    });
+
     // ============ MAIN RENDER ============
     function render() {
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
-        if (normalOrders.length === 0) { breadTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center">No bread orders 🥖</td></tr>'; }
-        else {
+        var allBreadOrders = breadOrders.slice();
+        if (allBreadOrders.length === 0) {
+            breadTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center">No bread orders 🥖</td></tr>';
+        } else {
             breadTableBody.innerHTML = '';
-            normalOrders.forEach(function(order, index) {
+            allBreadOrders.forEach(function(order, index) {
                 var row = document.createElement('tr');
                 var sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
-                var price = getPriceForOrder(order), pcs = getPcsForOrder(order);
-                var nameDisplay = order.name, countryDisplay = order.country || '—';
+                var price = getPriceForOrder(order);
+                var pcs = getPcsForOrder(order);
+                var nameDisplay = order.name || '—';
+                var countryDisplay = order.country || '—';
+                var flag = getCountryFlag(countryDisplay);
+                var isAddLabel = (order.isAdd || order.isAddBread) ? ' ⚡' : '';
+                var isComboLabel = order.isCombo ? ' 🧩' : '';
                 var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
                 var miniTag = order.isMini ? ' <span class="mini-tag">🥖 Mini</span>' : '';
                 var commClass = order.hasCommission ? 'active' : 'inactive';
                 var commLabel = order.hasCommission ? '13.5%' : '15%';
-                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + escapeHtml(countryDisplay) + '</td><td>' + order.breadType + '</td><td>' + sizeDisplay + miniTag + noHummusTag + '</td><td>' + pcs + '</td><td>' + price.toFixed(2) + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
+                if (order.isAdd || order.isAddBread || order.isCombo) { commClass = 'inactive'; commLabel = '—'; }
+                
+                var varietyDisplay = order.isCombo ? order.comboType : order.breadType;
+                var priceDisplay = order.isCombo ? (order.comboPrice || 0).toFixed(2) : price.toFixed(2);
+                
+                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + isAddLabel + isComboLabel + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + varietyDisplay + '</td><td>' + sizeDisplay + miniTag + noHummusTag + '</td><td>' + pcs + '</td><td>' + priceDisplay + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
                 breadTableBody.appendChild(row);
             });
         }
+        
         var normalHummus = hummusOrders.filter(function(o) { return !o.isAddHummus; });
         if (normalHummus.length === 0) { hummusTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No hummus orders 🫒</td></tr>'; }
         else {
@@ -1239,19 +1731,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
                 var hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
                 var nameDisplay = order.name, countryDisplay = order.country || '—';
-                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + escapeHtml(countryDisplay) + '</td><td>' + order.breadType + '</td><td>' + order.size + '</td><td><span class="' + hummusClass + '">' + hummusLabel + '</span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="hummus">✖</button></td>';
+                var flag = getCountryFlag(countryDisplay);
+                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + order.breadType + '</td><td>' + order.size + '</td><td><span class="' + hummusClass + '">' + hummusLabel + '</span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="hummus">✖</button></td>';
                 hummusTableBody.appendChild(row);
             });
         }
+        
         document.querySelectorAll('.comm-toggle').forEach(function(el) {
             el.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); toggleCommission(id); });
         });
+        
         document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
-            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); deleteBreadAndHummus(id); render(); saveToLocal(); updateRoute(); });
+            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); deleteBreadAndHummus(id); render(); saveToLocal(); updateRoute(); renderCombos(); });
         });
+        
         document.querySelectorAll('.delete-btn[data-type="hummus"]').forEach(function(btn) {
             btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); hummusOrders = hummusOrders.filter(function(o) { return o.id !== id; }); render(); saveToLocal(); updateRoute(); });
         });
+        
         var total = totalPriceAll();
         totalSpan.innerText = total.toFixed(2) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
@@ -1261,23 +1758,32 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         renderPreparation();
         renderAddOrders();
         updateRoute();
+        renderCombos();
     }
 
     // ============ RESET FORM ============
-    function resetForm() { customerName.value = ""; customerCountry.value = ""; miniCheckbox.checked = false; commissionCheckbox.checked = false; autoSelectHummus(); customerName.focus(); }
+    function resetForm() { 
+        customerName.value = ""; 
+        customerCountry.value = ""; 
+        countryFlagDisplay.textContent = '';
+        miniCheckbox.checked = false; 
+        commissionCheckbox.checked = false; 
+        autoSelectHummus(); 
+        customerName.focus(); 
+    }
 
     // ============ ADD ORDER ============
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
-        var country = capitalizeName(customerCountry.value.trim());
+        var country = customerCountry.value.trim();
         var breadVal = breadType.value, sizeVal = breadSize.value;
         var isMini = miniCheckbox.checked, hummusVal = hummusType.value, hummusSizeVal = hummusSize.value;
         var hasCommission = commissionCheckbox.checked;
         if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); return; }
         if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') { alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!'); return; }
         updateWeekDisplay();
-        breadOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: sizeVal, isMini: isMini, hasCommission: hasCommission, week: currentWeek, isAdd: false, isAddBread: false });
+        breadOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: sizeVal, isMini: isMini, hasCommission: hasCommission, week: currentWeek, isAdd: false, isAddBread: false, isCombo: false });
         if (hummusVal !== 'none') { hummusOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: hummusSizeVal, hummusType: hummusVal, week: currentWeek, isAdd: false, isAddHummus: false }); }
         render(); saveToLocal(); resetForm();
     }
@@ -1288,9 +1794,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var existing = addBreadOrders.find(function(item) { return item.type === breadVal && item.isMini === isMini; });
         if (existing) { existing.count += count; } else { addBreadOrders.push({type: breadVal, count: count, isMini: isMini}); }
         for (var i = 0; i < count; i++) {
-            breadOrders.push({ id: nextId++, name: isMini ? '⚡ Add Bread (Mini)' : '⚡ Add Bread', country: '', breadType: breadVal, size: 'S', isMini: isMini, hasCommission: false, week: currentWeek, isAdd: true, isAddBread: true });
+            breadOrders.push({ 
+                id: nextId++, 
+                name: isMini ? '⚡ Add Bread (Mini)' : '⚡ Add Bread', 
+                country: '', 
+                breadType: breadVal, 
+                size: 'S', 
+                isMini: isMini, 
+                hasCommission: false, 
+                week: currentWeek, 
+                isAdd: true, 
+                isAddBread: true,
+                isCombo: false
+            });
         }
-        render(); saveToLocal(); addBreadCount = 1; addBreadCountDisplay.textContent = addBreadCount; addBreadMiniCheckbox.checked = false;
+        render(); saveToLocal(); 
+        addBreadCount = 1; 
+        addBreadCountDisplay.textContent = addBreadCount; 
+        addBreadMiniCheckbox.checked = false;
     }
 
     // ============ ADD HUMMUS ============
@@ -1310,10 +1831,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     addHummusAddBtn.addEventListener("click", addAddHummusOrder);
 
     resetTableBtn.addEventListener("click", function() {
-        if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length || pickupList.length) && confirm("Delete all orders and pickups?")) {
-            breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = [];
-            render(); saveToLocal(); savePickups(); nextId = 1; updateRoute();
-        } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length && !pickupList.length) { alert("No orders or pickups"); }
+        if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length || pickupList.length || combos.length) && confirm("Delete all orders and pickups?")) {
+            breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = []; combos = [];
+            render(); saveToLocal(); savePickups(); nextId = 1; updateRoute(); renderCombos();
+        } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length && !pickupList.length && !combos.length) { alert("No orders or pickups"); }
     });
 
     saveHistoryBtn.addEventListener("click", function() { saveCurrentWeekToHistory(); });
@@ -1348,10 +1869,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     startTrafficSimulation();
     updateRoute();
     appleMapsBtn.disabled = true;
+    renderCombos();
 
     console.log("✅ Microbiome Warrior started!");
-    console.log("🌍 Country field added");
-    console.log("📊 All calculations verified");
+    console.log("🌍 Country input with auto-flag detection");
+    console.log("🧩 COMBO Packs: 88-200 (¥682) and 150-208 (¥890)");
+    console.log("💬 WeChat Export: Copy + Image");
+    console.log("📊 4 Mixes: 88er, 138er, 150er, 188/200/208er");
 })();
 </script>
 </body>
