@@ -23,16 +23,6 @@ input:focus,select:focus{outline:none;border-color:#e2aa54;box-shadow:0 0 0 3px 
 .checkbox-group{background:rgba(255,255,255,0.5);padding:8px 12px;border-radius:28px;margin-top:8px}
 .checkbox-group label{margin:0;display:flex;align-items:center;gap:8px;cursor:pointer}
 .checkbox-group input{width:18px;height:18px;margin:0}
-.combo-section{background:rgba(226,170,84,0.12);border-radius:16px;padding:12px;margin-top:8px;border:2px solid #e2aa54}
-.combo-section .combo-title{font-size:0.8rem;font-weight:800;color:#b87a2a;margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.combo-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.combo-row select{flex:1;min-width:100px;padding:6px 10px;font-size:0.7rem;margin:0}
-.combo-row .combo-btn{padding:6px 16px;border-radius:20px;border:none;font-weight:800;font-size:0.7rem;background:linear-gradient(135deg,#e2aa54,#c9943a);color:#2a1a08;cursor:pointer;margin:0;white-space:nowrap}
-.combo-row .combo-btn:active{transform:scale(0.95)}
-.combo-list{margin-top:6px;font-size:0.6rem}
-.combo-list .combo-item{display:inline-block;background:rgba(226,170,84,0.15);padding:2px 10px;border-radius:12px;margin:2px;border:1px solid #e2aa54}
-.combo-list .combo-item .del{cursor:pointer;color:#c0392b;margin-left:4px;font-weight:700}
-.combo-list .combo-item .price{font-weight:700;color:#b87a2a}
 button{width:100%;padding:12px;margin-top:12px;border-radius:28px;border:none;font-weight:900;font-size:0.9rem;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;cursor:pointer;transition:all 0.2s ease;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 button:active{transform:scale(0.97)}
 .btn-reset{background:#d4c090;margin-top:8px}
@@ -45,8 +35,20 @@ button:active{transform:scale(0.97)}
 .btn-copy{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:4px 12px;margin:0;font-size:0.6rem;border-radius:16px;border:none;font-weight:700;cursor:pointer;flex-shrink:0}
 .btn-copy:active{transform:scale(0.95)}
 .btn-copy.copied{background:linear-gradient(135deg,#27ae60,#1e8449)}
+.btn-pdf{background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-pdf:active{transform:scale(0.95)}
+.btn-copy-text{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-copy-text:active{transform:scale(0.95)}
+.btn-email-export{background:linear-gradient(135deg,#3498db,#2980b9);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-email-export:active{transform:scale(0.95)}
+.btn-json-export{background:linear-gradient(135deg,#f39c12,#e67e22);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-json-export:active{transform:scale(0.95)}
+.btn-csv-export{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-csv-export:active{transform:scale(0.95)}
+.btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-screenshot:active{transform:scale(0.95)}
 .export-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.export-buttons button{flex:1;min-width:100px;padding:10px 14px;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
+.export-buttons button{flex:1;min-width:70px;padding:8px 10px;font-size:0.55rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
 .export-buttons button:active{transform:scale(0.95)}
 table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;border-radius:16px;overflow:hidden;margin:8px 0}
 th{padding:8px 4px;font-weight:800;color:#2a1a08}
@@ -85,6 +87,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .wechat-status.show{display:block}
 .wechat-status.success{background:#d5f5e3;color:#27ae60}
 .wechat-status.error{background:#fadbd8;color:#e74c3c}
+#screenshotStatus{font-size:0.55rem;color:#6b4a1c;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,0.5);display:none;text-align:center}
+#screenshotStatus.show{display:block}
+#screenshotStatus.success{background:#d5f5e3;color:#27ae60}
+#screenshotStatus.error{background:#fadbd8;color:#e74c3c}
 .salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54}
 .salary-container .salary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .salary-container .salary-header .salary-title{font-weight:800;font-size:0.8rem;color:#b87a2a;display:flex;align-items:center;gap:6px}
@@ -204,7 +210,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .history-summary .stat{display:flex;align-items:center;gap:3px}
 .history-summary .stat .val{font-weight:700;color:#27ae60}
 .history-summary .stat .val.pickup{color:#e74c3c}
-@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img{display:none}}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
 </style>
 </head>
 <body>
@@ -216,6 +222,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
+<div class="screenshot-btn-wrap">
+    <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
+    <span id="screenshotStatus"></span>
+</div>
 </div>
 </div>
 
@@ -227,21 +237,31 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-<div><label>Variety</label><select id="breadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select></div>
-<div><label>Size</label><select id="breadSize"><option value="S">S (2 pcs)</option><option value="S+">S+ (3 pcs) −12.4%</option><option value="M">M (5 pcs)</option><option value="M+">M+ (6 pcs) no hummus</option><option value="L">L (8 pcs)</option><option value="XM">XM (9 pcs)</option><option value="XL">XL (11 pcs)</option><option value="XL+">XL+ (12 pcs) no hummus</option></select></div>
-</div>
-
-<!-- ====== COMBO SECTION ====== -->
-<div class="combo-section">
-<div class="combo-title">🧩 COMBO PACKS</div>
-<div class="combo-row">
-    <select id="comboType">
-        <option value="88-200">88-200 (2× each: 88,150,188,200) — ¥682</option>
-        <option value="150-208">150-208 (2× each: 150,188,200,208) — ¥890</option>
+<div>
+    <label>Variety</label>
+    <select id="breadType">
+        <option value="88er">88er</option>
+        <option value="150er">150er</option>
+        <option value="188er">188er</option>
+        <option value="200er">200er</option>
+        <option value="208er">208er</option>
+        <option value="combo-88-200" style="background:#e2aa54;font-weight:700;color:#2a1a08;">🧩 COMBO 88-200 (¥682)</option>
+        <option value="combo-150-208" style="background:#e2aa54;font-weight:700;color:#2a1a08;">🧩 COMBO 150-208 (¥890)</option>
     </select>
-    <button class="combo-btn" id="addComboBtn">➕ Add Combo</button>
 </div>
-<div class="combo-list" id="comboList"><span style="color:#b88c48;">No combos added yet</span></div>
+<div>
+    <label>Size</label>
+    <select id="breadSize">
+        <option value="S">S (2 pcs)</option>
+        <option value="S+">S+ (3 pcs) −12.4%</option>
+        <option value="M">M (5 pcs)</option>
+        <option value="M+">M+ (6 pcs) no hummus</option>
+        <option value="L">L (8 pcs)</option>
+        <option value="XM">XM (9 pcs)</option>
+        <option value="XL">XL (11 pcs)</option>
+        <option value="XL+">XL+ (12 pcs) no hummus</option>
+    </select>
+</div>
 </div>
 
 <div class="commission-order-row">
@@ -330,10 +350,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <span class="total-sum" id="totalPriceSum">0 CNY</span>
 </div>
 
-<!-- WECHAT EXPORT BUTTONS -->
+<!-- EXPORT BUTTONS -->
 <div class="export-buttons">
-    <button class="btn-wechat" id="wechatCopyBtn">💬 Copy for WeChat</button>
-    <button class="btn-wechat-img" id="wechatImageBtn">📸 WeChat Image</button>
+    <button class="btn-screenshot" id="screenshotBtn2">📸 Screenshot</button>
+    <button class="btn-pdf" id="pdfBtn">📄 PDF</button>
+    <button class="btn-copy-text" id="copyTextBtn">📋 Copy Text</button>
+    <button class="btn-wechat" id="wechatCopyBtn">💬 WeChat</button>
+    <button class="btn-wechat-img" id="wechatImageBtn">📸 WeChat Img</button>
+    <button class="btn-email-export" id="emailExportBtn">📧 Email</button>
+    <button class="btn-json-export" id="jsonExportBtn">💾 JSON</button>
+    <button class="btn-csv-export" id="csvExportBtn">📊 CSV</button>
 </div>
 <div id="wechatStatus" class="wechat-status"></div>
 
@@ -450,66 +476,25 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <script>
 (function() {
-    // ============ LÄNDER-FLAGGEN DATENBANK ============
+    // ============ LÄNDER-FLAGGEN ============
     var countryFlags = {
-        'germany': '🇩🇪', 'deutschland': '🇩🇪',
-        'china': '🇨🇳',
-        'usa': '🇺🇸', 'united states': '🇺🇸', 'america': '🇺🇸',
-        'uk': '🇬🇧', 'united kingdom': '🇬🇧', 'england': '🇬🇧', 'britain': '🇬🇧',
-        'france': '🇫🇷',
-        'italy': '🇮🇹',
-        'spain': '🇪🇸',
-        'portugal': '🇵🇹',
-        'netherlands': '🇳🇱', 'holland': '🇳🇱',
-        'belgium': '🇧🇪',
-        'switzerland': '🇨🇭',
-        'austria': '🇦🇹',
-        'sweden': '🇸🇪',
-        'norway': '🇳🇴',
-        'denmark': '🇩🇰',
-        'finland': '🇫🇮',
-        'japan': '🇯🇵',
-        'south korea': '🇰🇷', 'korea': '🇰🇷',
-        'india': '🇮🇳',
-        'brazil': '🇧🇷',
-        'australia': '🇦🇺',
-        'canada': '🇨🇦',
-        'mexico': '🇲🇽',
-        'south africa': '🇿🇦',
-        'russia': '🇷🇺',
-        'turkey': '🇹🇷',
-        'greece': '🇬🇷',
-        'ireland': '🇮🇪',
-        'poland': '🇵🇱',
-        'czech': '🇨🇿', 'czech republic': '🇨🇿',
-        'hungary': '🇭🇺',
-        'uae': '🇦🇪', 'united arab emirates': '🇦🇪',
-        'saudi arabia': '🇸🇦',
-        'israel': '🇮🇱',
-        'singapore': '🇸🇬',
-        'malaysia': '🇲🇾',
-        'thailand': '🇹🇭',
-        'vietnam': '🇻🇳',
-        'philippines': '🇵🇭',
-        'indonesia': '🇮🇩',
-        'new zealand': '🇳🇿',
-        'argentina': '🇦🇷',
-        'chile': '🇨🇱',
-        'colombia': '🇨🇴',
-        'peru': '🇵🇪',
-        'egypt': '🇪🇬',
-        'morocco': '🇲🇦',
-        'nigeria': '🇳🇬',
-        'kenya': '🇰🇪'
+        'germany':'🇩🇪','deutschland':'🇩🇪','china':'🇨🇳','usa':'🇺🇸','united states':'🇺🇸','america':'🇺🇸',
+        'uk':'🇬🇧','united kingdom':'🇬🇧','england':'🇬🇧','britain':'🇬🇧','france':'🇫🇷','italy':'🇮🇹',
+        'spain':'🇪🇸','portugal':'🇵🇹','netherlands':'🇳🇱','holland':'🇳🇱','belgium':'🇧🇪','switzerland':'🇨🇭',
+        'austria':'🇦🇹','sweden':'🇸🇪','norway':'🇳🇴','denmark':'🇩🇰','finland':'🇫🇮','japan':'🇯🇵',
+        'south korea':'🇰🇷','korea':'🇰🇷','india':'🇮🇳','brazil':'🇧🇷','australia':'🇦🇺','canada':'🇨🇦',
+        'mexico':'🇲🇽','south africa':'🇿🇦','russia':'🇷🇺','turkey':'🇹🇷','greece':'🇬🇷','ireland':'🇮🇪',
+        'poland':'🇵🇱','czech':'🇨🇿','czech republic':'🇨🇿','hungary':'🇭🇺','uae':'🇦🇪','united arab emirates':'🇦🇪',
+        'saudi arabia':'🇸🇦','israel':'🇮🇱','singapore':'🇸🇬','malaysia':'🇲🇾','thailand':'🇹🇭','vietnam':'🇻🇳',
+        'philippines':'🇵🇭','indonesia':'🇮🇩','new zealand':'🇳🇿','argentina':'🇦🇷','chile':'🇨🇱','colombia':'🇨🇴',
+        'peru':'🇵🇪','egypt':'🇪🇬','morocco':'🇲🇦','nigeria':'🇳🇬','kenya':'🇰🇪'
     };
 
-    function getCountryFlag(countryName) {
-        if (!countryName) return '';
-        var lower = countryName.toLowerCase().trim();
+    function getCountryFlag(name) {
+        if (!name) return '';
+        var lower = name.toLowerCase().trim();
         for (var key in countryFlags) {
-            if (lower === key || lower.includes(key)) {
-                return countryFlags[key];
-            }
+            if (lower === key || lower.includes(key)) return countryFlags[key];
         }
         return '';
     }
@@ -517,208 +502,83 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ COUNTRY FLAG DISPLAY ============
     var customerCountryInput = document.getElementById('customerCountry');
     var countryFlagDisplay = document.getElementById('countryFlagDisplay');
-
     customerCountryInput.addEventListener('input', function() {
         var flag = getCountryFlag(this.value);
-        if (flag) {
-            countryFlagDisplay.textContent = flag + ' ' + this.value.trim();
-        } else if (this.value.trim()) {
-            countryFlagDisplay.textContent = '🌍 ' + this.value.trim();
-        } else {
-            countryFlagDisplay.textContent = '';
-        }
+        countryFlagDisplay.textContent = flag ? flag + ' ' + this.value.trim() : (this.value.trim() ? '🌍 ' + this.value.trim() : '');
     });
 
-    // ============ COMBO PREIS ============
-    var comboPrices = {
-        '88-200': 682,
-        '150-208': 890
-    };
-
+    // ============ COMBO ============
+    var comboPrices = {'88-200':682, '150-208':890};
     var combos = [];
 
-    // ============ COMBO ITEMS ============
     function getComboItems(type) {
         if (type === '88-200') {
-            return [
-                { variety: '88er', size: 'S', price: 102, pcs: 2 },
-                { variety: '150er', size: 'S', price: 208, pcs: 2 },
-                { variety: '188er', size: 'S', price: 288, pcs: 2 },
-                { variety: '200er', size: 'S', price: 308, pcs: 2 }
-            ];
-        } else if (type === '150-208') {
-            return [
-                { variety: '150er', size: 'S', price: 208, pcs: 2 },
-                { variety: '188er', size: 'S', price: 288, pcs: 2 },
-                { variety: '200er', size: 'S', price: 308, pcs: 2 },
-                { variety: '208er', size: 'S', price: 328, pcs: 2 }
-            ];
+            return [{variety:'88er',size:'S',price:102,pcs:2},{variety:'150er',size:'S',price:208,pcs:2},{variety:'188er',size:'S',price:288,pcs:2},{variety:'200er',size:'S',price:308,pcs:2}];
+        } else {
+            return [{variety:'150er',size:'S',price:208,pcs:2},{variety:'188er',size:'S',price:288,pcs:2},{variety:'200er',size:'S',price:308,pcs:2},{variety:'208er',size:'S',price:328,pcs:2}];
         }
-        return [];
     }
 
-    // ============ COMBO ADD ============
-    document.getElementById('addComboBtn').addEventListener('click', function() {
-        var type = document.getElementById('comboType').value;
-        var name = customerName.value.trim() || 'Combo';
-        var country = customerCountry.value.trim();
-        var isMini = document.getElementById('miniCheckbox').checked;
-        
-        var comboItems = getComboItems(type);
-        var totalPrice = comboPrices[type];
-        var totalPcs = comboItems.length * 2; // 2 Stück pro Sorte
-        
-        if (isMini) {
-            totalPrice = totalPrice / 2;
-            totalPcs = totalPcs / 2;
-        }
-        
-        // In breadOrders speichern
-        var comboId = nextId++;
-        
-        // Jedes einzelne Brot als eigene Bestellung hinzufügen
-        comboItems.forEach(function(item) {
-            var pcs = isMini ? item.pcs / 2 : item.pcs;
-            var price = isMini ? item.price / 2 : item.price;
-            breadOrders.push({
-                id: nextId++,
-                name: name + ' (Combo)',
-                country: country,
-                breadType: item.variety,
-                size: 'S',
-                isMini: isMini,
-                hasCommission: document.getElementById('commissionCheckbox').checked,
-                week: currentWeek,
-                isAdd: false,
-                isAddBread: false,
-                isCombo: true,
-                comboType: type,
-                comboPrice: totalPrice
-            });
-        });
-        
-        // Combo zur Liste hinzufügen
-        combos.push({
-            id: comboId,
-            type: type,
-            name: name,
-            country: country,
-            isMini: isMini,
-            price: totalPrice,
-            items: comboItems.length
-        });
-        
-        render();
-        saveToLocal();
-        renderCombos();
-        document.getElementById('miniCheckbox').checked = false;
-    });
-
-    function renderCombos() {
-        var list = document.getElementById('comboList');
-        if (combos.length === 0) {
-            list.innerHTML = '<span style="color:#b88c48;">No combos added yet</span>';
-            return;
-        }
-        var html = '';
-        combos.forEach(function(c, index) {
-            var miniLabel = c.isMini ? ' 🥖Mini' : '';
-            var typeLabel = c.type === '88-200' ? '88-200' : '150-208';
-            html += '<span class="combo-item">' + 
-                c.name + ' ' + (c.country ? getCountryFlag(c.country) + ' ' : '') + 
-                '🧩 ' + typeLabel + miniLabel + 
-                ' <span class="price">¥' + c.price.toFixed(2) + '</span>' +
-                ' <span class="del" data-combo-index="' + index + '">✖</span>' +
-            '</span>';
-        });
-        list.innerHTML = html;
-        document.querySelectorAll('.combo-list .del').forEach(function(el) {
-            el.addEventListener('click', function() {
-                var idx = parseInt(this.dataset.comboIndex);
-                var combo = combos[idx];
-                // Alle zugehörigen Bestellungen löschen
-                breadOrders = breadOrders.filter(function(o) {
-                    return !(o.isCombo && o.comboType === combo.type && o.name === combo.name + ' (Combo)');
-                });
-                combos.splice(idx, 1);
-                render();
-                saveToLocal();
-                renderCombos();
-            });
-        });
-    }
-
-    // ============ WEEK CALCULATION ============
+    // ============ WEEK ============
     function calculateCurrentWeek() {
-        var startDate = new Date(2025, 11, 22);
+        var startDate = new Date(2025,11,22);
         var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        var diffTime = today.getTime() - startDate.getTime();
-        var diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        var weekNum = Math.floor(diffDays / 7) + 1;
-        if (weekNum < 1) weekNum = 1;
-        if (weekNum > 53) weekNum = 53;
+        today.setHours(0,0,0,0);
+        var diffDays = Math.floor((today.getTime()-startDate.getTime())/(1000*60*60*24));
+        var weekNum = Math.floor(diffDays/7)+1;
+        if (weekNum<1) weekNum=1;
+        if (weekNum>53) weekNum=53;
         return weekNum;
     }
 
-    // ============ PRICE DATABASE ============
+    // ============ PRICE DB ============
     var priceDB = {
-        "88er": {"S":102, "S+":(102/2)*3*0.875817, "M":190, "M+":190, "L":278, "XM":308, "XL":350, "XL+":350},
-        "150er": {"S":208, "S+":(208/2)*3*0.875817, "M":402, "M+":402, "L":596, "XM":658, "XL":766, "XL+":766},
-        "188er": {"S":288, "S+":(288/2)*3*0.875817, "M":588, "M+":588, "L":888, "XM":988, "XL":1138, "XL+":1138},
-        "200er": {"S":308, "S+":(308/2)*3*0.875817, "M":688, "M+":688, "L":968, "XM":1080, "XL":1288, "XL+":1288},
-        "208er": {"S":328, "S+":(328/2)*3*0.875817, "M":788, "M+":788, "L":1108, "XM":1288, "XL":1468, "XL+":1468}
+        "88er":{"S":102,"S+":(102/2)*3*0.875817,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},
+        "150er":{"S":208,"S+":(208/2)*3*0.875817,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},
+        "188er":{"S":288,"S+":(288/2)*3*0.875817,"M":588,"M+":588,"L":888,"XM":988,"XL":1138,"XL+":1138},
+        "200er":{"S":308,"S+":(308/2)*3*0.875817,"M":688,"M+":688,"L":968,"XM":1080,"XL":1288,"XL+":1288},
+        "208er":{"S":328,"S+":(328/2)*3*0.875817,"M":788,"M+":788,"L":1108,"XM":1288,"XL":1468,"XL+":1468}
     };
+    var sizeToPcs = {"S":2,"S+":3,"M":5,"M+":6,"L":8,"XM":9,"XL":11,"XL+":12};
 
-    var sizeToPcs = {"S":2, "S+":3, "M":5, "M+":6, "L":8, "XM":9, "XL":11, "XL+":12};
-
-    // ============ REZEPTE - 4 MISCHUNGEN ============
     var recipeFor13 = {
-        "88er": {mix88:745, mix138:0, mix150:0, mix188_200_208:0, water:360},
-        "150er": {mix88:650, mix138:97, mix150:0, mix188_200_208:0, water:360},
-        "188er": {mix88:630, mix138:97, mix150:15, mix188_200_208:0, water:360},
-        "200er": {mix88:620, mix138:97, mix150:15, mix188_200_208:13, water:360},
-        "208er": {mix88:620, mix138:97, mix150:15, mix188_200_208:13, water:360}
+        "88er":{mix88:745,mix138:0,mix150:0,mix188_200_208:0,water:360},
+        "150er":{mix88:650,mix138:97,mix150:0,mix188_200_208:0,water:360},
+        "188er":{mix88:630,mix138:97,mix150:15,mix188_200_208:0,water:360},
+        "200er":{mix88:620,mix138:97,mix150:15,mix188_200_208:13,water:360},
+        "208er":{mix88:620,mix138:97,mix150:15,mix188_200_208:13,water:360}
     };
 
     function getPerPcs(type) {
         var r = recipeFor13[type];
-        return {
-            mix88: r.mix88/13, 
-            mix138: r.mix138/13, 
-            mix150: r.mix150/13, 
-            mix188_200_208: r.mix188_200_208/13, 
-            water: r.water/13
-        };
+        return {mix88:r.mix88/13,mix138:r.mix138/13,mix150:r.mix150/13,mix188_200_208:r.mix188_200_208/13,water:r.water/13};
     }
 
     // ============ DISTANCES ============
     var realDistances = {
-        'qingpu': {'qingpu':0, 'jingan':32, 'huangpu':38, 'xuhui':35, 'pudong':45, 'changning':28, 'hongkou':40, 'yangpu':42, 'minhang':22, 'baoshan':50, 'jiading':30, 'songjiang':18, 'putuo':30, 'zhabei':35, 'luwan':36, 'unknown':30},
-        'jingan': {'qingpu':32, 'jingan':0, 'huangpu':5, 'xuhui':6, 'pudong':12, 'changning':4, 'hongkou':5, 'yangpu':8, 'minhang':15, 'baoshan':18, 'jiading':25, 'songjiang':28, 'putuo':5, 'zhabei':4, 'luwan':4, 'unknown':12},
-        'huangpu': {'qingpu':38, 'jingan':5, 'huangpu':0, 'xuhui':4, 'pudong':8, 'changning':6, 'hongkou':4, 'yangpu':7, 'minhang':16, 'baoshan':20, 'jiading':28, 'songjiang':30, 'putuo':6, 'zhabei':5, 'luwan':2, 'unknown':12},
-        'xuhui': {'qingpu':35, 'jingan':6, 'huangpu':4, 'xuhui':0, 'pudong':10, 'changning':5, 'hongkou':7, 'yangpu':9, 'minhang':12, 'baoshan':22, 'jiading':26, 'songjiang':22, 'putuo':6, 'zhabei':7, 'luwan':3, 'unknown':12},
-        'pudong': {'qingpu':45, 'jingan':12, 'huangpu':8, 'xuhui':10, 'pudong':0, 'changning':14, 'hongkou':10, 'yangpu':8, 'minhang':20, 'baoshan':25, 'jiading':32, 'songjiang':35, 'putuo':14, 'zhabei':12, 'luwan':9, 'unknown':16},
-        'changning': {'qingpu':28, 'jingan':4, 'huangpu':6, 'xuhui':5, 'pudong':14, 'changning':0, 'hongkou':6, 'yangpu':9, 'minhang':12, 'baoshan':20, 'jiading':22, 'songjiang':24, 'putuo':4, 'zhabei':5, 'luwan':5, 'unknown':12},
-        'hongkou': {'qingpu':40, 'jingan':5, 'huangpu':4, 'xuhui':7, 'pudong':10, 'changning':6, 'hongkou':0, 'yangpu':4, 'minhang':18, 'baoshan':15, 'jiading':26, 'songjiang':32, 'putuo':6, 'zhabei':3, 'luwan':4, 'unknown':12},
-        'yangpu': {'qingpu':42, 'jingan':8, 'huangpu':7, 'xuhui':9, 'pudong':8, 'changning':9, 'hongkou':4, 'yangpu':0, 'minhang':20, 'baoshan':12, 'jiading':28, 'songjiang':34, 'putuo':9, 'zhabei':6, 'luwan':8, 'unknown':14},
-        'minhang': {'qingpu':22, 'jingan':15, 'huangpu':16, 'xuhui':12, 'pudong':20, 'changning':12, 'hongkou':18, 'yangpu':20, 'minhang':0, 'baoshan':28, 'jiading':18, 'songjiang':12, 'putuo':14, 'zhabei':16, 'luwan':15, 'unknown':14},
-        'baoshan': {'qingpu':50, 'jingan':18, 'huangpu':20, 'xuhui':22, 'pudong':25, 'changning':20, 'hongkou':15, 'yangpu':12, 'minhang':28, 'baoshan':0, 'jiading':15, 'songjiang':38, 'putuo':18, 'zhabei':14, 'luwan':20, 'unknown':18},
-        'jiading': {'qingpu':30, 'jingan':25, 'huangpu':28, 'xuhui':26, 'pudong':32, 'changning':22, 'hongkou':26, 'yangpu':28, 'minhang':18, 'baoshan':15, 'jiading':0, 'songjiang':25, 'putuo':20, 'zhabei':22, 'luwan':27, 'unknown':20},
-        'songjiang': {'qingpu':18, 'jingan':28, 'huangpu':30, 'xuhui':22, 'pudong':35, 'changning':24, 'hongkou':32, 'yangpu':34, 'minhang':12, 'baoshan':38, 'jiading':25, 'songjiang':0, 'putuo':26, 'zhabei':30, 'luwan':28, 'unknown':22},
-        'putuo': {'qingpu':30, 'jingan':5, 'huangpu':6, 'xuhui':6, 'pudong':14, 'changning':4, 'hongkou':6, 'yangpu':9, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':26, 'putuo':0, 'zhabei':4, 'luwan':5, 'unknown':12},
-        'zhabei': {'qingpu':35, 'jingan':4, 'huangpu':5, 'xuhui':7, 'pudong':12, 'changning':5, 'hongkou':3, 'yangpu':6, 'minhang':16, 'baoshan':14, 'jiading':22, 'songjiang':30, 'putuo':4, 'zhabei':0, 'luwan':5, 'unknown':12},
-        'luwan': {'qingpu':36, 'jingan':4, 'huangpu':2, 'xuhui':3, 'pudong':9, 'changning':5, 'hongkou':4, 'yangpu':8, 'minhang':15, 'baoshan':20, 'jiading':27, 'songjiang':28, 'putuo':5, 'zhabei':5, 'luwan':0, 'unknown':12},
-        'unknown': {'qingpu':25, 'jingan':12, 'huangpu':12, 'xuhui':12, 'pudong':16, 'changning':12, 'hongkou':12, 'yangpu':14, 'minhang':14, 'baoshan':18, 'jiading':20, 'songjiang':22, 'putuo':12, 'zhabei':12, 'luwan':12, 'unknown':0}
+        'qingpu':{'qingpu':0,'jingan':32,'huangpu':38,'xuhui':35,'pudong':45,'changning':28,'hongkou':40,'yangpu':42,'minhang':22,'baoshan':50,'jiading':30,'songjiang':18,'putuo':30,'zhabei':35,'luwan':36,'unknown':30},
+        'jingan':{'qingpu':32,'jingan':0,'huangpu':5,'xuhui':6,'pudong':12,'changning':4,'hongkou':5,'yangpu':8,'minhang':15,'baoshan':18,'jiading':25,'songjiang':28,'putuo':5,'zhabei':4,'luwan':4,'unknown':12},
+        'huangpu':{'qingpu':38,'jingan':5,'huangpu':0,'xuhui':4,'pudong':8,'changning':6,'hongkou':4,'yangpu':7,'minhang':16,'baoshan':20,'jiading':28,'songjiang':30,'putuo':6,'zhabei':5,'luwan':2,'unknown':12},
+        'xuhui':{'qingpu':35,'jingan':6,'huangpu':4,'xuhui':0,'pudong':10,'changning':5,'hongkou':7,'yangpu':9,'minhang':12,'baoshan':22,'jiading':26,'songjiang':22,'putuo':6,'zhabei':7,'luwan':3,'unknown':12},
+        'pudong':{'qingpu':45,'jingan':12,'huangpu':8,'xuhui':10,'pudong':0,'changning':14,'hongkou':10,'yangpu':8,'minhang':20,'baoshan':25,'jiading':32,'songjiang':35,'putuo':14,'zhabei':12,'luwan':9,'unknown':16},
+        'changning':{'qingpu':28,'jingan':4,'huangpu':6,'xuhui':5,'pudong':14,'changning':0,'hongkou':6,'yangpu':9,'minhang':12,'baoshan':20,'jiading':22,'songjiang':24,'putuo':4,'zhabei':5,'luwan':5,'unknown':12},
+        'hongkou':{'qingpu':40,'jingan':5,'huangpu':4,'xuhui':7,'pudong':10,'changning':6,'hongkou':0,'yangpu':4,'minhang':18,'baoshan':15,'jiading':26,'songjiang':32,'putuo':6,'zhabei':3,'luwan':4,'unknown':12},
+        'yangpu':{'qingpu':42,'jingan':8,'huangpu':7,'xuhui':9,'pudong':8,'changning':9,'hongkou':4,'yangpu':0,'minhang':20,'baoshan':12,'jiading':28,'songjiang':34,'putuo':9,'zhabei':6,'luwan':8,'unknown':14},
+        'minhang':{'qingpu':22,'jingan':15,'huangpu':16,'xuhui':12,'pudong':20,'changning':12,'hongkou':18,'yangpu':20,'minhang':0,'baoshan':28,'jiading':18,'songjiang':12,'putuo':14,'zhabei':16,'luwan':15,'unknown':14},
+        'baoshan':{'qingpu':50,'jingan':18,'huangpu':20,'xuhui':22,'pudong':25,'changning':20,'hongkou':15,'yangpu':12,'minhang':28,'baoshan':0,'jiading':15,'songjiang':38,'putuo':18,'zhabei':14,'luwan':20,'unknown':18},
+        'jiading':{'qingpu':30,'jingan':25,'huangpu':28,'xuhui':26,'pudong':32,'changning':22,'hongkou':26,'yangpu':28,'minhang':18,'baoshan':15,'jiading':0,'songjiang':25,'putuo':20,'zhabei':22,'luwan':27,'unknown':20},
+        'songjiang':{'qingpu':18,'jingan':28,'huangpu':30,'xuhui':22,'pudong':35,'changning':24,'hongkou':32,'yangpu':34,'minhang':12,'baoshan':38,'jiading':25,'songjiang':0,'putuo':26,'zhabei':30,'luwan':28,'unknown':22},
+        'putuo':{'qingpu':30,'jingan':5,'huangpu':6,'xuhui':6,'pudong':14,'changning':4,'hongkou':6,'yangpu':9,'minhang':14,'baoshan':18,'jiading':20,'songjiang':26,'putuo':0,'zhabei':4,'luwan':5,'unknown':12},
+        'zhabei':{'qingpu':35,'jingan':4,'huangpu':5,'xuhui':7,'pudong':12,'changning':5,'hongkou':3,'yangpu':6,'minhang':16,'baoshan':14,'jiading':22,'songjiang':30,'putuo':4,'zhabei':0,'luwan':5,'unknown':12},
+        'luwan':{'qingpu':36,'jingan':4,'huangpu':2,'xuhui':3,'pudong':9,'changning':5,'hongkou':4,'yangpu':8,'minhang':15,'baoshan':20,'jiading':27,'songjiang':28,'putuo':5,'zhabei':5,'luwan':0,'unknown':12},
+        'unknown':{'qingpu':25,'jingan':12,'huangpu':12,'xuhui':12,'pudong':16,'changning':12,'hongkou':12,'yangpu':14,'minhang':14,'baoshan':18,'jiading':20,'songjiang':22,'putuo':12,'zhabei':12,'luwan':12,'unknown':0}
     };
 
     function getDistance(addr1, addr2) {
         if (!addr1 || !addr2) return 12;
         var bez1 = getBezirk(addr1);
         var bez2 = getBezirk(addr2);
-        if (realDistances[bez1] && realDistances[bez1][bez2] !== undefined) {
-            return realDistances[bez1][bez2];
-        }
+        if (realDistances[bez1] && realDistances[bez1][bez2] !== undefined) return realDistances[bez1][bez2];
         return 12;
     }
 
@@ -768,6 +628,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var calculatedRestFooter = $("calculatedRestFooter"), perPcsRow = $("perPcsRow");
     var resetTableBtn = $("resetTableBtn"), saveHistoryBtn = $("saveHistoryBtn");
     var wechatCopyBtn = $("wechatCopyBtn"), wechatImageBtn = $("wechatImageBtn"), wechatStatus = $("wechatStatus");
+    var screenshotBtn = $("screenshotBtn"), screenshotStatus = $("screenshotStatus");
+    var screenshotBtn2 = $("screenshotBtn2");
+    var pdfBtn = $("pdfBtn"), copyTextBtn = $("copyTextBtn");
+    var emailExportBtn = $("emailExportBtn"), jsonExportBtn = $("jsonExportBtn"), csvExportBtn = $("csvExportBtn");
 
     // ============ COPY SALARY ============
     window.copySalary = function() {
@@ -840,10 +704,208 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function updateWeekDisplay() { currentWeek = calculateCurrentWeek(); weekNumber.value = currentWeek; weekBadge.textContent = 'Week ' + currentWeek; }
     updateWeekDisplay();
 
+    // ============ COMBO: SIZE DEAKTIVIEREN ============
+    breadType.addEventListener('change', function() {
+        var val = this.value;
+        if (val === 'combo-88-200' || val === 'combo-150-208') {
+            breadSize.disabled = true;
+            breadSize.style.opacity = '0.5';
+            breadSize.value = 'S';
+            hummusType.value = 'none';
+            hummusType.disabled = true;
+            hummusType.style.opacity = '0.5';
+            hummusSize.disabled = true;
+            hummusSize.style.opacity = '0.5';
+            yingYangInfo.classList.remove('show');
+            yingYangWarning.style.display = 'none';
+        } else {
+            breadSize.disabled = false;
+            breadSize.style.opacity = '1';
+            hummusType.disabled = false;
+            hummusType.style.opacity = '1';
+            hummusSize.disabled = false;
+            hummusSize.style.opacity = '1';
+            autoSelectHummus();
+        }
+    });
+
+    // ============ SCREENSHOT ============
+    function takeScreenshot(btn, statusEl) {
+        var element = document.getElementById('captureArea');
+        var status = statusEl || screenshotStatus;
+        var button = btn || screenshotBtn;
+        var originalText = button.textContent;
+        
+        status.className = 'show';
+        status.textContent = '⏳ Generating...';
+        button.textContent = '⏳ Loading...';
+        button.style.opacity = '0.7';
+        
+        setTimeout(function() {
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#f7f1dd',
+                logging: false,
+                width: element.scrollWidth,
+                height: element.scrollHeight,
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight,
+                onclone: function(doc) {
+                    var el = doc.getElementById('captureArea');
+                    if (el) {
+                        el.style.transform = 'none';
+                        el.style.overflow = 'visible';
+                        el.style.maxWidth = '100%';
+                    }
+                }
+            }).then(function(canvas) {
+                try {
+                    var link = document.createElement('a');
+                    link.download = 'microbiome_week_' + currentWeek + '.png';
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    status.textContent = '✅ Downloaded! Week ' + currentWeek;
+                    status.className = 'show success';
+                    button.textContent = '✅ Done!';
+                    button.style.opacity = '1';
+                    setTimeout(function() {
+                        status.className = '';
+                        status.textContent = '';
+                        button.textContent = originalText;
+                        button.style.opacity = '1';
+                    }, 4000);
+                } catch(e) {
+                    status.textContent = '❌ Error saving';
+                    status.className = 'show error';
+                    button.textContent = '❌ Error';
+                    button.style.opacity = '1';
+                    setTimeout(function() {
+                        status.className = '';
+                        status.textContent = '';
+                        button.textContent = originalText;
+                        button.style.opacity = '1';
+                    }, 4000);
+                }
+            }).catch(function(error) {
+                console.error('Screenshot error:', error);
+                status.textContent = '❌ Error: ' + (error.message || 'unknown');
+                status.className = 'show error';
+                button.textContent = '❌ Error';
+                button.style.opacity = '1';
+                setTimeout(function() {
+                    status.className = '';
+                    status.textContent = '';
+                    button.textContent = originalText;
+                    button.style.opacity = '1';
+                }, 4000);
+            });
+        }, 500);
+    }
+
+    screenshotBtn.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
+    screenshotBtn2.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
+
+    // ============ PDF ============
+    pdfBtn.addEventListener('click', function() { window.print(); });
+
+    // ============ COPY TEXT ============
+    copyTextBtn.addEventListener('click', function() {
+        var text = generateExportText();
+        var btn = this;
+        var originalText = btn.textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#27ae60';
+                setTimeout(function() { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+                alert('✅ Copied to clipboard!');
+            }).catch(function() { fallbackCopyText(text, btn, originalText); });
+        } else { fallbackCopyText(text, btn, originalText); }
+    });
+
+    function fallbackCopyText(text, btn, originalText) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            btn.textContent = '✅ Copied!';
+            btn.style.background = '#27ae60';
+            setTimeout(function() { btn.textContent = originalText; btn.style.background = ''; }, 2000);
+            alert('✅ Copied to clipboard!');
+        } catch(e) { alert('❌ Could not copy. Please copy manually:\n\n' + text.substring(0, 300) + '...'); }
+        document.body.removeChild(textarea);
+    }
+
+    // ============ EMAIL ============
+    emailExportBtn.addEventListener('click', function() {
+        var subject = 'Microbiome Warrior - Week ' + currentWeek;
+        var body = generateExportText();
+        window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    });
+
+    // ============ JSON ============
+    jsonExportBtn.addEventListener('click', function() {
+        var data = {
+            week: currentWeek,
+            date: new Date().toISOString(),
+            orders: breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; }),
+            combos: combos,
+            totalRevenue: totalPriceAll(),
+            salary: salaryAmount.textContent,
+            preparation: getTotalRequirements()
+        };
+        var json = JSON.stringify(data, null, 2);
+        var blob = new Blob([json], {type: 'application/json'});
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'microbiome_week_' + currentWeek + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
+    // ============ CSV ============
+    csvExportBtn.addEventListener('click', function() {
+        var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
+        if (orders.length === 0 && combos.length === 0) { alert('No orders to export'); return; }
+        var lines = ['Name,Country,Variety,Size,Mini,pcs,Price'];
+        orders.forEach(function(o) {
+            var pcs = getPcsForOrder(o);
+            var price = getPriceForOrder(o);
+            lines.push([o.name,o.country||'',o.breadType,o.size,o.isMini?'Yes':'No',pcs,price.toFixed(2)].join(','));
+        });
+        combos.forEach(function(c) {
+            var typeLabel = c.type === '88-200' ? '88-200' : '150-208';
+            var mini = c.isMini ? 'Yes' : 'No';
+            lines.push([c.name + ' (Combo)',c.country||'',typeLabel,'Combo',mini,'8',c.price.toFixed(2)].join(','));
+        });
+        lines.push('TOTAL,,, , ,' + totalPriceAll().toFixed(2));
+        lines.push('SALARY,,, , ,' + salaryAmount.textContent);
+        var csv = lines.join('\n');
+        var blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'microbiome_week_' + currentWeek + '.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
     // ============ HUMMUS AUTO ============
     function getHummusSizeForBreadSize(bs) { if (bs === 'S+') return 'S'; return bs; }
     function autoSelectHummus() {
         var val = breadType.value, sizeVal = breadSize.value;
+        if (val.indexOf('combo') !== -1) { hummusType.value = 'none'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; return; }
         if (sizeVal === 'M+' || sizeVal === 'XL+') { hummusType.value = 'none'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; return; }
         hummusSize.value = getHummusSizeForBreadSize(sizeVal);
         if (val === '88er' || val === '150er') { hummusType.value = 'hummus'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; }
@@ -968,10 +1030,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return 'unknown';
     }
 
-    // ============ KORREKT: Add Bread = 1 Stück, Mini = 0.5 ============
+    // ============ KORREKT: Combo = 8 Stück, Mini Combo = 4 Stück ============
     function getPcsForOrder(order) {
         if (order.isAdd || order.isAddBread) {
             return order.isMini ? 0.5 : 1;
+        }
+        if (order.isCombo) {
+            // Combo: 4 Sorten × 2 Stück = 8 Stück
+            // Mini Combo: 4 Sorten × 1 Stück = 4 Stück
+            return order.isMini ? 4 : 8;
         }
         var base = sizeToPcs[order.size] || 0;
         return order.isMini ? base / 2 : base;
@@ -982,7 +1049,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             return 0;
         }
         if (order.isCombo) {
-            return order.comboPrice / 4; // Preis pro Einzelitem
+            return order.comboPrice || 0;
         }
         var basePrice = priceDB[order.breadType]?.[order.size] || 0;
         return order.isMini ? basePrice / 2 : basePrice;
@@ -994,7 +1061,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         breadOrders.forEach(function(o) {
             if (o.isAdd || o.isAddBread) return;
             if (o.isCombo) {
-                // Nur einmal pro Combo zählen
                 var key = o.comboType + '|' + o.name;
                 if (!comboSet.has(key)) {
                     comboSet.add(key);
@@ -1007,22 +1073,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return sum;
     }
 
-    function totalHummusCount() {
-        return hummusOrders.length;
-    }
+    function totalHummusCount() { return hummusOrders.length; }
 
+    // ============ KORREKT: Combo in Preparation ============
     function getTotalPcsPerType() {
-        var totals = {"88er":0, "150er":0, "188er":0, "200er":0, "208er":0};
+        var totals = {"88er":0,"150er":0,"188er":0,"200er":0,"208er":0};
         breadOrders.forEach(function(o) {
-            var pcs = getPcsForOrder(o);
             if (o.isCombo) {
-                // Combo: jedes Item 2 Stück (oder 1 bei Mini)
                 var comboItems = getComboItems(o.comboType);
                 comboItems.forEach(function(item) {
                     var p = o.isMini ? 1 : 2;
                     totals[item.variety] += p;
                 });
             } else {
+                var pcs = getPcsForOrder(o);
                 totals[o.breadType] += pcs;
             }
         });
@@ -1031,7 +1095,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     function getTotalRequirements() {
         var pcs = getTotalPcsPerType();
-        var total88 = 0, total138 = 0, total150 = 0, total188_200_208 = 0, totalWater = 0;
+        var total88=0,total138=0,total150=0,total188_200_208=0,totalWater=0;
         for (var type in pcs) {
             var p = pcs[type];
             if (p === 0) continue;
@@ -1042,7 +1106,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             total188_200_208 += per.mix188_200_208 * p;
             totalWater += per.water * p;
         }
-        return {mix88: total88, mix138: total138, mix150: total150, mix188_200_208: total188_200_208, water: totalWater};
+        return {mix88:total88,mix138:total138,mix150:total150,mix188_200_208:total188_200_208,water:totalWater};
     }
 
     function getTimesPcsBreakdown() {
@@ -1086,7 +1150,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             if (comboData) { var parsed = JSON.parse(comboData); if (parsed.combos) combos = parsed.combos; }
         } catch(e) {}
         render();
-        renderCombos();
     }
 
     // ============ SALARY ============
@@ -1122,8 +1185,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             summary[variety].totalPcs += getPcsForOrder(order);
             if (order.isMini) { summary[variety].miniCount += 1; }
         });
-        var varietyOrder = ['88er', '150er', '188er', '200er', '208er'];
-        var sortedKeys = Object.keys(summary).sort(function(a, b) { return varietyOrder.indexOf(a) - varietyOrder.indexOf(b); });
+        var varietyOrder = ['88er','150er','188er','200er','208er'];
+        var sortedKeys = Object.keys(summary).sort(function(a,b) { return varietyOrder.indexOf(a) - varietyOrder.indexOf(b); });
         breadSummaryBody.innerHTML = '';
         sortedKeys.forEach(function(key) {
             var item = summary[key];
@@ -1224,7 +1287,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var itemA = summary[a], itemB = summary[b];
                 if (itemA.type === 'yingyang' && itemB.type !== 'yingyang') return -1;
                 if (itemA.type !== 'yingyang' && itemB.type === 'yingyang') return 1;
-                var sizeOrderArr = {'S':0, 'M':1, 'L':2, 'XM':3, 'XL':4};
+                var sizeOrderArr = {'S':0,'M':1,'L':2,'XM':3,'XL':4};
                 return sizeOrderArr[itemA.size] - sizeOrderArr[itemB.size];
             });
             hummusSummaryBody.innerHTML = '';
@@ -1299,7 +1362,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             routeCompareInfo.textContent = '';
             return;
         }
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
         if (normalOrders.length === 0 && pickupList.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
             autoRouteList.innerHTML = 'No orders or pickups';
@@ -1329,8 +1392,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         normalOrders.forEach(function(order) {
             var addr = addressBook[order.name] || '', hasAddr = addr && addr.trim();
             var statusIcon = hasAddr ? '✅' : '⚠️', statusText = hasAddr ? '📍 ' + addr : 'no address';
-            var miniLabel = order.isMini ? ' 🥖Mini' : '', countryLabel = order.country ? ' ' + order.country : '';
-            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;"><span>' + escapeHtml(order.name) + countryLabel + ' (' + order.breadType + ' ' + order.size + miniLabel + ')</span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
+            var miniLabel = order.isMini ? ' 🥖Mini' : '';
+            var countryLabel = order.country ? ' ' + order.country : '';
+            var comboLabel = order.isCombo ? ' 🧩' : '';
+            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;"><span>' + escapeHtml(order.name) + countryLabel + comboLabel + ' (' + order.breadType + ' ' + order.size + miniLabel + ')</span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
         });
         autoRouteList.innerHTML = listHtml;
         if (allCustomers.length === 0) {
@@ -1422,7 +1487,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var miniInfo = hasAnyMini ? ' 🥖 (includes Mini)' : '';
         preparationRow.innerHTML = '<tr><td>88er Base Mix' + miniInfo + '</td><td>' + needed88.toFixed(1) + ' g</td><td>' + boxes + ' Boxes</td></tr>';
         var perPcsHtml = '';
-        var types = ['88er', '150er', '188er', '200er', '208er'];
+        var types = ['88er','150er','188er','200er','208er'];
         types.forEach(function(type) {
             var per = getPerPcs(type);
             var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
@@ -1474,8 +1539,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         calculatedRestTable.innerHTML = restHtml;
     }
 
-    // ============ GENERATE WECHAT TEXT ============
-    function generateWeChatText() {
+    // ============ GENERATE EXPORT TEXT ============
+    function generateExportText() {
         var lines = [];
         var now = new Date();
         lines.push('🧬 MICROBIOME WARRIOR');
@@ -1492,7 +1557,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         } else {
             lines.push('📋 ORDERS:');
             var index = 1;
-            // Normale Bestellungen
             normalOrders.forEach(function(o) {
                 var country = o.country || '';
                 var flag = getCountryFlag(country);
@@ -1503,8 +1567,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 lines.push('   ' + o.breadType + ' ' + o.size + mini + ' → ' + pcs + ' pcs  ¥' + price.toFixed(2));
                 index++;
             });
-            
-            // Combo Bestellungen
             comboOrders.forEach(function(o) {
                 var key = o.comboType + '|' + o.name;
                 if (!comboSet.has(key)) {
@@ -1515,16 +1577,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     var price = o.comboPrice || 0;
                     var typeLabel = o.comboType === '88-200' ? '88-200' : '150-208';
                     lines.push(index + '. ' + o.name + ' ' + flag + ' ' + country + ' 🧩 ' + typeLabel + mini);
-                    lines.push('   Combo → 8 pcs  ¥' + price.toFixed(2));
+                    lines.push('   Combo → ' + (o.isMini ? 4 : 8) + ' pcs  ¥' + price.toFixed(2));
                     index++;
                 }
             });
-            
             lines.push('');
             lines.push('💰 TOTAL: ¥' + totalPriceAll().toFixed(2));
             lines.push('');
-            
-            // PREPARATION
             var req = getTotalRequirements();
             var breakdown = getTimesPcsBreakdown();
             lines.push('📦 PREPARATION:');
@@ -1542,6 +1601,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     lines.push('🔢 ' + b.type + ': ' + b.restPcs + ' pcs rest');
                 }
             });
+            lines.push('');
+            lines.push('💰 SALARY: ¥' + salaryAmount.textContent);
         }
         lines.push('────────────────────────────');
         lines.push('🌾 ' + now.toLocaleString('zh-CN'));
@@ -1550,11 +1611,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     // ============ WECHAT COPY ============
     wechatCopyBtn.addEventListener("click", function() {
-        var text = generateWeChatText();
+        var text = generateExportText();
         var btn = this;
         var originalText = btn.textContent;
         var status = wechatStatus;
-        
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() {
                 status.className = 'wechat-status show success';
@@ -1567,12 +1627,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     btn.textContent = originalText;
                     btn.style.background = '';
                 }, 3000);
-            }).catch(function() {
-                fallbackWeChatCopy(text, btn, originalText, status);
-            });
-        } else {
-            fallbackWeChatCopy(text, btn, originalText, status);
-        }
+            }).catch(function() { fallbackWeChatCopy(text, btn, originalText, status); });
+        } else { fallbackWeChatCopy(text, btn, originalText, status); }
     });
 
     function fallbackWeChatCopy(text, btn, originalText, status) {
@@ -1620,12 +1676,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         btn.disabled = true;
         status.className = 'wechat-status show';
         status.textContent = '⏳ Generating image...';
-        
-        var text = generateWeChatText();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text);
-        }
-        
+        var text = generateExportText();
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text); }
         var element = document.getElementById('captureArea');
         html2canvas(element, {
             scale: 1.5,
@@ -1638,10 +1690,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             windowHeight: element.scrollHeight,
             onclone: function(doc) {
                 var el = doc.getElementById('captureArea');
-                if (el) {
-                    el.style.transform = 'none';
-                    el.style.overflow = 'visible';
-                }
+                if (el) { el.style.transform = 'none'; el.style.overflow = 'visible'; }
             }
         }).then(function(canvas) {
             try {
@@ -1651,7 +1700,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
                 status.className = 'wechat-status show success';
                 status.textContent = '✅ Text copied! Image downloaded!';
                 btn.textContent = '✅ Done!';
@@ -1713,15 +1761,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var commClass = order.hasCommission ? 'active' : 'inactive';
                 var commLabel = order.hasCommission ? '13.5%' : '15%';
                 if (order.isAdd || order.isAddBread || order.isCombo) { commClass = 'inactive'; commLabel = '—'; }
-                
                 var varietyDisplay = order.isCombo ? order.comboType : order.breadType;
                 var priceDisplay = order.isCombo ? (order.comboPrice || 0).toFixed(2) : price.toFixed(2);
-                
                 row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + isAddLabel + isComboLabel + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + varietyDisplay + '</td><td>' + sizeDisplay + miniTag + noHummusTag + '</td><td>' + pcs + '</td><td>' + priceDisplay + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
                 breadTableBody.appendChild(row);
             });
         }
-        
         var normalHummus = hummusOrders.filter(function(o) { return !o.isAddHummus; });
         if (normalHummus.length === 0) { hummusTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No hummus orders 🫒</td></tr>'; }
         else {
@@ -1736,19 +1781,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 hummusTableBody.appendChild(row);
             });
         }
-        
         document.querySelectorAll('.comm-toggle').forEach(function(el) {
             el.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); toggleCommission(id); });
         });
-        
         document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
-            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); deleteBreadAndHummus(id); render(); saveToLocal(); updateRoute(); renderCombos(); });
+            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); deleteBreadAndHummus(id); render(); saveToLocal(); updateRoute(); });
         });
-        
         document.querySelectorAll('.delete-btn[data-type="hummus"]').forEach(function(btn) {
             btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); hummusOrders = hummusOrders.filter(function(o) { return o.id !== id; }); render(); saveToLocal(); updateRoute(); });
         });
-        
         var total = totalPriceAll();
         totalSpan.innerText = total.toFixed(2) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
@@ -1758,7 +1799,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         renderPreparation();
         renderAddOrders();
         updateRoute();
-        renderCombos();
     }
 
     // ============ RESET FORM ============
@@ -1768,6 +1808,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         countryFlagDisplay.textContent = '';
         miniCheckbox.checked = false; 
         commissionCheckbox.checked = false; 
+        breadSize.disabled = false;
+        breadSize.style.opacity = '1';
+        hummusType.disabled = false;
+        hummusType.style.opacity = '1';
+        hummusSize.disabled = false;
+        hummusSize.style.opacity = '1';
         autoSelectHummus(); 
         customerName.focus(); 
     }
@@ -1777,9 +1823,42 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
         var country = customerCountry.value.trim();
-        var breadVal = breadType.value, sizeVal = breadSize.value;
-        var isMini = miniCheckbox.checked, hummusVal = hummusType.value, hummusSizeVal = hummusSize.value;
+        var breadVal = breadType.value;
+        var sizeVal = breadSize.value;
+        var isMini = miniCheckbox.checked;
+        var hummusVal = hummusType.value;
+        var hummusSizeVal = hummusSize.value;
         var hasCommission = commissionCheckbox.checked;
+        
+        // COMBO ERKENNUNG
+        if (breadVal === 'combo-88-200' || breadVal === 'combo-150-208') {
+            var comboType = breadVal === 'combo-88-200' ? '88-200' : '150-208';
+            var totalPrice = comboPrices[comboType];
+            if (isMini) { totalPrice = totalPrice / 2; }
+            var comboItems = getComboItems(comboType);
+            var comboId = nextId++;
+            comboItems.forEach(function(item) {
+                breadOrders.push({
+                    id: nextId++,
+                    name: name + ' (Combo)',
+                    country: country,
+                    breadType: item.variety,
+                    size: 'S',
+                    isMini: isMini,
+                    hasCommission: hasCommission,
+                    week: currentWeek,
+                    isAdd: false,
+                    isAddBread: false,
+                    isCombo: true,
+                    comboType: comboType,
+                    comboPrice: totalPrice
+                });
+            });
+            combos.push({ id: comboId, type: comboType, name: name, country: country, isMini: isMini, price: totalPrice, items: comboItems.length });
+            render(); saveToLocal(); resetForm(); return;
+        }
+        
+        // NORMALE BESTELLUNG
         if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); return; }
         if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') { alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!'); return; }
         updateWeekDisplay();
@@ -1833,7 +1912,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     resetTableBtn.addEventListener("click", function() {
         if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length || pickupList.length || combos.length) && confirm("Delete all orders and pickups?")) {
             breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = []; combos = [];
-            render(); saveToLocal(); savePickups(); nextId = 1; updateRoute(); renderCombos();
+            render(); saveToLocal(); savePickups(); nextId = 1; updateRoute();
         } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length && !pickupList.length && !combos.length) { alert("No orders or pickups"); }
     });
 
@@ -1869,13 +1948,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     startTrafficSimulation();
     updateRoute();
     appleMapsBtn.disabled = true;
-    renderCombos();
 
     console.log("✅ Microbiome Warrior started!");
     console.log("🌍 Country input with auto-flag detection");
     console.log("🧩 COMBO Packs: 88-200 (¥682) and 150-208 (¥890)");
-    console.log("💬 WeChat Export: Copy + Image");
-    console.log("📊 4 Mixes: 88er, 138er, 150er, 188/200/208er");
+    console.log("📊 Combo = 8 pcs (4×2), Mini Combo = 4 pcs");
+    console.log("📸 Screenshot fixed!");
+    console.log("📄 PDF, 📋 Text, 📧 Email, 💾 JSON, 📊 CSV, 💬 WeChat");
 })();
 </script>
 </body>
