@@ -72,7 +72,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .table-title{font-size:0.8rem;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:6px}
 .table-title.bread-title{color:#b87a2a}
 .table-title.hummus-title{color:#6d8a30}
-.yingyang-available{background:#f5edd8;border-radius:16px;padding:4px 12px;font-size:0.65rem;color:#8a6a2a;display:none;margin-top:4px;border:1px solid #d4a843}
+.yingyang-available{background:#f5edd8;border-radius:16px;padding:4px 12px;font-size:0.65rem;color:#8a6a2a;display:block;margin-top:4px;border:1px solid #d4a843}
 .yingyang-available.show{display:block}
 .header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .header-left{display:flex;align-items:center;gap:8px}
@@ -276,11 +276,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="hummus-section">
 <div style="font-size:0.8rem;font-weight:800;color:#6d8a30;margin-bottom:4px;">🫒 HUMMUS (free)</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-<div><label>Type</label><select id="hummusType"><option value="none">❌ No Hummus</option><option value="hummus">🫒 Hummus</option><option value="yingyang">☯️ Ying & Yang</option></select></div>
-<div><label>Size</label><select id="hummusSize"><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XM">XM</option><option value="XL">XL</option></select></div>
+<div><label>Type</label>
+    <select id="hummusType">
+        <option value="none">❌ No Hummus</option>
+        <option value="hummus">🫒 Hummus</option>
+        <option value="yingyang">☯️ Ying & Yang</option>
+    </select>
 </div>
-<div id="yingYangInfo" class="yingyang-available">✅ ☯️ Ying & Yang available for 188er, 200er & 208er</div>
-<div id="yingYangWarning" style="font-size:0.6rem;color:#c0392b;margin-top:4px;padding:4px 12px;background:#fde8e8;border-radius:16px;display:none;">⚠️ Ying & Yang only available for 188er, 200er & 208er!</div>
+<div><label>Size</label>
+    <select id="hummusSize">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XM">XM</option>
+        <option value="XL">XL</option>
+    </select>
+</div>
+</div>
+<div id="yingYangInfo" class="yingyang-available">✅ ☯️ Ying & Yang available for ALL varieties!</div>
 </div>
 
 <button id="addBtn">➕ Add Order</button>
@@ -595,7 +608,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var customerName = $("customerName"), customerCountry = $("customerCountry");
     var breadType = $("breadType"), breadSize = $("breadSize"), miniCheckbox = $("miniCheckbox");
     var hummusType = $("hummusType"), hummusSize = $("hummusSize");
-    var yingYangInfo = $("yingYangInfo"), yingYangWarning = $("yingYangWarning");
+    var yingYangInfo = $("yingYangInfo");
     var breadTableBody = $("breadTableBody"), breadSummaryBody = $("breadSummaryBody");
     var addBreadSummaryBody = $("addBreadSummaryBody"), hummusSummaryBody = $("hummusSummaryBody");
     var hummusTableBody = $("hummusTableBody"), totalSpan = $("totalPriceSum"), hummusCountSpan = $("hummusCount");
@@ -717,7 +730,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             hummusSize.disabled = true;
             hummusSize.style.opacity = '0.5';
             yingYangInfo.classList.remove('show');
-            yingYangWarning.style.display = 'none';
         } else {
             breadSize.disabled = false;
             breadSize.style.opacity = '1';
@@ -901,31 +913,52 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         URL.revokeObjectURL(url);
     });
 
-    // ============ HUMMUS AUTO ============
+    // ============ HUMMUS AUTO - MIT VORSORTIERUNG ============
     function getHummusSizeForBreadSize(bs) { if (bs === 'S+') return 'S'; return bs; }
     function autoSelectHummus() {
         var val = breadType.value, sizeVal = breadSize.value;
-        if (val.indexOf('combo') !== -1) { hummusType.value = 'none'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; return; }
-        if (sizeVal === 'M+' || sizeVal === 'XL+') { hummusType.value = 'none'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; return; }
+        if (val.indexOf('combo') !== -1) { 
+            hummusType.value = 'none'; 
+            yingYangInfo.classList.remove('show'); 
+            return; 
+        }
+        if (sizeVal === 'M+' || sizeVal === 'XL+') { 
+            hummusType.value = 'none'; 
+            yingYangInfo.classList.remove('show'); 
+            return; 
+        }
         hummusSize.value = getHummusSizeForBreadSize(sizeVal);
-        if (val === '88er' || val === '150er') { hummusType.value = 'hummus'; yingYangInfo.classList.remove('show'); yingYangWarning.style.display = 'none'; }
-        else if (val === '188er' || val === '200er' || val === '208er') { hummusType.value = 'yingyang'; yingYangInfo.classList.add('show'); yingYangWarning.style.display = 'none'; }
+        
+        // VORSORTIERUNG: 
+        // 88er und 150er → Hummus (normal)
+        // 188er, 200er, 208er → Ying & Yang
+        if (val === '88er' || val === '150er') {
+            hummusType.value = 'hummus';
+        } else if (val === '188er' || val === '200er' || val === '208er') {
+            hummusType.value = 'yingyang';
+            yingYangInfo.classList.add('show');
+        } else {
+            hummusType.value = 'none';
+        }
     }
     breadType.addEventListener('change', autoSelectHummus);
     breadSize.addEventListener('change', autoSelectHummus);
     autoSelectHummus();
+    
+    // Benutzer kann manuell ändern, aber Ying & Yang bleibt für alle verfügbar
     hummusType.addEventListener('change', function() {
         var sizeVal = breadSize.value;
-        if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); this.value = 'none'; return; }
+        if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') { 
+            alert('❌ ' + sizeVal + ' comes without hummus as standard!'); 
+            this.value = 'none'; 
+            return; 
+        }
+        // Ying & Yang für alle erlaubt!
         if (this.value === 'yingyang') {
-            var val = breadType.value;
-            if (val !== '188er' && val !== '200er' && val !== '208er') {
-                yingYangWarning.style.display = 'block';
-                alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!');
-                this.value = 'hummus';
-                yingYangWarning.style.display = 'none';
-            } else { yingYangWarning.style.display = 'none'; }
-        } else { yingYangWarning.style.display = 'none'; }
+            yingYangInfo.classList.add('show');
+        } else {
+            yingYangInfo.classList.remove('show');
+        }
     });
 
     // ============ ADDRESS BOOK ============
@@ -1036,8 +1069,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             return order.isMini ? 0.5 : 1;
         }
         if (order.isCombo) {
-            // Combo: 4 Sorten × 2 Stück = 8 Stück
-            // Mini Combo: 4 Sorten × 1 Stück = 4 Stück
             return order.isMini ? 4 : 8;
         }
         var base = sizeToPcs[order.size] || 0;
@@ -1075,7 +1106,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     function totalHummusCount() { return hummusOrders.length; }
 
-    // ============ KORREKT: Combo in Preparation ============
     function getTotalPcsPerType() {
         var totals = {"88er":0,"150er":0,"188er":0,"200er":0,"208er":0};
         breadOrders.forEach(function(o) {
@@ -1860,7 +1890,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         // NORMALE BESTELLUNG
         if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); return; }
-        if (hummusVal === 'yingyang' && breadVal !== '188er' && breadVal !== '200er' && breadVal !== '208er') { alert('☯️ Ying & Yang is only available for 188er, 200er and 208er!'); return; }
+        // Ying & Yang für ALLE Sorten erlaubt!
         updateWeekDisplay();
         breadOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: sizeVal, isMini: isMini, hasCommission: hasCommission, week: currentWeek, isAdd: false, isAddBread: false, isCombo: false });
         if (hummusVal !== 'none') { hummusOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: hummusSizeVal, hummusType: hummusVal, week: currentWeek, isAdd: false, isAddHummus: false }); }
@@ -1951,6 +1981,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     console.log("✅ Microbiome Warrior started!");
     console.log("🌍 Country input with auto-flag detection");
+    console.log("☯️ Ying & Yang available for ALL varieties!");
+    console.log("📌 Hummus auto-sorted: 88er/150er → Hummus, 188er/200er/208er → Ying & Yang");
     console.log("🧩 COMBO Packs: 88-200 (¥682) and 150-208 (¥890)");
     console.log("📊 Combo = 8 pcs (4×2), Mini Combo = 4 pcs");
     console.log("📸 Screenshot fixed!");
