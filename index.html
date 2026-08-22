@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-/* === ALLES CSS === */
+/* === ALLES CSS (kompakt) === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -48,9 +48,6 @@ button:active{transform:scale(0.97)}
 .btn-csv-export:active{transform:scale(0.95)}
 .btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
 .btn-screenshot:active{transform:scale(0.95)}
-.btn-locate{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
-.btn-locate:active{transform:scale(0.95)}
-.btn-locate.locating{background:linear-gradient(135deg,#f39c12,#e67e22)}
 .export-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .export-buttons button{flex:1;min-width:70px;padding:8px 10px;font-size:0.55rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
 .export-buttons button:active{transform:scale(0.95)}
@@ -150,9 +147,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .route-input-group input{width:100%;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem}
 .route-input-group input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
 .route-start-row{display:flex;gap:6px;align-items:center}
-.route-start-row input{flex:1;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;margin:0}
+.route-start-row input{flex:1;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;margin:0;background:#f0f5eb}
 .route-start-row input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
-.route-start-row .btn-locate{width:auto;padding:8px 12px;margin:0;font-size:0.65rem;border-radius:16px;white-space:nowrap}
+.route-start-row .btn-locate{width:auto;padding:8px 12px;margin:0;font-size:0.65rem;border-radius:16px;white-space:nowrap;background:linear-gradient(135deg,#27ae60,#1e8449);color:white;border:none;cursor:pointer;transition:all 0.2s}
+.route-start-row .btn-locate:active{transform:scale(0.95)}
+.route-start-row .btn-locate.locating{background:linear-gradient(135deg,#f39c12,#e67e22)}
 .route-result{margin-top:10px}
 .route-apple-btn{width:100%;padding:14px;margin-top:8px;border-radius:20px;border:none;font-weight:700;font-size:0.8rem;background:linear-gradient(135deg,#007aff,#0055cc);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,122,255,0.3)}
 .route-apple-btn:active{transform:scale(0.97)}
@@ -222,7 +221,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .history-summary .stat{display:flex;align-items:center;gap:3px}
 .history-summary .stat .val{font-weight:700;color:#27ae60}
 .history-summary .stat .val.pickup{color:#e74c3c}
-@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export,.btn-locate{display:none}}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
 </style>
 </head>
 <body>
@@ -450,10 +449,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 </div>
 
 <div class="route-input-group">
-<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">📍 Your Current Location / Home Address</label>
+<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">📍 Current Location <span style="color:#27ae60;font-weight:700;">(auto-updates)</span></label>
 <div class="route-start-row">
-    <input id="routeStart" placeholder="e.g. 中国上海市青浦区湖畔佳苑391号" value="中国上海市青浦区湖畔佳苑391号">
-    <button class="btn-locate" id="locateBtn">📍 Locate Me</button>
+    <input id="routeStart" placeholder="Getting location..." value="📍 Loading location..." readonly style="background:#f0f5eb;">
+    <button class="btn-locate" id="locateBtn">📍 Update</button>
 </div>
 <div id="locationStatus" class="location-status"></div>
 </div>
@@ -580,7 +579,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return {mix88:r.mix88/13,mix138:r.mix138/13,mix150:r.mix150/13,mix188_200_208:r.mix188_200_208/13,water:r.water/13};
     }
 
-    // ============ DISTANCES ============
+    // ============ DISTANCEN ============
     var realDistances = {
         'qingpu':{'qingpu':0,'jingan':32,'huangpu':38,'xuhui':35,'pudong':45,'changning':28,'hongkou':40,'yangpu':42,'minhang':22,'baoshan':50,'jiading':30,'songjiang':18,'putuo':30,'zhabei':35,'luwan':36,'unknown':30},
         'jingan':{'qingpu':32,'jingan':0,'huangpu':5,'xuhui':6,'pudong':12,'changning':4,'hongkou':5,'yangpu':8,'minhang':15,'baoshan':18,'jiading':25,'songjiang':28,'putuo':5,'zhabei':4,'luwan':4,'unknown':12},
@@ -615,6 +614,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var weekHistory = {};
     var trafficSimulationInterval = null;
     var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 1 };
+    var currentLocation = null;
+    var watchId = null;
+    var locationInitialized = false;
 
     // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
@@ -1374,37 +1376,46 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         if (routeNoDist) { var span = routeNoDist.querySelector('span:last-child'); if (span) { span.textContent = '🚦 ' + currentTraffic.label; span.style.color = currentTraffic.color; } }
     }
 
-    // ============ LOCATION FUNKTION ============
-    function getCurrentLocation() {
+    // ============ LOCATION - AUTOMATISCH & AKTUALISIEREND ============
+    function startLocationWatch() {
         var status = locationStatus;
         var btn = locateBtn;
         
         if (!navigator.geolocation) {
+            routeStart.value = '⚠️ Geolocation not supported';
             status.className = 'location-status show error';
-            status.textContent = '❌ Geolocation not supported by this browser.';
-            btn.textContent = '📍 Locate Me';
-            btn.className = 'btn-locate';
+            status.textContent = '❌ Geolocation not supported by this browser. Please enter address manually.';
+            btn.textContent = '❌ Unsupported';
+            btn.disabled = true;
             return;
         }
         
-        btn.textContent = '⏳ Locating...';
-        btn.className = 'btn-locate locating';
         status.className = 'location-status show';
         status.textContent = '⏳ Getting your location...';
+        routeStart.value = '⏳ Locating...';
+        btn.textContent = '⏳ Locating...';
+        btn.className = 'btn-locate locating';
         
-        navigator.geolocation.getCurrentPosition(
+        // WATCH POSITION - AUTOMATISCHE AKTUALISIERUNG
+        if (watchId !== null) {
+            navigator.geolocation.clearWatch(watchId);
+        }
+        
+        watchId = navigator.geolocation.watchPosition(
             function(position) {
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
                 var accuracy = position.coords.accuracy;
                 
                 var locationStr = lat + ',' + lng;
+                currentLocation = locationStr;
                 routeStart.value = locationStr;
                 
                 status.className = 'location-status show success';
-                status.textContent = '✅ Location found! (accuracy: ' + Math.round(accuracy) + 'm)';
-                btn.textContent = '📍 Located!';
+                status.textContent = '📍 ' + lat.toFixed(6) + ', ' + lng.toFixed(6) + ' (accuracy: ' + Math.round(accuracy) + 'm)';
+                btn.textContent = '📍 Updated';
                 btn.className = 'btn-locate';
+                locationInitialized = true;
                 
                 updateRoute();
             },
@@ -1413,7 +1424,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 switch(error.code) {
                     case error.PERMISSION_DENIED: msg = 'Permission denied. Please allow location access.';
                         break;
-                    case error.POSITION_UNAVAILABLE: msg = 'Location unavailable.';
+                    case error.POSITION_UNAVAILABLE: msg = 'Location unavailable. Using default.';
                         break;
                     case error.TIMEOUT: msg = 'Location request timed out.';
                         break;
@@ -1421,20 +1432,27 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 }
                 status.className = 'location-status show error';
                 status.textContent = '❌ ' + msg;
-                btn.textContent = '📍 Try Again';
+                btn.textContent = '📍 Retry';
                 btn.className = 'btn-locate';
-                routeStart.value = 'Bitte Adresse eingeben...';
+                if (!locationInitialized) {
+                    routeStart.value = '中国上海市青浦区湖畔佳苑391号';
+                    updateRoute();
+                }
             },
             {
                 enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
+                timeout: 15000,
+                maximumAge: 30000 // 30 Sekunden Cache
             }
         );
     }
 
     locateBtn.addEventListener('click', function() {
-        getCurrentLocation();
+        if (watchId !== null) {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+        }
+        startLocationWatch();
     });
 
     // ============ ROUTE OPTIMIZATION - NEAREST NEIGHBOR ============
@@ -1450,7 +1468,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var route = [];
         var current = { address: startAddr };
         
-        // NEAREST NEIGHBOR ALGORITHM - IMMER ZUM NÄCHSTEN KUNDEN
+        // NEAREST NEIGHBOR ALGORITHM
         while (unvisited.length > 0) {
             var nearest = null;
             var nearestDist = Infinity;
@@ -1477,7 +1495,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function updateRoute() {
         var start = routeStart.value.trim();
         if (!start) {
-            routeResult.innerHTML = '<div class="route-empty">⚠️ Please enter your location or click "Locate Me".</div>';
+            routeResult.innerHTML = '<div class="route-empty">⚠️ Waiting for location...</div>';
             autoRouteList.innerHTML = 'No start address set';
             appleMapsBtn.disabled = true;
             routeOptimizedInfo.textContent = '🧠 Waiting for location...';
@@ -2101,7 +2119,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     loadPickups();
     loadHistory();
     startTrafficSimulation();
-    updateRoute();
+    
+    // START LOCATION AUTOMATISCH
+    startLocationWatch();
+    
     appleMapsBtn.disabled = true;
 
     console.log("✅ Microbiome Warrior started!");
@@ -2109,7 +2130,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("☯️ Ying & Yang available for ALL varieties!");
     console.log("📌 Hummus auto-sorted: 88er/150er → Hummus, 188er/200er/208er → Ying & Yang");
     console.log("🧩 COMBO Packs: 88-200 (¥682) and 150-208 (¥890)");
-    console.log("📍 GPS location support - click 'Locate Me'");
+    console.log("📍 GPS location is AUTO-UPDATING every 30 seconds!");
     console.log("🧠 NEAREST NEIGHBOR ROUTE: Always goes to closest customer first!");
     console.log("📊 Combo = 8 pcs (4×2), Mini Combo = 4 pcs");
     console.log("📸 Screenshot fixed!");
