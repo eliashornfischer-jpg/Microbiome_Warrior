@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
+/* === ALLES CSS (wie zuvor) === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -47,6 +48,9 @@ button:active{transform:scale(0.97)}
 .btn-csv-export:active{transform:scale(0.95)}
 .btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
 .btn-screenshot:active{transform:scale(0.95)}
+.btn-locate{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+.btn-locate:active{transform:scale(0.95)}
+.btn-locate.locating{background:linear-gradient(135deg,#f39c12,#e67e22)}
 .export-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .export-buttons button{flex:1;min-width:70px;padding:8px 10px;font-size:0.55rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
 .export-buttons button:active{transform:scale(0.95)}
@@ -145,6 +149,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .route-input-group{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
 .route-input-group input{width:100%;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem}
 .route-input-group input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
+.route-start-row{display:flex;gap:6px;align-items:center}
+.route-start-row input{flex:1;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;margin:0}
+.route-start-row input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
+.route-start-row .btn-locate{width:auto;padding:8px 12px;margin:0;font-size:0.65rem;border-radius:16px;white-space:nowrap}
 .route-result{margin-top:10px}
 .route-apple-btn{width:100%;padding:14px;margin-top:8px;border-radius:20px;border:none;font-weight:700;font-size:0.8rem;background:linear-gradient(135deg,#007aff,#0055cc);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,122,255,0.3)}
 .route-apple-btn:active{transform:scale(0.97)}
@@ -174,6 +182,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .optimized-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.45rem;font-weight:700;margin-left:4px}
 .route-optimized{background:rgba(39,174,96,0.08);border-radius:10px;padding:4px 10px;margin-top:4px;font-size:0.55rem;color:#27ae60;text-align:center;border:1px solid rgba(39,174,96,0.15)}
 .route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2)}
+.location-status{font-size:0.55rem;padding:4px 8px;border-radius:12px;display:none;text-align:center;margin-top:4px}
+.location-status.show{display:block}
+.location-status.success{background:#d5f5e3;color:#27ae60}
+.location-status.error{background:#fadbd8;color:#e74c3c}
 .mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block}
 .mini-label{font-size:0.75rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:8px;padding:4px 8px;background:rgba(255,255,255,0.4);border-radius:16px;border:1px solid #e0d0a0;cursor:pointer}
 .mini-label input[type="checkbox"]{width:18px;height:18px;margin:0;flex-shrink:0;cursor:pointer}
@@ -210,7 +222,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .history-summary .stat{display:flex;align-items:center;gap:3px}
 .history-summary .stat .val{font-weight:700;color:#27ae60}
 .history-summary .stat .val.pickup{color:#e74c3c}
-@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export,.btn-locate{display:none}}
 </style>
 </head>
 <body>
@@ -438,11 +450,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 </div>
 
 <div class="route-input-group">
-<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">🏠 Your Start Address (Home)</label>
-<div class="route-start-container">
-    <input id="routeStart" placeholder="e.g. 中国上海市青浦区湖畔佳苑391号" value="中国上海市青浦区湖畔佳苑391号">
-    <span class="start-badge">🏠 home</span>
+<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">📍 Your Current Location</label>
+<div class="route-start-row">
+    <input id="routeStart" placeholder="e.g. 中国上海市青浦区湖畔佳苑391号" value="正在获取位置...">
+    <button class="btn-locate" id="locateBtn">📍 Locate Me</button>
 </div>
+<div id="locationStatus" class="location-status"></div>
 </div>
 
 <div style="margin-top:8px;background:rgba(46,204,113,0.06);border-radius:12px;padding:8px;border:1px solid #d4c090;">
@@ -602,6 +615,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var weekHistory = {};
     var trafficSimulationInterval = null;
     var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 1 };
+    var currentLocation = null;
+    var watchId = null;
 
     // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
@@ -645,6 +660,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var screenshotBtn2 = $("screenshotBtn2");
     var pdfBtn = $("pdfBtn"), copyTextBtn = $("copyTextBtn");
     var emailExportBtn = $("emailExportBtn"), jsonExportBtn = $("jsonExportBtn"), csvExportBtn = $("csvExportBtn");
+    var locateBtn = $("locateBtn"), locationStatus = $("locationStatus");
 
     // ============ COPY SALARY ============
     window.copySalary = function() {
@@ -929,9 +945,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
         hummusSize.value = getHummusSizeForBreadSize(sizeVal);
         
-        // VORSORTIERUNG: 
-        // 88er und 150er → Hummus (normal)
-        // 188er, 200er, 208er → Ying & Yang
         if (val === '88er' || val === '150er') {
             hummusType.value = 'hummus';
         } else if (val === '188er' || val === '200er' || val === '208er') {
@@ -945,7 +958,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     breadSize.addEventListener('change', autoSelectHummus);
     autoSelectHummus();
     
-    // Benutzer kann manuell ändern, aber Ying & Yang bleibt für alle verfügbar
     hummusType.addEventListener('change', function() {
         var sizeVal = breadSize.value;
         if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') { 
@@ -953,7 +965,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             this.value = 'none'; 
             return; 
         }
-        // Ying & Yang für alle erlaubt!
         if (this.value === 'yingyang') {
             yingYangInfo.classList.add('show');
         } else {
@@ -1365,6 +1376,70 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         if (routeNoDist) { var span = routeNoDist.querySelector('span:last-child'); if (span) { span.textContent = '🚦 ' + currentTraffic.label; span.style.color = currentTraffic.color; } }
     }
 
+    // ============ LOCATION FUNKTION ============
+    function getCurrentLocation() {
+        var status = locationStatus;
+        var btn = locateBtn;
+        
+        if (!navigator.geolocation) {
+            status.className = 'location-status show error';
+            status.textContent = '❌ Geolocation not supported by this browser.';
+            btn.textContent = '📍 Locate Me';
+            btn.className = 'btn-locate';
+            return;
+        }
+        
+        btn.textContent = '⏳ Locating...';
+        btn.className = 'btn-locate locating';
+        status.className = 'location-status show';
+        status.textContent = '⏳ Getting your location...';
+        
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+                
+                var locationStr = lat + ',' + lng;
+                currentLocation = locationStr;
+                routeStart.value = locationStr;
+                
+                status.className = 'location-status show success';
+                status.textContent = '✅ Location found! (accuracy: ' + Math.round(accuracy) + 'm)';
+                btn.textContent = '📍 Located!';
+                btn.className = 'btn-locate';
+                
+                updateRoute();
+            },
+            function(error) {
+                var msg = '';
+                switch(error.code) {
+                    case error.PERMISSION_DENIED: msg = 'Permission denied. Please allow location access.';
+                        break;
+                    case error.POSITION_UNAVAILABLE: msg = 'Location unavailable.';
+                        break;
+                    case error.TIMEOUT: msg = 'Location request timed out.';
+                        break;
+                    default: msg = 'Unknown error.';
+                }
+                status.className = 'location-status show error';
+                status.textContent = '❌ ' + msg;
+                btn.textContent = '📍 Try Again';
+                btn.className = 'btn-locate';
+                routeStart.value = '请输入地址...';
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
+    }
+
+    locateBtn.addEventListener('click', function() {
+        getCurrentLocation();
+    });
+
     // ============ ROUTE OPTIMIZATION ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
@@ -1385,14 +1460,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function updateRoute() {
         var start = routeStart.value.trim();
         if (!start) {
-            routeResult.innerHTML = '<div class="route-empty">⚠️ Please enter your home address.</div>';
+            routeResult.innerHTML = '<div class="route-empty">⚠️ Please enter your location or click "Locate Me".</div>';
             autoRouteList.innerHTML = 'No start address set';
             appleMapsBtn.disabled = true;
-            routeOptimizedInfo.textContent = '🧠 Waiting for home address...';
+            routeOptimizedInfo.textContent = '🧠 Waiting for location...';
             routeCompareInfo.textContent = '';
             return;
         }
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
+        
+        // Koordinaten prüfen
+        if (start.indexOf(',') > -1 && !isNaN(parseFloat(start.split(',')[0])) && !isNaN(parseFloat(start.split(',')[1]))) {
+            // Koordinaten werden als String gespeichert
+        }
+        
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
         if (normalOrders.length === 0 && pickupList.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
             autoRouteList.innerHTML = 'No orders or pickups';
@@ -1449,7 +1530,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var timeStr = hours > 0 ? hours + 'h ' + minutes + 'min' : minutes + ' min';
         var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
         routeDeliveries.push(start);
-        var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">🏠 Start & End: ' + escapeHtml(start) + '</div>';
+        var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
         html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Optimized Round Trip (' + (optimizedRoute.length - 1) + ' stops)</div>';
         optimizedRoute.forEach(function(c, index) {
             var isReturn = c.isReturn || false, isPickup = c.isPickup || false, isMini = c.order ? c.order.isMini : false;
@@ -1860,7 +1941,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var hummusSizeVal = hummusSize.value;
         var hasCommission = commissionCheckbox.checked;
         
-        // COMBO ERKENNUNG
         if (breadVal === 'combo-88-200' || breadVal === 'combo-150-208') {
             var comboType = breadVal === 'combo-88-200' ? '88-200' : '150-208';
             var totalPrice = comboPrices[comboType];
@@ -1888,9 +1968,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             render(); saveToLocal(); resetForm(); return;
         }
         
-        // NORMALE BESTELLUNG
         if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); return; }
-        // Ying & Yang für ALLE Sorten erlaubt!
         updateWeekDisplay();
         breadOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: sizeVal, isMini: isMini, hasCommission: hasCommission, week: currentWeek, isAdd: false, isAddBread: false, isCombo: false });
         if (hummusVal !== 'none') { hummusOrders.push({ id: nextId++, name: name, country: country, breadType: breadVal, size: hummusSizeVal, hummusType: hummusVal, week: currentWeek, isAdd: false, isAddHummus: false }); }
@@ -1984,6 +2062,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("☯️ Ying & Yang available for ALL varieties!");
     console.log("📌 Hummus auto-sorted: 88er/150er → Hummus, 188er/200er/208er → Ying & Yang");
     console.log("🧩 COMBO Packs: 88-200 (¥682) and 150-208 (¥890)");
+    console.log("📍 GPS location support - click 'Locate Me'");
     console.log("📊 Combo = 8 pcs (4×2), Mini Combo = 4 pcs");
     console.log("📸 Screenshot fixed!");
     console.log("📄 PDF, 📋 Text, 📧 Email, 💾 JSON, 📊 CSV, 💬 WeChat");
