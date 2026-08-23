@@ -1079,7 +1079,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ HELPERS ============
     function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
 
-    // ============ KORREKT: Combo = 8 Stück, Mini Combo = 4 Stück ============
+    // ============ KORREKT: Mini = halbe Stückzahl ============
     function getPcsForOrder(order) {
         if (order.isAdd || order.isAddBread) {
             return order.isMini ? 0.5 : 1;
@@ -1091,7 +1091,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return order.isMini ? base / 2 : base;
     }
 
-    // ============ KORREKT: Preis pro Kunde ============
+    // ============ KORREKT: Preis pro Bestellung (wird später zusammengefasst) ============
     function getPriceForOrder(order) {
         if (order.isAdd || order.isAddBread) {
             return 0;
@@ -1103,27 +1103,27 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return order.isMini ? basePrice / 2 : basePrice;
     }
 
-    // ============ NEU: Gesamtpreis pro Kunde (zusammengefasst) ============
-    function getCustomerTotal(name) {
+    // ============ KORREKT: Gesamtpreis pro Kunde (zusammengefasst) ============
+    function getCustomerPrice(name) {
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
         });
         
+        if (orders.length === 0) return 0;
+        if (orders[0].isCombo) {
+            return orders[0].comboPrice || 0;
+        }
+        
+        // Gesamtstückzahl berechnen
         var totalPcs = 0;
         orders.forEach(function(o) {
             totalPcs += getPcsForOrder(o);
         });
         
-        if (orders.length === 0) return 0;
-        if (orders[0].isCombo) {
-            // Combo Preis ist schon gespeichert
-            return orders[0].comboPrice || 0;
-        }
-        
         var variety = orders[0].breadType;
         var isMini = orders[0].isMini || false;
         
-        // Regel: 4-6 Stück = M Preis, 7-9 Stück = L Preis, 10-12 Stück = XL Preis
+        // Größe basierend auf Gesamtstückzahl
         var size = 'S';
         if (totalPcs >= 4 && totalPcs <= 6) {
             size = 'M';
@@ -1135,11 +1135,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             size = 'XL+';
         }
         
-        // Wenn Mini, dann halber Preis
         var price = priceDB[variety]?.[size] || 0;
         return isMini ? price / 2 : price;
     }
 
+    // ============ KORREKT: Gesamtpreis aller Kunden ============
     function totalPriceAll() {
         var sum = 0;
         var customers = {};
@@ -1169,7 +1169,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var variety = data.variety;
             var isMini = data.isMini;
             
-            // Bestimme Größe basierend auf Gesamtstückzahl
             var size = 'S';
             if (totalPcs >= 4 && totalPcs <= 6) {
                 size = 'M';
@@ -1187,6 +1186,42 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
         
         return sum;
+    }
+
+    // ============ Funktion für Anzeige in Tabelle ============
+    function getCustomerDisplay(name) {
+        var orders = breadOrders.filter(function(o) { 
+            return !o.isAdd && !o.isAddBread && o.name === name; 
+        });
+        
+        if (orders.length === 0) return { price: 0, size: 'S', totalPcs: 0 };
+        if (orders[0].isCombo) {
+            return { price: orders[0].comboPrice || 0, size: 'Combo', totalPcs: 8 };
+        }
+        
+        var totalPcs = 0;
+        orders.forEach(function(o) {
+            totalPcs += getPcsForOrder(o);
+        });
+        
+        var variety = orders[0].breadType;
+        var isMini = orders[0].isMini || false;
+        
+        var size = 'S';
+        if (totalPcs >= 4 && totalPcs <= 6) {
+            size = 'M';
+        } else if (totalPcs >= 7 && totalPcs <= 9) {
+            size = 'L';
+        } else if (totalPcs >= 10 && totalPcs <= 12) {
+            size = 'XL';
+        } else if (totalPcs >= 13) {
+            size = 'XL+';
+        }
+        
+        var price = priceDB[variety]?.[size] || 0;
+        if (isMini) price = price / 2;
+        
+        return { price: price, size: size, totalPcs: totalPcs, variety: variety, isMini: isMini };
     }
 
     function totalHummusCount() { return hummusOrders.length; }
@@ -1268,7 +1303,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ SALARY ============
     function updateSalaryDisplay() {
         var totalWithComm = 0, totalWithoutComm = 0;
-        // Verwende die neue Preisberechnung pro Kunde
         var customers = {};
         breadOrders.forEach(function(o) {
             if (o.isAdd || o.isAddBread || o.isCombo) return;
@@ -1482,19 +1516,19 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         if (routeNoDist) { var span = routeNoDist.querySelector('span:last-child'); if (span) { span.textContent = '🚦 ' + currentTraffic.label; span.style.color = currentTraffic.color; } }
     }
 
-    // ============ LOCATION - AUTOMATISCH & AKTUALISIEREND ============
+    // ============ LOCATION ============
     function startLocationWatch() {
         var status = locationStatus;
         
         if (!navigator.geolocation) {
             routeStart.value = '⚠️ Geolocation not supported';
             status.className = 'location-status show error';
-            status.textContent = '❌ Geolocation not supported by this browser.';
+            status.textContent = '❌ Geolocation not supported.';
             return;
         }
         
         status.className = 'location-status show';
-        status.textContent = '⏳ Getting your location...';
+        status.textContent = '⏳ Getting location...';
         routeStart.value = '⏳ Locating...';
         
         if (watchId !== null) {
@@ -1512,7 +1546,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 routeStart.value = locationStr;
                 
                 status.className = 'location-status show success';
-                status.textContent = '📍 ' + lat.toFixed(6) + ', ' + lng.toFixed(6) + ' (accuracy: ' + Math.round(accuracy) + 'm)';
+                status.textContent = '📍 ' + lat.toFixed(6) + ', ' + lng.toFixed(6) + ' (±' + Math.round(accuracy) + 'm)';
                 locationInitialized = true;
                 
                 updateRoute();
@@ -1520,11 +1554,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             function(error) {
                 var msg = '';
                 switch(error.code) {
-                    case error.PERMISSION_DENIED: msg = 'Permission denied. Please allow location access.';
+                    case error.PERMISSION_DENIED: msg = 'Permission denied.';
                         break;
                     case error.POSITION_UNAVAILABLE: msg = 'Location unavailable.';
                         break;
-                    case error.TIMEOUT: msg = 'Location request timed out.';
+                    case error.TIMEOUT: msg = 'Request timed out.';
                         break;
                     default: msg = 'Unknown error.';
                 }
@@ -1543,12 +1577,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         );
     }
 
-    // ============ ROUTE OPTIMIZATION - NEAREST NEIGHBOR ============
+    // ============ ROUTE OPTIMIZATION ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
         if (customers.length === 1) { 
             var result = customers.slice(); 
-            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME (Huqingping 1517)' }); 
+            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' }); 
             return result; 
         }
         
@@ -1575,7 +1609,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         }
         
-        route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME (Huqingping 1517)' });
+        route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' });
         return route;
     }
 
@@ -1611,7 +1645,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         });
         
-        // Nur eindeutige Kunden für die Route (nicht jede Bestellung einzeln)
         var uniqueCustomers = {};
         normalOrders.forEach(function(order) {
             var addr = addressBook[order.name] || '';
@@ -1834,18 +1867,36 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         if (normalOrders.length === 0 && comboOrders.length === 0) {
             lines.push('❌ No orders yet');
         } else {
-            lines.push('📋 ORDERS:');
+            lines.push('📋 ORDERS (Grouped by Customer):');
             var index = 1;
+            
+            // Kunden gruppieren für Export
+            var customerGroups = {};
             normalOrders.forEach(function(o) {
-                var country = o.country || '';
-                var flag = getCountryFlag(country);
-                var mini = o.isMini ? ' Mini' : '';
-                var pcs = getPcsForOrder(o);
-                var price = getPriceForOrder(o);
-                lines.push(index + '. ' + o.name + ' ' + flag + ' ' + country);
-                lines.push('   ' + o.breadType + ' ' + o.size + mini + ' → ' + pcs + ' pcs  ¥' + price.toFixed(2));
-                index++;
+                if (!customerGroups[o.name]) {
+                    customerGroups[o.name] = [];
+                }
+                customerGroups[o.name].push(o);
             });
+            
+            for (var name in customerGroups) {
+                var orders = customerGroups[name];
+                var totalPcs = 0;
+                var varieties = [];
+                orders.forEach(function(o) {
+                    totalPcs += getPcsForOrder(o);
+                    varieties.push(o.breadType + ' ' + o.size);
+                });
+                var display = getCustomerDisplay(name);
+                var flag = getCountryFlag(orders[0].country || '');
+                var country = orders[0].country || '';
+                var miniLabel = orders[0].isMini ? ' Mini' : '';
+                lines.push(index + '. ' + name + ' ' + flag + ' ' + country);
+                lines.push('   ' + varieties.join(' + ') + ' → ' + totalPcs + ' pcs' + miniLabel);
+                lines.push('   ➜ Price: ' + display.size + ' (¥' + display.price.toFixed(2) + ')');
+                index++;
+            }
+            
             comboOrders.forEach(function(o) {
                 var key = o.comboType + '|' + o.name;
                 if (!comboSet.has(key)) {
@@ -1860,6 +1911,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     index++;
                 }
             });
+            
             lines.push('');
             lines.push('💰 TOTAL: ¥' + totalPriceAll().toFixed(2));
             lines.push('');
@@ -2025,50 +2077,101 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             breadTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center">No bread orders 🥖</td></tr>';
         } else {
             breadTableBody.innerHTML = '';
-            allBreadOrders.forEach(function(order, index) {
-                var row = document.createElement('tr');
-                var sizeDisplay = order.isMini ? order.size + ' (Mini)' : order.size;
-                var price = getPriceForOrder(order);
-                var pcs = getPcsForOrder(order);
-                var nameDisplay = order.name || '—';
-                var countryDisplay = order.country || '—';
+            var customerGroups = {};
+            var normalOrders = allBreadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
+            var comboOrders = allBreadOrders.filter(function(o) { return o.isCombo; });
+            
+            // Normale Bestellungen nach Kunde gruppieren
+            normalOrders.forEach(function(o) {
+                if (!customerGroups[o.name]) {
+                    customerGroups[o.name] = [];
+                }
+                customerGroups[o.name].push(o);
+            });
+            
+            var displayIndex = 1;
+            
+            // Jeden Kunden als eine Zeile anzeigen
+            for (var name in customerGroups) {
+                var orders = customerGroups[name];
+                var totalPcs = 0;
+                var variety = orders[0].breadType;
+                var isMini = orders[0].isMini || false;
+                var countryDisplay = orders[0].country || '—';
                 var flag = getCountryFlag(countryDisplay);
-                var isAddLabel = (order.isAdd || order.isAddBread) ? ' ⚡' : '';
-                var isComboLabel = order.isCombo ? ' 🧩' : '';
-                var noHummusTag = (order.size === 'XL+' || order.size === 'M+') ? ' <span class="no-hummus-tag">no hummus</span>' : '';
-                var miniTag = order.isMini ? ' <span class="mini-tag">🥖 Mini</span>' : '';
-                var commClass = order.hasCommission ? 'active' : 'inactive';
-                var commLabel = order.hasCommission ? '13.5%' : '15%';
-                if (order.isAdd || order.isAddBread || order.isCombo) { commClass = 'inactive'; commLabel = '—'; }
-                var varietyDisplay = order.isCombo ? order.comboType : order.breadType;
-                var priceDisplay = order.isCombo ? (order.comboPrice || 0).toFixed(2) : price.toFixed(2);
-                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + isAddLabel + isComboLabel + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + varietyDisplay + '</td><td>' + sizeDisplay + miniTag + noHummusTag + '</td><td>' + pcs + '</td><td>' + priceDisplay + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + order.id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="bread">✖</button></td>';
+                var hasCommission = orders[0].hasCommission || false;
+                
+                orders.forEach(function(o) {
+                    totalPcs += getPcsForOrder(o);
+                });
+                
+                var display = getCustomerDisplay(name);
+                var sizeDisplay = display.size;
+                var priceDisplay = display.price.toFixed(2);
+                var commClass = hasCommission ? 'active' : 'inactive';
+                var commLabel = hasCommission ? '13.5%' : '15%';
+                var miniTag = isMini ? ' <span class="mini-tag">🥖 Mini</span>' : '';
+                
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>#' + displayIndex + '</td><td style="text-align:left">' + escapeHtml(name) + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + variety + '</td><td>' + sizeDisplay + miniTag + '</td><td>' + totalPcs + '</td><td>' + priceDisplay + ' ¥</td><td><span class="comm-toggle ' + commClass + '" data-id="' + orders[0].id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td><td><button class="delete-btn" data-name="' + escapeHtml(name) + '" data-type="customer">✖</button></td>';
                 breadTableBody.appendChild(row);
+                displayIndex++;
+            }
+            
+            // Combo Bestellungen
+            var comboSet = new Set();
+            comboOrders.forEach(function(o) {
+                var key = o.comboType + '|' + o.name;
+                if (!comboSet.has(key)) {
+                    comboSet.add(key);
+                    var countryDisplay = o.country || '—';
+                    var flag = getCountryFlag(countryDisplay);
+                    var miniTag = o.isMini ? ' <span class="mini-tag">🥖 Mini</span>' : '';
+                    var priceDisplay = (o.comboPrice || 0).toFixed(2);
+                    var row = document.createElement('tr');
+                    row.innerHTML = '<td>#' + displayIndex + '</td><td style="text-align:left">' + escapeHtml(o.name) + ' 🧩</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + o.comboType + '</td><td>Combo' + miniTag + '</td><td>' + (o.isMini ? 4 : 8) + '</td><td>' + priceDisplay + ' ¥</td><td><span class="comm-toggle inactive"><span class="toggle-dot"></span><span class="toggle-label">—</span></span></td><td><button class="delete-btn" data-name="' + escapeHtml(o.name) + '" data-type="combo" data-combo-type="' + o.comboType + '">✖</button></td>';
+                    breadTableBody.appendChild(row);
+                    displayIndex++;
+                }
             });
         }
-        var normalHummus = hummusOrders.filter(function(o) { return !o.isAddHummus; });
-        if (normalHummus.length === 0) { hummusTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No hummus orders 🫒</td></tr>'; }
-        else {
-            hummusTableBody.innerHTML = '';
-            normalHummus.forEach(function(order, index) {
-                var row = document.createElement('tr');
-                var hummusLabel = order.hummusType === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
-                var hummusClass = order.hummusType === 'yingyang' ? 'yingyang-tag' : 'hummus-tag';
-                var nameDisplay = order.name, countryDisplay = order.country || '—';
-                var flag = getCountryFlag(countryDisplay);
-                row.innerHTML = '<td>#' + (index + 1) + '</td><td style="text-align:left">' + escapeHtml(nameDisplay) + '</td><td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td><td>' + order.breadType + '</td><td>' + order.size + '</td><td><span class="' + hummusClass + '">' + hummusLabel + '</span></td><td><button class="delete-btn" data-id="' + order.id + '" data-type="hummus">✖</button></td>';
-                hummusTableBody.appendChild(row);
+        
+        document.querySelectorAll('.delete-btn[data-type="customer"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var name = this.dataset.name;
+                if (confirm('Delete all orders for ' + name + '?')) {
+                    breadOrders = breadOrders.filter(function(o) { return o.name !== name || o.isAdd || o.isAddBread; });
+                    hummusOrders = hummusOrders.filter(function(o) { return o.name !== name; });
+                    render();
+                    saveToLocal();
+                    updateRoute();
+                }
             });
-        }
+        });
+        
+        document.querySelectorAll('.delete-btn[data-type="combo"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var name = this.dataset.name;
+                var comboType = this.dataset.comboType;
+                if (confirm('Delete combo for ' + name + '?')) {
+                    breadOrders = breadOrders.filter(function(o) { return !(o.isCombo && o.name === name && o.comboType === comboType); });
+                    combos = combos.filter(function(c) { return !(c.name === name && c.type === comboType); });
+                    render();
+                    saveToLocal();
+                    updateRoute();
+                }
+            });
+        });
+        
         document.querySelectorAll('.comm-toggle').forEach(function(el) {
-            el.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); toggleCommission(id); });
+            el.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                if (id) {
+                    toggleCommission(id);
+                }
+            });
         });
-        document.querySelectorAll('.delete-btn[data-type="bread"]').forEach(function(btn) {
-            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); deleteBreadAndHummus(id); render(); saveToLocal(); updateRoute(); });
-        });
-        document.querySelectorAll('.delete-btn[data-type="hummus"]').forEach(function(btn) {
-            btn.addEventListener('click', function() { var id = parseInt(this.getAttribute('data-id')); hummusOrders = hummusOrders.filter(function(o) { return o.id !== id; }); render(); saveToLocal(); updateRoute(); });
-        });
+        
         var total = totalPriceAll();
         totalSpan.innerText = total.toFixed(2) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
@@ -2118,7 +2221,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             comboItems.forEach(function(item) {
                 breadOrders.push({
                     id: nextId++,
-                    name: name + ' (Combo)',
+                    name: name,
                     country: country,
                     breadType: item.variety,
                     size: 'S',
@@ -2228,8 +2331,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("✅ Microbiome Warrior started!");
     console.log("📍 Start: Your current location (auto-detected)");
     console.log("🏁 End: Huqingping Highway 1517");
-    console.log("🧠 NEAREST NEIGHBOR ROUTE: Always goes to closest customer first!");
     console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
+    console.log("📊 Customers with multiple orders are grouped together!");
 })();
 </script>
 </body>
