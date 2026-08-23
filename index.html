@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
+/* === ALLES CSS === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -1090,6 +1091,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return order.isMini ? base / 2 : base;
     }
 
+    // ============ KORREKT: Preis pro Kunde ============
     function getPriceForOrder(order) {
         if (order.isAdd || order.isAddBread) {
             return 0;
@@ -1101,9 +1103,48 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return order.isMini ? basePrice / 2 : basePrice;
     }
 
+    // ============ NEU: Gesamtpreis pro Kunde (zusammengefasst) ============
+    function getCustomerTotal(name) {
+        var orders = breadOrders.filter(function(o) { 
+            return !o.isAdd && !o.isAddBread && o.name === name; 
+        });
+        
+        var totalPcs = 0;
+        orders.forEach(function(o) {
+            totalPcs += getPcsForOrder(o);
+        });
+        
+        if (orders.length === 0) return 0;
+        if (orders[0].isCombo) {
+            // Combo Preis ist schon gespeichert
+            return orders[0].comboPrice || 0;
+        }
+        
+        var variety = orders[0].breadType;
+        var isMini = orders[0].isMini || false;
+        
+        // Regel: 4-6 Stück = M Preis, 7-9 Stück = L Preis, 10-12 Stück = XL Preis
+        var size = 'S';
+        if (totalPcs >= 4 && totalPcs <= 6) {
+            size = 'M';
+        } else if (totalPcs >= 7 && totalPcs <= 9) {
+            size = 'L';
+        } else if (totalPcs >= 10 && totalPcs <= 12) {
+            size = 'XL';
+        } else if (totalPcs >= 13) {
+            size = 'XL+';
+        }
+        
+        // Wenn Mini, dann halber Preis
+        var price = priceDB[variety]?.[size] || 0;
+        return isMini ? price / 2 : price;
+    }
+
     function totalPriceAll() {
         var sum = 0;
+        var customers = {};
         var comboSet = new Set();
+        
         breadOrders.forEach(function(o) {
             if (o.isAdd || o.isAddBread) return;
             if (o.isCombo) {
@@ -1112,10 +1153,39 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     comboSet.add(key);
                     sum += o.comboPrice || 0;
                 }
-            } else {
-                sum += getPriceForOrder(o);
+                return;
             }
+            var name = o.name;
+            if (!customers[name]) {
+                customers[name] = { orders: [], totalPcs: 0, variety: o.breadType, isMini: o.isMini };
+            }
+            customers[name].orders.push(o);
+            customers[name].totalPcs += getPcsForOrder(o);
         });
+        
+        for (var name in customers) {
+            var data = customers[name];
+            var totalPcs = data.totalPcs;
+            var variety = data.variety;
+            var isMini = data.isMini;
+            
+            // Bestimme Größe basierend auf Gesamtstückzahl
+            var size = 'S';
+            if (totalPcs >= 4 && totalPcs <= 6) {
+                size = 'M';
+            } else if (totalPcs >= 7 && totalPcs <= 9) {
+                size = 'L';
+            } else if (totalPcs >= 10 && totalPcs <= 12) {
+                size = 'XL';
+            } else if (totalPcs >= 13) {
+                size = 'XL+';
+            }
+            
+            var price = priceDB[variety]?.[size] || 0;
+            if (isMini) price = price / 2;
+            sum += price;
+        }
+        
         return sum;
     }
 
@@ -1198,13 +1268,47 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ SALARY ============
     function updateSalaryDisplay() {
         var totalWithComm = 0, totalWithoutComm = 0;
+        // Verwende die neue Preisberechnung pro Kunde
+        var customers = {};
         breadOrders.forEach(function(o) {
             if (o.isAdd || o.isAddBread || o.isCombo) return;
-            var price = getPriceForOrder(o);
-            if (o.hasCommission) { totalWithComm += price; } else { totalWithoutComm += price; }
+            if (!customers[o.name]) {
+                customers[o.name] = { orders: [], totalPcs: 0, variety: o.breadType, isMini: o.isMini, hasCommission: o.hasCommission };
+            }
+            customers[o.name].orders.push(o);
+            customers[o.name].totalPcs += getPcsForOrder(o);
         });
+        
+        for (var name in customers) {
+            var data = customers[name];
+            var totalPcs = data.totalPcs;
+            var variety = data.variety;
+            var isMini = data.isMini;
+            
+            var size = 'S';
+            if (totalPcs >= 4 && totalPcs <= 6) {
+                size = 'M';
+            } else if (totalPcs >= 7 && totalPcs <= 9) {
+                size = 'L';
+            } else if (totalPcs >= 10 && totalPcs <= 12) {
+                size = 'XL';
+            } else if (totalPcs >= 13) {
+                size = 'XL+';
+            }
+            
+            var price = priceDB[variety]?.[size] || 0;
+            if (isMini) price = price / 2;
+            
+            if (data.hasCommission) {
+                totalWithComm += price;
+            } else {
+                totalWithoutComm += price;
+            }
+        }
+        
         var totalSalary = (totalWithComm * 0.135) + (totalWithoutComm * 0.15);
         salaryAmount.textContent = totalSalary.toFixed(2);
+        
         var infoText = '';
         if (totalWithComm > 0 && totalWithoutComm > 0) { infoText = '(mix: 13.5% + 15%)'; } else if (totalWithComm > 0) { infoText = '(13.5%)'; } else { infoText = '(15%)'; }
         salaryPercentDisplay.textContent = infoText;
@@ -1507,16 +1611,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         });
         
+        // Nur eindeutige Kunden für die Route (nicht jede Bestellung einzeln)
+        var uniqueCustomers = {};
         normalOrders.forEach(function(order) {
             var addr = addressBook[order.name] || '';
             if (addr && addr.trim()) {
-                allDestinations.push({ name: order.name, address: addr, isPickup: false, order: order });
+                if (!uniqueCustomers[order.name]) {
+                    uniqueCustomers[order.name] = { name: order.name, address: addr, isPickup: false, order: order };
+                }
             } else {
                 noAddress.push(order.name);
             }
         });
         
-        var allCustomers = pickupDestinations.concat(allDestinations);
+        var allCustomers = pickupDestinations.concat(Object.values(uniqueCustomers));
         
         var listHtml = '';
         
@@ -1618,22 +1726,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             return; 
         }
         
-        // Apple Maps URL mit Start und Ziel
         var appUrl = 'maps://maps.apple.com/?';
         var params = [];
         params.push('saddr=' + encodeURIComponent(start));
-        // Alle Lieferadressen + Endpunkt
         deliveries.forEach(function(addr) {
             params.push('daddr=' + encodeURIComponent(addr));
         });
-        // Letzte Adresse = Huqingping Highway 1517
         params.push('daddr=' + encodeURIComponent(HOME_ADDRESS));
         params.push('dirflg=d');
         appUrl += params.join('&');
         
         window.location.href = appUrl;
         
-        // Fallback: Web-Version
         setTimeout(function() {
             var webUrl = 'https://maps.apple.com/?';
             var webParams = [];
@@ -2125,8 +2229,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("📍 Start: Your current location (auto-detected)");
     console.log("🏁 End: Huqingping Highway 1517");
     console.log("🧠 NEAREST NEIGHBOR ROUTE: Always goes to closest customer first!");
-    console.log("📸 Screenshot fixed!");
-    console.log("📄 PDF, 📋 Text, 📧 Email, 💾 JSON, 📊 CSV, 💬 WeChat");
+    console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
 })();
 </script>
 </body>
