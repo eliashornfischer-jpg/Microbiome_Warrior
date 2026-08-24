@@ -25,6 +25,7 @@ button:active{transform:scale(0.97)}
 table{width:100%;border-collapse:collapse;font-size:0.7rem;background:white;border-radius:16px;overflow:hidden;margin:8px 0}
 th{padding:8px 4px;font-weight:800;color:#2a1a08}
 th.bread-th{background:#e2aa54}
+th.hummus-th{background:#8faa4a;color:white}
 td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .total-sum{font-weight:800;font-size:1rem;background:#ecdba8;padding:4px 14px;border-radius:30px;display:inline-block}
 .header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
@@ -63,6 +64,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
 .provision-row .provision-label{font-weight:700;color:#e74c3c}
 .provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
+
+/* HUMMUS */
+.hummus-section{border-left:4px solid #8faa4a;margin-top:8px;padding:8px 12px;background:rgba(143,170,74,0.05);border-radius:12px}
+.hummus-section .hummus-title{font-weight:700;font-size:0.7rem;color:#6d8a30;margin-bottom:4px}
 
 /* HISTORY */
 .history-container{background:rgba(52,152,219,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(52,152,219,0.15)}
@@ -167,6 +172,30 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <label><input type="checkbox" id="miniCheckbox"> 🥖 Mini (half price & half pcs)</label>
 </div>
 
+<!-- HUMMUS AUSWAHL -->
+<div class="hummus-section">
+    <div class="hummus-title">🫒 HUMMUS (free) - 1 pro Kunde</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div>
+            <label style="font-size:0.65rem;">Type</label>
+            <select id="hummusType">
+                <option value="none">❌ No Hummus</option>
+                <option value="hummus">🫒 Hummus</option>
+                <option value="yingyang">☯️ Ying & Yang</option>
+            </select>
+        </div>
+        <div>
+            <label style="font-size:0.65rem;">Size</label>
+            <select id="hummusSize">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+        </div>
+    </div>
+</div>
+
 <button id="addBtn">➕ Add Order</button>
 
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -179,8 +208,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div style="display:flex;justify-content:space-between;align-items:center;"><h2>📋 Orders (CNY)</h2><span class="week-badge" id="weekBadge">Week 27</span></div>
 
 <div class="scrollable"><table>
-<thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Comm</th><th class="bread-th"></th></thead>
-<tbody id="breadTableBody"><tr><td colspan="9" style="text-align:center">No bread orders 🥖</td></tr>
+<thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Hummus</th><th class="bread-th">Comm</th><th class="bread-th"></th></thead>
+<tbody id="breadTableBody"><tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr>
 </tbody></table></div>
 
 <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
@@ -195,13 +224,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     </div>
     <div class="salary-row">
         <span class="salary-label">👤 Salary (15%)</span>
-        <span class="salary-amount" id="salaryAmount">0.00 <span class="currency">¥</span></span>
+        <span class="salary-amount" id="salaryAmount">0 <span class="currency">¥</span></span>
     </div>
     
     <div class="provision-container">
         <div class="provision-row">
             <span class="provision-label">💼 Provision (10%)</span>
-            <span class="provision-amount" id="provisionAmount">0.00 <span class="currency">¥</span></span>
+            <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
         </div>
     </div>
 </div>
@@ -227,7 +256,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 </div>
 </div>
 
-<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | CNY | Auto-save bei jeder Änderung | 10% Provision</footer>
+<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | CNY | Auto-save bei jeder Änderung | 10% Provision | 1 Hummus pro Kunde</footer>
 </div>
 
 <script>
@@ -244,6 +273,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     };
     
     var sizeToPcs = {"S": 2, "M": 5, "L": 8, "XL": 11};
+    
+    // ============ HUMMUS GRÖSSEN ============
+    var hummusSizeMap = {
+        "S": {pcs: 1, label: "S (1)"},
+        "M": {pcs: 2, label: "M (2)"},
+        "L": {pcs: 3, label: "L (3)"},
+        "XL": {pcs: 4, label: "XL (4)"}
+    };
     
     // ============ STÜCKPREISE ============
     function getStückpreis(sorte, größe) {
@@ -285,7 +322,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             totalPrice += stückpreis * pcs;
         }
         
-        return totalPrice;
+        // AUFRUNDEN auf ganze Zahl (ohne Kommastellen)
+        return Math.round(totalPrice);
+    }
+
+    // ============ HUMMUS FÜR KUNDEN ============
+    function getCustomerHummus(name) {
+        var orders = breadOrders.filter(function(o) { 
+            return !o.isAdd && !o.isAddBread && o.name === name && o.hummusType && o.hummusType !== 'none'; 
+        });
+        
+        if (orders.length === 0) return null;
+        
+        // Nur den ersten Hummus nehmen (1 pro Kunde)
+        var firstOrder = orders[0];
+        return {
+            type: firstOrder.hummusType,
+            size: firstOrder.hummusSize || 'S'
+        };
     }
 
     // ============ DETAILS FÜR ANZEIGE ============
@@ -329,13 +383,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         }
         
+        // Hummus für diesen Kunden
+        var hummus = getCustomerHummus(name);
+        
         return {
             totalPcs: totalPcs,
             size: size,
-            totalPrice: totalPrice,
+            totalPrice: Math.round(totalPrice),
             details: details,
             orderCount: orders.length,
-            isMini: orders[0].isMini || false
+            isMini: orders[0].isMini || false,
+            hummus: hummus
         };
     }
 
@@ -345,8 +403,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var currentWeek = getCurrentWeek();
     var weekHistory = {};
     var historyOpen = false;
-    
-    // ============ KUNDEN-DATENBANK ============
     var customerDatabase = {};
     
     // ============ DOM REFS ============
@@ -362,6 +418,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var breadType = $("breadType");
     var breadSize = $("breadSize");
     var miniCheckbox = $("miniCheckbox");
+    var hummusType = $("hummusType");
+    var hummusSize = $("hummusSize");
     var historyToggle = $("historyToggle");
     var historyBody = $("historyBody");
     var historyArrow = $("historyArrow");
@@ -408,7 +466,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         customers.forEach(function(name) {
             sum += getCustomerPrice(name);
         });
-        return sum;
+        return Math.round(sum);
     }
 
     function capitalizeName(input) { 
@@ -452,21 +510,30 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 country: country || '',
                 lastOrders: [],
                 lastWeek: currentWeek,
-                totalOrders: 0
+                totalOrders: 0,
+                lastHummus: null
             };
         }
         
-        // Land aktualisieren
         if (country && !customerDatabase[name].country) {
             customerDatabase[name].country = country;
         }
         
-        // Bestellung speichern (maximal 10 letzte Bestellungen)
+        // Hummus speichern
+        if (order.hummusType && order.hummusType !== 'none') {
+            customerDatabase[name].lastHummus = {
+                type: order.hummusType,
+                size: order.hummusSize || 'S'
+            };
+        }
+        
         var orderEntry = {
             week: currentWeek,
             breadType: order.breadType,
             size: order.size,
-            isMini: order.isMini || false
+            isMini: order.isMini || false,
+            hummusType: order.hummusType || 'none',
+            hummusSize: order.hummusSize || 'S'
         };
         
         if (!customerDatabase[name].lastOrders) {
@@ -496,14 +563,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var lastOrderText = '';
                 if (data.lastOrders && data.lastOrders.length > 0) {
                     var last = data.lastOrders[data.lastOrders.length - 1];
-                    lastOrderText = 'Letzte: ' + last.breadType + ' ' + last.size + (last.isMini ? ' Mini' : '');
+                    lastOrderText = last.breadType + ' ' + last.size + (last.isMini ? ' Mini' : '');
+                    if (last.hummusType && last.hummusType !== 'none') {
+                        lastOrderText += ' + 🫒';
+                    }
                 }
                 suggestions.push({
                     name: name,
                     country: data.country || '',
                     lastOrder: lastOrderText,
                     totalOrders: data.totalOrders || 0,
-                    lastWeek: data.lastWeek || 0
+                    lastWeek: data.lastWeek || 0,
+                    lastHummus: data.lastHummus || null
                 });
             }
         }
@@ -525,45 +596,53 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         suggestions.forEach(function(s) {
             var isCurrentWeek = s.lastWeek === currentWeek;
             var weekBadge = isCurrentWeek ? ' <span class="suggestion-badge">🔥 aktuell</span>' : '';
-            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-country="' + escapeHtml(s.country) + '">' +
+            var hummusIcon = s.lastHummus ? ' 🫒' : '';
+            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-country="' + escapeHtml(s.country) + '" data-hummus-type="' + (s.lastHummus ? s.lastHummus.type : '') + '" data-hummus-size="' + (s.lastHummus ? s.lastHummus.size : '') + '">' +
                 '<div>' +
                 '<span class="suggestion-name">' + escapeHtml(s.name) + '</span>' +
                 ' <span style="font-size:0.5rem;color:#8a6a2a;">' + (s.country || '') + '</span>' +
                 weekBadge +
                 '</div>' +
-                '<div class="suggestion-detail">' + (s.lastOrder || 'Neu') + ' · ' + s.totalOrders + 'x</div>' +
+                '<div class="suggestion-detail">' + (s.lastOrder || 'Neu') + hummusIcon + ' · ' + s.totalOrders + 'x</div>' +
                 '</div>';
         });
         
         list.innerHTML = html;
         list.className = 'suggestions-list show';
         
-        // Click-Handler für Vorschläge
         list.querySelectorAll('.suggestion-item').forEach(function(item) {
             item.addEventListener('click', function() {
                 var name = this.dataset.name;
                 var country = this.dataset.country;
+                var hummusType = this.dataset.hummusType;
+                var hummusSize = this.dataset.hummusSize;
+                
                 customerName.value = name;
                 customerCountry.value = country || '';
                 suggestionsList.className = 'suggestions-list';
                 customerName.focus();
-                // Automatisch die letzte Bestellung des Kunden vorschlagen
-                autoFillLastOrder(name);
+                
+                autoFillLastOrder(name, hummusType, hummusSize);
             });
         });
     }
 
-    function autoFillLastOrder(name) {
+    function autoFillLastOrder(name, hummusType, hummusSize) {
         if (!customerDatabase[name] || !customerDatabase[name].lastOrders) return;
         
         var lastOrders = customerDatabase[name].lastOrders;
         if (lastOrders.length === 0) return;
         
         var last = lastOrders[lastOrders.length - 1];
-        // Automatisch die letzte Sorte und Größe vorschlagen
         breadType.value = last.breadType || '88er';
         breadSize.value = last.size || 'S';
         miniCheckbox.checked = last.isMini || false;
+        
+        // Hummus automatisch setzen
+        if (hummusType && hummusType !== 'none') {
+            hummusType.value = hummusType;
+            hummusSize.value = hummusSize || 'S';
+        }
     }
 
     // ============ HISTORY FUNCTIONS ============
@@ -613,8 +692,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
         
         weekHistory[week].orders = orders.length;
-        weekHistory[week].revenue = totalRevenue;
-        weekHistory[week].pcs = totalPcs;
+        weekHistory[week].revenue = Math.round(totalRevenue);
+        weekHistory[week].pcs = Math.round(totalPcs);
         weekHistory[week].customers = customers.size;
         
         saveHistory();
@@ -647,12 +726,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 html += '<div class="history-item">' +
                     '<span class="week">📅 Week ' + week + '</span>' +
                     '<span class="orders">📋 ' + (data.orders || 0) + ' orders · 👤 ' + (data.customers || 0) + ' customers · 🍞' + (data.pcs || 0) + ' pcs</span>' +
-                    '<span class="total">💰 ' + (data.revenue || 0).toFixed(2) + ' ¥</span>' +
+                    '<span class="total">💰 ' + (data.revenue || 0).toFixed(0) + ' ¥</span>' +
                     '</div>';
             });
             historyList.innerHTML = html;
             histTotalOrders.textContent = totalOrders;
-            histTotalRevenue.textContent = totalRevenue.toFixed(2) + ' ¥';
+            histTotalRevenue.textContent = totalRevenue.toFixed(0) + ' ¥';
             histTotalWeeks.textContent = weeks.length;
         }
     }
@@ -682,7 +761,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         
         if (normalOrders.length === 0) {
-            breadTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center">No bread orders 🥖</td></tr>';
+            breadTableBody.innerHTML = '<tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr>';
         } else {
             breadTableBody.innerHTML = '';
             var customerGroups = {};
@@ -712,8 +791,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     orders.map(function(o) { return o.breadType; }).join(', ');
                 
                 var sizeDisplay = details.size + (isMulti ? ' (' + details.totalPcs + ' stk)' : '');
-                var totalPcsDisplay = details.totalPcs;
-                var priceDisplay = details.totalPrice.toFixed(2);
+                var totalPcsDisplay = Math.round(details.totalPcs);
+                var priceDisplay = details.totalPrice.toFixed(0);
                 var hasCommission = orders[0].hasCommission || false;
                 var commClass = hasCommission ? 'active' : 'inactive';
                 var commLabel = hasCommission ? '13.5%' : '15%';
@@ -721,10 +800,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 
                 var multiBadge = isMulti ? ' <span class="multi-badge">📦 ' + orders.length + 'x</span>' : '';
                 
+                // Hummus Anzeige
+                var hummusDisplay = '—';
+                if (details.hummus) {
+                    var typeLabel = details.hummus.type === 'yingyang' ? '☯️' : '🫒';
+                    hummusDisplay = typeLabel + ' ' + details.hummus.size;
+                }
+                
                 var breakdownHtml = '';
                 if (isMulti) {
                     var lines = details.details.map(function(d) {
-                        return d.pcs + '× ' + d.sorte + ' = ' + d.price.toFixed(2) + ' ¥ (à ' + d.stückpreis.toFixed(2) + ' ¥)';
+                        return d.pcs + '× ' + d.sorte + ' = ' + Math.round(d.price) + ' ¥ (à ' + d.stückpreis.toFixed(2) + ' ¥)';
                     }).join('<br>');
                     breakdownHtml = '<div class="multi-detail">' +
                         '<div style="font-weight:700;font-size:0.55rem;color:#f39c12;">📦 ' + name + ' hat ' + orders.length + ' Bestellungen (' + details.totalPcs + ' Stück → ' + details.size + ' Preis)</div>' + 
@@ -741,6 +827,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     '<td>' + sizeDisplay + '</td>' +
                     '<td>' + totalPcsDisplay + '</td>' +
                     '<td><strong>' + priceDisplay + ' ¥</strong></td>' +
+                    '<td>' + hummusDisplay + '</td>' +
                     '<td><span class="comm-toggle ' + commClass + '" data-id="' + orders[0].id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td>' +
                     '<td><button class="delete-btn" data-name="' + escapeHtml(name) + '">✖</button></td>';
                 
@@ -749,7 +836,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 if (isMulti) {
                     var breakRow = document.createElement('tr');
                     breakRow.className = 'multi-breakdown';
-                    breakRow.innerHTML = '<td colspan="9" style="padding:4px 8px;background:#fef9e7;">' + breakdownHtml + '</td>';
+                    breakRow.innerHTML = '<td colspan="10" style="padding:4px 8px;background:#fef9e7;">' + breakdownHtml + '</td>';
                     breadTableBody.appendChild(breakRow);
                 }
                 
@@ -789,7 +876,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         
         var total = totalPriceAll();
-        totalSpan.innerText = total.toFixed(2) + ' ¥';
+        totalSpan.innerText = total.toFixed(0) + ' ¥';
         updateSalaryDisplay();
         updateWeekDisplay();
         
@@ -799,11 +886,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ SALARY & PROVISION ============
     function updateSalaryDisplay() {
         var total = totalPriceAll();
-        var salary = total * 0.15;
-        var provision = total * 0.10;
+        var salary = Math.round(total * 0.15);
+        var provision = Math.round(total * 0.10);
         
-        salaryAmount.textContent = salary.toFixed(2);
-        provisionAmount.textContent = provision.toFixed(2);
+        salaryAmount.textContent = salary.toFixed(0);
+        provisionAmount.textContent = provision.toFixed(0);
     }
 
     // ============ LOCAL STORAGE ============
@@ -833,6 +920,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         customerName.value = ""; 
         customerCountry.value = ""; 
         miniCheckbox.checked = false; 
+        hummusType.value = 'none';
+        hummusSize.value = 'S';
         suggestionsList.className = 'suggestions-list';
         customerName.focus(); 
     }
@@ -849,6 +938,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var breadVal = breadType.value;
         var sizeVal = breadSize.value;
         var isMini = miniCheckbox.checked;
+        var hType = hummusType.value;
+        var hSize = hummusSize.value;
         
         var order = {
             id: nextId++, 
@@ -860,7 +951,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             hasCommission: false, 
             week: currentWeek, 
             isAdd: false, 
-            isAddBread: false 
+            isAddBread: false,
+            hummusType: hType,
+            hummusSize: hSize
         };
         
         breadOrders.push(order);
@@ -904,7 +997,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     });
 
-    // Klick außerhalb der Vorschläge schließt sie
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.suggestions-container')) {
             suggestionsList.className = 'suggestions-list';
@@ -920,9 +1012,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ SALARY COPY ============
     document.getElementById("salaryCopyBtn").addEventListener("click", function() {
         var total = totalPriceAll();
-        var salary = total * 0.15;
-        var provision = total * 0.10;
-        var text = '💰 Salary: ' + salary.toFixed(2) + ' ¥\n💼 Provision: ' + provision.toFixed(2) + ' ¥\n📊 Total Revenue: ' + total.toFixed(2) + ' ¥';
+        var salary = Math.round(total * 0.15);
+        var provision = Math.round(total * 0.10);
+        var text = '💰 Salary: ' + salary + ' ¥\n💼 Provision: ' + provision + ' ¥\n📊 Total Revenue: ' + total + ' ¥';
         var btn = this;
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() {
@@ -959,7 +1051,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log('🔄 History wird bei JEDER Änderung automatisch gespeichert!');
     console.log('💼 10% Provision vom Verkaufspreis!');
     console.log('👤 Kundendatenbank mit Vorschlägen beim Tippen!');
-    console.log('📊 Bei mehreren Bestellungen pro Kunde wird der Stückpreis basierend auf der Gesamtstückzahl berechnet!');
+    console.log('🫒 1 Hummus pro Kunde (basierend auf Gesamtmenge)!');
+    console.log('🔢 Alle Preise werden auf ganze Zahlen abgerundet!');
     console.log('📅 Aktuelle Woche: ' + currentWeek);
     
 })();
