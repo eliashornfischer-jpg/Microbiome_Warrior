@@ -920,17 +920,43 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(totalPrice);
     }
 
+    // ============ HUMMUS LOGIK ============
     function getCustomerHummus(name) {
         var orders = breadOrders.filter(function(o) { 
-            return !o.isAdd && !o.isAddBread && o.name === name && o.hummusType && o.hummusType !== 'none'; 
+            return !o.isAdd && !o.isAddBread && o.name === name; 
         });
         
         if (orders.length === 0) return null;
         
-        var firstOrder = orders[0];
+        // Prüfen ob der Kunde überhaupt Hummus haben möchte
+        var hasHummus = orders.some(function(o) { 
+            return o.hummusType && o.hummusType !== 'none'; 
+        });
+        
+        if (!hasHummus) return null;
+        
+        // 1. Gesamtstückzahl berechnen
+        var totalPcs = 0;
+        orders.forEach(function(o) {
+            totalPcs += getPcsForOrder(o);
+        });
+        
+        // 2. Hummus Größe basierend auf Gesamtstückzahl
+        var hummusSize = 'S';
+        if (totalPcs >= 4 && totalPcs <= 6) hummusSize = 'M';
+        else if (totalPcs >= 7 && totalPcs <= 9) hummusSize = 'L';
+        else if (totalPcs >= 10) hummusSize = 'XL';
+        
+        // 3. Hummus Art basierend auf Brotsorten
+        var hasHighVariety = orders.some(function(o) {
+            return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er';
+        });
+        
+        var hummusType = hasHighVariety ? 'yingyang' : 'hummus';
+        
         return {
-            type: firstOrder.hummusType,
-            size: firstOrder.hummusSize || 'S'
+            type: hummusType,
+            size: hummusSize
         };
     }
 
@@ -2105,21 +2131,26 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             
             for (var name in customerGroups) {
                 var orders = customerGroups[name];
+                var details = getCustomerDetails(name);
                 var totalPcs = 0;
                 var varieties = [];
-                var hummus = getCustomerHummus(name);
                 orders.forEach(function(o) {
                     totalPcs += getPcsForOrder(o);
                     varieties.push(o.breadType + ' ' + o.size);
                 });
-                var display = getCustomerDetails(name);
                 var flag = getCountryFlag(orders[0].country || '');
                 var country = orders[0].country || '';
                 var miniLabel = orders[0].isMini ? ' Mini' : '';
-                var hummusLabel = hummus ? ' 🫒 ' + hummus.type + ' ' + hummus.size : '';
+                var hummusLabel = '';
+                if (details && details.hummus) {
+                    var typeLabel = details.hummus.type === 'yingyang' ? '☯️' : '🫒';
+                    hummusLabel = ' ' + typeLabel + ' ' + details.hummus.size;
+                }
                 lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel);
                 lines.push('   ' + varieties.join(' + ') + ' → ' + Math.round(totalPcs) + ' pcs' + miniLabel);
-                lines.push('   ➜ Price: ' + display.size + ' (¥' + display.totalPrice + ')');
+                if (details) {
+                    lines.push('   ➜ Price: ' + details.size + ' (¥' + details.totalPrice + ')');
+                }
                 index++;
             }
             
@@ -2543,7 +2574,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
             combos.push({ id: comboId, type: comboType, name: name, country: country, isMini: isMini, price: totalPrice, items: comboItems.length });
             
-            // Kunde in Datenbank speichern
             var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S' };
             updateCustomerDatabase(name, country, order);
             
@@ -2585,7 +2615,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }); 
         }
         
-        // Kunde in Datenbank speichern
         updateCustomerDatabase(name, country, order);
         
         render(); saveToLocal(); resetForm();
@@ -2711,7 +2740,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("🏁 End: Huqingping Highway 1517");
     console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
     console.log("📊 Customers with multiple orders are grouped together!");
-    console.log("🫒 1 Hummus per customer!");
+    console.log("🫒 1 Hummus per customer - size based on total pcs, type based on bread varieties!");
     console.log("💼 10% Provision on total revenue!");
     console.log("💾 Auto-save to history with every change!");
     console.log("🗑️ Save & Clear Week: saves to history and clears all data!");
