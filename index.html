@@ -919,40 +919,42 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(totalPrice);
     }
 
-    // ============ HUMMUS LOGIK ============
+    // ============ HUMMUS LOGIK (KORREKT - 1 Hummus pro Kunde) ============
     function getCustomerHummus(name) {
+        // Alle Bestellungen des Kunden holen
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
         });
         
         if (orders.length === 0) return null;
         
-        // Prüfen ob der Kunde überhaupt Hummus haben möchte
+        // Prüfen ob der Kunde überhaupt Hummus haben möchte (mindestens eine Bestellung hat Hummus ausgewählt)
         var hasHummus = orders.some(function(o) { 
             return o.hummusType && o.hummusType !== 'none'; 
         });
         
         if (!hasHummus) return null;
         
-        // 1. Gesamtstückzahl berechnen
+        // 1. Gesamtstückzahl ALLER Bestellungen berechnen
         var totalPcs = 0;
         orders.forEach(function(o) {
             totalPcs += getPcsForOrder(o);
         });
         
-        // 2. Hummus Größe basierend auf Gesamtstückzahl
+        // 2. EINEN Hummus in der passenden Größe (basierend auf Gesamtstückzahl)
         var hummusSize = 'S';
         if (totalPcs >= 4 && totalPcs <= 6) hummusSize = 'M';
         else if (totalPcs >= 7 && totalPcs <= 9) hummusSize = 'L';
         else if (totalPcs >= 10) hummusSize = 'XL';
         
-        // 3. Hummus Art basierend auf Brotsorten
+        // 3. Hummus Art basierend auf Brotsorten (188/200/208 → Ying&Yang)
         var hasHighVariety = orders.some(function(o) {
             return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er';
         });
         
         var hummusType = hasHighVariety ? 'yingyang' : 'hummus';
         
+        // NUR EINEN HUMMUS zurückgeben!
         return {
             type: hummusType,
             size: hummusSize
@@ -999,6 +1001,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         }
         
+        // NUR EINEN HUMMUS pro Kunde!
         var hummus = getCustomerHummus(name);
         
         return {
@@ -1008,7 +1011,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             details: details,
             orderCount: orders.length,
             isMini: orders[0].isMini || false,
-            hummus: hummus
+            hummus: hummus  // NUR EIN HUMMUS!
         };
     }
 
@@ -1511,7 +1514,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(sum);
     }
 
-    function totalHummusCount() { return hummusOrders.length; }
+    function totalHummusCount() { 
+        // Zähle Kunden mit Hummus (NUR 1 Hummus pro Kunde)
+        var customersWithHummus = new Set();
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && o.hummusType && o.hummusType !== 'none') {
+                customersWithHummus.add(o.name);
+            }
+        });
+        return customersWithHummus.size;
+    }
 
     function getTotalPcsPerType() {
         var totals = {"88er":0,"150er":0,"188er":0,"200er":0,"208er":0};
@@ -2600,19 +2612,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         breadOrders.push(order);
         
-        if (hummusVal !== 'none') { 
-            hummusOrders.push({ 
-                id: nextId++, 
-                name: name, 
-                country: country, 
-                breadType: breadVal, 
-                size: hummusSizeVal, 
-                hummusType: hummusVal, 
-                week: currentWeek, 
-                isAdd: false, 
-                isAddHummus: false 
-            }); 
-        }
+        // WICHTIG: NUR EINEN HUMMUS pro Kunde - wir speichern hier NUR die Bestellung
+        // Der Hummus wird in getCustomerHummus() berechnet und angezeigt
         
         updateCustomerDatabase(name, country, order);
         
