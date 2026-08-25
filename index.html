@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
+/* === ALLES CSS === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -2546,7 +2547,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         customerName.focus(); 
     }
 
-    // ============ ADD ORDER ============
+    // ============ ADD ORDER (KORREKT - mit Hummus) ============
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
@@ -2606,14 +2607,26 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             isAdd: false, 
             isAddBread: false, 
             isCombo: false,
-            hummusType: hummusVal,
-            hummusSize: hummusSizeVal
+            hummusType: hummusVal,      // ← HIER wird der Hummus gespeichert!
+            hummusSize: hummusSizeVal   // ← HIER wird die Hummus-Größe gespeichert!
         };
         
         breadOrders.push(order);
         
-        // WICHTIG: NUR EINEN HUMMUS pro Kunde - wir speichern hier NUR die Bestellung
-        // Der Hummus wird in getCustomerHummus() berechnet und angezeigt
+        // Hummus auch in hummusOrders speichern für die Übersicht
+        if (hummusVal !== 'none') { 
+            hummusOrders.push({ 
+                id: nextId++, 
+                name: name, 
+                country: country, 
+                breadType: breadVal, 
+                size: hummusSizeVal, 
+                hummusType: hummusVal, 
+                week: currentWeek, 
+                isAdd: false, 
+                isAddHummus: false 
+            }); 
+        }
         
         updateCustomerDatabase(name, country, order);
         
