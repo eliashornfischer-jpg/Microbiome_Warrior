@@ -1711,22 +1711,35 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     }
 
-    // ============ RENDER HUMMUS SUMMARY ============
+    // ============ RENDER HUMMUS SUMMARY (KORREKT - NUR 1 Hummus pro Kunde) ============
     function renderHummusSummary() {
-        var allHummus = [];
-        hummusOrders.forEach(function(o) { if (!o.isAddHummus) { allHummus.push(o); } });
-        addHummusOrders.forEach(function(item) { for (var i = 0; i < item.count; i++) { allHummus.push({ hummusType: item.type, size: item.size, isAdd: true }); } });
-        var summary = {};
-        allHummus.forEach(function(o) {
-            var key = o.hummusType + '|' + o.size;
-            if (!summary[key]) { summary[key] = { type: o.hummusType, size: o.size, count: 0 }; }
-            summary[key].count++;
+        // Hummus von JEDEM Kunden aus getCustomerDetails() holen
+        var customerHummus = {};
+        var customers = new Set();
+        
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread) {
+                customers.add(o.name);
+            }
         });
-        var keys = Object.keys(summary);
-        if (keys.length === 0) { hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr>'; }
-        else {
+        
+        customers.forEach(function(name) {
+            var details = getCustomerDetails(name);
+            if (details && details.hummus) {
+                var key = details.hummus.type + '|' + details.hummus.size;
+                if (!customerHummus[key]) {
+                    customerHummus[key] = { type: details.hummus.type, size: details.hummus.size, count: 0 };
+                }
+                customerHummus[key].count++;
+            }
+        });
+        
+        var keys = Object.keys(customerHummus);
+        if (keys.length === 0) {
+            hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr>';
+        } else {
             var sortedKeys = keys.sort(function(a, b) {
-                var itemA = summary[a], itemB = summary[b];
+                var itemA = customerHummus[a], itemB = customerHummus[b];
                 if (itemA.type === 'yingyang' && itemB.type !== 'yingyang') return -1;
                 if (itemA.type !== 'yingyang' && itemB.type === 'yingyang') return 1;
                 var sizeOrderArr = {'S':0,'M':1,'L':2,'XM':3,'XL':4};
@@ -1734,7 +1747,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
             hummusSummaryBody.innerHTML = '';
             sortedKeys.forEach(function(key) {
-                var item = summary[key];
+                var item = customerHummus[key];
                 var row = document.createElement('tr');
                 var typeLabel = item.type === 'yingyang' ? '☯️ Ying&Yang' : '🫒 Hummus';
                 row.innerHTML = '<td>' + typeLabel + '</td><td>' + item.size + '</td><td>' + item.count + '</td>';
@@ -2382,7 +2395,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var miniTag = details.isMini ? ' 🥖' : '';
                 var multiBadge = isMulti ? ' <span class="multi-badge">📦 ' + orders.length + 'x</span>' : '';
                 
-                // ★★★ NUR EIN HUMMUS pro Kunde - aus details.hummus ★★★
+                // NUR EIN HUMMUS pro Kunde - aus details.hummus
                 var hummusDisplay = '—';
                 if (details.hummus) {
                     var typeLabel = details.hummus.type === 'yingyang' ? '☯️' : '🫒';
