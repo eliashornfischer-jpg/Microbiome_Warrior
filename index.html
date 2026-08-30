@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-/* === ALLES CSS === */
+/* ====== KOMPLETTES CSS ====== */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -187,6 +187,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .customer-manager .cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
 .cm-comm-active{color:#27ae60;font-weight:700}
 .cm-comm-inactive{color:#95a5a6}
+.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
+.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.provision-row .provision-label{font-weight:700;color:#e74c3c}
+.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
+.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
+.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.share-row .share-label{font-weight:700;color:#27ae60}
+.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
 .auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center}
 .route-no-distance{font-size:0.55rem;color:#8a6a2a;margin-top:4px;text-align:center}
 .address-stats{font-size:0.5rem;color:#8a6a2a}
@@ -249,19 +257,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .suggestion-item .suggestion-name{font-weight:700;color:#2a1a08}
 .suggestion-item .suggestion-detail{font-size:0.6rem;color:#8a6a2a}
 .suggestion-item .suggestion-badge{background:#e2aa54;color:#2a1a08;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700}
-.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
-.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.provision-row .provision-label{font-weight:700;color:#e74c3c}
-.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
-.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
-.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.share-row .share-label{font-weight:700;color:#27ae60}
-.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
-.advanced-toggle{background:none;border:none;color:#8a6a2a;font-size:0.55rem;cursor:pointer;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.5);margin:4px 0;text-align:center;width:auto;font-weight:700;transition:all 0.2s ease}
-.advanced-toggle:hover{background:rgba(226,170,84,0.15)}
-.advanced-toggle.active{background:#e2aa54;color:#2a1a08}
-.advanced-fields{display:none;padding-top:8px;border-top:1px dashed #d4c090;margin-top:8px}
-.advanced-fields.show{display:block}
 @media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
 </style>
 </head>
@@ -290,14 +285,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     <div class="suggestions-list" id="suggestionsList"></div>
 </div>
 
-<!-- ADVANCED TOGGLE -->
-<button class="advanced-toggle" id="advancedToggle">⚙️ Advanced Settings ▼</button>
-
-<div class="advanced-fields" id="advancedFields">
-    <label>🌍 Country (e.g. Germany, China, USA)</label>
-    <input id="customerCountry" placeholder="Type country name..." autocomplete="off" style="text-transform:capitalize;">
-    <div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
-</div>
+<!-- Country entfernt - kommt jetzt aus Customer Manager -->
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div>
@@ -325,6 +313,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         <option value="XL+">XL+ (12 pcs) no hummus</option>
     </select>
 </div>
+</div>
+
+<div class="commission-order-row">
+<label><input type="checkbox" id="commissionCheckbox"> 💰 Commission active (13.5% Share)</label>
+<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
 </div>
 
 <div class="checkbox-group" style="margin-top:4px;">
@@ -359,29 +352,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
     <button id="resetTableBtn" class="btn-reset" style="flex:1;min-width:120px;">🗑️ Delete All</button>
     <button id="saveHistoryBtn" class="btn-save-history">💾 Save & Clear Week</button>
-</div>
-</div>
-
-<!-- ====== CUSTOMER MANAGER ====== -->
-<div class="card">
-<div class="customer-manager">
-    <div class="cm-header" id="customerManagerToggle">
-        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
-        <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
-    </div>
-    <div class="cm-body" id="customerManagerBody">
-        <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
-        <div class="cm-row">
-            <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
-            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
-            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
-                <option value="true">💰 Yes (Share 13.5%)</option>
-                <option value="false">❌ No (Share 15%)</option>
-            </select>
-            <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
-        </div>
-        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
-    </div>
 </div>
 </div>
 
@@ -469,7 +439,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         </div>
         <div class="provision-container">
             <div class="provision-row">
-                <span class="provision-label">💼 Provision (10% of all revenue)</span>
+                <span class="provision-label">💼 Provision (10% of customers with Commission)</span>
                 <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
             </div>
         </div>
@@ -529,6 +499,27 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     </div>
 </div>
 
+<!-- ====== CUSTOMER MANAGER (in Routenplanung unter Address Book) ====== -->
+<div class="customer-manager">
+    <div class="cm-header" id="customerManagerToggle">
+        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
+        <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
+    </div>
+    <div class="cm-body" id="customerManagerBody">
+        <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
+        <div class="cm-row">
+            <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
+            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
+            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
+                <option value="true">💰 Yes (Share 13.5% + Provision 10%)</option>
+                <option value="false">❌ No (Share 15%, no Provision)</option>
+            </select>
+            <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
+        </div>
+        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
+    </div>
+</div>
+
 <div class="route-input-group">
 <label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">📍 Start: My Location <span style="color:#27ae60;font-weight:700;">(auto-detected)</span></label>
 <div class="route-start-row">
@@ -547,7 +538,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="route-empty">Add orders → route will auto-optimize</div>
 </div>
 
-<div class="route-optimized" id="routeOptimizedInfo">🧠 AI Route - always goes to the closest unvisited customer first</div>
+<div class="route-optimized" id="routeOptimizedInfo">🧠 Nearest-Neighbor algorithm - always goes to closest customer first</div>
 <div class="route-compare" id="routeCompareInfo"></div>
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
@@ -578,7 +569,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 </div>
 </div>
 
-<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision | 1 Hummus pro Kunde</footer>
+<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision (nur bei Commission) | 1 Hummus pro Kunde</footer>
 </div>
 
 <script>
@@ -608,26 +599,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return '';
     }
 
-    // ============ COUNTRY FLAG DISPLAY ============
-    var customerCountryInput = document.getElementById('customerCountry');
-    var countryFlagDisplay = document.getElementById('countryFlagDisplay');
-    customerCountryInput.addEventListener('input', function() {
-        var flag = getCountryFlag(this.value);
-        countryFlagDisplay.textContent = flag ? flag + ' ' + this.value.trim() : (this.value.trim() ? '🌍 ' + this.value.trim() : '');
-    });
-
-    // ============ ADVANCED TOGGLE ============
-    var advancedToggle = document.getElementById('advancedToggle');
-    var advancedFields = document.getElementById('advancedFields');
-    var advancedOpen = false;
-    
-    advancedToggle.addEventListener('click', function() {
-        advancedOpen = !advancedOpen;
-        advancedFields.classList.toggle('show');
-        this.textContent = advancedOpen ? '⚙️ Advanced Settings ▲' : '⚙️ Advanced Settings ▼';
-        this.classList.toggle('active');
-    });
-
     // ============ CUSTOMER MANAGER TOGGLE ============
     var cmToggle = document.getElementById('customerManagerToggle');
     var cmBody = document.getElementById('customerManagerBody');
@@ -638,6 +609,30 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         cmOpen = !cmOpen;
         cmBody.classList.toggle('open');
         cmToggleBtn.textContent = cmOpen ? '▲ Hide' : '▼ Show';
+    });
+
+    // ============ ADDRESS BOOK TOGGLE ============
+    var addressToggle = document.getElementById('addressToggle');
+    var addressBody = document.getElementById('addressBody');
+    var addressToggleBtn = document.getElementById('addressToggleBtn');
+    var addressOpen = false;
+    
+    addressToggle.addEventListener('click', function() {
+        addressOpen = !addressOpen;
+        addressBody.classList.toggle('open');
+        addressToggleBtn.textContent = addressOpen ? '▲ Hide' : '▼ Show';
+    });
+
+    // ============ HISTORY TOGGLE ============
+    var historyToggle = document.getElementById('historyToggle');
+    var historyBody = document.getElementById('historyBody');
+    var historyArrow = document.getElementById('historyArrow');
+    var historyOpen = false;
+    
+    historyToggle.addEventListener('click', function() {
+        historyOpen = !historyOpen;
+        historyBody.classList.toggle('open');
+        historyArrow.classList.toggle('open');
     });
 
     // ============ COMBO ============
@@ -741,7 +736,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ DATA STORE ============
     var breadOrders = [], hummusOrders = [], addBreadOrders = [], addHummusOrders = [], pickupList = [], addressBook = {};
     var nextId = 1, currentWeek = calculateCurrentWeek(), addBreadCount = 1, addHummusCount = 1;
-    var addressBookOpen = false, historyOpen = false;
     var weekHistory = {};
     var trafficSimulationInterval = null;
     var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 1 };
@@ -752,9 +746,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
-    var customerName = $("customerName"), customerCountry = $("customerCountry");
+    var customerName = $("customerName");
     var breadType = $("breadType"), breadSize = $("breadSize"), miniCheckbox = $("miniCheckbox");
     var hummusType = $("hummusType"), hummusSize = $("hummusSize");
+    var commissionCheckbox = $("commissionCheckbox");
     var yingYangInfo = $("yingYangInfo");
     var breadTableBody = $("breadTableBody"), breadSummaryBody = $("breadSummaryBody");
     var addBreadSummaryBody = $("addBreadSummaryBody"), hummusSummaryBody = $("hummusSummaryBody");
@@ -774,15 +769,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var addressList = $("addressList"), addressNameInput = $("addressNameInput");
     var addressAddrInput = $("addressAddrInput"), addAddressBtn = $("addAddressBtn");
     var addressCount = $("addressCount"), addressToggleBtn = $("addressToggleBtn");
-    var addressBody = $("addressBody"), addressToggle = $("addressToggle");
     var routeOptimizedInfo = $("routeOptimizedInfo"), routeCompareInfo = $("routeCompareInfo");
     var pickupNameInput = $("pickupNameInput"), addPickupBtn = $("addPickupBtn");
     var pickupListEl = $("pickupList"), pickupCount = $("pickupCount");
-    var historyToggle = $("historyToggle"), historyBody = $("historyBody");
-    var historyArrow = $("historyArrow"), historyList = $("historyList");
-    var historyCount = $("historyCount"), histTotalOrders = $("histTotalOrders");
-    var histTotalRevenue = $("histTotalRevenue"), histTotalPickups = $("histTotalPickups");
-    var histTotalWeeks = $("histTotalWeeks"), preparationRow = $("preparationRow");
+    var historyList = $("historyList"), historyCount = $("historyCount");
+    var histTotalOrders = $("histTotalOrders"), histTotalRevenue = $("histTotalRevenue");
+    var histTotalPickups = $("histTotalPickups"), histTotalWeeks = $("histTotalWeeks");
+    var preparationRow = $("preparationRow");
     var timesTableBody = $("timesTableBody"), pcsTableBody = $("pcsTableBody");
     var calculatedThermomixTable = $("calculatedThermomixTable"), calculatedRestTable = $("calculatedRestTable");
     var calculatedRestFooter = $("calculatedRestFooter"), perPcsRow = $("perPcsRow");
@@ -832,7 +825,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var data = customerDatabase[name];
                 var country = data.country || '';
                 var flag = getCountryFlag(country);
-                var shareLabel = data.defaultCommission ? '13.5%' : '15%';
+                var shareLabel = data.defaultCommission ? '13.5% + Prov.' : '15%';
                 var commClass = data.defaultCommission ? 'cm-comm-active' : 'cm-comm-inactive';
                 html += '<span class="cm-tag">' + escapeHtml(name) + ' ' + flag + ' ' + escapeHtml(country) + ' <span class="' + commClass + '">Share ' + shareLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
             });
@@ -948,7 +941,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var commission = this.dataset.commission === 'true';
                 
                 customerName.value = name;
-                customerCountry.value = country || '';
+                commissionCheckbox.checked = commission;
                 suggestionsList.className = 'suggestions-list';
                 customerName.focus();
                 
@@ -967,9 +960,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         breadType.value = last.breadType || '88er';
         breadSize.value = last.size || 'S';
         miniCheckbox.checked = last.isMini || false;
-        
-        // Commission wird aus der Datenbank geladen, aber nicht als Checkbox angezeigt
-        // Sie wird nur für die Berechnung verwendet
+        commissionCheckbox.checked = commission !== undefined ? commission : (last.hasCommission || false);
         
         if (hummusType && hummusType !== 'none') {
             hummusType.value = hummusType;
@@ -1000,6 +991,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             };
         }
         
+        if (order.hasCommission !== undefined) {
+            customerDatabase[name].defaultCommission = order.hasCommission;
+        }
+        
         var orderEntry = {
             week: currentWeek,
             breadType: order.breadType,
@@ -1007,7 +1002,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             isMini: order.isMini || false,
             hummusType: order.hummusType || 'none',
             hummusSize: order.hummusSize || 'S',
-            hasCommission: false
+            hasCommission: order.hasCommission || false
         };
         
         if (!customerDatabase[name].lastOrders) {
@@ -1067,6 +1062,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(totalPrice);
     }
 
+    // ============ TOGGLE COMMISSION ============
+    function toggleCommission(orderId) {
+        var order = breadOrders.find(function(o) { return o.id === orderId; });
+        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) { 
+            order.hasCommission = !order.hasCommission; 
+            render(); 
+            saveToLocal(); 
+            updateRoute(); 
+        }
+    }
+
     // ============ FINANCIAL OVERVIEW ============
     function updateFinancialDisplay() {
         var totalRevenue = 0;
@@ -1075,6 +1081,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var totalWithoutShare = 0;
         var shareCustomers = 0;
         var normalCustomers = 0;
+        var totalProvisionRevenue = 0;
         
         breadOrders.forEach(function(o) {
             if (!o.isAdd && !o.isAddBread && !o.isCombo) {
@@ -1086,14 +1093,21 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var price = getCustomerPrice(name);
             totalRevenue += price;
             
-            // Prüfen ob Kunde in der Datenbank ist und Commission hat
             var hasCommission = false;
+            
+            breadOrders.forEach(function(o) {
+                if (!o.isAdd && !o.isAddBread && !o.isCombo && o.name === name && o.hasCommission) {
+                    hasCommission = true;
+                }
+            });
+            
             if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
                 hasCommission = true;
             }
             
             if (hasCommission) {
                 totalWithShare += price;
+                totalProvisionRevenue += price;
                 shareCustomers++;
             } else {
                 totalWithoutShare += price;
@@ -1101,15 +1115,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         });
         
-        // Share Berechnung: 13.5% für Kunden mit Commission, 15% für ohne
         var share = (totalWithShare * 0.135) + (totalWithoutShare * 0.15);
-        var provision = totalRevenue * 0.10;
+        var provision = totalProvisionRevenue * 0.10;
         
         shareAmount.textContent = Math.round(share);
         provisionAmount.textContent = Math.round(provision);
         totalRevenueDisplay.textContent = Math.round(totalRevenue);
         
-        // Status Info
         var statusInfo = '';
         if (shareCustomers > 0 && normalCustomers > 0) {
             statusInfo = ' (mix: ' + shareCustomers + '×13.5% + ' + normalCustomers + '×15%)';
@@ -1119,10 +1131,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             statusInfo = ' (15%)';
         }
         
-        // Update Share label
         var shareLabel = document.querySelector('.salary-row .salary-label');
         if (shareLabel) {
             shareLabel.textContent = '👤 Share' + statusInfo;
+        }
+        
+        var provLabel = document.querySelector('.provision-row .provision-label');
+        if (provLabel) {
+            provLabel.textContent = '💼 Provision (10% von ' + shareCustomers + ' Kunden mit Commission)';
         }
     }
 
@@ -1204,11 +1220,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         var hummus = getCustomerHummus(name);
         
-        // Prüfen ob Kunde in der Datenbank ist und Commission hat
         var hasCommission = false;
         if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
             hasCommission = true;
         }
+        orders.forEach(function(o) {
+            if (o.hasCommission) hasCommission = true;
+        });
         
         return {
             totalPcs: totalPcs,
@@ -1226,8 +1244,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     window.copySalary = function() {
         var total = totalRevenue();
         var share = Math.round(total * 0.15);
-        var provision = Math.round(total * 0.10);
-        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10%): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
+        var provision = Math.round(provisionRevenue() * 0.10);
+        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10% von Commission-Kunden): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
         var btn = document.getElementById('salaryCopyBtn');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() {
@@ -1260,17 +1278,26 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return sum;
     }
 
-    // ============ TOGGLES ============
-    addressToggle.addEventListener('click', function() {
-        addressBookOpen = !addressBookOpen;
-        addressBody.classList.toggle('open');
-        addressToggleBtn.textContent = addressBookOpen ? '▲ Hide' : '▼ Show';
-    });
-    historyToggle.addEventListener('click', function() {
-        historyOpen = !historyOpen;
-        historyBody.classList.toggle('open');
-        historyArrow.classList.toggle('open');
-    });
+    function provisionRevenue() {
+        var sum = 0;
+        var customers = new Set();
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo && o.hasCommission) {
+                customers.add(o.name);
+            }
+        });
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo) {
+                if (customerDatabase[o.name] && customerDatabase[o.name].defaultCommission) {
+                    customers.add(o.name);
+                }
+            }
+        });
+        customers.forEach(function(name) {
+            sum += getCustomerPrice(name);
+        });
+        return sum;
+    }
 
     // ============ CAPITALIZE ============
     function capitalizeName(input) { 
@@ -1335,125 +1362,81 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     });
 
     // ============ SCREENSHOT ============
-    async function takeScreenshot(btn, statusEl) {
+    function takeScreenshot(btn, statusEl) {
         var element = document.getElementById('captureArea');
         var status = statusEl || screenshotStatus;
         var button = btn || screenshotBtn;
         var originalText = button.textContent;
-
-        if (!element) {
-            if (status) { status.className = 'show error'; status.textContent = '❌ Capture area not found'; }
-            return;
-        }
-        if (typeof html2canvas !== 'function') {
-            if (status) { status.className = 'show error'; status.textContent = '❌ Screenshot library not loaded'; }
-            return;
-        }
-
+        
         status.className = 'show';
         status.textContent = '⏳ Generating...';
         button.textContent = '⏳ Loading...';
         button.style.opacity = '0.7';
-        button.disabled = true;
-
-        var canvas = null;
-        try {
-            // Wait for the browser to finish layout/paint and fonts before capturing.
-            if (document.fonts && document.fonts.ready) await document.fonts.ready;
-            var images = Array.prototype.slice.call(element.querySelectorAll('img'));
-            await Promise.all(images.map(function(img) {
-                if (img.complete) return Promise.resolve();
-                return new Promise(function(resolve) {
-                    img.addEventListener('load', resolve, {once:true});
-                    img.addEventListener('error', resolve, {once:true});
-                    setTimeout(resolve, 2500);
-                });
-            }));
-            await new Promise(function(resolve) { requestAnimationFrame(function() { requestAnimationFrame(resolve); }); });
-
-            var width = Math.max(element.scrollWidth, element.offsetWidth, 1);
-            var height = Math.max(element.scrollHeight, element.offsetHeight, 1);
-            // Scale 1 is deliberately used here: it avoids canvas-size failures on phones
-            // while still producing a full-resolution screenshot of the app area.
-            canvas = await html2canvas(element, {
-                scale: 1,
+        
+        setTimeout(function() {
+            html2canvas(element, {
+                scale: 2,
                 useCORS: true,
-                allowTaint: false,
+                allowTaint: true,
                 backgroundColor: '#f7f1dd',
                 logging: false,
-                width: width,
-                height: height,
-                windowWidth: width,
-                windowHeight: height,
-                scrollX: 0,
-                scrollY: -window.scrollY,
-                imageTimeout: 10000,
+                width: element.scrollWidth,
+                height: element.scrollHeight,
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight,
                 onclone: function(doc) {
                     var el = doc.getElementById('captureArea');
                     if (el) {
                         el.style.transform = 'none';
                         el.style.overflow = 'visible';
-                        el.style.maxWidth = width + 'px';
-                        el.style.width = width + 'px';
-                        el.style.height = 'auto';
+                        el.style.maxWidth = '100%';
                     }
                 }
-            });
-
-            // Blob download is more reliable than canvas.toDataURL() for large screenshots.
-            canvas.toBlob(function(blob) {
-                if (!blob) throw new Error('Could not create PNG');
-                var url = URL.createObjectURL(blob);
-                var link = document.createElement('a');
-                link.href = url;
-                link.download = 'microbiome_week_' + currentWeek + '.png';
-                link.rel = 'noopener';
-                document.body.appendChild(link);
-                link.click();
-                link.remove();
-                setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
-
-                status.textContent = '✅ Screenshot saved! Week ' + currentWeek;
-                status.className = 'show success';
-                button.textContent = '✅ Done!';
+            }).then(function(canvas) {
+                try {
+                    var link = document.createElement('a');
+                    link.download = 'microbiome_week_' + currentWeek + '.png';
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    status.textContent = '✅ Downloaded! Week ' + currentWeek;
+                    status.className = 'show success';
+                    button.textContent = '✅ Done!';
+                    button.style.opacity = '1';
+                    setTimeout(function() {
+                        status.className = '';
+                        status.textContent = '';
+                        button.textContent = originalText;
+                        button.style.opacity = '1';
+                    }, 4000);
+                } catch(e) {
+                    status.textContent = '❌ Error saving';
+                    status.className = 'show error';
+                    button.textContent = '❌ Error';
+                    button.style.opacity = '1';
+                    setTimeout(function() {
+                        status.className = '';
+                        status.textContent = '';
+                        button.textContent = originalText;
+                        button.style.opacity = '1';
+                    }, 4000);
+                }
+            }).catch(function(error) {
+                console.error('Screenshot error:', error);
+                status.textContent = '❌ Error: ' + (error.message || 'unknown');
+                status.className = 'show error';
+                button.textContent = '❌ Error';
                 button.style.opacity = '1';
-                button.disabled = false;
                 setTimeout(function() {
                     status.className = '';
                     status.textContent = '';
                     button.textContent = originalText;
+                    button.style.opacity = '1';
                 }, 4000);
-            }, 'image/png');
-        } catch (error) {
-            console.error('Screenshot error:', error);
-            // Last-resort fallback: open the generated image in a new tab when the
-            // browser blocks automatic downloads.
-            try {
-                if (typeof canvas !== 'undefined' && canvas) {
-                    var fallbackUrl = canvas.toDataURL('image/png');
-                    var win = window.open(fallbackUrl, '_blank');
-                    if (win) {
-                        status.textContent = '✅ Screenshot opened — save the image';
-                        status.className = 'show success';
-                    } else {
-                        throw new Error('Popup blocked');
-                    }
-                } else {
-                    throw error;
-                }
-            } catch (fallbackError) {
-                status.textContent = '❌ Screenshot failed: ' + (error.message || 'unknown error');
-                status.className = 'show error';
-            }
-            button.textContent = '❌ Retry';
-            button.style.opacity = '1';
-            button.disabled = false;
-            setTimeout(function() {
-                status.className = '';
-                status.textContent = '';
-                button.textContent = originalText;
-            }, 5000);
-        }
+            });
+        }, 500);
     }
 
     screenshotBtn.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
@@ -1541,7 +1524,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         var total = totalRevenue();
         var share = Math.round(total * 0.15);
-        var provision = Math.round(total * 0.10);
+        var provision = Math.round(provisionRevenue() * 0.10);
         lines.push('TOTAL,,, , ,' + Math.round(total));
         lines.push('SHARE,,, , ,' + share);
         lines.push('PROVISION,,, , ,' + provision);
@@ -2112,36 +2095,35 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ ROUTE OPTIMIZATION ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
-
-        // AI-style route planning without changing any customer data:
-        // 1) Start from the entered/current location.
-        // 2) At every step choose the closest UNVISITED customer.
-        // 3) Never insert HOME before all customers have been visited.
-        // 4) Only after the final customer, go to HOME_ADDRESS.
-        // The existing getDistance() function is intentionally used so all
-        // existing distance values remain untouched.
+        if (customers.length === 1) { 
+            var result = customers.slice(); 
+            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' }); 
+            return result; 
+        }
+        
         var unvisited = customers.slice();
         var route = [];
-        var currentAddress = startAddr;
-
+        var current = { address: startAddr };
+        
         while (unvisited.length > 0) {
-            var nearestIndex = 0;
-            var nearestDistance = Infinity;
-
+            var nearest = null;
+            var nearestDist = Infinity;
+            
             for (var i = 0; i < unvisited.length; i++) {
-                var distance = getDistance(currentAddress, unvisited[i].address);
-                if (distance < nearestDistance) {
-                    nearestDistance = distance;
-                    nearestIndex = i;
+                var dist = getDistance(current.address, unvisited[i].address);
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearest = i;
                 }
             }
-
-            var nextCustomer = unvisited.splice(nearestIndex, 1)[0];
-            route.push(nextCustomer);
-            currentAddress = nextCustomer.address;
+            
+            if (nearest !== null) {
+                route.push(unvisited[nearest]);
+                current = unvisited[nearest];
+                unvisited.splice(nearest, 1);
+            }
         }
-
-        // HOME is ALWAYS the final destination.
+        
         route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' });
         return route;
     }
@@ -2242,7 +2224,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         routeDeliveries.push(HOME_ADDRESS);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 AI Nearest-Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
         html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: ' + escapeHtml(HOME_ADDRESS) + '</div>';
         
         optimizedRoute.forEach(function(c, index) {
@@ -2280,7 +2262,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         appleMapsBtn.disabled = false;
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
-        routeOptimizedInfo.textContent = '🧠 AI Route: always visits the closest unvisited customer first (' + allCustomers.length + ' stops)';
+        routeOptimizedInfo.textContent = '🧠 Nearest Neighbor: always goes to closest customer first (' + allCustomers.length + ' stops)';
         routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 ' + HOME_ADDRESS;
     }
 
@@ -2430,7 +2412,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     hummusLabel = ' ' + typeLabel + ' ' + details.hummus.size;
                 }
                 var shareLabel = details.hasCommission ? ' (13.5%)' : ' (15%)';
-                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel + shareLabel);
+                var provLabel = details.hasCommission ? ' + 10% Provision' : '';
+                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel + shareLabel + provLabel);
                 lines.push('   ' + varieties.join(' + ') + ' → ' + Math.round(totalPcs) + ' pcs' + miniLabel);
                 if (details) {
                     lines.push('   ➜ Price: ' + details.size + ' (¥' + details.totalPrice + ')');
@@ -2456,10 +2439,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             lines.push('');
             var total = totalRevenue();
             var share = Math.round(total * 0.15);
-            var provision = Math.round(total * 0.10);
+            var provRevenue = provisionRevenue();
+            var provision = Math.round(provRevenue * 0.10);
             lines.push('💰 TOTAL REVENUE: ¥' + Math.round(total));
             lines.push('👤 SHARE (15% / 13.5%): ¥' + share);
-            lines.push('💼 PROVISION (10%): ¥' + provision);
+            lines.push('💼 PROVISION (10% von ' + Math.round(provRevenue) + ' ¥ Umsatz mit Commission): ¥' + provision);
             lines.push('');
             var req = getTotalRequirements();
             var breakdown = getTimesPcsBreakdown();
@@ -2684,7 +2668,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     '<td>' + totalPcsDisplay + '</td>' +
                     '<td><strong>' + priceDisplay + ' ¥</strong></td>' +
                     '<td>' + hummusDisplay + '</td>' +
-                    '<td><span class="comm-toggle ' + shareClass + '"><span class="toggle-dot"></span><span class="toggle-label">' + shareLabel + '</span></span></td>' +
+                    '<td><span class="comm-toggle ' + shareClass + '" data-id="' + orders[0].id + '"><span class="toggle-dot"></span><span class="toggle-label">' + shareLabel + '</span></span></td>' +
                     '<td><button class="delete-btn" data-name="' + escapeHtml(name) + '" data-type="customer">✖</button></td>';
                 
                 breadTableBody.appendChild(row);
@@ -2743,6 +2727,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         });
         
+        document.querySelectorAll('.comm-toggle[data-id]').forEach(function(el) {
+            el.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                toggleCommission(id);
+            });
+        });
+        
         var total = totalRevenue();
         totalSpan.innerText = total.toFixed(0) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
@@ -2792,9 +2783,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ RESET FORM ============
     function resetForm() { 
         customerName.value = ""; 
-        customerCountry.value = ""; 
-        countryFlagDisplay.textContent = '';
         miniCheckbox.checked = false; 
+        commissionCheckbox.checked = false;
         hummusType.value = 'none';
         hummusSize.value = 'S';
         suggestionsList.className = 'suggestions-list';
@@ -2812,12 +2802,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
-        var country = customerCountry.value.trim();
         var breadVal = breadType.value;
         var sizeVal = breadSize.value;
         var isMini = miniCheckbox.checked;
         var hummusVal = hummusType.value;
         var hummusSizeVal = hummusSize.value;
+        var hasCommission = commissionCheckbox.checked;
+        
+        // Country aus Customer Database holen
+        var country = '';
+        if (customerDatabase[name] && customerDatabase[name].country) {
+            country = customerDatabase[name].country;
+        }
         
         if (breadVal === 'combo-88-200' || breadVal === 'combo-150-208') {
             var comboType = breadVal === 'combo-88-200' ? '88-200' : '150-208';
@@ -2833,6 +2829,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     breadType: item.variety,
                     size: 'S',
                     isMini: isMini,
+                    hasCommission: false,
                     week: currentWeek,
                     isAdd: false,
                     isAddBread: false,
@@ -2845,7 +2842,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
             combos.push({ id: comboId, type: comboType, name: name, country: country, isMini: isMini, price: totalPrice, items: comboItems.length });
             
-            var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S' };
+            var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S', hasCommission: false };
             updateCustomerDatabase(name, country, order);
             
             render(); saveToLocal(); resetForm(); return;
@@ -2861,6 +2858,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             breadType: breadVal, 
             size: sizeVal, 
             isMini: isMini, 
+            hasCommission: hasCommission,
             week: currentWeek, 
             isAdd: false, 
             isAddBread: false, 
@@ -2871,7 +2869,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         breadOrders.push(order);
         
-        // Hummus auch in hummusOrders speichern für die Übersicht
         if (hummusVal !== 'none') { 
             hummusOrders.push({ 
                 id: nextId++, 
@@ -2904,6 +2901,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 breadType: breadVal, 
                 size: 'S', 
                 isMini: isMini, 
+                hasCommission: false,
                 week: currentWeek, 
                 isAdd: true, 
                 isAddBread: true,
@@ -3016,8 +3014,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
     console.log("📊 Customers with multiple orders are grouped together!");
     console.log("🫒 1 Hummus per customer - size based on total pcs, type based on bread varieties!");
-    console.log("👤 Share: 13.5% for customers in database with Commission, 15% otherwise");
-    console.log("💼 10% Provision on total revenue!");
+    console.log("👤 Share: 13.5% for customers with Commission, 15% otherwise");
+    console.log("💼 10% Provision ONLY for customers with Commission!");
     console.log("💾 Auto-save to history with every change!");
     console.log("🗑️ Save & Clear Week: saves to history and clears all data!");
 })();
