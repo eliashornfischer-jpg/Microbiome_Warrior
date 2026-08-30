@@ -187,6 +187,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .customer-manager .cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
 .cm-comm-active{color:#27ae60;font-weight:700}
 .cm-comm-inactive{color:#95a5a6}
+.cm-comm-list{background:rgba(46,204,113,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.55rem;border:1px solid rgba(46,204,113,0.15)}
+.cm-comm-list .cm-comm-item{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+.cm-comm-list .cm-comm-item:last-child{border-bottom:none}
+.cm-comm-list .cm-comm-item .name{font-weight:600;color:#27ae60}
+.cm-comm-list .cm-comm-item .detail{color:#6b4a1c;font-size:0.5rem}
+.cm-comm-list .cm-comm-empty{color:#b88c48;text-align:center;padding:4px;font-size:0.5rem}
 .provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
 .provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
 .provision-row .provision-label{font-weight:700;color:#e74c3c}
@@ -284,8 +290,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     <input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
     <div class="suggestions-list" id="suggestionsList"></div>
 </div>
-
-<!-- Country entfernt - kommt jetzt aus Customer Manager -->
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div>
@@ -507,12 +511,19 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     </div>
     <div class="cm-body" id="customerManagerBody">
         <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
+        
+        <!-- Commission List -->
+        <div class="cm-comm-list" id="commissionList">
+            <div style="font-weight:700;font-size:0.55rem;color:#27ae60;margin-bottom:4px;">💰 Customers with Commission:</div>
+            <div id="commissionListItems"><div class="cm-comm-empty">No customers with commission</div></div>
+        </div>
+        
         <div class="cm-row">
             <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
             <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
             <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
-                <option value="true">💰 Yes (Share 13.5% + Provision 10%)</option>
-                <option value="false">❌ No (Share 15%, no Provision)</option>
+                <option value="true">💰 Yes</option>
+                <option value="false">❌ No</option>
             </select>
             <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
         </div>
@@ -791,6 +802,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var cmNameInput = $("cmNameInput"), cmCountryInput = $("cmCountryInput");
     var cmCommissionSelect = $("cmCommissionSelect"), addCustomerBtn = $("addCustomerBtn");
     var customerManagerList = $("customerManagerList"), customerCount = $("customerCount");
+    var commissionListItems = $("commissionListItems");
 
     // ============ CUSTOMER MANAGER ============
     function loadCustomerDatabase() {
@@ -805,6 +817,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             customerDatabase = {};
         }
         renderCustomerManager();
+        renderCommissionList();
     }
 
     function saveCustomerDatabase() {
@@ -812,6 +825,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             localStorage.setItem("microbiome_customers", JSON.stringify(customerDatabase));
         } catch(e) {}
         renderCustomerManager();
+        renderCommissionList();
     }
 
     function renderCustomerManager() {
@@ -839,6 +853,28 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     }
                 });
             });
+        }
+    }
+
+    function renderCommissionList() {
+        var keys = Object.keys(customerDatabase);
+        var commCustomers = keys.filter(function(name) {
+            return customerDatabase[name] && customerDatabase[name].defaultCommission === true;
+        });
+        
+        if (commCustomers.length === 0) {
+            commissionListItems.innerHTML = '<div class="cm-comm-empty">No customers with commission</div>';
+        } else {
+            var html = '';
+            commCustomers.forEach(function(name) {
+                var data = customerDatabase[name];
+                var flag = getCountryFlag(data.country || '');
+                html += '<div class="cm-comm-item">' +
+                    '<span class="name">' + escapeHtml(name) + '</span>' +
+                    '<span class="detail">' + flag + ' ' + escapeHtml(data.country || '') + ' · ' + (data.totalOrders || 0) + ' orders</span>' +
+                    '</div>';
+            });
+            commissionListItems.innerHTML = html;
         }
     }
 
@@ -2628,13 +2664,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var rowClass = isMulti ? 'multi-order-row' : '';
                 row.className = rowClass;
                 
+                // COMMISSION HIGHLIGHT: farbliche Hervorhebung für Kunden mit Commission
+                var hasCommission = details.hasCommission || false;
+                var shareClass = hasCommission ? 'active' : 'inactive';
+                var shareLabel = hasCommission ? '13.5%' : '15%';
+                
+                // Zellen-Inhalte
                 var varietyDisplay = orders.length === 1 ? orders[0].breadType : orders.map(function(o) { return o.breadType; }).join(', ');
                 var sizeDisplay = details.size + (isMulti ? ' (' + details.totalPcs + ' stk)' : '');
                 var totalPcsDisplay = Math.round(details.totalPcs);
                 var priceDisplay = details.totalPrice.toFixed(0);
-                var hasCommission = details.hasCommission || false;
-                var shareClass = hasCommission ? 'active' : 'inactive';
-                var shareLabel = hasCommission ? '13.5%' : '15%';
                 var miniTag = details.isMini ? ' 🥖' : '';
                 var multiBadge = isMulti ? ' <span class="multi-badge">📦 ' + orders.length + 'x</span>' : '';
                 
@@ -2659,9 +2698,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var countryDisplay = orders[0].country || '—';
                 var flag = getCountryFlag(countryDisplay);
                 
+                // NAME mit Commission-Highlight
+                var nameDisplay = escapeHtml(name) + multiBadge;
+                if (hasCommission) {
+                    nameDisplay = '💰 ' + nameDisplay;
+                }
+                
+                // Zeilen-Highlight für Commission
+                var rowStyle = hasCommission ? 'style="background:#fef9e7;border-left:4px solid #c0392b;"' : '';
+                
                 row.innerHTML = 
                     '<td>#' + displayIndex + '</td>' +
-                    '<td style="text-align:left">' + escapeHtml(name) + multiBadge + '</td>' +
+                    '<td style="text-align:left;font-weight:' + (hasCommission ? '800' : '400') + ';color:' + (hasCommission ? '#c0392b' : 'inherit') + ';">' + nameDisplay + '</td>' +
                     '<td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td>' +
                     '<td>' + varietyDisplay + miniTag + '</td>' +
                     '<td>' + sizeDisplay + '</td>' +
@@ -2809,7 +2857,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var hummusSizeVal = hummusSize.value;
         var hasCommission = commissionCheckbox.checked;
         
-        // Country aus Customer Database holen
         var country = '';
         if (customerDatabase[name] && customerDatabase[name].country) {
             country = customerDatabase[name].country;
