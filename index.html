@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
+/* === ALLES CSS === */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -171,6 +172,21 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .address-manager .am-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0}
 .address-manager .am-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700}
 .address-manager .am-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
+.customer-manager{font-size:0.6rem;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px dashed #d4c090}
+.customer-manager .cm-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:2px 0}
+.customer-manager .cm-header .cm-label{font-weight:700;color:#6b4a1c;font-size:0.55rem}
+.customer-manager .cm-header .cm-toggle{background:none;border:none;color:#8a6a2a;font-size:0.5rem;cursor:pointer;padding:2px 6px}
+.customer-manager .cm-body{display:none;margin-top:4px}
+.customer-manager .cm-body.open{display:block}
+.customer-manager .cm-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:3px}
+.customer-manager .cm-row input{flex:1;min-width:60px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
+.customer-manager .cm-row select{flex:0.7;min-width:50px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
+.customer-manager .cm-row button{padding:4px 10px;font-size:0.55rem;margin:0;border-radius:12px;width:auto}
+.customer-manager .cm-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0}
+.customer-manager .cm-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700}
+.customer-manager .cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
+.cm-comm-active{color:#27ae60;font-weight:700}
+.cm-comm-inactive{color:#95a5a6}
 .auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center}
 .route-no-distance{font-size:0.55rem;color:#8a6a2a;margin-top:4px;text-align:center}
 .address-stats{font-size:0.5rem;color:#8a6a2a}
@@ -237,6 +253,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
 .provision-row .provision-label{font-weight:700;color:#e74c3c}
 .provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
+.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
+.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.share-row .share-label{font-weight:700;color:#27ae60}
+.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
+.advanced-toggle{background:none;border:none;color:#8a6a2a;font-size:0.55rem;cursor:pointer;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.5);margin:4px 0;text-align:center;width:auto;font-weight:700;transition:all 0.2s ease}
+.advanced-toggle:hover{background:rgba(226,170,84,0.15)}
+.advanced-toggle.active{background:#e2aa54;color:#2a1a08}
+.advanced-fields{display:none;padding-top:8px;border-top:1px dashed #d4c090;margin-top:8px}
+.advanced-fields.show{display:block}
 @media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
 </style>
 </head>
@@ -265,9 +290,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     <div class="suggestions-list" id="suggestionsList"></div>
 </div>
 
-<label>🌍 Country (e.g. Germany, China, USA)</label>
-<input id="customerCountry" placeholder="Type country name..." autocomplete="off" style="text-transform:capitalize;">
-<div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
+<!-- ADVANCED TOGGLE -->
+<button class="advanced-toggle" id="advancedToggle">⚙️ Advanced Settings ▼</button>
+
+<div class="advanced-fields" id="advancedFields">
+    <label>🌍 Country (e.g. Germany, China, USA)</label>
+    <input id="customerCountry" placeholder="Type country name..." autocomplete="off" style="text-transform:capitalize;">
+    <div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
+</div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div>
@@ -295,11 +325,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         <option value="XL+">XL+ (12 pcs) no hummus</option>
     </select>
 </div>
-</div>
-
-<div class="commission-order-row">
-<label><input type="checkbox" id="commissionCheckbox"> 💰 Commission active</label>
-<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
 </div>
 
 <div class="checkbox-group" style="margin-top:4px;">
@@ -334,6 +359,29 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
     <button id="resetTableBtn" class="btn-reset" style="flex:1;min-width:120px;">🗑️ Delete All</button>
     <button id="saveHistoryBtn" class="btn-save-history">💾 Save & Clear Week</button>
+</div>
+</div>
+
+<!-- ====== CUSTOMER MANAGER ====== -->
+<div class="card">
+<div class="customer-manager">
+    <div class="cm-header" id="customerManagerToggle">
+        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
+        <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
+    </div>
+    <div class="cm-body" id="customerManagerBody">
+        <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
+        <div class="cm-row">
+            <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
+            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
+            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
+                <option value="true">💰 Yes (Share 13.5%)</option>
+                <option value="false">❌ No (Share 15%)</option>
+            </select>
+            <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
+        </div>
+        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
+    </div>
 </div>
 </div>
 
@@ -377,7 +425,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div style="display:flex;justify-content:space-between;align-items:center;"><h2>📋 Orders (CNY)</h2><span class="week-badge" id="weekBadge">Week 27</span></div>
 
 <div class="table-title bread-title">🥖 Bread Orders</div>
-<div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍 Country</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Hummus</th><th class="bread-th">Comm</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
+<div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍 Country</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Hummus</th><th class="bread-th">Share</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
 
 <div class="table-title" style="color:#b87a2a;margin-top:12px;">📊 BREAD SUMMARY (grouped by variety)</div>
 <div class="scrollable"><table><thead><th class="summary-th">Variety</th><th class="summary-th">Total Orders</th><th class="summary-th">Total pcs</th><th class="summary-th">Mini</th></thead><tbody id="breadSummaryBody"><tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr></tbody></table></div>
@@ -411,18 +459,24 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <div class="salary-container">
     <div class="salary-header">
-        <span class="salary-title">💰 SALARY <span class="salary-percent" id="salaryPercentDisplay">(15%)</span></span>
+        <span class="salary-title">💰 FINANCIAL OVERVIEW</span>
         <button class="btn-copy" id="salaryCopyBtn" onclick="copySalary()">📋 Copy</button>
     </div>
     <div id="salaryContent">
         <div class="salary-row">
-            <span class="salary-label">👤 Salary (15%)</span>
-            <span class="salary-amount" id="salaryAmount">0 <span class="currency">¥</span></span>
+            <span class="salary-label">👤 Share (15% / 13.5%)</span>
+            <span class="salary-amount" id="shareAmount">0 <span class="currency">¥</span></span>
         </div>
         <div class="provision-container">
             <div class="provision-row">
-                <span class="provision-label">💼 Provision (10%)</span>
+                <span class="provision-label">💼 Provision (10% of all revenue)</span>
                 <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
+            </div>
+        </div>
+        <div class="share-container">
+            <div class="share-row">
+                <span class="share-label">📊 Total Revenue</span>
+                <span class="share-amount" id="totalRevenueDisplay">0 <span class="currency">¥</span></span>
             </div>
         </div>
     </div>
@@ -493,7 +547,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="route-empty">Add orders → route will auto-optimize</div>
 </div>
 
-<div class="route-optimized" id="routeOptimizedInfo">🧠 Nearest-Neighbor algorithm - always goes to closest customer first</div>
+<div class="route-optimized" id="routeOptimizedInfo">🧠 AI Route - always goes to the closest unvisited customer first</div>
 <div class="route-compare" id="routeCompareInfo"></div>
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
@@ -560,6 +614,30 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     customerCountryInput.addEventListener('input', function() {
         var flag = getCountryFlag(this.value);
         countryFlagDisplay.textContent = flag ? flag + ' ' + this.value.trim() : (this.value.trim() ? '🌍 ' + this.value.trim() : '');
+    });
+
+    // ============ ADVANCED TOGGLE ============
+    var advancedToggle = document.getElementById('advancedToggle');
+    var advancedFields = document.getElementById('advancedFields');
+    var advancedOpen = false;
+    
+    advancedToggle.addEventListener('click', function() {
+        advancedOpen = !advancedOpen;
+        advancedFields.classList.toggle('show');
+        this.textContent = advancedOpen ? '⚙️ Advanced Settings ▲' : '⚙️ Advanced Settings ▼';
+        this.classList.toggle('active');
+    });
+
+    // ============ CUSTOMER MANAGER TOGGLE ============
+    var cmToggle = document.getElementById('customerManagerToggle');
+    var cmBody = document.getElementById('customerManagerBody');
+    var cmToggleBtn = document.getElementById('customerManagerToggleBtn');
+    var cmOpen = false;
+    
+    cmToggle.addEventListener('click', function() {
+        cmOpen = !cmOpen;
+        cmBody.classList.toggle('open');
+        cmToggleBtn.textContent = cmOpen ? '▲ Hide' : '▼ Show';
     });
 
     // ============ COMBO ============
@@ -682,7 +760,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var addBreadSummaryBody = $("addBreadSummaryBody"), hummusSummaryBody = $("hummusSummaryBody");
     var hummusTableBody = $("hummusTableBody"), totalSpan = $("totalPriceSum"), hummusCountSpan = $("hummusCount");
     var weekNumber = $("weekNumber"), weekBadge = $("weekBadge");
-    var commissionCheckbox = $("commissionCheckbox");
     var addBreadType = $("addBreadType"), addBreadMiniCheckbox = $("addBreadMiniCheckbox");
     var addBreadCountDisplay = $("addBreadCountDisplay"), addBreadMinusBtn = $("addBreadMinusBtn");
     var addBreadPlusBtn = $("addBreadPlusBtn"), addBreadAddBtn = $("addBreadAddBtn");
@@ -690,8 +767,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var addHummusSize = $("addHummusSize"), addHummusCountDisplay = $("addHummusCountDisplay");
     var addHummusMinusBtn = $("addHummusMinusBtn"), addHummusPlusBtn = $("addHummusPlusBtn");
     var addHummusAddBtn = $("addHummusAddBtn"), addHummusOrdersList = $("addHummusOrdersList");
-    var salaryAmount = $("salaryAmount"), provisionAmount = $("provisionAmount");
-    var salaryPercentDisplay = $("salaryPercentDisplay");
+    var shareAmount = $("shareAmount"), provisionAmount = $("provisionAmount");
+    var totalRevenueDisplay = $("totalRevenueDisplay");
     var salaryCopyFeedback = $("salaryCopyFeedback"), routeStart = $("routeStart");
     var routeResult = $("routeResult"), appleMapsBtn = $("appleMapsBtn"), autoRouteList = $("autoRouteList");
     var addressList = $("addressList"), addressNameInput = $("addressNameInput");
@@ -718,8 +795,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var locateBtn = $("locateBtn"), locationStatus = $("locationStatus");
     var suggestionsList = $("suggestionsList");
     var autoSaveNotification = $("autoSaveNotification");
+    var cmNameInput = $("cmNameInput"), cmCountryInput = $("cmCountryInput");
+    var cmCommissionSelect = $("cmCommissionSelect"), addCustomerBtn = $("addCustomerBtn");
+    var customerManagerList = $("customerManagerList"), customerCount = $("customerCount");
 
-    // ============ CUSTOMER DATABASE ============
+    // ============ CUSTOMER MANAGER ============
     function loadCustomerDatabase() {
         try {
             var data = localStorage.getItem("microbiome_customers");
@@ -731,58 +811,68 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         } catch(e) {
             customerDatabase = {};
         }
+        renderCustomerManager();
     }
 
     function saveCustomerDatabase() {
         try {
             localStorage.setItem("microbiome_customers", JSON.stringify(customerDatabase));
         } catch(e) {}
+        renderCustomerManager();
     }
 
-    function updateCustomerDatabase(name, country, order) {
+    function renderCustomerManager() {
+        var keys = Object.keys(customerDatabase);
+        customerCount.textContent = '(' + keys.length + ' entries)';
+        if (keys.length === 0) {
+            customerManagerList.innerHTML = '<div class="cm-empty">No customers saved yet</div>';
+        } else {
+            var html = '';
+            keys.forEach(function(name) {
+                var data = customerDatabase[name];
+                var country = data.country || '';
+                var flag = getCountryFlag(country);
+                var shareLabel = data.defaultCommission ? '13.5%' : '15%';
+                var commClass = data.defaultCommission ? 'cm-comm-active' : 'cm-comm-inactive';
+                html += '<span class="cm-tag">' + escapeHtml(name) + ' ' + flag + ' ' + escapeHtml(country) + ' <span class="' + commClass + '">Share ' + shareLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
+            });
+            customerManagerList.innerHTML = html;
+            document.querySelectorAll('.cm-tag .del').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var name = this.dataset.name;
+                    if (confirm('Delete customer ' + name + '?')) {
+                        delete customerDatabase[name];
+                        saveCustomerDatabase();
+                    }
+                });
+            });
+        }
+    }
+
+    function addCustomerManually() {
+        var name = capitalizeName(cmNameInput.value.trim());
+        if (!name) { alert('Please enter a name.'); return; }
+        var country = cmCountryInput.value.trim();
+        var hasCommission = cmCommissionSelect.value === 'true';
+        
         if (!customerDatabase[name]) {
             customerDatabase[name] = {
                 country: country || '',
                 lastOrders: [],
                 lastWeek: currentWeek,
                 totalOrders: 0,
-                lastHummus: null
+                lastHummus: null,
+                defaultCommission: hasCommission
             };
+        } else {
+            if (country) customerDatabase[name].country = country;
+            customerDatabase[name].defaultCommission = hasCommission;
         }
-        
-        if (country && !customerDatabase[name].country) {
-            customerDatabase[name].country = country;
-        }
-        
-        if (order.hummusType && order.hummusType !== 'none') {
-            customerDatabase[name].lastHummus = {
-                type: order.hummusType,
-                size: order.hummusSize || 'S'
-            };
-        }
-        
-        var orderEntry = {
-            week: currentWeek,
-            breadType: order.breadType,
-            size: order.size,
-            isMini: order.isMini || false,
-            hummusType: order.hummusType || 'none',
-            hummusSize: order.hummusSize || 'S'
-        };
-        
-        if (!customerDatabase[name].lastOrders) {
-            customerDatabase[name].lastOrders = [];
-        }
-        
-        customerDatabase[name].lastOrders.push(orderEntry);
-        if (customerDatabase[name].lastOrders.length > 10) {
-            customerDatabase[name].lastOrders.shift();
-        }
-        
-        customerDatabase[name].totalOrders = (customerDatabase[name].totalOrders || 0) + 1;
-        customerDatabase[name].lastWeek = currentWeek;
         
         saveCustomerDatabase();
+        cmNameInput.value = '';
+        cmCountryInput.value = '';
+        cmNameInput.focus();
     }
 
     function getCustomerSuggestions(input) {
@@ -801,6 +891,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     if (last.hummusType && last.hummusType !== 'none') {
                         lastOrderText += ' + 🫒';
                     }
+                    if (last.hasCommission) {
+                        lastOrderText += ' 💰';
+                    }
                 }
                 suggestions.push({
                     name: name,
@@ -808,7 +901,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     lastOrder: lastOrderText,
                     totalOrders: data.totalOrders || 0,
                     lastWeek: data.lastWeek || 0,
-                    lastHummus: data.lastHummus || null
+                    lastHummus: data.lastHummus || null,
+                    defaultCommission: data.defaultCommission || false
                 });
             }
         }
@@ -830,13 +924,15 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var isCurrentWeek = s.lastWeek === currentWeek;
             var weekBadge = isCurrentWeek ? ' <span class="suggestion-badge">🔥 aktuell</span>' : '';
             var hummusIcon = s.lastHummus ? ' 🫒' : '';
-            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-country="' + escapeHtml(s.country) + '" data-hummus-type="' + (s.lastHummus ? s.lastHummus.type : '') + '" data-hummus-size="' + (s.lastHummus ? s.lastHummus.size : '') + '">' +
+            var commIcon = s.defaultCommission ? ' 💰' : '';
+            var flag = getCountryFlag(s.country);
+            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-country="' + escapeHtml(s.country) + '" data-hummus-type="' + (s.lastHummus ? s.lastHummus.type : '') + '" data-hummus-size="' + (s.lastHummus ? s.lastHummus.size : '') + '" data-commission="' + (s.defaultCommission ? 'true' : 'false') + '">' +
                 '<div>' +
                 '<span class="suggestion-name">' + escapeHtml(s.name) + '</span>' +
-                ' <span style="font-size:0.5rem;color:#8a6a2a;">' + (s.country || '') + '</span>' +
+                ' <span style="font-size:0.5rem;color:#8a6a2a;">' + flag + ' ' + (s.country || '') + '</span>' +
                 weekBadge +
                 '</div>' +
-                '<div class="suggestion-detail">' + (s.lastOrder || 'Neu') + hummusIcon + ' · ' + s.totalOrders + 'x</div>' +
+                '<div class="suggestion-detail">' + (s.lastOrder || 'Neu') + hummusIcon + commIcon + ' · ' + s.totalOrders + 'x</div>' +
                 '</div>';
         });
         
@@ -849,18 +945,19 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var country = this.dataset.country;
                 var hummusType = this.dataset.hummusType;
                 var hummusSize = this.dataset.hummusSize;
+                var commission = this.dataset.commission === 'true';
                 
                 customerName.value = name;
                 customerCountry.value = country || '';
                 suggestionsList.className = 'suggestions-list';
                 customerName.focus();
                 
-                autoFillLastOrder(name, hummusType, hummusSize);
+                autoFillLastOrder(name, hummusType, hummusSize, commission);
             });
         });
     }
 
-    function autoFillLastOrder(name, hummusType, hummusSize) {
+    function autoFillLastOrder(name, hummusType, hummusSize, commission) {
         if (!customerDatabase[name] || !customerDatabase[name].lastOrders) return;
         
         var lastOrders = customerDatabase[name].lastOrders;
@@ -871,10 +968,61 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         breadSize.value = last.size || 'S';
         miniCheckbox.checked = last.isMini || false;
         
+        // Commission wird aus der Datenbank geladen, aber nicht als Checkbox angezeigt
+        // Sie wird nur für die Berechnung verwendet
+        
         if (hummusType && hummusType !== 'none') {
             hummusType.value = hummusType;
             hummusSize.value = hummusSize || 'S';
         }
+    }
+
+    function updateCustomerDatabase(name, country, order) {
+        if (!customerDatabase[name]) {
+            customerDatabase[name] = {
+                country: country || '',
+                lastOrders: [],
+                lastWeek: currentWeek,
+                totalOrders: 0,
+                lastHummus: null,
+                defaultCommission: false
+            };
+        }
+        
+        if (country && !customerDatabase[name].country) {
+            customerDatabase[name].country = country;
+        }
+        
+        if (order.hummusType && order.hummusType !== 'none') {
+            customerDatabase[name].lastHummus = {
+                type: order.hummusType,
+                size: order.hummusSize || 'S'
+            };
+        }
+        
+        var orderEntry = {
+            week: currentWeek,
+            breadType: order.breadType,
+            size: order.size,
+            isMini: order.isMini || false,
+            hummusType: order.hummusType || 'none',
+            hummusSize: order.hummusSize || 'S',
+            hasCommission: false
+        };
+        
+        if (!customerDatabase[name].lastOrders) {
+            customerDatabase[name].lastOrders = [];
+        }
+        
+        customerDatabase[name].lastOrders.push(orderEntry);
+        if (customerDatabase[name].lastOrders.length > 10) {
+            customerDatabase[name].lastOrders.shift();
+        }
+        
+        customerDatabase[name].totalOrders = (customerDatabase[name].totalOrders || 0) + 1;
+        customerDatabase[name].lastWeek = currentWeek;
+        
+        saveCustomerDatabase();
     }
 
     // ============ STÜCKPREISE (Multi-Order) ============
@@ -919,42 +1067,95 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(totalPrice);
     }
 
-    // ============ HUMMUS LOGIK (KORREKT - 1 Hummus pro Kunde) ============
+    // ============ FINANCIAL OVERVIEW ============
+    function updateFinancialDisplay() {
+        var totalRevenue = 0;
+        var customers = new Set();
+        var totalWithShare = 0;
+        var totalWithoutShare = 0;
+        var shareCustomers = 0;
+        var normalCustomers = 0;
+        
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo) {
+                customers.add(o.name);
+            }
+        });
+        
+        customers.forEach(function(name) {
+            var price = getCustomerPrice(name);
+            totalRevenue += price;
+            
+            // Prüfen ob Kunde in der Datenbank ist und Commission hat
+            var hasCommission = false;
+            if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
+                hasCommission = true;
+            }
+            
+            if (hasCommission) {
+                totalWithShare += price;
+                shareCustomers++;
+            } else {
+                totalWithoutShare += price;
+                normalCustomers++;
+            }
+        });
+        
+        // Share Berechnung: 13.5% für Kunden mit Commission, 15% für ohne
+        var share = (totalWithShare * 0.135) + (totalWithoutShare * 0.15);
+        var provision = totalRevenue * 0.10;
+        
+        shareAmount.textContent = Math.round(share);
+        provisionAmount.textContent = Math.round(provision);
+        totalRevenueDisplay.textContent = Math.round(totalRevenue);
+        
+        // Status Info
+        var statusInfo = '';
+        if (shareCustomers > 0 && normalCustomers > 0) {
+            statusInfo = ' (mix: ' + shareCustomers + '×13.5% + ' + normalCustomers + '×15%)';
+        } else if (shareCustomers > 0) {
+            statusInfo = ' (13.5%)';
+        } else if (normalCustomers > 0) {
+            statusInfo = ' (15%)';
+        }
+        
+        // Update Share label
+        var shareLabel = document.querySelector('.salary-row .salary-label');
+        if (shareLabel) {
+            shareLabel.textContent = '👤 Share' + statusInfo;
+        }
+    }
+
+    // ============ HUMMUS LOGIK ============
     function getCustomerHummus(name) {
-        // Alle Bestellungen des Kunden holen
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
         });
         
         if (orders.length === 0) return null;
         
-        // Prüfen ob der Kunde überhaupt Hummus haben möchte (mindestens eine Bestellung hat Hummus ausgewählt)
         var hasHummus = orders.some(function(o) { 
             return o.hummusType && o.hummusType !== 'none'; 
         });
         
         if (!hasHummus) return null;
         
-        // 1. Gesamtstückzahl ALLER Bestellungen berechnen
         var totalPcs = 0;
         orders.forEach(function(o) {
             totalPcs += getPcsForOrder(o);
         });
         
-        // 2. EINEN Hummus in der passenden Größe (basierend auf Gesamtstückzahl)
         var hummusSize = 'S';
         if (totalPcs >= 4 && totalPcs <= 6) hummusSize = 'M';
         else if (totalPcs >= 7 && totalPcs <= 9) hummusSize = 'L';
         else if (totalPcs >= 10) hummusSize = 'XL';
         
-        // 3. Hummus Art basierend auf Brotsorten (188/200/208 → Ying&Yang)
         var hasHighVariety = orders.some(function(o) {
             return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er';
         });
         
         var hummusType = hasHighVariety ? 'yingyang' : 'hummus';
         
-        // NUR EINEN HUMMUS zurückgeben!
         return {
             type: hummusType,
             size: hummusSize
@@ -1001,8 +1202,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         }
         
-        // NUR EINEN HUMMUS pro Kunde!
         var hummus = getCustomerHummus(name);
+        
+        // Prüfen ob Kunde in der Datenbank ist und Commission hat
+        var hasCommission = false;
+        if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
+            hasCommission = true;
+        }
         
         return {
             totalPcs: totalPcs,
@@ -1011,16 +1217,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             details: details,
             orderCount: orders.length,
             isMini: orders[0].isMini || false,
-            hummus: hummus  // NUR EIN HUMMUS!
+            hummus: hummus,
+            hasCommission: hasCommission
         };
     }
 
-    // ============ COPY SALARY ============
+    // ============ COPY FINANCIAL ============
     window.copySalary = function() {
-        var total = totalPriceAll();
-        var salary = Math.round(total * 0.15);
+        var total = totalRevenue();
+        var share = Math.round(total * 0.15);
         var provision = Math.round(total * 0.10);
-        var text = '💰 Salary: ' + salary + ' ¥\n💼 Provision: ' + provision + ' ¥\n📊 Total Revenue: ' + total + ' ¥';
+        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10%): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
         var btn = document.getElementById('salaryCopyBtn');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() {
@@ -1039,6 +1246,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     };
 
+    function totalRevenue() {
+        var sum = 0;
+        var customers = new Set();
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread) {
+                customers.add(o.name);
+            }
+        });
+        customers.forEach(function(name) {
+            sum += getCustomerPrice(name);
+        });
+        return sum;
+    }
+
     // ============ TOGGLES ============
     addressToggle.addEventListener('click', function() {
         addressBookOpen = !addressBookOpen;
@@ -1052,10 +1273,32 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     });
 
     // ============ CAPITALIZE ============
-    function capitalizeName(input) { if (!input) return ''; return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase(); }
-    customerName.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
-    addressNameInput.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
-    pickupNameInput.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
+    function capitalizeName(input) { 
+        if (!input) return ''; 
+        return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase(); 
+    }
+    
+    // ============ LOWER CASE FOR ADDRESS ============
+    function lowerCaseAddress(input) {
+        if (!input) return '';
+        return input.toLowerCase();
+    }
+    
+    customerName.addEventListener('blur', function() { 
+        this.value = capitalizeName(this.value.trim()); 
+    });
+    addressNameInput.addEventListener('blur', function() { 
+        this.value = capitalizeName(this.value.trim()); 
+    });
+    pickupNameInput.addEventListener('blur', function() { 
+        this.value = capitalizeName(this.value.trim()); 
+    });
+    cmNameInput.addEventListener('blur', function() { 
+        this.value = capitalizeName(this.value.trim()); 
+    });
+    addressAddrInput.addEventListener('blur', function() {
+        this.value = lowerCaseAddress(this.value.trim());
+    });
 
     // ============ COUNT CONTROLS ============
     addBreadMinusBtn.addEventListener('click', function() { if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; } });
@@ -1092,81 +1335,125 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     });
 
     // ============ SCREENSHOT ============
-    function takeScreenshot(btn, statusEl) {
+    async function takeScreenshot(btn, statusEl) {
         var element = document.getElementById('captureArea');
         var status = statusEl || screenshotStatus;
         var button = btn || screenshotBtn;
         var originalText = button.textContent;
-        
+
+        if (!element) {
+            if (status) { status.className = 'show error'; status.textContent = '❌ Capture area not found'; }
+            return;
+        }
+        if (typeof html2canvas !== 'function') {
+            if (status) { status.className = 'show error'; status.textContent = '❌ Screenshot library not loaded'; }
+            return;
+        }
+
         status.className = 'show';
         status.textContent = '⏳ Generating...';
         button.textContent = '⏳ Loading...';
         button.style.opacity = '0.7';
-        
-        setTimeout(function() {
-            html2canvas(element, {
-                scale: 2,
+        button.disabled = true;
+
+        var canvas = null;
+        try {
+            // Wait for the browser to finish layout/paint and fonts before capturing.
+            if (document.fonts && document.fonts.ready) await document.fonts.ready;
+            var images = Array.prototype.slice.call(element.querySelectorAll('img'));
+            await Promise.all(images.map(function(img) {
+                if (img.complete) return Promise.resolve();
+                return new Promise(function(resolve) {
+                    img.addEventListener('load', resolve, {once:true});
+                    img.addEventListener('error', resolve, {once:true});
+                    setTimeout(resolve, 2500);
+                });
+            }));
+            await new Promise(function(resolve) { requestAnimationFrame(function() { requestAnimationFrame(resolve); }); });
+
+            var width = Math.max(element.scrollWidth, element.offsetWidth, 1);
+            var height = Math.max(element.scrollHeight, element.offsetHeight, 1);
+            // Scale 1 is deliberately used here: it avoids canvas-size failures on phones
+            // while still producing a full-resolution screenshot of the app area.
+            canvas = await html2canvas(element, {
+                scale: 1,
                 useCORS: true,
-                allowTaint: true,
+                allowTaint: false,
                 backgroundColor: '#f7f1dd',
                 logging: false,
-                width: element.scrollWidth,
-                height: element.scrollHeight,
-                windowWidth: element.scrollWidth,
-                windowHeight: element.scrollHeight,
+                width: width,
+                height: height,
+                windowWidth: width,
+                windowHeight: height,
+                scrollX: 0,
+                scrollY: -window.scrollY,
+                imageTimeout: 10000,
                 onclone: function(doc) {
                     var el = doc.getElementById('captureArea');
                     if (el) {
                         el.style.transform = 'none';
                         el.style.overflow = 'visible';
-                        el.style.maxWidth = '100%';
+                        el.style.maxWidth = width + 'px';
+                        el.style.width = width + 'px';
+                        el.style.height = 'auto';
                     }
                 }
-            }).then(function(canvas) {
-                try {
-                    var link = document.createElement('a');
-                    link.download = 'microbiome_week_' + currentWeek + '.png';
-                    link.href = canvas.toDataURL('image/png');
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    status.textContent = '✅ Downloaded! Week ' + currentWeek;
-                    status.className = 'show success';
-                    button.textContent = '✅ Done!';
-                    button.style.opacity = '1';
-                    setTimeout(function() {
-                        status.className = '';
-                        status.textContent = '';
-                        button.textContent = originalText;
-                        button.style.opacity = '1';
-                    }, 4000);
-                } catch(e) {
-                    status.textContent = '❌ Error saving';
-                    status.className = 'show error';
-                    button.textContent = '❌ Error';
-                    button.style.opacity = '1';
-                    setTimeout(function() {
-                        status.className = '';
-                        status.textContent = '';
-                        button.textContent = originalText;
-                        button.style.opacity = '1';
-                    }, 4000);
-                }
-            }).catch(function(error) {
-                console.error('Screenshot error:', error);
-                status.textContent = '❌ Error: ' + (error.message || 'unknown');
-                status.className = 'show error';
-                button.textContent = '❌ Error';
+            });
+
+            // Blob download is more reliable than canvas.toDataURL() for large screenshots.
+            canvas.toBlob(function(blob) {
+                if (!blob) throw new Error('Could not create PNG');
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'microbiome_week_' + currentWeek + '.png';
+                link.rel = 'noopener';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
+
+                status.textContent = '✅ Screenshot saved! Week ' + currentWeek;
+                status.className = 'show success';
+                button.textContent = '✅ Done!';
                 button.style.opacity = '1';
+                button.disabled = false;
                 setTimeout(function() {
                     status.className = '';
                     status.textContent = '';
                     button.textContent = originalText;
-                    button.style.opacity = '1';
                 }, 4000);
-            });
-        }, 500);
+            }, 'image/png');
+        } catch (error) {
+            console.error('Screenshot error:', error);
+            // Last-resort fallback: open the generated image in a new tab when the
+            // browser blocks automatic downloads.
+            try {
+                if (typeof canvas !== 'undefined' && canvas) {
+                    var fallbackUrl = canvas.toDataURL('image/png');
+                    var win = window.open(fallbackUrl, '_blank');
+                    if (win) {
+                        status.textContent = '✅ Screenshot opened — save the image';
+                        status.className = 'show success';
+                    } else {
+                        throw new Error('Popup blocked');
+                    }
+                } else {
+                    throw error;
+                }
+            } catch (fallbackError) {
+                status.textContent = '❌ Screenshot failed: ' + (error.message || 'unknown error');
+                status.className = 'show error';
+            }
+            button.textContent = '❌ Retry';
+            button.style.opacity = '1';
+            button.disabled = false;
+            setTimeout(function() {
+                status.className = '';
+                status.textContent = '';
+                button.textContent = originalText;
+            }, 5000);
+        }
     }
 
     screenshotBtn.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
@@ -1221,8 +1508,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             date: new Date().toISOString(),
             orders: breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; }),
             combos: combos,
-            totalRevenue: totalPriceAll(),
-            salary: salaryAmount.textContent,
+            totalRevenue: totalRevenue(),
+            share: shareAmount.textContent,
             provision: provisionAmount.textContent,
             preparation: getTotalRequirements()
         };
@@ -1252,9 +1539,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var mini = c.isMini ? 'Yes' : 'No';
             lines.push([c.name + ' (Combo)',c.country||'',typeLabel,'Combo',mini,'8',Math.round(c.price),'none'].join(','));
         });
-        lines.push('TOTAL,,, , ,' + Math.round(totalPriceAll()));
-        lines.push('SALARY,,, , ,' + salaryAmount.textContent);
-        lines.push('PROVISION,,, , ,' + provisionAmount.textContent);
+        var total = totalRevenue();
+        var share = Math.round(total * 0.15);
+        var provision = Math.round(total * 0.10);
+        lines.push('TOTAL,,, , ,' + Math.round(total));
+        lines.push('SHARE,,, , ,' + share);
+        lines.push('PROVISION,,, , ,' + provision);
         var csv = lines.join('\n');
         var blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
         var url = URL.createObjectURL(blob);
@@ -1386,12 +1676,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             return false;
         }
         
-        var totalRevenue = 0;
+        var totalRevenueValue = 0;
         var totalPcs = 0;
         var customers = new Set();
         
         orders.forEach(function(o) {
-            totalRevenue += getCustomerPrice(o.name);
+            totalRevenueValue += getCustomerPrice(o.name);
             totalPcs += getPcsForOrder(o);
             customers.add(o.name);
         });
@@ -1401,7 +1691,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
         
         weekHistory[week].orders += orders.length;
-        weekHistory[week].revenue += Math.round(totalRevenue);
+        weekHistory[week].revenue += Math.round(totalRevenueValue);
         weekHistory[week].pcs += Math.round(totalPcs);
         weekHistory[week].customers += customers.size;
         weekHistory[week].pickups += pickups;
@@ -1409,7 +1699,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         saveHistory();
         
         if (showNotification) {
-            showNotification('✅ Week ' + week + ' saved!\n📋 Orders: ' + orders.length + '\n🍞 pcs: ' + Math.round(totalPcs) + '\n💰 Revenue: ' + Math.round(totalRevenue) + ' ¥\n👤 Customers: ' + customers.size + '\n📦 Pickups: ' + pickups);
+            showNotification('✅ Week ' + week + ' saved!\n📋 Orders: ' + orders.length + '\n🍞 pcs: ' + Math.round(totalPcs) + '\n💰 Revenue: ' + Math.round(totalRevenueValue) + ' ¥\n👤 Customers: ' + customers.size + '\n📦 Pickups: ' + pickups);
         }
         
         // ALLE DATEN LÖSCHEN FÜR NEUE WOCHE
@@ -1500,22 +1790,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return order.isMini ? basePrice / 2 : basePrice;
     }
 
-    function totalPriceAll() {
-        var sum = 0;
-        var customers = new Set();
-        breadOrders.forEach(function(o) {
-            if (!o.isAdd && !o.isAddBread) {
-                customers.add(o.name);
-            }
-        });
-        customers.forEach(function(name) {
-            sum += getCustomerPrice(name);
-        });
-        return Math.round(sum);
-    }
-
     function totalHummusCount() { 
-        // Zähle Kunden mit Hummus (NUR 1 Hummus pro Kunde)
         var customersWithHummus = new Set();
         breadOrders.forEach(function(o) {
             if (!o.isAdd && !o.isAddBread && o.hummusType && o.hummusType !== 'none') {
@@ -1597,22 +1872,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             if (comboData) { var parsed = JSON.parse(comboData); if (parsed.combos) combos = parsed.combos; }
         } catch(e) {}
         render();
-    }
-
-    // ============ SALARY & PROVISION ============
-    function updateSalaryDisplay() {
-        var total = totalPriceAll();
-        var salary = Math.round(total * 0.15);
-        var provision = Math.round(total * 0.10);
-        
-        salaryAmount.textContent = salary.toFixed(0);
-        provisionAmount.textContent = provision.toFixed(0);
-    }
-
-    // ============ TOGGLE COMMISSION ============
-    function toggleCommission(orderId) {
-        var order = breadOrders.find(function(o) { return o.id === orderId; });
-        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) { order.hasCommission = !order.hasCommission; render(); saveToLocal(); updateRoute(); }
     }
 
     // ============ RENDER BREAD SUMMARY ============
@@ -1711,9 +1970,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     }
 
-    // ============ RENDER HUMMUS SUMMARY (KORREKT - NUR 1 Hummus pro Kunde) ============
+    // ============ RENDER HUMMUS SUMMARY ============
     function renderHummusSummary() {
-        // Hummus von JEDEM Kunden aus getCustomerDetails() holen
         var customerHummus = {};
         var customers = new Set();
         
@@ -1854,35 +2112,36 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ ROUTE OPTIMIZATION ============
     function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
-        if (customers.length === 1) { 
-            var result = customers.slice(); 
-            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' }); 
-            return result; 
-        }
-        
+
+        // AI-style route planning without changing any customer data:
+        // 1) Start from the entered/current location.
+        // 2) At every step choose the closest UNVISITED customer.
+        // 3) Never insert HOME before all customers have been visited.
+        // 4) Only after the final customer, go to HOME_ADDRESS.
+        // The existing getDistance() function is intentionally used so all
+        // existing distance values remain untouched.
         var unvisited = customers.slice();
         var route = [];
-        var current = { address: startAddr };
-        
+        var currentAddress = startAddr;
+
         while (unvisited.length > 0) {
-            var nearest = null;
-            var nearestDist = Infinity;
-            
+            var nearestIndex = 0;
+            var nearestDistance = Infinity;
+
             for (var i = 0; i < unvisited.length; i++) {
-                var dist = getDistance(current.address, unvisited[i].address);
-                if (dist < nearestDist) {
-                    nearestDist = dist;
-                    nearest = i;
+                var distance = getDistance(currentAddress, unvisited[i].address);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestIndex = i;
                 }
             }
-            
-            if (nearest !== null) {
-                route.push(unvisited[nearest]);
-                current = unvisited[nearest];
-                unvisited.splice(nearest, 1);
-            }
+
+            var nextCustomer = unvisited.splice(nearestIndex, 1)[0];
+            route.push(nextCustomer);
+            currentAddress = nextCustomer.address;
         }
-        
+
+        // HOME is ALWAYS the final destination.
         route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' });
         return route;
     }
@@ -1983,7 +2242,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         routeDeliveries.push(HOME_ADDRESS);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 AI Nearest-Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
         html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: ' + escapeHtml(HOME_ADDRESS) + '</div>';
         
         optimizedRoute.forEach(function(c, index) {
@@ -2021,7 +2280,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         appleMapsBtn.disabled = false;
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
-        routeOptimizedInfo.textContent = '🧠 Nearest Neighbor: always goes to closest customer first (' + allCustomers.length + ' stops)';
+        routeOptimizedInfo.textContent = '🧠 AI Route: always visits the closest unvisited customer first (' + allCustomers.length + ' stops)';
         routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 ' + HOME_ADDRESS;
     }
 
@@ -2170,7 +2429,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     var typeLabel = details.hummus.type === 'yingyang' ? '☯️' : '🫒';
                     hummusLabel = ' ' + typeLabel + ' ' + details.hummus.size;
                 }
-                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel);
+                var shareLabel = details.hasCommission ? ' (13.5%)' : ' (15%)';
+                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel + shareLabel);
                 lines.push('   ' + varieties.join(' + ') + ' → ' + Math.round(totalPcs) + ' pcs' + miniLabel);
                 if (details) {
                     lines.push('   ➜ Price: ' + details.size + ' (¥' + details.totalPrice + ')');
@@ -2194,8 +2454,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
             
             lines.push('');
-            var total = totalPriceAll();
-            lines.push('💰 TOTAL: ¥' + total);
+            var total = totalRevenue();
+            var share = Math.round(total * 0.15);
+            var provision = Math.round(total * 0.10);
+            lines.push('💰 TOTAL REVENUE: ¥' + Math.round(total));
+            lines.push('👤 SHARE (15% / 13.5%): ¥' + share);
+            lines.push('💼 PROVISION (10%): ¥' + provision);
             lines.push('');
             var req = getTotalRequirements();
             var breakdown = getTimesPcsBreakdown();
@@ -2214,11 +2478,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     lines.push('🔢 ' + b.type + ': ' + b.restPcs + ' pcs rest');
                 }
             });
-            lines.push('');
-            var salary = Math.round(total * 0.15);
-            var provision = Math.round(total * 0.10);
-            lines.push('💰 SALARY (15%): ¥' + salary);
-            lines.push('💼 PROVISION (10%): ¥' + provision);
         }
         lines.push('────────────────────────────');
         lines.push('🌾 ' + now.toLocaleString('zh-CN'));
@@ -2389,13 +2648,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var sizeDisplay = details.size + (isMulti ? ' (' + details.totalPcs + ' stk)' : '');
                 var totalPcsDisplay = Math.round(details.totalPcs);
                 var priceDisplay = details.totalPrice.toFixed(0);
-                var hasCommission = orders[0].hasCommission || false;
-                var commClass = hasCommission ? 'active' : 'inactive';
-                var commLabel = hasCommission ? '13.5%' : '15%';
+                var hasCommission = details.hasCommission || false;
+                var shareClass = hasCommission ? 'active' : 'inactive';
+                var shareLabel = hasCommission ? '13.5%' : '15%';
                 var miniTag = details.isMini ? ' 🥖' : '';
                 var multiBadge = isMulti ? ' <span class="multi-badge">📦 ' + orders.length + 'x</span>' : '';
                 
-                // NUR EIN HUMMUS pro Kunde - aus details.hummus
                 var hummusDisplay = '—';
                 if (details.hummus) {
                     var typeLabel = details.hummus.type === 'yingyang' ? '☯️' : '🫒';
@@ -2426,7 +2684,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     '<td>' + totalPcsDisplay + '</td>' +
                     '<td><strong>' + priceDisplay + ' ¥</strong></td>' +
                     '<td>' + hummusDisplay + '</td>' +
-                    '<td><span class="comm-toggle ' + commClass + '" data-id="' + orders[0].id + '"><span class="toggle-dot"></span><span class="toggle-label">' + commLabel + '</span></span></td>' +
+                    '<td><span class="comm-toggle ' + shareClass + '"><span class="toggle-dot"></span><span class="toggle-label">' + shareLabel + '</span></span></td>' +
                     '<td><button class="delete-btn" data-name="' + escapeHtml(name) + '" data-type="customer">✖</button></td>';
                 
                 breadTableBody.appendChild(row);
@@ -2485,19 +2743,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         });
         
-        document.querySelectorAll('.comm-toggle').forEach(function(el) {
-            el.addEventListener('click', function() {
-                var id = parseInt(this.getAttribute('data-id'));
-                if (id) {
-                    toggleCommission(id);
-                }
-            });
-        });
-        
-        var total = totalPriceAll();
+        var total = totalRevenue();
         totalSpan.innerText = total.toFixed(0) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
-        updateSalaryDisplay();
+        updateFinancialDisplay();
         renderBreadSummary();
         renderHummusSummary();
         renderPreparation();
@@ -2516,12 +2765,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         if (orders.length === 0 && pickups === 0) return false;
         
-        var totalRevenue = 0;
+        var totalRevenueValue = 0;
         var totalPcs = 0;
         var customers = new Set();
         
         orders.forEach(function(o) {
-            totalRevenue += getCustomerPrice(o.name);
+            totalRevenueValue += getCustomerPrice(o.name);
             totalPcs += getPcsForOrder(o);
             customers.add(o.name);
         });
@@ -2531,7 +2780,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
         
         weekHistory[week].orders = orders.length;
-        weekHistory[week].revenue = Math.round(totalRevenue);
+        weekHistory[week].revenue = Math.round(totalRevenueValue);
         weekHistory[week].pcs = Math.round(totalPcs);
         weekHistory[week].customers = customers.size;
         weekHistory[week].pickups = pickups;
@@ -2546,7 +2795,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         customerCountry.value = ""; 
         countryFlagDisplay.textContent = '';
         miniCheckbox.checked = false; 
-        commissionCheckbox.checked = false; 
         hummusType.value = 'none';
         hummusSize.value = 'S';
         suggestionsList.className = 'suggestions-list';
@@ -2570,7 +2818,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var isMini = miniCheckbox.checked;
         var hummusVal = hummusType.value;
         var hummusSizeVal = hummusSize.value;
-        var hasCommission = commissionCheckbox.checked;
         
         if (breadVal === 'combo-88-200' || breadVal === 'combo-150-208') {
             var comboType = breadVal === 'combo-88-200' ? '88-200' : '150-208';
@@ -2586,7 +2833,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     breadType: item.variety,
                     size: 'S',
                     isMini: isMini,
-                    hasCommission: hasCommission,
                     week: currentWeek,
                     isAdd: false,
                     isAddBread: false,
@@ -2615,7 +2861,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             breadType: breadVal, 
             size: sizeVal, 
             isMini: isMini, 
-            hasCommission: hasCommission, 
             week: currentWeek, 
             isAdd: false, 
             isAddBread: false, 
@@ -2659,7 +2904,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 breadType: breadVal, 
                 size: 'S', 
                 isMini: isMini, 
-                hasCommission: false, 
                 week: currentWeek, 
                 isAdd: true, 
                 isAddBread: true,
@@ -2707,7 +2951,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     routeStart.addEventListener('input', updateRoute);
 
     addAddressBtn.addEventListener("click", function() {
-        var name = capitalizeName(addressNameInput.value.trim()), addr = addressAddrInput.value.trim();
+        var name = capitalizeName(addressNameInput.value.trim()), addr = lowerCaseAddress(addressAddrInput.value.trim());
         if (!name) { alert('Please enter a name.'); return; }
         addressBook[name] = addr || ''; saveAddressBook();
         addressNameInput.value = ''; addressAddrInput.value = ''; addressNameInput.focus(); updateRoute();
@@ -2715,7 +2959,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     addressAddrInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
-            var name = capitalizeName(addressNameInput.value.trim()), addr = addressAddrInput.value.trim();
+            var name = capitalizeName(addressNameInput.value.trim()), addr = lowerCaseAddress(addressAddrInput.value.trim());
             if (!name) { alert('Please enter a name.'); return; }
             addressBook[name] = addr || ''; saveAddressBook();
             addressNameInput.value = ''; addressAddrInput.value = ''; addressNameInput.focus(); updateRoute();
@@ -2724,6 +2968,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     addPickupBtn.addEventListener('click', function() { addPickup(pickupNameInput.value); });
     pickupNameInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { addPickup(pickupNameInput.value); } });
+
+    // ============ CUSTOMER MANAGER EVENTS ============
+    addCustomerBtn.addEventListener('click', addCustomerManually);
+    cmNameInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomerManually(); });
+    cmCountryInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomerManually(); });
 
     // ============ SUGGESTIONS EVENTS ============
     customerName.addEventListener('input', function() {
@@ -2767,6 +3016,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
     console.log("📊 Customers with multiple orders are grouped together!");
     console.log("🫒 1 Hummus per customer - size based on total pcs, type based on bread varieties!");
+    console.log("👤 Share: 13.5% for customers in database with Commission, 15% otherwise");
     console.log("💼 10% Provision on total revenue!");
     console.log("💾 Auto-save to history with every change!");
     console.log("🗑️ Save & Clear Week: saves to history and clears all data!");
