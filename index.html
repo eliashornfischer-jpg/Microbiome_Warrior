@@ -307,7 +307,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     <label>Size</label>
     <select id="breadSize">
         <option value="S">S (2 pcs)</option>
-        <option value="S+">S+ (3 pcs) −12.4%</option>
+        <option value="S+">S+ (3 pcs + Hummus) ¥134/268/368/398/428</option>
         <option value="M">M (5 pcs)</option>
         <option value="M+">M+ (6 pcs) no hummus</option>
         <option value="L">L (8 pcs)</option>
@@ -669,13 +669,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return weekNum;
     }
 
-    // ============ PRICE DB (KORRIGIERT: M+ = M-Preis, XL+ = XL-Preis) ============
+    // ============ PRICE DB ============
     var priceDB = {
-        "88er":{"S":102,"S+":(102/2)*3*0.875817,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},
-        "150er":{"S":208,"S+":(208/2)*3*0.875817,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},
-        "188er":{"S":288,"S+":(288/2)*3*0.875817,"M":588,"M+":588,"L":888,"XM":988,"XL":1138,"XL+":1138},
-        "200er":{"S":308,"S+":(308/2)*3*0.875817,"M":688,"M+":688,"L":968,"XM":1080,"XL":1288,"XL+":1288},
-        "208er":{"S":328,"S+":(328/2)*3*0.875817,"M":788,"M+":788,"L":1108,"XM":1288,"XL":1468,"XL+":1468}
+        "88er":{"S":102,"S+":134,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},
+        "150er":{"S":208,"S+":268,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},
+        "188er":{"S":288,"S+":368,"M":588,"M+":588,"L":888,"XM":988,"XL":1138,"XL+":1138},
+        "200er":{"S":308,"S+":398,"M":688,"M+":688,"L":968,"XM":1080,"XL":1288,"XL+":1288},
+        "208er":{"S":328,"S+":428,"M":788,"M+":788,"L":1108,"XM":1288,"XL":1468,"XL+":1468}
     };
     var sizeToPcs = {"S":2,"S+":3,"M":5,"M+":6,"L":8,"XM":9,"XL":11,"XL+":12};
 
@@ -1055,13 +1055,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         saveCustomerDatabase();
     }
 
-    // ============ STÜCKPREISE (Multi-Order) ============
+    // ============ STÜCKPREISE ============
     function getStückpreis(sorte, größe) {
         var preis = priceDB[sorte]?.[größe] || 0;
         var stückzahl = sizeToPcs[größe] || 1;
         return preis / stückzahl;
     }
 
+    // ============ KUNDENPREIS (S+ ist Festpreis, fließt nicht in Multi-Order ein) ============
     function getCustomerPrice(name) {
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
@@ -1069,29 +1070,43 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         if (orders.length === 0) return 0;
         
-        var totalPcs = 0;
-        orders.forEach(function(o) {
-            totalPcs += getPcsForOrder(o);
-        });
-        
-        var size = 'S';
-        if (totalPcs >= 4 && totalPcs <= 6) size = 'M';
-        else if (totalPcs >= 7 && totalPcs <= 9) size = 'L';
-        else if (totalPcs >= 10) size = 'XL';
-        
-        var sortenMap = {};
-        orders.forEach(function(o) {
-            var sorte = o.breadType;
-            var pcs = getPcsForOrder(o);
-            if (!sortenMap[sorte]) sortenMap[sorte] = 0;
-            sortenMap[sorte] += pcs;
-        });
+        // S+ separat berechnen (Festpreis, keine Multi-Order-Logik)
+        var sPlusOrders = orders.filter(function(o) { return o.size === 'S+'; });
+        var otherOrders = orders.filter(function(o) { return o.size !== 'S+'; });
         
         var totalPrice = 0;
-        for (var sorte in sortenMap) {
-            var pcs = sortenMap[sorte];
-            var stückpreis = getStückpreis(sorte, size);
-            totalPrice += stückpreis * pcs;
+        
+        // S+ Festpreis (mit Mini-Halbierung falls Mini)
+        sPlusOrders.forEach(function(o) {
+            var basePrice = priceDB[o.breadType]?.['S+'] || 0;
+            totalPrice += o.isMini ? basePrice / 2 : basePrice;
+        });
+        
+        // Multi-Order-Logik nur für die anderen Bestellungen
+        if (otherOrders.length > 0) {
+            var totalPcs = 0;
+            otherOrders.forEach(function(o) {
+                totalPcs += getPcsForOrder(o);
+            });
+            
+            var size = 'S';
+            if (totalPcs >= 4 && totalPcs <= 6) size = 'M';
+            else if (totalPcs >= 7 && totalPcs <= 9) size = 'L';
+            else if (totalPcs >= 10) size = 'XL';
+            
+            var sortenMap = {};
+            otherOrders.forEach(function(o) {
+                var sorte = o.breadType;
+                var pcs = getPcsForOrder(o);
+                if (!sortenMap[sorte]) sortenMap[sorte] = 0;
+                sortenMap[sorte] += pcs;
+            });
+            
+            for (var sorte in sortenMap) {
+                var pcs = sortenMap[sorte];
+                var stückpreis = getStückpreis(sorte, size);
+                totalPrice += stückpreis * pcs;
+            }
         }
         
         return Math.round(totalPrice);
@@ -1177,7 +1192,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     }
 
-    // ============ HUMMUS LOGIK (MIT YIN YANG S→M AUTO) ============
+    // ============ HUMMUS LOGIK ============
     function getCustomerHummus(name) {
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
@@ -1190,6 +1205,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         
         if (!hasHummus) return null;
+        
+        // S+ hat immer Hummus (3 pcs mit Hummus)
+        var hasSPlus = orders.some(function(o) { return o.size === 'S+'; });
         
         var totalPcs = 0;
         orders.forEach(function(o) {
@@ -1230,6 +1248,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             totalPcs += getPcsForOrder(o);
         });
         
+        // Size für die Anzeige (S+ zählt als S+ wenn nur S+ vorhanden)
         var size = 'S';
         if (totalPcs >= 4 && totalPcs <= 6) size = 'M';
         else if (totalPcs >= 7 && totalPcs <= 9) size = 'L';
@@ -1245,17 +1264,54 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         var details = [];
         var totalPrice = 0;
-        for (var sorte in sortenMap) {
-            var pcs = sortenMap[sorte];
-            var stückpreis = getStückpreis(sorte, size);
-            var price = stückpreis * pcs;
-            totalPrice += price;
+        
+        // S+ separat
+        var sPlusOrders = orders.filter(function(o) { return o.size === 'S+'; });
+        var otherOrders = orders.filter(function(o) { return o.size !== 'S+'; });
+        
+        sPlusOrders.forEach(function(o) {
+            var basePrice = priceDB[o.breadType]?.['S+'] || 0;
+            var actualPrice = o.isMini ? basePrice / 2 : basePrice;
+            totalPrice += actualPrice;
             details.push({
-                sorte: sorte,
-                pcs: pcs,
-                stückpreis: stückpreis,
-                price: price
+                sorte: o.breadType,
+                pcs: 3,
+                stückpreis: actualPrice / 3,
+                price: actualPrice,
+                isSPlus: true
             });
+        });
+        
+        if (otherOrders.length > 0) {
+            var otherPcs = 0;
+            otherOrders.forEach(function(o) { otherPcs += getPcsForOrder(o); });
+            
+            var otherSize = 'S';
+            if (otherPcs >= 4 && otherPcs <= 6) otherSize = 'M';
+            else if (otherPcs >= 7 && otherPcs <= 9) otherSize = 'L';
+            else if (otherPcs >= 10) otherSize = 'XL';
+            
+            var otherSortenMap = {};
+            otherOrders.forEach(function(o) {
+                var sorte = o.breadType;
+                var pcs = getPcsForOrder(o);
+                if (!otherSortenMap[sorte]) otherSortenMap[sorte] = 0;
+                otherSortenMap[sorte] += pcs;
+            });
+            
+            for (var sorte in otherSortenMap) {
+                var pcs = otherSortenMap[sorte];
+                var stückpreis = getStückpreis(sorte, otherSize);
+                var price = stückpreis * pcs;
+                totalPrice += price;
+                details.push({
+                    sorte: sorte,
+                    pcs: pcs,
+                    stückpreis: stückpreis,
+                    price: price,
+                    isSPlus: false
+                });
+            }
         }
         
         var hummus = getCustomerHummus(name);
@@ -1345,7 +1401,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase(); 
     }
     
-    // ============ LOWER CASE FOR ADDRESS ============
     function lowerCaseAddress(input) {
         if (!input) return '';
         return input.toLowerCase();
@@ -1577,7 +1632,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         URL.revokeObjectURL(url);
     });
 
-    // ============ HUMMUS AUTO (MIT M+/XL+ FIX) ============
+    // ============ HUMMUS AUTO ============
     function getHummusSizeForBreadSize(bs) { if (bs === 'S+') return 'S'; return bs; }
     function autoSelectHummus() {
         var val = breadType.value, sizeVal = breadSize.value;
@@ -1586,9 +1641,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             yingYangInfo.classList.remove('show'); 
             return; 
         }
-        // M+ und XL+ kommen OHNE Hummus → automatisch "none"
+        // M+ und XL+ haben GENERALL keinen Hummus
         if (sizeVal === 'M+' || sizeVal === 'XL+') { 
             hummusType.value = 'none'; 
+            hummusSize.value = 'S';
             yingYangInfo.classList.remove('show'); 
             return; 
         }
@@ -1609,9 +1665,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     
     hummusType.addEventListener('change', function() {
         var sizeVal = breadSize.value;
-        if ((sizeVal === 'M+' || sizeVal === 'XL+') && this.value !== 'none') { 
-            alert('❌ ' + sizeVal + ' comes without hummus as standard!'); 
+        // M+/XL+ haben generell keinen Hummus - Auswahl zurücksetzen
+        if (sizeVal === 'M+' || sizeVal === 'XL+') { 
             this.value = 'none'; 
+            hummusSize.value = 'S';
+            yingYangInfo.classList.remove('show');
             return; 
         }
         if (this.value === 'yingyang') {
@@ -1725,7 +1783,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             showNotification('✅ Week ' + week + ' saved!\n📋 Orders: ' + orders.length + '\n🍞 pcs: ' + Math.round(totalPcs) + '\n💰 Revenue: ' + Math.round(totalRevenueValue) + ' ¥\n👤 Customers: ' + customers.size + '\n📦 Pickups: ' + pickups);
         }
         
-        // ALLE DATEN LÖSCHEN FÜR NEUE WOCHE
         breadOrders = [];
         hummusOrders = [];
         addBreadOrders = [];
@@ -1734,7 +1791,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         combos = [];
         nextId = 1;
         
-        // Lokale Speicher löschen
         try {
             localStorage.removeItem("microbiome_bread");
             localStorage.removeItem("microbiome_hummus");
@@ -1744,7 +1800,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             localStorage.removeItem("microbiome_pickups");
         } catch(e) {}
         
-        // Woche aktualisieren
         updateWeekDisplay();
         render();
         saveToLocal();
@@ -2035,14 +2090,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 hummusSummaryBody.appendChild(row);
             });
         }
-    }
-
-    // ============ DELETE ============
-    function deleteBreadAndHummus(breadId) {
-        var breadToDelete = breadOrders.find(function(o) { return o.id === breadId; });
-        if (!breadToDelete) return;
-        breadOrders = breadOrders.filter(function(o) { return o.id !== breadId; });
-        hummusOrders = hummusOrders.filter(function(o) { return !(o.name === breadToDelete.name && o.breadType === breadToDelete.breadType); });
     }
 
     // ============ TRAFFIC ============
@@ -2668,12 +2715,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var rowClass = isMulti ? 'multi-order-row' : '';
                 row.className = rowClass;
                 
-                // COMMISSION HIGHLIGHT: farbliche Hervorhebung für Kunden mit Commission
                 var hasCommission = details.hasCommission || false;
                 var shareClass = hasCommission ? 'active' : 'inactive';
                 var shareLabel = hasCommission ? '13.5%' : '15%';
                 
-                // Zellen-Inhalte
                 var varietyDisplay = orders.length === 1 ? orders[0].breadType : orders.map(function(o) { return o.breadType; }).join(', ');
                 var sizeDisplay = details.size + (isMulti ? ' (' + details.totalPcs + ' stk)' : '');
                 var totalPcsDisplay = Math.round(details.totalPcs);
@@ -2690,7 +2735,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var breakdownHtml = '';
                 if (isMulti) {
                     var lines = details.details.map(function(d) {
-                        return d.pcs + '× ' + d.sorte + ' = ' + Math.round(d.price) + ' ¥ (à ' + d.stückpreis.toFixed(2) + ' ¥)';
+                        var label = d.isSPlus ? ' (S+ Festpreis)' : '';
+                        return d.pcs + '× ' + d.sorte + label + ' = ' + Math.round(d.price) + ' ¥ (à ' + d.stückpreis.toFixed(2) + ' ¥)';
                     }).join('<br>');
                     breakdownHtml = '<div class="multi-detail">' +
                         '<div style="font-weight:700;font-size:0.55rem;color:#f39c12;">📦 ' + name + ' hat ' + orders.length + ' Bestellungen (' + details.totalPcs + ' Stück → ' + details.size + ' Preis)</div>' + 
@@ -2702,14 +2748,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var countryDisplay = orders[0].country || '—';
                 var flag = getCountryFlag(countryDisplay);
                 
-                // NAME mit Commission-Highlight
                 var nameDisplay = escapeHtml(name) + multiBadge;
                 if (hasCommission) {
                     nameDisplay = '💰 ' + nameDisplay;
                 }
-                
-                // Zeilen-Highlight für Commission
-                var rowStyle = hasCommission ? 'style="background:#fef9e7;border-left:4px solid #c0392b;"' : '';
                 
                 row.innerHTML = 
                     '<td>#' + displayIndex + '</td>' +
@@ -2796,7 +2838,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         renderAddOrders();
         updateRoute();
         
-        // Auto-Save nach jedem Render
         autoSaveToHistory();
     }
 
@@ -2899,7 +2940,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             render(); saveToLocal(); resetForm(); return;
         }
         
-        if ((sizeVal === 'M+' || sizeVal === 'XL+') && hummusVal !== 'none') { alert('❌ ' + sizeVal + ' comes without hummus as standard!'); return; }
+        // M+/XL+ haben generell keinen Hummus - erzwingen
+        if (sizeVal === 'M+' || sizeVal === 'XL+') {
+            hummusVal = 'none';
+            hummusSizeVal = 'S';
+        }
+        
         updateWeekDisplay();
         
         var order = {
@@ -3019,12 +3065,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     addPickupBtn.addEventListener('click', function() { addPickup(pickupNameInput.value); });
     pickupNameInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { addPickup(pickupNameInput.value); } });
 
-    // ============ CUSTOMER MANAGER EVENTS ============
     addCustomerBtn.addEventListener('click', addCustomerManually);
     cmNameInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomerManually(); });
     cmCountryInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') addCustomerManually(); });
 
-    // ============ SUGGESTIONS EVENTS ============
     customerName.addEventListener('input', function() {
         var input = this.value.trim();
         if (input.length > 0) {
@@ -3061,15 +3105,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     appleMapsBtn.disabled = true;
 
     console.log("✅ Microbiome Warrior started!");
-    console.log("📍 Start: Your current location (auto-detected)");
-    console.log("🏁 End: Huqingping Highway 1517");
-    console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
-    console.log("📊 Customers with multiple orders are grouped together!");
-    console.log("🫒 1 Hummus per customer - size based on total pcs, type based on bread varieties!");
-    console.log("👤 Share: 13.5% for customers with Commission, 15% otherwise");
-    console.log("💼 10% Provision ONLY for customers with Commission!");
-    console.log("💾 Auto-save to history with every change!");
-    console.log("🗑️ Save & Clear Week: saves to history and clears all data!");
+    console.log("📊 S+ = Festpreis (134/268/368/398/428), fließt NICHT in Multi-Order-Logik ein");
+    console.log("🫒 M+ und XL+ haben generell keinen Hummus");
+    console.log("☯️ Yin & Yang S → automatisch M");
 })();
 </script>
 </body>
