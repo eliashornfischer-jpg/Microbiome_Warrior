@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-/* === ALLES CSS === */
+/* ====== KOMPLETTES CSS ====== */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -48,6 +48,8 @@ button:active{transform:scale(0.97)}
 .btn-csv-export:active{transform:scale(0.95)}
 .btn-screenshot{background:linear-gradient(135deg,#6c8ebf,#4a6f9e);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.75rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
 .btn-screenshot:active{transform:scale(0.95)}
+.btn-add-order-header{background:linear-gradient(135deg,#27ae60,#1e8449);color:white;width:auto;padding:8px 18px;margin:0;font-size:0.8rem;border-radius:20px;border:none;font-weight:800;cursor:pointer;transition:all 0.2s ease;white-space:nowrap}
+.btn-add-order-header:active{transform:scale(0.95)}
 .export-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .export-buttons button{flex:1;min-width:70px;padding:8px 10px;font-size:0.55rem;border-radius:14px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s;margin:0}
 .export-buttons button:active{transform:scale(0.95)}
@@ -77,7 +79,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .yingyang-available.show{display:block}
 .header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .header-left{display:flex;align-items:center;gap:8px}
-.header-right{display:flex;align-items:center;gap:8px}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .week-selector{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.6);padding:4px 10px 4px 14px;border-radius:28px;border:1px solid #e0d0a0}
 .week-selector label{margin:0;font-size:0.7rem;color:#6b4a1c}
 .week-selector input{width:46px;padding:4px 6px;border-radius:16px;border:1px solid #e0d0a0;text-align:center;font-size:0.85rem;font-weight:700;margin:0;background:#f5f0e0}
@@ -129,7 +131,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .comm-toggle.active .toggle-dot{background:#2ecc71}
 .comm-toggle.inactive .toggle-dot{background:#95a5a6}
 .comm-toggle .toggle-label{font-size:0.5rem}
-.route-mode-switch{display:flex;gap:6px;margin:8px 0;background:rgba(255,255,255,0.5);padding:5px;border-radius:18px;border:1px solid #d4c090}.route-mode-btn{flex:1;padding:9px 8px!important;margin:0!important;border-radius:14px!important;font-size:0.65rem!important;background:#eee!important;color:#555!important;box-shadow:none!important}.route-mode-btn.active{background:linear-gradient(135deg,#27ae60,#1e8449)!important;color:white!important}.route-mode-desc{font-size:0.55rem;color:#6b4a1c;text-align:center;padding:3px 6px;margin-top:3px}
 .route-container{background:rgba(46,204,113,0.08);border-radius:16px;padding:12px;margin-top:12px;border:2px solid #27ae60}
 .route-step{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(39,174,96,0.15);font-size:0.65rem}
 .route-step:last-child{border-bottom:none}
@@ -188,6 +189,20 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .customer-manager .cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
 .cm-comm-active{color:#27ae60;font-weight:700}
 .cm-comm-inactive{color:#95a5a6}
+.cm-comm-list{background:rgba(46,204,113,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.55rem;border:1px solid rgba(46,204,113,0.15)}
+.cm-comm-list .cm-comm-item{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+.cm-comm-list .cm-comm-item:last-child{border-bottom:none}
+.cm-comm-list .cm-comm-item .name{font-weight:600;color:#27ae60}
+.cm-comm-list .cm-comm-item .detail{color:#6b4a1c;font-size:0.5rem}
+.cm-comm-list .cm-comm-empty{color:#b88c48;text-align:center;padding:4px;font-size:0.5rem}
+.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
+.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.provision-row .provision-label{font-weight:700;color:#e74c3c}
+.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
+.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
+.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.share-row .share-label{font-weight:700;color:#27ae60}
+.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
 .auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center}
 .route-no-distance{font-size:0.55rem;color:#8a6a2a;margin-top:4px;text-align:center}
 .address-stats{font-size:0.5rem;color:#8a6a2a}
@@ -250,36 +265,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .suggestion-item .suggestion-name{font-weight:700;color:#2a1a08}
 .suggestion-item .suggestion-detail{font-size:0.6rem;color:#8a6a2a}
 .suggestion-item .suggestion-badge{background:#e2aa54;color:#2a1a08;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700}
-.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
-.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.provision-row .provision-label{font-weight:700;color:#e74c3c}
-.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
-.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
-.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.share-row .share-label{font-weight:700;color:#27ae60}
-.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
-.advanced-toggle{background:none;border:none;color:#8a6a2a;font-size:0.55rem;cursor:pointer;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.5);margin:4px 0;text-align:center;width:auto;font-weight:700;transition:all 0.2s ease}
-.advanced-toggle:hover{background:rgba(226,170,84,0.15)}
-.advanced-toggle.active{background:#e2aa54;color:#2a1a08}
-.advanced-fields{display:none;padding-top:8px;border-top:1px dashed #d4c090;margin-top:8px}
-.advanced-fields.show{display:block}
 @media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
-
-.route-step.route-completed{opacity:.72;background:rgba(127,127,127,.08);border-radius:8px;padding:6px 5px;margin:3px 0;}
-.route-step.route-completed .step-num{background:#7f8c8d;}
-.route-step .route-actions{display:flex;align-items:center;gap:4px;flex-shrink:0;}
-.route-check{display:flex;align-items:center;gap:3px;font-size:.52rem;color:#6b4a1c;white-space:nowrap;cursor:pointer;}
-.route-check input{width:16px;height:16px;accent-color:#27ae60;cursor:pointer;}
-.route-photo-btn{border:0;border-radius:8px;background:#f39c12;color:white;padding:4px 6px;font-size:.55rem;cursor:pointer;}
-.route-photo-btn.has-photo{background:#27ae60;}
-.route-completed-title{margin-top:9px;padding:6px 8px;background:rgba(127,127,127,.10);border-radius:10px;font-weight:800;font-size:.62rem;color:#566573;}
-.route-proof{display:flex;align-items:center;gap:6px;margin-top:4px;padding:4px;background:rgba(255,255,255,.65);border-radius:8px;}
-.route-proof img{width:58px;height:58px;object-fit:cover;border-radius:7px;border:1px solid #d4c090;}
-.route-proof-actions{display:flex;flex-wrap:wrap;gap:4px;}
-.route-proof-actions button,.route-proof-actions a{border:0;border-radius:7px;padding:3px 6px;font-size:.48rem;text-decoration:none;cursor:pointer;background:#6b4a1c;color:white;}
-.route-completed-name{text-decoration:line-through;color:#7f8c8d!important;}
-.route-completed-badge{background:#7f8c8d;color:white;padding:0 5px;border-radius:8px;font-size:.45rem;font-weight:700;margin-left:4px;}
-.route-finished-box{margin-top:6px;padding:5px 8px;background:rgba(127,127,127,.06);border-radius:9px;font-size:.55rem;color:#566573;}
 </style>
 </head>
 <body>
@@ -294,10 +280,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
-<div class="screenshot-btn-wrap">
-    <button class="btn-screenshot" id="screenshotBtn">📸 Screenshot</button>
-    <span id="screenshotStatus"></span>
-</div>
+<button class="btn-add-order-header" id="addBtnTop">➕ Add Order</button>
 </div>
 </div>
 
@@ -305,15 +288,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="suggestions-container">
     <input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
     <div class="suggestions-list" id="suggestionsList"></div>
-</div>
-
-<!-- ADVANCED TOGGLE -->
-<button class="advanced-toggle" id="advancedToggle">⚙️ Advanced Settings ▼</button>
-
-<div class="advanced-fields" id="advancedFields">
-    <label>🌍 Country (e.g. Germany, China, USA)</label>
-    <input id="customerCountry" placeholder="Type country name..." autocomplete="off" style="text-transform:capitalize;">
-    <div id="countryFlagDisplay" style="font-size:1.5rem;margin-top:2px;min-height:30px;"></div>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
@@ -342,6 +316,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         <option value="XL+">XL+ (12 pcs) no hummus</option>
     </select>
 </div>
+</div>
+
+<div class="commission-order-row">
+<label><input type="checkbox" id="commissionCheckbox"> 💰 Commission active (13.5% Share)</label>
+<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
 </div>
 
 <div class="checkbox-group" style="margin-top:4px;">
@@ -376,29 +355,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
     <button id="resetTableBtn" class="btn-reset" style="flex:1;min-width:120px;">🗑️ Delete All</button>
     <button id="saveHistoryBtn" class="btn-save-history">💾 Save & Clear Week</button>
-</div>
-</div>
-
-<!-- ====== CUSTOMER MANAGER ====== -->
-<div class="card">
-<div class="customer-manager">
-    <div class="cm-header" id="customerManagerToggle">
-        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
-        <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
-    </div>
-    <div class="cm-body" id="customerManagerBody">
-        <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
-        <div class="cm-row">
-            <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
-            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
-            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
-                <option value="true">💰 Yes (Share 13.5%)</option>
-                <option value="false">❌ No (Share 15%)</option>
-            </select>
-            <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
-        </div>
-        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
-    </div>
 </div>
 </div>
 
@@ -486,7 +442,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         </div>
         <div class="provision-container">
             <div class="provision-row">
-                <span class="provision-label">💼 Provision (10% of all revenue)</span>
+                <span class="provision-label">💼 Provision (10% of customers with Commission)</span>
                 <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
             </div>
         </div>
@@ -520,12 +476,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <!-- ====== ROUTE PLANNING ====== -->
 <div class="card">
-<div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge" id="routeModeBadge">🏠 BACK HOME</span></div>
-<div class="route-mode-switch">
-    <button type="button" class="route-mode-btn active" id="backHomeModeBtn">🏠 Back Home</button>
-    <button type="button" class="route-mode-btn" id="fastDeliveryModeBtn">⚡ Fast Delivery</button>
-</div>
-<div class="route-mode-desc" id="routeModeDesc">🏠 Start → nearest customer → next nearest → ... → Huqingping Highway 1517</div>
+<div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">🧠 NEAREST NEIGHBOR</span></div>
 
 <div class="pickup-container">
     <div class="pickup-title">📦 PICKUP LIST <span class="count-badge" id="pickupCount">0</span></div>
@@ -548,6 +499,34 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             <input id="addressAddrInput" placeholder="Address" style="flex:1.2;">
             <button id="addAddressBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
         </div>
+    </div>
+</div>
+
+<!-- ====== CUSTOMER MANAGER (in Routenplanung unter Address Book) ====== -->
+<div class="customer-manager">
+    <div class="cm-header" id="customerManagerToggle">
+        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
+        <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
+    </div>
+    <div class="cm-body" id="customerManagerBody">
+        <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
+        
+        <!-- Commission List -->
+        <div class="cm-comm-list" id="commissionList">
+            <div style="font-weight:700;font-size:0.55rem;color:#27ae60;margin-bottom:4px;">💰 Customers with Commission:</div>
+            <div id="commissionListItems"><div class="cm-comm-empty">No customers with commission</div></div>
+        </div>
+        
+        <div class="cm-row">
+            <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
+            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
+            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
+                <option value="true">💰 Yes</option>
+                <option value="false">❌ No</option>
+            </select>
+            <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
+        </div>
+        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
     </div>
 </div>
 
@@ -574,9 +553,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
     <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
-    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub" id="appleMapsSub">📍 End: Huqingping Highway 1517</span></span>
+    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub">📍 End: Huqingping Highway 1517</span></span>
 </button>
-<div class="auto-route-info" id="routeEndInfo">✅ Back Home: Route ends at Huqingping Highway 1517</div>
+<div class="auto-route-info">✅ Route ends at Huqingping Highway 1517</div>
 </div>
 
 <!-- ====== HISTORY ====== -->
@@ -600,7 +579,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 </div>
 </div>
 
-<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision | 1 Hummus pro Kunde</footer>
+<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision (nur bei Commission) | 1 Hummus pro Kunde</footer>
 </div>
 
 <script>
@@ -630,26 +609,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return '';
     }
 
-    // ============ COUNTRY FLAG DISPLAY ============
-    var customerCountryInput = document.getElementById('customerCountry');
-    var countryFlagDisplay = document.getElementById('countryFlagDisplay');
-    customerCountryInput.addEventListener('input', function() {
-        var flag = getCountryFlag(this.value);
-        countryFlagDisplay.textContent = flag ? flag + ' ' + this.value.trim() : (this.value.trim() ? '🌍 ' + this.value.trim() : '');
-    });
-
-    // ============ ADVANCED TOGGLE ============
-    var advancedToggle = document.getElementById('advancedToggle');
-    var advancedFields = document.getElementById('advancedFields');
-    var advancedOpen = false;
-    
-    advancedToggle.addEventListener('click', function() {
-        advancedOpen = !advancedOpen;
-        advancedFields.classList.toggle('show');
-        this.textContent = advancedOpen ? '⚙️ Advanced Settings ▲' : '⚙️ Advanced Settings ▼';
-        this.classList.toggle('active');
-    });
-
     // ============ CUSTOMER MANAGER TOGGLE ============
     var cmToggle = document.getElementById('customerManagerToggle');
     var cmBody = document.getElementById('customerManagerBody');
@@ -660,6 +619,30 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         cmOpen = !cmOpen;
         cmBody.classList.toggle('open');
         cmToggleBtn.textContent = cmOpen ? '▲ Hide' : '▼ Show';
+    });
+
+    // ============ ADDRESS BOOK TOGGLE ============
+    var addressToggle = document.getElementById('addressToggle');
+    var addressBody = document.getElementById('addressBody');
+    var addressToggleBtn = document.getElementById('addressToggleBtn');
+    var addressOpen = false;
+    
+    addressToggle.addEventListener('click', function() {
+        addressOpen = !addressOpen;
+        addressBody.classList.toggle('open');
+        addressToggleBtn.textContent = addressOpen ? '▲ Hide' : '▼ Show';
+    });
+
+    // ============ HISTORY TOGGLE ============
+    var historyToggle = document.getElementById('historyToggle');
+    var historyBody = document.getElementById('historyBody');
+    var historyArrow = document.getElementById('historyArrow');
+    var historyOpen = false;
+    
+    historyToggle.addEventListener('click', function() {
+        historyOpen = !historyOpen;
+        historyBody.classList.toggle('open');
+        historyArrow.classList.toggle('open');
     });
 
     // ============ COMBO ============
@@ -686,7 +669,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return weekNum;
     }
 
-    // ============ PRICE DB ============
+    // ============ PRICE DB (KORRIGIERT: M+ = M-Preis, XL+ = XL-Preis) ============
     var priceDB = {
         "88er":{"S":102,"S+":(102/2)*3*0.875817,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},
         "150er":{"S":208,"S+":(208/2)*3*0.875817,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},
@@ -763,7 +746,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ DATA STORE ============
     var breadOrders = [], hummusOrders = [], addBreadOrders = [], addHummusOrders = [], pickupList = [], addressBook = {};
     var nextId = 1, currentWeek = calculateCurrentWeek(), addBreadCount = 1, addHummusCount = 1;
-    var addressBookOpen = false, historyOpen = false;
     var weekHistory = {};
     var trafficSimulationInterval = null;
     var currentTraffic = { level: 'light', label: 'Light traffic', color: '#27ae60', delay: 1 };
@@ -774,9 +756,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
-    var customerName = $("customerName"), customerCountry = $("customerCountry");
+    var customerName = $("customerName");
     var breadType = $("breadType"), breadSize = $("breadSize"), miniCheckbox = $("miniCheckbox");
     var hummusType = $("hummusType"), hummusSize = $("hummusSize");
+    var commissionCheckbox = $("commissionCheckbox");
     var yingYangInfo = $("yingYangInfo");
     var breadTableBody = $("breadTableBody"), breadSummaryBody = $("breadSummaryBody");
     var addBreadSummaryBody = $("addBreadSummaryBody"), hummusSummaryBody = $("hummusSummaryBody");
@@ -796,26 +779,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var addressList = $("addressList"), addressNameInput = $("addressNameInput");
     var addressAddrInput = $("addressAddrInput"), addAddressBtn = $("addAddressBtn");
     var addressCount = $("addressCount"), addressToggleBtn = $("addressToggleBtn");
-    var addressBody = $("addressBody"), addressToggle = $("addressToggle");
     var routeOptimizedInfo = $("routeOptimizedInfo"), routeCompareInfo = $("routeCompareInfo");
-    var backHomeModeBtn = $("backHomeModeBtn"), fastDeliveryModeBtn = $("fastDeliveryModeBtn");
-    var routeModeBadge = $("routeModeBadge"), routeModeDesc = $("routeModeDesc"), appleMapsSub = $("appleMapsSub"), routeEndInfo = $("routeEndInfo");
-    var routeMode = 'backHome';
-    var routeCompleted = {};
-    var routeProofs = {};
     var pickupNameInput = $("pickupNameInput"), addPickupBtn = $("addPickupBtn");
     var pickupListEl = $("pickupList"), pickupCount = $("pickupCount");
-    var historyToggle = $("historyToggle"), historyBody = $("historyBody");
-    var historyArrow = $("historyArrow"), historyList = $("historyList");
-    var historyCount = $("historyCount"), histTotalOrders = $("histTotalOrders");
-    var histTotalRevenue = $("histTotalRevenue"), histTotalPickups = $("histTotalPickups");
-    var histTotalWeeks = $("histTotalWeeks"), preparationRow = $("preparationRow");
+    var historyList = $("historyList"), historyCount = $("historyCount");
+    var histTotalOrders = $("histTotalOrders"), histTotalRevenue = $("histTotalRevenue");
+    var histTotalPickups = $("histTotalPickups"), histTotalWeeks = $("histTotalWeeks");
+    var preparationRow = $("preparationRow");
     var timesTableBody = $("timesTableBody"), pcsTableBody = $("pcsTableBody");
     var calculatedThermomixTable = $("calculatedThermomixTable"), calculatedRestTable = $("calculatedRestTable");
     var calculatedRestFooter = $("calculatedRestFooter"), perPcsRow = $("perPcsRow");
     var resetTableBtn = $("resetTableBtn"), saveHistoryBtn = $("saveHistoryBtn");
     var wechatCopyBtn = $("wechatCopyBtn"), wechatImageBtn = $("wechatImageBtn"), wechatStatus = $("wechatStatus");
-    var screenshotBtn = $("screenshotBtn"), screenshotStatus = $("screenshotStatus");
     var screenshotBtn2 = $("screenshotBtn2");
     var pdfBtn = $("pdfBtn"), copyTextBtn = $("copyTextBtn");
     var emailExportBtn = $("emailExportBtn"), jsonExportBtn = $("jsonExportBtn"), csvExportBtn = $("csvExportBtn");
@@ -825,6 +800,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var cmNameInput = $("cmNameInput"), cmCountryInput = $("cmCountryInput");
     var cmCommissionSelect = $("cmCommissionSelect"), addCustomerBtn = $("addCustomerBtn");
     var customerManagerList = $("customerManagerList"), customerCount = $("customerCount");
+    var commissionListItems = $("commissionListItems");
+    var addBtnTop = $("addBtnTop");
 
     // ============ CUSTOMER MANAGER ============
     function loadCustomerDatabase() {
@@ -839,6 +816,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             customerDatabase = {};
         }
         renderCustomerManager();
+        renderCommissionList();
     }
 
     function saveCustomerDatabase() {
@@ -846,6 +824,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             localStorage.setItem("microbiome_customers", JSON.stringify(customerDatabase));
         } catch(e) {}
         renderCustomerManager();
+        renderCommissionList();
     }
 
     function renderCustomerManager() {
@@ -859,7 +838,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var data = customerDatabase[name];
                 var country = data.country || '';
                 var flag = getCountryFlag(country);
-                var shareLabel = data.defaultCommission ? '13.5%' : '15%';
+                var shareLabel = data.defaultCommission ? '13.5% + Prov.' : '15%';
                 var commClass = data.defaultCommission ? 'cm-comm-active' : 'cm-comm-inactive';
                 html += '<span class="cm-tag">' + escapeHtml(name) + ' ' + flag + ' ' + escapeHtml(country) + ' <span class="' + commClass + '">Share ' + shareLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
             });
@@ -873,6 +852,28 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     }
                 });
             });
+        }
+    }
+
+    function renderCommissionList() {
+        var keys = Object.keys(customerDatabase);
+        var commCustomers = keys.filter(function(name) {
+            return customerDatabase[name] && customerDatabase[name].defaultCommission === true;
+        });
+        
+        if (commCustomers.length === 0) {
+            commissionListItems.innerHTML = '<div class="cm-comm-empty">No customers with commission</div>';
+        } else {
+            var html = '';
+            commCustomers.forEach(function(name) {
+                var data = customerDatabase[name];
+                var flag = getCountryFlag(data.country || '');
+                html += '<div class="cm-comm-item">' +
+                    '<span class="name">' + escapeHtml(name) + '</span>' +
+                    '<span class="detail">' + flag + ' ' + escapeHtml(data.country || '') + ' · ' + (data.totalOrders || 0) + ' orders</span>' +
+                    '</div>';
+            });
+            commissionListItems.innerHTML = html;
         }
     }
 
@@ -975,7 +976,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var commission = this.dataset.commission === 'true';
                 
                 customerName.value = name;
-                customerCountry.value = country || '';
+                commissionCheckbox.checked = commission;
                 suggestionsList.className = 'suggestions-list';
                 customerName.focus();
                 
@@ -994,9 +995,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         breadType.value = last.breadType || '88er';
         breadSize.value = last.size || 'S';
         miniCheckbox.checked = last.isMini || false;
-        
-        // Commission wird aus der Datenbank geladen, aber nicht als Checkbox angezeigt
-        // Sie wird nur für die Berechnung verwendet
+        commissionCheckbox.checked = commission !== undefined ? commission : (last.hasCommission || false);
         
         if (hummusType && hummusType !== 'none') {
             hummusType.value = hummusType;
@@ -1027,6 +1026,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             };
         }
         
+        if (order.hasCommission !== undefined) {
+            customerDatabase[name].defaultCommission = order.hasCommission;
+        }
+        
         var orderEntry = {
             week: currentWeek,
             breadType: order.breadType,
@@ -1034,7 +1037,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             isMini: order.isMini || false,
             hummusType: order.hummusType || 'none',
             hummusSize: order.hummusSize || 'S',
-            hasCommission: false
+            hasCommission: order.hasCommission || false
         };
         
         if (!customerDatabase[name].lastOrders) {
@@ -1094,6 +1097,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return Math.round(totalPrice);
     }
 
+    // ============ TOGGLE COMMISSION ============
+    function toggleCommission(orderId) {
+        var order = breadOrders.find(function(o) { return o.id === orderId; });
+        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) { 
+            order.hasCommission = !order.hasCommission; 
+            render(); 
+            saveToLocal(); 
+            updateRoute(); 
+        }
+    }
+
     // ============ FINANCIAL OVERVIEW ============
     function updateFinancialDisplay() {
         var totalRevenue = 0;
@@ -1102,6 +1116,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var totalWithoutShare = 0;
         var shareCustomers = 0;
         var normalCustomers = 0;
+        var totalProvisionRevenue = 0;
         
         breadOrders.forEach(function(o) {
             if (!o.isAdd && !o.isAddBread && !o.isCombo) {
@@ -1113,14 +1128,21 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var price = getCustomerPrice(name);
             totalRevenue += price;
             
-            // Prüfen ob Kunde in der Datenbank ist und Commission hat
             var hasCommission = false;
+            
+            breadOrders.forEach(function(o) {
+                if (!o.isAdd && !o.isAddBread && !o.isCombo && o.name === name && o.hasCommission) {
+                    hasCommission = true;
+                }
+            });
+            
             if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
                 hasCommission = true;
             }
             
             if (hasCommission) {
                 totalWithShare += price;
+                totalProvisionRevenue += price;
                 shareCustomers++;
             } else {
                 totalWithoutShare += price;
@@ -1128,15 +1150,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         });
         
-        // Share Berechnung: 13.5% für Kunden mit Commission, 15% für ohne
         var share = (totalWithShare * 0.135) + (totalWithoutShare * 0.15);
-        var provision = totalRevenue * 0.10;
+        var provision = totalProvisionRevenue * 0.10;
         
         shareAmount.textContent = Math.round(share);
         provisionAmount.textContent = Math.round(provision);
         totalRevenueDisplay.textContent = Math.round(totalRevenue);
         
-        // Status Info
         var statusInfo = '';
         if (shareCustomers > 0 && normalCustomers > 0) {
             statusInfo = ' (mix: ' + shareCustomers + '×13.5% + ' + normalCustomers + '×15%)';
@@ -1146,14 +1166,18 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             statusInfo = ' (15%)';
         }
         
-        // Update Share label
         var shareLabel = document.querySelector('.salary-row .salary-label');
         if (shareLabel) {
             shareLabel.textContent = '👤 Share' + statusInfo;
         }
+        
+        var provLabel = document.querySelector('.provision-row .provision-label');
+        if (provLabel) {
+            provLabel.textContent = '💼 Provision (10% von ' + shareCustomers + ' Kunden mit Commission)';
+        }
     }
 
-    // ============ HUMMUS LOGIK ============
+    // ============ HUMMUS LOGIK (MIT YIN YANG S→M AUTO) ============
     function getCustomerHummus(name) {
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
@@ -1182,6 +1206,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         
         var hummusType = hasHighVariety ? 'yingyang' : 'hummus';
+        
+        // YIN YANG S → M AUTO
+        if (hummusType === 'yingyang' && hummusSize === 'S') {
+            hummusSize = 'M';
+        }
         
         return {
             type: hummusType,
@@ -1231,11 +1260,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         var hummus = getCustomerHummus(name);
         
-        // Prüfen ob Kunde in der Datenbank ist und Commission hat
         var hasCommission = false;
         if (customerDatabase[name] && customerDatabase[name].defaultCommission) {
             hasCommission = true;
         }
+        orders.forEach(function(o) {
+            if (o.hasCommission) hasCommission = true;
+        });
         
         return {
             totalPcs: totalPcs,
@@ -1253,8 +1284,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     window.copySalary = function() {
         var total = totalRevenue();
         var share = Math.round(total * 0.15);
-        var provision = Math.round(total * 0.10);
-        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10%): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
+        var provision = Math.round(provisionRevenue() * 0.10);
+        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10% von Commission-Kunden): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
         var btn = document.getElementById('salaryCopyBtn');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() {
@@ -1287,17 +1318,26 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return sum;
     }
 
-    // ============ TOGGLES ============
-    addressToggle.addEventListener('click', function() {
-        addressBookOpen = !addressBookOpen;
-        addressBody.classList.toggle('open');
-        addressToggleBtn.textContent = addressBookOpen ? '▲ Hide' : '▼ Show';
-    });
-    historyToggle.addEventListener('click', function() {
-        historyOpen = !historyOpen;
-        historyBody.classList.toggle('open');
-        historyArrow.classList.toggle('open');
-    });
+    function provisionRevenue() {
+        var sum = 0;
+        var customers = new Set();
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo && o.hasCommission) {
+                customers.add(o.name);
+            }
+        });
+        breadOrders.forEach(function(o) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo) {
+                if (customerDatabase[o.name] && customerDatabase[o.name].defaultCommission) {
+                    customers.add(o.name);
+                }
+            }
+        });
+        customers.forEach(function(name) {
+            sum += getCustomerPrice(name);
+        });
+        return sum;
+    }
 
     // ============ CAPITALIZE ============
     function capitalizeName(input) { 
@@ -1365,7 +1405,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function takeScreenshot(btn, statusEl) {
         var element = document.getElementById('captureArea');
         var status = statusEl || screenshotStatus;
-        var button = btn || screenshotBtn;
+        var button = btn || screenshotBtn2;
         var originalText = button.textContent;
         
         status.className = 'show';
@@ -1439,7 +1479,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }, 500);
     }
 
-    screenshotBtn.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
     screenshotBtn2.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
 
     // ============ PDF ============
@@ -1524,7 +1563,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         });
         var total = totalRevenue();
         var share = Math.round(total * 0.15);
-        var provision = Math.round(total * 0.10);
+        var provision = Math.round(provisionRevenue() * 0.10);
         lines.push('TOTAL,,, , ,' + Math.round(total));
         lines.push('SHARE,,, , ,' + share);
         lines.push('PROVISION,,, , ,' + provision);
@@ -1538,7 +1577,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         URL.revokeObjectURL(url);
     });
 
-    // ============ HUMMUS AUTO ============
+    // ============ HUMMUS AUTO (MIT M+/XL+ FIX) ============
     function getHummusSizeForBreadSize(bs) { if (bs === 'S+') return 'S'; return bs; }
     function autoSelectHummus() {
         var val = breadType.value, sizeVal = breadSize.value;
@@ -1547,6 +1586,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             yingYangInfo.classList.remove('show'); 
             return; 
         }
+        // M+ und XL+ kommen OHNE Hummus → automatisch "none"
         if (sizeVal === 'M+' || sizeVal === 'XL+') { 
             hummusType.value = 'none'; 
             yingYangInfo.classList.remove('show'); 
@@ -2092,135 +2132,40 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         );
     }
 
-    // ============ DELIVERY COMPLETION / PROOF ============
-    function getRouteStateKey() { return 'microbiome_route_completed_week_' + currentWeek; }
-    function getRouteProofKey() { return 'microbiome_route_proofs_week_' + currentWeek; }
-    function getRouteStopKey(stop) { return String(stop.name || '') + '|' + String(stop.address || ''); }
-    function loadRouteCompletionState() {
-        try { routeCompleted = JSON.parse(localStorage.getItem(getRouteStateKey()) || '{}') || {}; } catch(e) { routeCompleted = {}; }
-        try { routeProofs = JSON.parse(localStorage.getItem(getRouteProofKey()) || '{}') || {}; } catch(e) { routeProofs = {}; }
-    }
-    function saveRouteCompletionState() { try { localStorage.setItem(getRouteStateKey(), JSON.stringify(routeCompleted)); } catch(e) {} }
-    function saveRouteProofs() { try { localStorage.setItem(getRouteProofKey(), JSON.stringify(routeProofs)); } catch(e) {} }
-    function isRouteCompleted(stop) { return !!routeCompleted[getRouteStopKey(stop)]; }
-    function escapeRouteAttr(value) { return escapeHtml(String(value || '')).replace(/'/g, '&#39;'); }
-    function markRouteCompleted(stop, completed) {
-        var key = getRouteStopKey(stop);
-        if (completed) routeCompleted[key] = true; else delete routeCompleted[key];
-        saveRouteCompletionState();
-        updateRoute();
-    }
-    function resizeRoutePhoto(file, callback) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var img = new Image();
-            img.onload = function() {
-                var maxSide = 1200;
-                var scale = Math.min(1, maxSide / Math.max(img.width, img.height));
-                var canvas = document.createElement('canvas');
-                canvas.width = Math.max(1, Math.round(img.width * scale));
-                canvas.height = Math.max(1, Math.round(img.height * scale));
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                callback(canvas.toDataURL('image/jpeg', 0.78));
-            };
-            img.onerror = function(){ callback(null); };
-            img.src = e.target.result;
-        };
-        reader.onerror = function(){ callback(null); };
-        reader.readAsDataURL(file);
-    }
-    function addRoutePhoto(stop, file) {
-        if (!file || !file.type || file.type.indexOf('image/') !== 0) return;
-        resizeRoutePhoto(file, function(dataUrl) {
-            if (!dataUrl) { alert('❌ Photo could not be loaded.'); return; }
-            var key = getRouteStopKey(stop);
-            try {
-                routeProofs[key] = dataUrl;
-                saveRouteProofs();
-                updateRoute();
-            } catch(e) {
-                alert('❌ Photo could not be saved. Please take a smaller photo.');
-            }
-        });
-    }
-    function routeProofMarkup(stop, key, completed) {
-        var photo = routeProofs[key];
-        if (!photo) return '';
-        var fileName = 'delivery_' + String(stop.name || 'customer').replace(/[^a-z0-9_-]/gi, '_') + '.jpg';
-        return '<div class="route-proof"><img src="' + photo + '" alt="Delivery proof"><div class="route-proof-actions"><a href="' + photo + '" target="_blank" download="' + escapeRouteAttr(fileName) + '">💾 Save photo</a><button type="button" data-action="photo" data-stop-key="' + escapeRouteAttr(key) + '">📷 Retake</button></div></div>';
-    }
-    function bindRouteCompletionControls() {
-        routeResult.querySelectorAll('[data-action="complete"]').forEach(function(cb) {
-            cb.addEventListener('change', function() {
-                var key = this.dataset.stopKey;
-                var stop = window._routeStopMap ? window._routeStopMap[key] : null;
-                if (stop) markRouteCompleted(stop, this.checked);
-            });
-        });
-        routeResult.querySelectorAll('[data-action="photo"]').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var key = this.dataset.stopKey;
-                var inputs = routeResult.querySelectorAll('input[type="file"][data-photo-input]');
-                for (var i = 0; i < inputs.length; i++) { if (inputs[i].dataset.photoInput === key) { inputs[i].click(); break; } }
-            });
-        });
-        routeResult.querySelectorAll('input[type="file"][data-photo-input]').forEach(function(input) {
-            input.addEventListener('change', function() {
-                var key = this.dataset.photoInput;
-                var stop = window._routeStopMap ? window._routeStopMap[key] : null;
-                if (stop && this.files && this.files[0]) addRoutePhoto(stop, this.files[0]);
-                this.value = '';
-            });
-        });
-    }
-
     // ============ ROUTE OPTIMIZATION ============
-    function findBackHomeRoute(startAddr, customers) {
+    function findOptimalRoundTrip(startAddr, customers) {
         if (!customers || customers.length === 0) return [];
+        if (customers.length === 1) { 
+            var result = customers.slice(); 
+            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' }); 
+            return result; 
+        }
+        
         var unvisited = customers.slice();
         var route = [];
         var current = { address: startAddr };
+        
         while (unvisited.length > 0) {
-            var nearest = null, nearestDist = Infinity;
+            var nearest = null;
+            var nearestDist = Infinity;
+            
             for (var i = 0; i < unvisited.length; i++) {
                 var dist = getDistance(current.address, unvisited[i].address);
-                if (dist < nearestDist) { nearestDist = dist; nearest = i; }
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearest = i;
+                }
             }
+            
             if (nearest !== null) {
                 route.push(unvisited[nearest]);
                 current = unvisited[nearest];
                 unvisited.splice(nearest, 1);
             }
         }
+        
         route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' });
         return route;
-    }
-
-    function findFastDeliveryRoute(startAddr, customers) {
-        if (!customers || customers.length === 0) return [];
-        // Fast Delivery: customers are ordered by their distance from the start,
-        // nearest first and farthest last. There is deliberately NO return home.
-        return customers.slice().sort(function(a, b) {
-            var da = getDistance(startAddr, a.address);
-            var db = getDistance(startAddr, b.address);
-            if (da !== db) return da - db;
-            return String(a.name || '').localeCompare(String(b.name || ''));
-        });
-    }
-
-    function setRouteMode(mode) {
-        routeMode = mode === 'fastDelivery' ? 'fastDelivery' : 'backHome';
-        var fast = routeMode === 'fastDelivery';
-        backHomeModeBtn.classList.toggle('active', !fast);
-        fastDeliveryModeBtn.classList.toggle('active', fast);
-        routeModeBadge.textContent = fast ? '⚡ FAST DELIVERY' : '🏠 BACK HOME';
-        routeModeDesc.textContent = fast
-            ? '⚡ Start → nearest customer → ... → farthest customer (no return home)'
-            : '🏠 Start → nearest customer → next nearest → ... → Huqingping Highway 1517';
-        appleMapsSub.textContent = fast ? '⚡ End: farthest customer • no return home' : '📍 End: Huqingping Highway 1517';
-        routeEndInfo.textContent = fast ? '⚡ Fast Delivery: No return to Huqingping Highway 1517' : '✅ Back Home: Route ends at Huqingping Highway 1517';
-        updateRoute();
     }
 
     function updateRoute() {
@@ -2233,7 +2178,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             routeCompareInfo.textContent = '';
             return;
         }
-
+        
         var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
         if (normalOrders.length === 0 && pickupList.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
@@ -2243,37 +2188,51 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             routeCompareInfo.textContent = '';
             return;
         }
-
-        var pickupDestinations = [], noAddress = [];
+        
+        var allDestinations = [], pickupDestinations = [], noAddress = [];
+        
         pickupList.forEach(function(name) {
             var addr = addressBook[name] || '';
-            if (addr && addr.trim()) pickupDestinations.push({ name: name, address: addr, isPickup: true, order: null });
-            else noAddress.push(name + ' (pickup)');
+            if (addr && addr.trim()) {
+                pickupDestinations.push({ name: name, address: addr, isPickup: true, order: null });
+            } else {
+                noAddress.push(name + ' (pickup)');
+            }
         });
-
+        
         var uniqueCustomers = {};
         normalOrders.forEach(function(order) {
             var addr = addressBook[order.name] || '';
             if (addr && addr.trim()) {
-                if (!uniqueCustomers[order.name]) uniqueCustomers[order.name] = { name: order.name, address: addr, isPickup: false, order: order };
-            } else noAddress.push(order.name);
+                if (!uniqueCustomers[order.name]) {
+                    uniqueCustomers[order.name] = { name: order.name, address: addr, isPickup: false, order: order };
+                }
+            } else {
+                noAddress.push(order.name);
+            }
         });
-
+        
         var allCustomers = pickupDestinations.concat(Object.values(uniqueCustomers));
-        var completedCustomers = allCustomers.filter(function(c) { return isRouteCompleted(c); });
-        var activeCustomers = allCustomers.filter(function(c) { return !isRouteCompleted(c); });
-        window._routeStopMap = {};
-        allCustomers.forEach(function(c) { window._routeStopMap[getRouteStopKey(c)] = c; });
-
+        
         var listHtml = '';
-        allCustomers.forEach(function(c) {
-            var done = isRouteCompleted(c);
-            var statusIcon = done ? '☑️' : '⬜';
-            var statusText = done ? 'FERTIG' : '📍 ' + c.address;
-            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;' + (done ? 'opacity:.65;' : '') + '"><span' + (done ? ' style="text-decoration:line-through"' : '') + '>' + (c.isPickup ? '📦 ' : '') + escapeHtml(c.name) + '</span><span>' + statusIcon + ' ' + escapeHtml(statusText) + '</span></div>';
+        
+        pickupList.forEach(function(name) {
+            var addr = addressBook[name] || '', hasAddr = addr && addr.trim();
+            var statusIcon = hasAddr ? '✅' : '⚠️', statusText = hasAddr ? '📍 ' + addr : 'no address';
+            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;border-left:3px solid #e74c3c;padding-left:4px;"><span>📦 ' + escapeHtml(name) + ' <span style="color:#e74c3c;font-size:0.45rem;font-weight:700;">PICKUP</span></span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
         });
-        autoRouteList.innerHTML = listHtml || 'No orders yet';
-
+        
+        normalOrders.forEach(function(order) {
+            var addr = addressBook[order.name] || '', hasAddr = addr && addr.trim();
+            var statusIcon = hasAddr ? '✅' : '⚠️', statusText = hasAddr ? '📍 ' + addr : 'no address';
+            var miniLabel = order.isMini ? ' 🥖Mini' : '';
+            var countryLabel = order.country ? ' ' + order.country : '';
+            var comboLabel = order.isCombo ? ' 🧩' : '';
+            var hummusLabel = (order.hummusType && order.hummusType !== 'none') ? ' 🫒' : '';
+            listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;"><span>' + escapeHtml(order.name) + countryLabel + comboLabel + hummusLabel + ' (' + order.breadType + ' ' + order.size + miniLabel + ')</span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
+        });
+        autoRouteList.innerHTML = listHtml;
+        
         if (allCustomers.length === 0) {
             routeResult.innerHTML = '<div class="route-empty">⚠️ No valid addresses found. Add addresses in Address Book.</div>';
             appleMapsBtn.disabled = true;
@@ -2281,100 +2240,105 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             routeCompareInfo.textContent = '';
             return;
         }
-
-        var optimizedRoute = routeMode === 'fastDelivery' ? findFastDeliveryRoute(start, activeCustomers) : findBackHomeRoute(start, activeCustomers);
-        var activeStops = optimizedRoute.filter(function(c) { return !c.isReturn; });
+        
+        var optimizedRoute = findOptimalRoundTrip(start, allCustomers);
+        
         var totalDist = 0;
-        activeStops.forEach(function(c, index) {
-            if (index === 0) totalDist += getDistance(start, c.address);
-            else totalDist += getDistance(activeStops[index - 1].address, c.address);
+        optimizedRoute.forEach(function(c, index) {
+            if (index === 0) {
+                totalDist += getDistance(start, c.address);
+            } else {
+                var prev = optimizedRoute[index - 1];
+                totalDist += getDistance(prev.address, c.address);
+            }
         });
-        if (routeMode === 'backHome' && activeStops.length > 0) totalDist += getDistance(activeStops[activeStops.length - 1].address, HOME_ADDRESS);
-
+        
         var traffic = currentTraffic;
         var totalDistWithTraffic = totalDist * traffic.delay;
         var avgSpeed = traffic.level === 'heavy' ? 25 : traffic.level === 'moderate' ? 35 : 45;
         var timeMin = Math.round(totalDistWithTraffic / avgSpeed * 60);
         var hours = Math.floor(timeMin / 60), minutes = timeMin % 60;
         var timeStr = hours > 0 ? hours + 'h ' + minutes + 'min' : minutes + ' min';
-
-        var routeDeliveries = activeStops.map(function(c) { return c.address; });
-        if (routeMode === 'backHome' && activeStops.length > 0) routeDeliveries.push(HOME_ADDRESS);
-
+        
+        var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
+        routeDeliveries.push(HOME_ADDRESS);
+        
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">' + (routeMode === 'fastDelivery' ? '⚡ Fast Delivery Route' : '🧠 Back Home Route') + ' (' + activeStops.length + ' active stops)</div>';
-        if (routeMode === 'backHome') html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: ' + escapeHtml(HOME_ADDRESS) + '</div>';
-        else html += '<div style="font-weight:600;font-size:0.6rem;color:#27ae60;margin-bottom:6px;">🏁 End: Farthest active customer</div>';
-
-        if (activeStops.length === 0) {
-            html += '<div class="route-empty">🎉 Alle Kunden sind fertig! Keine weitere Navigation nötig.</div>';
-        } else {
-            activeStops.forEach(function(c, index) {
-                var key = getRouteStopKey(c);
-                var isPickup = c.isPickup || false, isMini = c.order ? c.order.isMini : false;
-                var distFromPrev = index === 0 ? getDistance(start, c.address) : getDistance(activeStops[index - 1].address, c.address);
-                var pickupClass = isPickup ? 'pickup' : '';
-                var pickupBadge = isPickup ? ' <span class="pickup-badge">📦 PICKUP</span>' : '';
-                var miniBadge = isMini ? ' <span class="mini-badge">🥖 Mini</span>' : '';
-                var nameDisplay = isPickup ? '📦 ' + c.name : c.name;
-                var orderInfo = c.order ? ' (' + c.order.breadType + ' ' + c.order.size + (c.order.isMini ? ' Mini' : '') + ')' : '';
-                var photoButtonClass = routeProofs[key] ? ' has-photo' : '';
-                html += '<div class="route-step ' + pickupClass + '"><span class="step-num">' + (index + 1) + '</span><span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + miniBadge + '<br><span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:#27ae60;font-size:.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span></span><span class="route-actions"><label class="route-check"><input type="checkbox" data-action="complete" data-stop-key="' + escapeRouteAttr(key) + '"> Fertig</label><button type="button" class="route-photo-btn' + photoButtonClass + '" data-action="photo" data-stop-key="' + escapeRouteAttr(key) + '">' + (routeProofs[key] ? '📷 Photo ✓' : '📷 Photo') + '</button><input type="file" accept="image/*" capture="environment" data-photo-input="' + escapeRouteAttr(key) + '" style="display:none"></span></div>';
-            });
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
+        html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: ' + escapeHtml(HOME_ADDRESS) + '</div>';
+        
+        optimizedRoute.forEach(function(c, index) {
+            var isReturn = c.isReturn || false, isPickup = c.isPickup || false, isMini = c.order ? c.order.isMini : false;
+            var distFromPrev = 0;
+            
+            if (index === 0) {
+                distFromPrev = getDistance(start, c.address);
+            } else {
+                var prev = optimizedRoute[index - 1];
+                distFromPrev = getDistance(prev.address, c.address);
+            }
+            
+            var pickupClass = isPickup ? 'pickup' : '', returnClass = isReturn ? 'return-home' : '';
+            var pickupBadge = isPickup ? ' <span class="pickup-badge">📦 PICKUP</span>' : '';
+            var homeBadge = isReturn ? ' <span class="home-badge">🏠 HOME</span>' : '';
+            var miniBadge = (isMini && !isReturn) ? ' <span class="mini-badge">🥖 Mini</span>' : '';
+            var nameDisplay = isReturn ? '🏠 ' + c.label : (isPickup ? '📦 ' + c.name : c.name);
+            var orderInfo = c.order ? ' (' + c.order.breadType + ' ' + c.order.size + (c.order.isMini ? ' Mini' : '') + ')' : '';
+            
+            html += '<div class="route-step ' + pickupClass + ' ' + returnClass + '"><span class="step-num">' + (index + 1) + '</span><span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + homeBadge + miniBadge + '</span><span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:' + (isReturn ? '#2ecc71' : (isPickup ? '#e74c3c' : '#27ae60')) + ';font-size:0.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span></div>';
+        });
+        
+        if (noAddress.length > 0) {
+            html += '<div style="margin-top:4px;padding:4px 8px;background:#fde8e8;border-radius:8px;font-size:0.55rem;color:#c0392b;">⚠️ No address for: ' + noAddress.join(', ') + ' (not in route)</div>';
         }
-
-        if (completedCustomers.length > 0) {
-            html += '<div class="route-completed-title">✅ FERTIG / SCHON BESUCHT (' + completedCustomers.length + ')</div>';
-            completedCustomers.forEach(function(c, index) {
-                var key = getRouteStopKey(c);
-                var nameDisplay = c.isPickup ? '📦 ' + c.name : c.name;
-                html += '<div class="route-step route-completed"><span class="step-num">✓</span><span class="step-name route-completed-name">' + escapeHtml(nameDisplay) + ' <span class="route-completed-badge">FERTIG</span><br><span class="step-detail">📍 ' + escapeHtml(c.address) + '</span>' + routeProofMarkup(c, key, true) + '</span><span class="route-actions"><label class="route-check"><input type="checkbox" checked data-action="complete" data-stop-key="' + escapeRouteAttr(key) + '"> Fertig</label><button type="button" class="route-photo-btn' + (routeProofs[key] ? ' has-photo' : '') + '" data-action="photo" data-stop-key="' + escapeRouteAttr(key) + '">📷 ' + (routeProofs[key] ? 'Photo ✓' : 'Photo') + '</button><input type="file" accept="image/*" capture="environment" data-photo-input="' + escapeRouteAttr(key) + '" style="display:none"></span></div>';
-            });
-        }
-
-        if (noAddress.length > 0) html += '<div style="margin-top:4px;padding:4px 8px;background:#fde8e8;border-radius:8px;font-size:0.55rem;color:#c0392b;">⚠️ No address for: ' + noAddress.join(', ') + ' (not in route)</div>';
-        if (activeStops.length > 0) {
-            html += '<div class="route-no-distance" style="margin-top:6px;padding:6px 10px;background:rgba(46,204,113,0.1);border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:0.6rem;">';
-            html += '<span>📏 <strong>' + totalDistWithTraffic.toFixed(1) + ' km</strong></span><span>⏱️ <strong>' + timeStr + '</strong></span><span style="color:' + traffic.color + ';">🚦 ' + traffic.label + '</span></div>';
-            html += '<div class="traffic-info-display" style="margin-top:4px;font-size:0.55rem;color:' + traffic.color + ';text-align:center;">🚦 ' + traffic.label + ' (auto-updates every 30s)</div>';
-        }
-
+        
+        html += '<div class="route-no-distance" style="margin-top:6px;padding:6px 10px;background:rgba(46,204,113,0.1);border-radius:10px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:0.6rem;">';
+        html += '<span>📏 <strong>' + totalDistWithTraffic.toFixed(1) + ' km</strong></span>';
+        html += '<span>⏱️ <strong>' + timeStr + '</strong></span>';
+        html += '<span style="color:' + traffic.color + ';">🚦 ' + traffic.label + '</span></div>';
+        html += '<div class="traffic-info-display" style="margin-top:4px;font-size:0.55rem;color:' + traffic.color + ';text-align:center;">🚦 ' + traffic.label + ' (auto-updates every 30s)</div>';
+        
         routeResult.innerHTML = html;
-        bindRouteCompletionControls();
-        appleMapsBtn.disabled = activeStops.length === 0;
+        appleMapsBtn.disabled = false;
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
-        window._routeMode = routeMode;
-        routeOptimizedInfo.textContent = routeMode === 'fastDelivery' ? '⚡ Fast Delivery: nearest from start → farthest last, completed stops skipped, no return home' : '🧠 Back Home: nearest customer first → completed stops skipped → return to ' + HOME_ADDRESS;
-        routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + (routeMode === 'backHome' ? ' | 🏁 ' + HOME_ADDRESS : ' | ⚡ No return home') + ' | ✅ ' + completedCustomers.length + ' finished';
+        routeOptimizedInfo.textContent = '🧠 Nearest Neighbor: always goes to closest customer first (' + allCustomers.length + ' stops)';
+        routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 ' + HOME_ADDRESS;
     }
 
     // ============ APPLE MAPS ============
     window.openAppleMapsDirect = function() {
         var start = window._routeStart || routeStart.value.trim();
         var deliveries = window._routeDeliveries || [];
-        var mode = window._routeMode || routeMode;
-        if (!start || deliveries.length === 0) {
+        if (!start || deliveries.length === 0) { 
             alert('Please add orders with addresses first.');
-            return;
+            return; 
         }
+        
         var appUrl = 'maps://maps.apple.com/?';
         var params = [];
         params.push('saddr=' + encodeURIComponent(start));
-        deliveries.forEach(function(addr) { params.push('daddr=' + encodeURIComponent(addr)); });
-        if (mode === 'backHome') params.push('daddr=' + encodeURIComponent(HOME_ADDRESS));
+        deliveries.forEach(function(addr) {
+            params.push('daddr=' + encodeURIComponent(addr));
+        });
+        params.push('daddr=' + encodeURIComponent(HOME_ADDRESS));
         params.push('dirflg=d');
         appUrl += params.join('&');
+        
         window.location.href = appUrl;
+        
         setTimeout(function() {
             var webUrl = 'https://maps.apple.com/?';
             var webParams = [];
             webParams.push('saddr=' + encodeURIComponent(start));
-            deliveries.forEach(function(addr) { webParams.push('daddr=' + encodeURIComponent(addr)); });
-            if (mode === 'backHome') webParams.push('daddr=' + encodeURIComponent(HOME_ADDRESS));
+            deliveries.forEach(function(addr) {
+                webParams.push('daddr=' + encodeURIComponent(addr));
+            });
+            webParams.push('daddr=' + encodeURIComponent(HOME_ADDRESS));
             webParams.push('dirflg=d');
             webParams.push('hl=zh-CN');
-            window.open(webUrl + webParams.join('&'), '_blank');
+            webUrl += webParams.join('&');
+            window.open(webUrl, '_blank');
         }, 1000);
     };
 
@@ -2488,7 +2452,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     hummusLabel = ' ' + typeLabel + ' ' + details.hummus.size;
                 }
                 var shareLabel = details.hasCommission ? ' (13.5%)' : ' (15%)';
-                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel + shareLabel);
+                var provLabel = details.hasCommission ? ' + 10% Provision' : '';
+                lines.push(index + '. ' + name + ' ' + flag + ' ' + country + hummusLabel + shareLabel + provLabel);
                 lines.push('   ' + varieties.join(' + ') + ' → ' + Math.round(totalPcs) + ' pcs' + miniLabel);
                 if (details) {
                     lines.push('   ➜ Price: ' + details.size + ' (¥' + details.totalPrice + ')');
@@ -2514,10 +2479,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             lines.push('');
             var total = totalRevenue();
             var share = Math.round(total * 0.15);
-            var provision = Math.round(total * 0.10);
+            var provRevenue = provisionRevenue();
+            var provision = Math.round(provRevenue * 0.10);
             lines.push('💰 TOTAL REVENUE: ¥' + Math.round(total));
             lines.push('👤 SHARE (15% / 13.5%): ¥' + share);
-            lines.push('💼 PROVISION (10%): ¥' + provision);
+            lines.push('💼 PROVISION (10% von ' + Math.round(provRevenue) + ' ¥ Umsatz mit Commission): ¥' + provision);
             lines.push('');
             var req = getTotalRequirements();
             var breakdown = getTimesPcsBreakdown();
@@ -2600,104 +2566,40 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     }
 
     // ============ WECHAT IMAGE ============
-    wechatImageBtn.addEventListener("click", async function() {
+    wechatImageBtn.addEventListener("click", function() {
         var btn = this;
         var originalText = btn.textContent;
         var status = wechatStatus;
-
-        btn.textContent = '⏳ Creating full page...';
+        btn.textContent = '⏳ Generating...';
         btn.disabled = true;
         status.className = 'wechat-status show';
-        status.textContent = '⏳ Preparing full page image...';
-
-        try {
-            // Wait for fonts and images so the screenshot contains the complete page.
-            if (document.fonts && document.fonts.ready) {
-                await document.fonts.ready;
+        status.textContent = '⏳ Generating image...';
+        var text = generateExportText();
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text); }
+        var element = document.getElementById('captureArea');
+        html2canvas(element, {
+            scale: 1.5,
+            useCORS: true,
+            backgroundColor: '#f7f1dd',
+            logging: false,
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight,
+            onclone: function(doc) {
+                var el = doc.getElementById('captureArea');
+                if (el) { el.style.transform = 'none'; el.style.overflow = 'visible'; }
             }
-
-            var images = Array.from(document.images);
-            await Promise.all(images.map(function(img) {
-                if (img.complete) return Promise.resolve();
-                return new Promise(function(resolve) {
-                    img.addEventListener('load', resolve, {once:true});
-                    img.addEventListener('error', resolve, {once:true});
-                });
-            }));
-
-            // Capture the entire document, not just the visible viewport.
-            var page = document.documentElement;
-            var body = document.body;
-            var fullWidth = Math.max(
-                page.scrollWidth, body.scrollWidth,
-                page.clientWidth, body.clientWidth
-            );
-            var fullHeight = Math.max(
-                page.scrollHeight, body.scrollHeight,
-                page.clientHeight, body.clientHeight
-            );
-
-            // Temporarily remove viewport limitations.
-            var oldPageOverflow = page.style.overflow;
-            var oldBodyOverflow = body.style.overflow;
-            page.style.overflow = 'visible';
-            body.style.overflow = 'visible';
-
-            var canvas = await html2canvas(body, {
-                scale: Math.min(2, window.devicePixelRatio || 1.5),
-                useCORS: true,
-                allowTaint: false,
-                backgroundColor: '#f7f1dd',
-                logging: false,
-                width: fullWidth,
-                height: fullHeight,
-                windowWidth: fullWidth,
-                windowHeight: fullHeight,
-                scrollX: 0,
-                scrollY: 0,
-                x: 0,
-                y: 0,
-                onclone: function(doc) {
-                    var clonedBody = doc.body;
-                    var clonedPage = doc.documentElement;
-                    clonedPage.style.overflow = 'visible';
-                    clonedBody.style.overflow = 'visible';
-                    clonedBody.style.height = 'auto';
-                    clonedBody.style.minHeight = '0';
-                }
-            });
-
-            page.style.overflow = oldPageOverflow;
-            body.style.overflow = oldBodyOverflow;
-
-            // Use a Blob instead of a data URL; this works more reliably on phones.
-            canvas.toBlob(function(blob) {
-                if (!blob) throw new Error('Could not create image');
-
-                var fileName = 'microbiome_warrior_week_' + currentWeek + '.png';
-                var file = new File([blob], fileName, {type:'image/png'});
-
-                // On phones, open the image so the user can save it to Photos/Gallery.
-                // On browsers supporting Web Share, offer the native Share/Save sheet.
-                if (navigator.share && navigator.canShare && navigator.canShare({files:[file]})) {
-                    navigator.share({
-                        title: 'Microbiome Warrior',
-                        files: [file]
-                    }).then(function() {
-                        status.className = 'wechat-status show success';
-                        status.textContent = '✅ Full page image ready — save it to your Photos/Gallery.';
-                    }).catch(function(err) {
-                        if (err && err.name === 'AbortError') {
-                            status.className = 'wechat-status show';
-                            status.textContent = 'Image ready. You can save it from the share menu.';
-                        } else {
-                            openImageForSaving(blob, fileName);
-                        }
-                    });
-                } else {
-                    openImageForSaving(blob, fileName);
-                }
-
+        }).then(function(canvas) {
+            try {
+                var link = document.createElement('a');
+                link.download = 'microbiome_week_' + currentWeek + '.png';
+                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                status.className = 'wechat-status show success';
+                status.textContent = '✅ Text copied! Image downloaded!';
                 btn.textContent = '✅ Done!';
                 btn.style.background = '#27ae60';
                 setTimeout(function() {
@@ -2706,38 +2608,34 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     btn.textContent = originalText;
                     btn.style.background = '';
                     btn.disabled = false;
-                }, 5000);
-            }, 'image/png');
-
-        } catch (error) {
-            console.error('Full page screenshot failed:', error);
+                }, 4000);
+            } catch(e) {
+                status.className = 'wechat-status show error';
+                status.textContent = '❌ Image error, but text is copied.';
+                btn.textContent = '❌ Error';
+                btn.style.background = '#e74c3c';
+                setTimeout(function() {
+                    status.className = 'wechat-status';
+                    status.textContent = '';
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }).catch(function(error) {
             status.className = 'wechat-status show error';
-            status.textContent = '❌ Screenshot failed: ' + (error.message || 'unknown error');
+            status.textContent = '❌ Image failed. Text is copied though!';
             btn.textContent = '❌ Error';
-
+            btn.style.background = '#e74c3c';
             setTimeout(function() {
                 status.className = 'wechat-status';
                 status.textContent = '';
                 btn.textContent = originalText;
                 btn.style.background = '';
                 btn.disabled = false;
-            }, 4000);
-        }
+            }, 3000);
+        });
     });
-
-    function openImageForSaving(blob, fileName) {
-        var imageUrl = URL.createObjectURL(blob);
-        var newWindow = window.open(imageUrl, '_blank');
-
-        // If popups are blocked, navigate directly to the image.
-        if (!newWindow) {
-            window.location.href = imageUrl;
-        }
-
-        setTimeout(function() {
-            URL.revokeObjectURL(imageUrl);
-        }, 60000);
-    }
 
     // ============ MAIN RENDER ============
     function render() {
@@ -2770,13 +2668,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var rowClass = isMulti ? 'multi-order-row' : '';
                 row.className = rowClass;
                 
+                // COMMISSION HIGHLIGHT: farbliche Hervorhebung für Kunden mit Commission
+                var hasCommission = details.hasCommission || false;
+                var shareClass = hasCommission ? 'active' : 'inactive';
+                var shareLabel = hasCommission ? '13.5%' : '15%';
+                
+                // Zellen-Inhalte
                 var varietyDisplay = orders.length === 1 ? orders[0].breadType : orders.map(function(o) { return o.breadType; }).join(', ');
                 var sizeDisplay = details.size + (isMulti ? ' (' + details.totalPcs + ' stk)' : '');
                 var totalPcsDisplay = Math.round(details.totalPcs);
                 var priceDisplay = details.totalPrice.toFixed(0);
-                var hasCommission = details.hasCommission || false;
-                var shareClass = hasCommission ? 'active' : 'inactive';
-                var shareLabel = hasCommission ? '13.5%' : '15%';
                 var miniTag = details.isMini ? ' 🥖' : '';
                 var multiBadge = isMulti ? ' <span class="multi-badge">📦 ' + orders.length + 'x</span>' : '';
                 
@@ -2801,16 +2702,25 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 var countryDisplay = orders[0].country || '—';
                 var flag = getCountryFlag(countryDisplay);
                 
+                // NAME mit Commission-Highlight
+                var nameDisplay = escapeHtml(name) + multiBadge;
+                if (hasCommission) {
+                    nameDisplay = '💰 ' + nameDisplay;
+                }
+                
+                // Zeilen-Highlight für Commission
+                var rowStyle = hasCommission ? 'style="background:#fef9e7;border-left:4px solid #c0392b;"' : '';
+                
                 row.innerHTML = 
                     '<td>#' + displayIndex + '</td>' +
-                    '<td style="text-align:left">' + escapeHtml(name) + multiBadge + '</td>' +
+                    '<td style="text-align:left;font-weight:' + (hasCommission ? '800' : '400') + ';color:' + (hasCommission ? '#c0392b' : 'inherit') + ';">' + nameDisplay + '</td>' +
                     '<td>' + flag + ' ' + escapeHtml(countryDisplay) + '</td>' +
                     '<td>' + varietyDisplay + miniTag + '</td>' +
                     '<td>' + sizeDisplay + '</td>' +
                     '<td>' + totalPcsDisplay + '</td>' +
                     '<td><strong>' + priceDisplay + ' ¥</strong></td>' +
                     '<td>' + hummusDisplay + '</td>' +
-                    '<td><span class="comm-toggle ' + shareClass + '"><span class="toggle-dot"></span><span class="toggle-label">' + shareLabel + '</span></span></td>' +
+                    '<td><span class="comm-toggle ' + shareClass + '" data-id="' + orders[0].id + '"><span class="toggle-dot"></span><span class="toggle-label">' + shareLabel + '</span></span></td>' +
                     '<td><button class="delete-btn" data-name="' + escapeHtml(name) + '" data-type="customer">✖</button></td>';
                 
                 breadTableBody.appendChild(row);
@@ -2869,6 +2779,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
         });
         
+        document.querySelectorAll('.comm-toggle[data-id]').forEach(function(el) {
+            el.addEventListener('click', function() {
+                var id = parseInt(this.getAttribute('data-id'));
+                toggleCommission(id);
+            });
+        });
+        
         var total = totalRevenue();
         totalSpan.innerText = total.toFixed(0) + ' ¥';
         hummusCountSpan.innerText = '🫒 ' + totalHummusCount();
@@ -2918,9 +2835,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ RESET FORM ============
     function resetForm() { 
         customerName.value = ""; 
-        customerCountry.value = ""; 
-        countryFlagDisplay.textContent = '';
         miniCheckbox.checked = false; 
+        commissionCheckbox.checked = false;
         hummusType.value = 'none';
         hummusSize.value = 'S';
         suggestionsList.className = 'suggestions-list';
@@ -2938,12 +2854,17 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
-        var country = customerCountry.value.trim();
         var breadVal = breadType.value;
         var sizeVal = breadSize.value;
         var isMini = miniCheckbox.checked;
         var hummusVal = hummusType.value;
         var hummusSizeVal = hummusSize.value;
+        var hasCommission = commissionCheckbox.checked;
+        
+        var country = '';
+        if (customerDatabase[name] && customerDatabase[name].country) {
+            country = customerDatabase[name].country;
+        }
         
         if (breadVal === 'combo-88-200' || breadVal === 'combo-150-208') {
             var comboType = breadVal === 'combo-88-200' ? '88-200' : '150-208';
@@ -2959,6 +2880,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     breadType: item.variety,
                     size: 'S',
                     isMini: isMini,
+                    hasCommission: false,
                     week: currentWeek,
                     isAdd: false,
                     isAddBread: false,
@@ -2971,7 +2893,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             });
             combos.push({ id: comboId, type: comboType, name: name, country: country, isMini: isMini, price: totalPrice, items: comboItems.length });
             
-            var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S' };
+            var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S', hasCommission: false };
             updateCustomerDatabase(name, country, order);
             
             render(); saveToLocal(); resetForm(); return;
@@ -2987,6 +2909,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             breadType: breadVal, 
             size: sizeVal, 
             isMini: isMini, 
+            hasCommission: hasCommission,
             week: currentWeek, 
             isAdd: false, 
             isAddBread: false, 
@@ -2997,7 +2920,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         breadOrders.push(order);
         
-        // Hummus auch in hummusOrders speichern für die Übersicht
         if (hummusVal !== 'none') { 
             hummusOrders.push({ 
                 id: nextId++, 
@@ -3030,6 +2952,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 breadType: breadVal, 
                 size: 'S', 
                 isMini: isMini, 
+                hasCommission: false,
                 week: currentWeek, 
                 isAdd: true, 
                 isAddBread: true,
@@ -3057,12 +2980,13 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     // ============ EVENT LISTENERS ============
     document.getElementById("addBtn").addEventListener("click", addOrder);
+    document.getElementById("addBtnTop").addEventListener("click", addOrder);
     addBreadAddBtn.addEventListener("click", addAddBreadOrder);
     addHummusAddBtn.addEventListener("click", addAddHummusOrder);
 
     resetTableBtn.addEventListener("click", function() {
         if ((breadOrders.length || hummusOrders.length || addBreadOrders.length || addHummusOrders.length || pickupList.length || combos.length) && confirm("Delete all orders and pickups?")) {
-            breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = []; combos = []; routeCompleted = {}; routeProofs = {}; saveRouteCompletionState(); saveRouteProofs();
+            breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = []; combos = [];
             render(); saveToLocal(); savePickups(); nextId = 1; updateRoute();
         } else if (!breadOrders.length && !hummusOrders.length && !addBreadOrders.length && !addHummusOrders.length && !pickupList.length && !combos.length) { alert("No orders or pickups"); }
     });
@@ -3126,14 +3050,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }
     });
 
-    backHomeModeBtn.addEventListener('click', function() { setRouteMode('backHome'); });
-    fastDeliveryModeBtn.addEventListener('click', function() { setRouteMode('fastDelivery'); });
-
     // ============ INIT ============
     loadCustomerDatabase();
     loadAddressBook();
     loadFromLocal();
-    loadRouteCompletionState();
     loadPickups();
     loadHistory();
     startTrafficSimulation();
@@ -3146,8 +3066,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("💰 Price logic: 4-6 pcs = M, 7-9 pcs = L, 10-12 pcs = XL");
     console.log("📊 Customers with multiple orders are grouped together!");
     console.log("🫒 1 Hummus per customer - size based on total pcs, type based on bread varieties!");
-    console.log("👤 Share: 13.5% for customers in database with Commission, 15% otherwise");
-    console.log("💼 10% Provision on total revenue!");
+    console.log("👤 Share: 13.5% for customers with Commission, 15% otherwise");
+    console.log("💼 10% Provision ONLY for customers with Commission!");
     console.log("💾 Auto-save to history with every change!");
     console.log("🗑️ Save & Clear Week: saves to history and clears all data!");
 })();
