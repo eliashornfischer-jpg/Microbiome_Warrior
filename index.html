@@ -75,7 +75,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .table-title{font-size:0.8rem;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:6px}
 .table-title.bread-title{color:#b87a2a}
 .table-title.hummus-title{color:#6d8a30}
-.yingyang-available{background:#f5edd8;border-radius:16px;padding:4px 12px;font-size:0.65rem;color:#8a6a2a;display:block;margin-top:4px;border:1px solid #d4a843}
+.yingyang-available{background:#f5edd8;border-radius:16px;padding:4px 12px;font-size:0.65rem;color:#8a6a2a;display:none;margin-top:4px;border:1px solid #d4a843}
 .yingyang-available.show{display:block}
 .header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .header-left{display:flex;align-items:center;gap:8px}
@@ -265,11 +265,28 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .suggestion-item .suggestion-name{font-weight:700;color:#2a1a08}
 .suggestion-item .suggestion-detail{font-size:0.6rem;color:#8a6a2a}
 .suggestion-item .suggestion-badge{background:#e2aa54;color:#2a1a08;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700}
-@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export{display:none}}
+.nav-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;position:sticky;top:0;z-index:100;background:rgba(247,241,221,0.95);padding:6px;border-radius:16px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.nav-bar button{width:auto;padding:5px 12px;font-size:0.6rem;border-radius:12px;margin:0;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;font-weight:800}
+.nav-bar button:active{transform:scale(0.95)}
+#scrollTopBtn{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f2b357,#d6993a);border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;display:none;color:#2a1a08;font-weight:900}
+#scrollTopBtn:active{transform:scale(0.9)}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export,.nav-bar,#scrollTopBtn{display:none}}
 </style>
 </head>
 <body>
 <div class="container" id="captureArea">
+
+<!-- SCREENSHOT STATUS -->
+<div id="screenshotStatus"></div>
+
+<!-- NAVIGATION BAR -->
+<div class="nav-bar">
+    <button onclick="document.querySelectorAll('.card')[0].scrollIntoView({behavior:'smooth',block:'start'})">📝 Order</button>
+    <button onclick="document.querySelectorAll('.card')[2].scrollIntoView({behavior:'smooth',block:'start'})">📋 Orders</button>
+    <button onclick="document.querySelectorAll('.card')[4].scrollIntoView({behavior:'smooth',block:'start'})">📦 Prep</button>
+    <button onclick="document.querySelectorAll('.card')[5].scrollIntoView({behavior:'smooth',block:'start'})">🚚 Route</button>
+    <button onclick="document.querySelectorAll('.card')[6].scrollIntoView({behavior:'smooth',block:'start'})">📊 History</button>
+</div>
 
 <!-- AUTO-SAVE NOTIFICATION -->
 <div id="autoSaveNotification" class="auto-save-notification"></div>
@@ -280,7 +297,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
-<button class="btn-add-order-header" id="addBtnTop">➕ Add Order</button>
+<button class="btn-add-order-header" id="addBtnTop" type="button">➕ Add Order</button>
 </div>
 </div>
 
@@ -502,7 +519,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     </div>
 </div>
 
-<!-- ====== CUSTOMER MANAGER (in Routenplanung unter Address Book) ====== -->
+<!-- ====== CUSTOMER MANAGER ====== -->
 <div class="customer-manager">
     <div class="cm-header" id="customerManagerToggle">
         <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
@@ -511,7 +528,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     <div class="cm-body" id="customerManagerBody">
         <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
         
-        <!-- Commission List -->
         <div class="cm-comm-list" id="commissionList">
             <div style="font-weight:700;font-size:0.55rem;color:#27ae60;margin-bottom:4px;">💰 Customers with Commission:</div>
             <div id="commissionListItems"><div class="cm-comm-empty">No customers with commission</div></div>
@@ -553,9 +569,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
     <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
-    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub">📍 End: Huqingping Highway 1517</span></span>
+    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub">📍 End: 🏠 Lake Front Garden</span></span>
 </button>
-<div class="auto-route-info">✅ Route ends at Huqingping Highway 1517</div>
+<div class="auto-route-info">✅ Route ends at 🏠 Lake Front Garden</div>
 </div>
 
 <!-- ====== HISTORY ====== -->
@@ -581,6 +597,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
 <footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision (nur bei Commission) | 1 Hummus pro Kunde</footer>
 </div>
+
+<!-- SCROLL TO TOP BUTTON -->
+<button id="scrollTopBtn">↑</button>
 
 <script>
 (function() {
@@ -618,7 +637,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     cmToggle.addEventListener('click', function() {
         cmOpen = !cmOpen;
         cmBody.classList.toggle('open');
-        cmToggleBtn.textContent = cmOpen ? '▲ Hide' : '▼ Show';
+        cmToggleBtn.innerHTML = cmOpen ? '▲ Hide' : '▼ Show';
     });
 
     // ============ ADDRESS BOOK TOGGLE ============
@@ -630,7 +649,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     addressToggle.addEventListener('click', function() {
         addressOpen = !addressOpen;
         addressBody.classList.toggle('open');
-        addressToggleBtn.textContent = addressOpen ? '▲ Hide' : '▼ Show';
+        addressToggleBtn.innerHTML = addressOpen ? '▲ Hide' : '▼ Show';
     });
 
     // ============ HISTORY TOGGLE ============
@@ -693,7 +712,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     }
 
     // ============ FESTE ADRESSE ============
-    var HOME_ADDRESS = "Huqingping Highway 1517";
+    var HOME_ADDRESS = "Lake Front Garden, Huqingping Highway 1517, Shanghai";
 
     // ============ DISTANCES ============
     var realDistances = {
@@ -717,7 +736,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     function getBezirk(adresse) {
         if (!adresse) return 'unknown';
-        if (adresse.includes('青浦') || adresse.includes('qingpu') || adresse.includes('Huqingping') || adresse.includes('1517')) return 'qingpu';
+        if (adresse.includes('青浦') || adresse.includes('qingpu') || adresse.includes('Huqingping') || adresse.includes('1517') || adresse.includes('Lake Front')) return 'qingpu';
         if (adresse.includes('静安') || adresse.includes('jingan')) return 'jingan';
         if (adresse.includes('黄浦') || adresse.includes('huangpu')) return 'huangpu';
         if (adresse.includes('徐汇') || adresse.includes('xuhui')) return 'xuhui';
@@ -802,6 +821,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     var customerManagerList = $("customerManagerList"), customerCount = $("customerCount");
     var commissionListItems = $("commissionListItems");
     var addBtnTop = $("addBtnTop");
+    var screenshotStatus = $("screenshotStatus");
+    var scrollTopBtn = $("scrollTopBtn");
+
+    // ============ SCROLL TO TOP ============
+    window.addEventListener('scroll', function() {
+        scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({top:0, behavior:'smooth'});
+    });
 
     // ============ CUSTOMER MANAGER ============
     function loadCustomerDatabase() {
@@ -971,8 +1000,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             item.addEventListener('click', function() {
                 var name = this.dataset.name;
                 var country = this.dataset.country;
-                var hummusType = this.dataset.hummusType;
-                var hummusSize = this.dataset.hummusSize;
+                var hummusTypeVal = this.dataset.hummusType;
+                var hummusSizeVal = this.dataset.hummusSize;
                 var commission = this.dataset.commission === 'true';
                 
                 customerName.value = name;
@@ -980,12 +1009,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                 suggestionsList.className = 'suggestions-list';
                 customerName.focus();
                 
-                autoFillLastOrder(name, hummusType, hummusSize, commission);
+                autoFillLastOrder(name, hummusTypeVal, hummusSizeVal, commission);
             });
         });
     }
 
-    function autoFillLastOrder(name, hummusType, hummusSize, commission) {
+    function autoFillLastOrder(name, hummusTypeVal, hummusSizeVal, commission) {
         if (!customerDatabase[name] || !customerDatabase[name].lastOrders) return;
         
         var lastOrders = customerDatabase[name].lastOrders;
@@ -997,9 +1026,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         miniCheckbox.checked = last.isMini || false;
         commissionCheckbox.checked = commission !== undefined ? commission : (last.hasCommission || false);
         
-        if (hummusType && hummusType !== 'none') {
-            hummusType.value = hummusType;
-            hummusSize.value = hummusSize || 'S';
+        if (hummusTypeVal && hummusTypeVal !== 'none') {
+            hummusType.value = hummusTypeVal;
+            hummusSize.value = hummusSizeVal || 'S';
         }
     }
 
@@ -1062,7 +1091,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         return preis / stückzahl;
     }
 
-    // ============ KUNDENPREIS (S+ ist Festpreis, fließt nicht in Multi-Order ein) ============
+    // ============ KUNDENPREIS ============
     function getCustomerPrice(name) {
         var orders = breadOrders.filter(function(o) { 
             return !o.isAdd && !o.isAddBread && o.name === name; 
@@ -1070,19 +1099,16 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         if (orders.length === 0) return 0;
         
-        // S+ separat berechnen (Festpreis, keine Multi-Order-Logik)
         var sPlusOrders = orders.filter(function(o) { return o.size === 'S+'; });
         var otherOrders = orders.filter(function(o) { return o.size !== 'S+'; });
         
         var totalPrice = 0;
         
-        // S+ Festpreis (mit Mini-Halbierung falls Mini)
         sPlusOrders.forEach(function(o) {
             var basePrice = priceDB[o.breadType]?.['S+'] || 0;
             totalPrice += o.isMini ? basePrice / 2 : basePrice;
         });
         
-        // Multi-Order-Logik nur für die anderen Bestellungen
         if (otherOrders.length > 0) {
             var totalPcs = 0;
             otherOrders.forEach(function(o) {
@@ -1119,7 +1145,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             order.hasCommission = !order.hasCommission; 
             render(); 
             saveToLocal(); 
-            updateRoute(); 
         }
     }
 
@@ -1206,9 +1231,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         if (!hasHummus) return null;
         
-        // S+ hat immer Hummus (3 pcs mit Hummus)
-        var hasSPlus = orders.some(function(o) { return o.size === 'S+'; });
-        
         var totalPcs = 0;
         orders.forEach(function(o) {
             totalPcs += getPcsForOrder(o);
@@ -1223,15 +1245,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er';
         });
         
-        var hummusType = hasHighVariety ? 'yingyang' : 'hummus';
+        var hummusTypeVal = hasHighVariety ? 'yingyang' : 'hummus';
         
-        // YIN YANG S → M AUTO
-        if (hummusType === 'yingyang' && hummusSize === 'S') {
+        if (hummusTypeVal === 'yingyang' && hummusSize === 'S') {
             hummusSize = 'M';
         }
         
         return {
-            type: hummusType,
+            type: hummusTypeVal,
             size: hummusSize
         };
     }
@@ -1248,24 +1269,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             totalPcs += getPcsForOrder(o);
         });
         
-        // Size für die Anzeige (S+ zählt als S+ wenn nur S+ vorhanden)
         var size = 'S';
         if (totalPcs >= 4 && totalPcs <= 6) size = 'M';
         else if (totalPcs >= 7 && totalPcs <= 9) size = 'L';
         else if (totalPcs >= 10) size = 'XL';
         
-        var sortenMap = {};
-        orders.forEach(function(o) {
-            var sorte = o.breadType;
-            var pcs = getPcsForOrder(o);
-            if (!sortenMap[sorte]) sortenMap[sorte] = 0;
-            sortenMap[sorte] += pcs;
-        });
-        
         var details = [];
         var totalPrice = 0;
         
-        // S+ separat
         var sPlusOrders = orders.filter(function(o) { return o.size === 'S+'; });
         var otherOrders = orders.filter(function(o) { return o.size !== 'S+'; });
         
@@ -1364,7 +1375,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var sum = 0;
         var customers = new Set();
         breadOrders.forEach(function(o) {
-            if (!o.isAdd && !o.isAddBread) {
+            if (!o.isAdd && !o.isAddBread && !o.isCombo) {
                 customers.add(o.name);
             }
         });
@@ -1459,12 +1470,14 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     // ============ SCREENSHOT ============
     function takeScreenshot(btn, statusEl) {
         var element = document.getElementById('captureArea');
-        var status = statusEl || screenshotStatus;
+        var status = statusEl || screenshotStatus || wechatStatus;
         var button = btn || screenshotBtn2;
         var originalText = button.textContent;
         
-        status.className = 'show';
-        status.textContent = '⏳ Generating...';
+        if (status) {
+            status.className = 'show';
+            status.textContent = '⏳ Generating...';
+        }
         button.textContent = '⏳ Loading...';
         button.style.opacity = '0.7';
         
@@ -1496,37 +1509,40 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     link.click();
                     document.body.removeChild(link);
                     
-                    status.textContent = '✅ Downloaded! Week ' + currentWeek;
-                    status.className = 'show success';
+                    if (status) {
+                        status.textContent = '✅ Downloaded! Week ' + currentWeek;
+                        status.className = 'show success';
+                    }
                     button.textContent = '✅ Done!';
                     button.style.opacity = '1';
                     setTimeout(function() {
-                        status.className = '';
-                        status.textContent = '';
+                        if (status) { status.className = ''; status.textContent = ''; }
                         button.textContent = originalText;
                         button.style.opacity = '1';
                     }, 4000);
                 } catch(e) {
-                    status.textContent = '❌ Error saving';
-                    status.className = 'show error';
+                    if (status) {
+                        status.textContent = '❌ Error saving';
+                        status.className = 'show error';
+                    }
                     button.textContent = '❌ Error';
                     button.style.opacity = '1';
                     setTimeout(function() {
-                        status.className = '';
-                        status.textContent = '';
+                        if (status) { status.className = ''; status.textContent = ''; }
                         button.textContent = originalText;
                         button.style.opacity = '1';
                     }, 4000);
                 }
             }).catch(function(error) {
                 console.error('Screenshot error:', error);
-                status.textContent = '❌ Error: ' + (error.message || 'unknown');
-                status.className = 'show error';
+                if (status) {
+                    status.textContent = '❌ Error: ' + (error.message || 'unknown');
+                    status.className = 'show error';
+                }
                 button.textContent = '❌ Error';
                 button.style.opacity = '1';
                 setTimeout(function() {
-                    status.className = '';
-                    status.textContent = '';
+                    if (status) { status.className = ''; status.textContent = ''; }
                     button.textContent = originalText;
                     button.style.opacity = '1';
                 }, 4000);
@@ -1534,7 +1550,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         }, 500);
     }
 
-    screenshotBtn2.addEventListener('click', function() { takeScreenshot(this, screenshotStatus); });
+    screenshotBtn2.addEventListener('click', function() { takeScreenshot(this, wechatStatus); });
 
     // ============ PDF ============
     pdfBtn.addEventListener('click', function() { window.print(); });
@@ -1641,7 +1657,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             yingYangInfo.classList.remove('show'); 
             return; 
         }
-        // M+ und XL+ haben GENERALL keinen Hummus
         if (sizeVal === 'M+' || sizeVal === 'XL+') { 
             hummusType.value = 'none'; 
             hummusSize.value = 'S';
@@ -1665,7 +1680,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     
     hummusType.addEventListener('change', function() {
         var sizeVal = breadSize.value;
-        // M+/XL+ haben generell keinen Hummus - Auswahl zurücksetzen
         if (sizeVal === 'M+' || sizeVal === 'XL+') { 
             this.value = 'none'; 
             hummusSize.value = 'S';
@@ -1771,11 +1785,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             weekHistory[week] = { orders: 0, revenue: 0, pcs: 0, customers: 0, pickups: 0 };
         }
         
-        weekHistory[week].orders += orders.length;
-        weekHistory[week].revenue += Math.round(totalRevenueValue);
-        weekHistory[week].pcs += Math.round(totalPcs);
-        weekHistory[week].customers += customers.size;
-        weekHistory[week].pickups += pickups;
+        weekHistory[week].orders = orders.length;
+        weekHistory[week].revenue = Math.round(totalRevenueValue);
+        weekHistory[week].pcs = Math.round(totalPcs);
+        weekHistory[week].customers = customers.size;
+        weekHistory[week].pickups = pickups;
         
         saveHistory();
         
@@ -2184,7 +2198,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         if (!customers || customers.length === 0) return [];
         if (customers.length === 1) { 
             var result = customers.slice(); 
-            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' }); 
+            result.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 LAKE FRONT GARDEN' }); 
             return result; 
         }
         
@@ -2211,7 +2225,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         }
         
-        route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 HOME' });
+        route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 LAKE FRONT GARDEN' });
         return route;
     }
 
@@ -2312,7 +2326,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
         html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
-        html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: ' + escapeHtml(HOME_ADDRESS) + '</div>';
+        html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: 🏠 LAKE FRONT GARDEN</div>';
         
         optimizedRoute.forEach(function(c, index) {
             var isReturn = c.isReturn || false, isPickup = c.isPickup || false, isMini = c.order ? c.order.isMini : false;
@@ -2350,7 +2364,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
         routeOptimizedInfo.textContent = '🧠 Nearest Neighbor: always goes to closest customer first (' + allCustomers.length + ' stops)';
-        routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 ' + HOME_ADDRESS;
+        routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 🏠 Lake Front Garden';
     }
 
     // ============ APPLE MAPS ============
@@ -2802,7 +2816,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     hummusOrders = hummusOrders.filter(function(o) { return o.name !== name; });
                     render();
                     saveToLocal();
-                    updateRoute();
                 }
             });
         });
@@ -2816,7 +2829,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
                     combos = combos.filter(function(c) { return !(c.name === name && c.type === comboType); });
                     render();
                     saveToLocal();
-                    updateRoute();
                 }
             });
         });
@@ -2837,8 +2849,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         renderPreparation();
         renderAddOrders();
         updateRoute();
-        
-        autoSaveToHistory();
     }
 
     // ============ AUTO-SAVE HISTORY ============
@@ -2881,6 +2891,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         hummusType.value = 'none';
         hummusSize.value = 'S';
         suggestionsList.className = 'suggestions-list';
+        suggestionsList.innerHTML = '';
         breadSize.disabled = false;
         breadSize.style.opacity = '1';
         hummusType.disabled = false;
@@ -2937,7 +2948,9 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             var order = { breadType: 'combo', size: 'Combo', isMini: isMini, hummusType: 'none', hummusSize: 'S', hasCommission: false };
             updateCustomerDatabase(name, country, order);
             
-            render(); saveToLocal(); resetForm(); return;
+            render(); saveToLocal(); 
+            resetForm();
+            return;
         }
         
         // M+/XL+ haben generell keinen Hummus - erzwingen
@@ -2982,7 +2995,8 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         
         updateCustomerDatabase(name, country, order);
         
-        render(); saveToLocal(); resetForm();
+        render(); saveToLocal(); 
+        resetForm();
     }
 
     // ============ ADD BREAD ============
@@ -3026,7 +3040,11 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     // ============ EVENT LISTENERS ============
     document.getElementById("addBtn").addEventListener("click", addOrder);
-    document.getElementById("addBtnTop").addEventListener("click", addOrder);
+    document.getElementById("addBtnTop").addEventListener("click", function(e) {
+        e.preventDefault();
+        customerName.scrollIntoView({behavior:'smooth', block:'center'});
+        setTimeout(function() { customerName.focus(); }, 400);
+    });
     addBreadAddBtn.addEventListener("click", addAddBreadOrder);
     addHummusAddBtn.addEventListener("click", addAddHummusOrder);
 
@@ -3044,7 +3062,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     });
 
     routeStart.addEventListener('change', updateRoute);
-    routeStart.addEventListener('input', updateRoute);
 
     addAddressBtn.addEventListener("click", function() {
         var name = capitalizeName(addressNameInput.value.trim()), addr = lowerCaseAddress(addressAddrInput.value.trim());
@@ -3080,6 +3097,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 
     customerName.addEventListener('keydown', function(e) { 
         if (e.key === 'Enter') {
+            if (suggestionsList.classList.contains('show')) {
+                suggestionsList.className = 'suggestions-list';
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
             suggestionsList.className = 'suggestions-list';
             addOrder(); 
         }
@@ -3108,6 +3131,7 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
     console.log("📊 S+ = Festpreis (134/268/368/398/428), fließt NICHT in Multi-Order-Logik ein");
     console.log("🫒 M+ und XL+ haben generell keinen Hummus");
     console.log("☯️ Yin & Yang S → automatisch M");
+    console.log("🏠 Route endet bei Lake Front Garden");
 })();
 </script>
 </body>
