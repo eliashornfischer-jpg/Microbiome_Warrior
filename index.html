@@ -271,6 +271,82 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 #scrollTopBtn{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f2b357,#d6993a);border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;display:none;color:#2a1a08;font-weight:900}
 #scrollTopBtn:active{transform:scale(0.9)}
 @media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export,.nav-bar,#scrollTopBtn{display:none}}
+
+/* ====== READABILITY FIX: preserve the original layout and category colors ====== */
+body { color: #3b2a16; }
+.card {
+  background: rgba(255,255,255,0.96) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.card, .card p, .card label, .card small, .card span,
+.card .hint, .card .subtext, .card .table-title {
+  text-shadow: none;
+}
+label, .table-title { color: #553713; }
+input, select, textarea {
+  color: #2a1a08 !important;
+  background: #ffffff !important;
+}
+input::placeholder, textarea::placeholder { color: #777777 !important; opacity: 1; }
+/* ====== CHECKBOX VISIBILITY FIX ====== */
+input[type="checkbox"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  padding: 0 !important;
+  margin: 0 6px 0 0 !important;
+  border: 1.5px solid #a58a5c !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color-scheme: light;
+  display: inline-grid !important;
+  place-content: center;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: none !important;
+  flex: 0 0 18px;
+}
+input[type="checkbox"]:checked {
+  background: #218c50 !important;
+  background-color: #218c50 !important;
+  border-color: #176d3d !important;
+}
+input[type="checkbox"]:checked::before {
+  content: "✓";
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 900;
+}
+input[type="checkbox"]:focus-visible {
+  outline: 2px solid #d6993a !important;
+  outline-offset: 2px;
+}
+.scrollable {
+  background: #ffffff !important;
+  border-radius: 14px;
+  overflow-x: auto;
+}
+table {
+  background: #ffffff !important;
+  opacity: 1 !important;
+  color: #2a1a08 !important;
+}
+tbody, tbody tr, tbody td {
+  background-color: #ffffff !important;
+  color: #2a1a08 !important;
+  opacity: 1 !important;
+}
+td { border-color: #eadfc8 !important; }
+th { opacity: 1 !important; }
+/* Keep the existing orange/green table header colors, but make their text clear. */
+th.bread-th, th.summary-th { color: #2a1a08 !important; }
+th.hummus-th { color: #ffffff !important; }
 </style>
 </head>
 <body>
@@ -2225,6 +2301,29 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
             }
         }
         
+        // Improve the nearest-neighbor order with 2-opt while keeping
+        // the start and the final return destination fixed.
+        var improved = true;
+        var maxPasses = 100;
+        while (improved && maxPasses-- > 0 && route.length > 2) {
+            improved = false;
+            for (var i = 0; i < route.length - 1; i++) {
+                for (var k = i + 1; k < route.length; k++) {
+                    var before = i === 0 ? startAddr : route[i - 1].address;
+                    var first = route[i].address;
+                    var last = route[k].address;
+                    var after = k === route.length - 1 ? HOME_ADDRESS : route[k + 1].address;
+                    var oldDistance = getDistance(before, first) + getDistance(last, after);
+                    var newDistance = getDistance(before, last) + getDistance(first, after);
+                    if (newDistance + 0.001 < oldDistance) {
+                        var reversed = route.slice(i, k + 1).reverse();
+                        route.splice.apply(route, [i, k - i + 1].concat(reversed));
+                        improved = true;
+                    }
+                }
+            }
+        }
+
         route.push({ isReturn: true, address: HOME_ADDRESS, label: '🏠 LAKE FRONT GARDEN' });
         return route;
     }
@@ -2322,7 +2421,6 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
         var timeStr = hours > 0 ? hours + 'h ' + minutes + 'min' : minutes + ' min';
         
         var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
-        routeDeliveries.push(HOME_ADDRESS);
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
         html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
