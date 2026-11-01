@@ -402,11 +402,11 @@ th.hummus-th { color: #ffffff !important; }
         <option value="S">S (2 pcs)</option>
         <option value="S+">S+ (3 pcs + Hummus) ¥134/268/368/398/428</option>
         <option value="M">M (5 pcs)</option>
-        <option value="M+">M+ (6 pcs) no hummus</option>
+        <option value="M+">M+ (6 pcs, same price as M, no hummus)</option>
         <option value="L">L (8 pcs)</option>
         <option value="XM">XM (9 pcs)</option>
         <option value="XL">XL (11 pcs)</option>
-        <option value="XL+">XL+ (12 pcs) no hummus</option>
+        <option value="XL+">XL+ (12 pcs, same price as XL, no hummus)</option>
     </select>
 </div>
 </div>
@@ -840,6 +840,8 @@ th.hummus-th { color: #ffffff !important; }
 
     // ============ DATA STORE ============
     var breadOrders = [], hummusOrders = [], addBreadOrders = [], addHummusOrders = [], pickupList = [], addressBook = {};
+    // Delivered stops are hidden from navigation only; the actual orders remain untouched.
+    var deliveredStops = {};
     var nextId = 1, currentWeek = calculateCurrentWeek(), addBreadCount = 1, addHummusCount = 1;
     var weekHistory = {};
     var trafficSimulationInterval = null;
@@ -1188,7 +1190,7 @@ th.hummus-th { color: #ffffff !important; }
         if (otherOrders.length > 0) {
             var totalPcs = 0;
             otherOrders.forEach(function(o) {
-                totalPcs += getPcsForOrder(o);
+                totalPcs += getChargeablePcsForOrder(o);
             });
             
             var size = 'S';
@@ -1199,7 +1201,7 @@ th.hummus-th { color: #ffffff !important; }
             var sortenMap = {};
             otherOrders.forEach(function(o) {
                 var sorte = o.breadType;
-                var pcs = getPcsForOrder(o);
+                var pcs = getChargeablePcsForOrder(o);
                 if (!sortenMap[sorte]) sortenMap[sorte] = 0;
                 sortenMap[sorte] += pcs;
             });
@@ -1371,7 +1373,7 @@ th.hummus-th { color: #ffffff !important; }
         
         if (otherOrders.length > 0) {
             var otherPcs = 0;
-            otherOrders.forEach(function(o) { otherPcs += getPcsForOrder(o); });
+            otherOrders.forEach(function(o) { otherPcs += getChargeablePcsForOrder(o); });
             
             var otherSize = 'S';
             if (otherPcs >= 4 && otherPcs <= 6) otherSize = 'M';
@@ -1379,21 +1381,27 @@ th.hummus-th { color: #ffffff !important; }
             else if (otherPcs >= 10) otherSize = 'XL';
             
             var otherSortenMap = {};
+            var otherActualSortenMap = {};
             otherOrders.forEach(function(o) {
                 var sorte = o.breadType;
-                var pcs = getPcsForOrder(o);
+                var chargeablePcs = getChargeablePcsForOrder(o);
+                var actualPcs = getPcsForOrder(o);
                 if (!otherSortenMap[sorte]) otherSortenMap[sorte] = 0;
-                otherSortenMap[sorte] += pcs;
+                if (!otherActualSortenMap[sorte]) otherActualSortenMap[sorte] = 0;
+                otherSortenMap[sorte] += chargeablePcs;
+                otherActualSortenMap[sorte] += actualPcs;
             });
             
             for (var sorte in otherSortenMap) {
-                var pcs = otherSortenMap[sorte];
+                var chargedPcs = otherSortenMap[sorte];
+                var actualPcs = otherActualSortenMap[sorte];
                 var stückpreis = getStückpreis(sorte, otherSize);
-                var price = stückpreis * pcs;
+                var price = stückpreis * chargedPcs;
                 totalPrice += price;
                 details.push({
                     sorte: sorte,
-                    pcs: pcs,
+                    pcs: actualPcs,
+                    chargedPcs: chargedPcs,
                     stückpreis: stückpreis,
                     price: price,
                     isSPlus: false
@@ -1813,6 +1821,7 @@ th.hummus-th { color: #ffffff !important; }
         name = capitalizeName(name.trim());
         if (!name) { alert('Please enter a name.'); return; }
         if (pickupList.indexOf(name) !== -1) { alert('Name already in pickup list!'); return; }
+        delete deliveredStops[stopKey(name, true)];
         pickupList.push(name); savePickups(); pickupNameInput.value = ''; pickupNameInput.focus(); updateRoute();
     }
 
@@ -1879,6 +1888,7 @@ th.hummus-th { color: #ffffff !important; }
         addHummusOrders = [];
         pickupList = [];
         combos = [];
+        deliveredStops = {};
         nextId = 1;
         
         try {
@@ -1888,6 +1898,7 @@ th.hummus-th { color: #ffffff !important; }
             localStorage.removeItem("microbiome_add_hummus");
             localStorage.removeItem("microbiome_combos");
             localStorage.removeItem("microbiome_pickups");
+            localStorage.removeItem("microbiome_delivered_stops");
         } catch(e) {}
         
         updateWeekDisplay();
@@ -1945,6 +1956,16 @@ th.hummus-th { color: #ffffff !important; }
         }
         var base = sizeToPcs[order.size] || 0;
         return order.isMini ? base / 2 : base;
+    }
+
+    // M+ and XL+ contain one extra piece at no extra charge.
+    // Mini orders scale that free extra piece to half a piece.
+    function getChargeablePcsForOrder(order) {
+        var pcs = getPcsForOrder(order);
+        if (order.size === 'M+' || order.size === 'XL+') {
+            pcs -= order.isMini ? 0.5 : 1;
+        }
+        return Math.max(0, pcs);
     }
 
     function getPriceForOrder(order) {
@@ -2024,6 +2045,7 @@ th.hummus-th { color: #ffffff !important; }
             localStorage.setItem("microbiome_add_bread", JSON.stringify({orders: addBreadOrders}));
             localStorage.setItem("microbiome_add_hummus", JSON.stringify({orders: addHummusOrders}));
             localStorage.setItem("microbiome_combos", JSON.stringify({combos: combos}));
+            localStorage.setItem("microbiome_delivered_stops", JSON.stringify(deliveredStops));
         } catch(e) {}
     }
     function loadFromLocal() {
@@ -2038,6 +2060,8 @@ th.hummus-th { color: #ffffff !important; }
             if (addHummusData) { var parsed = JSON.parse(addHummusData); if (parsed.orders) addHummusOrders = parsed.orders; }
             var comboData = localStorage.getItem("microbiome_combos");
             if (comboData) { var parsed = JSON.parse(comboData); if (parsed.combos) combos = parsed.combos; }
+            var deliveredData = localStorage.getItem("microbiome_delivered_stops");
+            if (deliveredData) deliveredStops = JSON.parse(deliveredData) || {};
         } catch(e) {}
         render();
     }
@@ -2060,7 +2084,7 @@ th.hummus-th { color: #ffffff !important; }
         sortedKeys.forEach(function(key) {
             var item = summary[key];
             var row = document.createElement('tr');
-            var miniDisplay = item.miniCount > 0 ? '🥖 ' + item.miniCount : '—';
+            var miniDisplay = item.miniCount > 0 ? '🥖 ' + item.miniCount + (item.miniCount === 1 ? ' Mini' : ' Minis') + ' (= ' + (item.miniCount / 2).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' whole)' : '—';
             row.innerHTML = '<td>' + item.variety + '</td><td>' + item.totalOrders + '</td><td>' + Math.round(item.totalPcs) + '</td><td>' + miniDisplay + '</td>';
             breadSummaryBody.appendChild(row);
         });
@@ -2096,8 +2120,8 @@ th.hummus-th { color: #ffffff !important; }
             addBreadOrders.forEach(function(item, index) {
                 var row = document.createElement('tr');
                 var miniLabel = item.isMini ? ' 🥖Mini' : '';
-                var pcsDisplay = item.isMini ? (item.count * 0.5) : item.count;
-                row.innerHTML = '<td>' + item.type + miniLabel + '</td><td>' + Math.round(pcsDisplay) + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
+                var pcsDisplay = item.isMini ? (item.count + ' Minis (= ' + (item.count / 2).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' whole)') : item.count;
+                row.innerHTML = '<td>' + item.type + miniLabel + '</td><td>' + pcsDisplay + '</td><td><button class="delete-btn" data-add-bread-index="' + index + '" style="background:#eeddbb;border:none;border-radius:20px;padding:2px 10px;font-weight:700;color:#9b6a2a;cursor:pointer;">✖</button></td>';
                 addBreadSummaryBody.appendChild(row);
             });
             document.querySelectorAll('#addBreadSummaryBody .delete-btn').forEach(function(btn) {
@@ -2328,6 +2352,34 @@ th.hummus-th { color: #ffffff !important; }
         return route;
     }
 
+    function stopKey(name, isPickup) { return (isPickup ? 'pickup:' : 'customer:') + name; }
+
+    function renderDeliveredStops() {
+        var keys = Object.keys(deliveredStops);
+        if (!keys.length) return '';
+        var html = '<div style="margin-top:10px;padding:8px 10px;background:#edf6e9;border:1px solid #b7d5a6;border-radius:10px;">';
+        html += '<div style="font-weight:800;font-size:0.7rem;color:#47752d;margin-bottom:5px;">✓ Already delivered — removed from navigation</div>';
+        keys.forEach(function(key) {
+            var stop = deliveredStops[key] || {};
+            html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;font-size:0.65rem;border-top:1px solid #d6e7ca;">';
+            html += '<span>' + (stop.isPickup ? '📦 ' : '✓ ') + escapeHtml(stop.name || key.split(':').slice(1).join(':')) + '</span>';
+            html += '<button type="button" data-undo-delivered="' + escapeHtml(key) + '" style="border:0;border-radius:12px;padding:5px 9px;background:#fff;color:#47752d;font-weight:700;cursor:pointer;">↩ Undo</button></div>';
+        });
+        return html + '</div>';
+    }
+
+    function markStopDelivered(key, stop) {
+        deliveredStops[key] = { name: stop.name, address: stop.address, isPickup: !!stop.isPickup, deliveredAt: new Date().toISOString() };
+        saveToLocal();
+        updateRoute();
+    }
+
+    function undoDeliveredStop(key) {
+        delete deliveredStops[key];
+        saveToLocal();
+        updateRoute();
+    }
+
     function updateRoute() {
         var start = routeStart.value.trim();
         if (!start || start === '⏳ Locating...' || start === '📍 Loading location...') {
@@ -2339,9 +2391,10 @@ th.hummus-th { color: #ffffff !important; }
             return;
         }
         
-        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
-        if (normalOrders.length === 0 && pickupList.length === 0) {
-            routeResult.innerHTML = '<div class="route-empty">No orders or pickups yet → add some!</div>';
+        var normalOrders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo && !deliveredStops[stopKey(o.name, false)]; });
+        var activePickups = pickupList.filter(function(name) { return !deliveredStops[stopKey(name, true)]; });
+        if (normalOrders.length === 0 && activePickups.length === 0) {
+            routeResult.innerHTML = '<div class="route-empty">No active deliveries in navigation.</div>' + renderDeliveredStops();
             autoRouteList.innerHTML = 'No orders or pickups';
             appleMapsBtn.disabled = true;
             routeOptimizedInfo.textContent = '🧠 Add orders or pickups to optimize round trip';
@@ -2351,7 +2404,7 @@ th.hummus-th { color: #ffffff !important; }
         
         var allDestinations = [], pickupDestinations = [], noAddress = [];
         
-        pickupList.forEach(function(name) {
+        activePickups.forEach(function(name) {
             var addr = addressBook[name] || '';
             if (addr && addr.trim()) {
                 pickupDestinations.push({ name: name, address: addr, isPickup: true, order: null });
@@ -2376,7 +2429,7 @@ th.hummus-th { color: #ffffff !important; }
         
         var listHtml = '';
         
-        pickupList.forEach(function(name) {
+        activePickups.forEach(function(name) {
             var addr = addressBook[name] || '', hasAddr = addr && addr.trim();
             var statusIcon = hasAddr ? '✅' : '⚠️', statusText = hasAddr ? '📍 ' + addr : 'no address';
             listHtml += '<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #f0e2c8;font-size:0.6rem;border-left:3px solid #e74c3c;padding-left:4px;"><span>📦 ' + escapeHtml(name) + ' <span style="color:#e74c3c;font-size:0.45rem;font-weight:700;">PICKUP</span></span><span style="color:' + (hasAddr ? '#27ae60' : '#c0392b') + ';">' + statusIcon + ' ' + statusText + '</span></div>';
@@ -2440,11 +2493,12 @@ th.hummus-th { color: #ffffff !important; }
             var pickupClass = isPickup ? 'pickup' : '', returnClass = isReturn ? 'return-home' : '';
             var pickupBadge = isPickup ? ' <span class="pickup-badge">📦 PICKUP</span>' : '';
             var homeBadge = isReturn ? ' <span class="home-badge">🏠 HOME</span>' : '';
-            var miniBadge = (isMini && !isReturn) ? ' <span class="mini-badge">🥖 Mini</span>' : '';
+            var miniBadge = (isMini && !isReturn) ? ' <span class="mini-badge">🥖 1 Mini</span>' : '';
             var nameDisplay = isReturn ? '🏠 ' + c.label : (isPickup ? '📦 ' + c.name : c.name);
             var orderInfo = c.order ? ' (' + c.order.breadType + ' ' + c.order.size + (c.order.isMini ? ' Mini' : '') + ')' : '';
             
-            html += '<div class="route-step ' + pickupClass + ' ' + returnClass + '"><span class="step-num">' + (index + 1) + '</span><span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + homeBadge + miniBadge + '</span><span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:' + (isReturn ? '#2ecc71' : (isPickup ? '#e74c3c' : '#27ae60')) + ';font-size:0.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span></div>';
+            var deliveredButton = isReturn ? '' : '<button type="button" data-mark-delivered="' + escapeHtml(stopKey(c.name, isPickup)) + '" style="margin-left:auto;flex-shrink:0;border:0;border-radius:14px;padding:5px 8px;background:#e7f3df;color:#47752d;font-size:0.58rem;font-weight:800;cursor:pointer;">✓ Delivered</button>';
+            html += '<div class="route-step ' + pickupClass + ' ' + returnClass + '"><span class="step-num">' + (index + 1) + '</span><span class="step-name">' + escapeHtml(nameDisplay) + orderInfo + pickupBadge + homeBadge + miniBadge + '</span><span class="step-detail">📍 ' + escapeHtml(c.address) + ' <span style="color:' + (isReturn ? '#2ecc71' : (isPickup ? '#e74c3c' : '#27ae60')) + ';font-size:0.5rem;">+' + (distFromPrev * traffic.delay).toFixed(1) + 'km</span></span>' + deliveredButton + '</div>';
         });
         
         if (noAddress.length > 0) {
@@ -2457,6 +2511,7 @@ th.hummus-th { color: #ffffff !important; }
         html += '<span style="color:' + traffic.color + ';">🚦 ' + traffic.label + '</span></div>';
         html += '<div class="traffic-info-display" style="margin-top:4px;font-size:0.55rem;color:' + traffic.color + ';text-align:center;">🚦 ' + traffic.label + ' (auto-updates every 30s)</div>';
         
+        html += renderDeliveredStops();
         routeResult.innerHTML = html;
         appleMapsBtn.disabled = false;
         window._routeDeliveries = routeDeliveries;
@@ -2501,6 +2556,12 @@ th.hummus-th { color: #ffffff !important; }
         }, 1000);
     };
 
+    // Returns true only for bread varieties that actually have a Mini order.
+    function varietyHasMini(type) {
+        return breadOrders.some(function(o) { return o.isMini && !o.isAdd && !o.isAddBread && !o.isCombo && o.breadType === type; }) ||
+               addBreadOrders.some(function(item) { return item.isMini && item.type === type; });
+    }
+
     // ============ RENDER PREPARATION ============
     function renderPreparation() {
         var req = getTotalRequirements();
@@ -2517,7 +2578,7 @@ th.hummus-th { color: #ffffff !important; }
         var types = ['88er','150er','188er','200er','208er'];
         types.forEach(function(type) {
             var per = getPerPcs(type);
-            var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+            var miniLabel = varietyHasMini(type) ? ' 🥖Mini' : '';
             perPcsHtml += '<tr><td>' + type + miniLabel + '</td><td>' + per.mix88.toFixed(1) + 'g</td><td>' + per.mix138.toFixed(1) + 'g</td><td>' + per.mix150.toFixed(1) + 'g</td><td>' + per.mix188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + per.water.toFixed(1) + 'g</td></tr>';
         });
         perPcsRow.innerHTML = perPcsHtml;
@@ -2525,14 +2586,14 @@ th.hummus-th { color: #ffffff !important; }
         if (breakdown.length === 0 || breakdown.every(function(b) { return b.fullCharges === 0; })) { timesHtml = '<tr><td colspan="2">No times</td></tr>'; }
         else {
             timesHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
-                var miniLabel = hasAnyMini ? ' 🥖' : '';
+                var miniLabel = varietyHasMini(b.type) ? ' 🥖Mini' : '';
                 return '<tr><td>' + b.type + miniLabel + '</td><td><span class="badge-time">' + b.fullCharges + ' time</span></td></tr>';
             }).join('');
         }
         if (breakdown.length === 0 || !breakdown.some(function(b) { return b.restPcs > 0; })) { pcsHtml = '<tr><td colspan="2">No rest pcs</td></tr>'; }
         else {
             pcsHtml = breakdown.filter(function(b) { return b.restPcs > 0; }).map(function(b) {
-                var miniLabel = hasAnyMini ? ' 🥖' : '';
+                var miniLabel = varietyHasMini(b.type) ? ' 🥖Mini' : '';
                 return '<tr><td>' + b.type + miniLabel + '</td><td><span class="badge-pcs">' + b.restPcs + ' pcs</span></td></tr>';
             }).join('');
         }
@@ -2542,7 +2603,7 @@ th.hummus-th { color: #ffffff !important; }
         if (breakdown.some(function(b) { return b.fullCharges > 0; })) {
             thermHtml = breakdown.filter(function(b) { return b.fullCharges > 0; }).map(function(b) {
                 var r = recipeFor13[b.type];
-                var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+                var miniLabel = varietyHasMini(b.type) ? ' 🥖Mini' : '';
                 return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.fullCharges + ' time</td><td>' + r.mix88 + 'g</td><td>' + r.mix138 + 'g</td><td>' + r.mix150 + 'g</td><td>' + r.mix188_200_208 + 'g</td><td class="water-cell">' + r.water + 'g</td></tr>';
             }).join('');
         } else { thermHtml = '<tr><td colspan="7">No times</td></tr>'; }
@@ -2557,7 +2618,7 @@ th.hummus-th { color: #ffffff !important; }
                 var t188_200_208 = per.mix188_200_208 * b.restPcs;
                 var tw = per.water * b.restPcs;
                 sum88 += t88; sum138 += t138; sum150 += t150; sum188_200_208 += t188_200_208; sumW += tw;
-                var miniLabel = hasAnyMini ? ' 🥖Mini' : '';
+                var miniLabel = varietyHasMini(b.type) ? ' 🥖Mini' : '';
                 return '<tr><td>' + b.type + miniLabel + '</td><td>' + b.restPcs + ' pcs</td><td>' + t88.toFixed(1) + 'g</td><td>' + t138.toFixed(1) + 'g</td><td>' + t150.toFixed(1) + 'g</td><td>' + t188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + tw.toFixed(1) + 'g</td></tr>';
             }).join('');
             var footerMini = hasAnyMini ? ' 🥖 includes Mini' : '';
@@ -3004,6 +3065,8 @@ th.hummus-th { color: #ffffff !important; }
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert("Please enter a name."); return; }
+        // A new order for this customer makes the navigation stop active again.
+        delete deliveredStops[stopKey(name, false)];
         var breadVal = breadType.value;
         var sizeVal = breadSize.value;
         var isMini = miniCheckbox.checked;
@@ -3213,6 +3276,23 @@ th.hummus-th { color: #ffffff !important; }
         if (!e.target.closest('.suggestions-container')) {
             suggestionsList.className = 'suggestions-list';
         }
+    });
+
+    // Navigation-only delivery controls. These never delete or modify order records.
+    routeResult.addEventListener('click', function(e) {
+        var markBtn = e.target.closest('[data-mark-delivered]');
+        if (markBtn) {
+            var key = markBtn.getAttribute('data-mark-delivered');
+            var isPickup = key.indexOf('pickup:') === 0;
+            var name = key.slice(isPickup ? 7 : 9);
+            var addr = addressBook[name] || '';
+            if (confirm('Mark ' + name + ' as delivered and remove only from navigation? The order will remain saved.')) {
+                markStopDelivered(key, { name: name, address: addr, isPickup: isPickup });
+            }
+            return;
+        }
+        var undoBtn = e.target.closest('[data-undo-delivered]');
+        if (undoBtn) undoDeliveredStop(undoBtn.getAttribute('data-undo-delivered'));
     });
 
     // ============ INIT ============
