@@ -6,7 +6,6 @@
 <title>Microbiome Warrior – FINAL BOSS MODE</title>
 <meta name="theme-color" content="#e2aa54">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 /* ====== KOMPLETTES CSS ====== */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -1564,6 +1563,19 @@ th.hummus-th { color: #ffffff !important; }
         }
         button.textContent = '⏳ Loading...';
         button.style.opacity = '0.7';
+
+        // The app itself has no required external CDN dependencies. If image
+        // export is unavailable offline, offer the browser's built-in print/save.
+        if (typeof window.html2canvas !== 'function') {
+            if (status) {
+                status.textContent = 'Image export is unavailable offline. Use Print > Save as PDF.';
+                status.className = 'show';
+            }
+            button.textContent = originalText;
+            button.style.opacity = '1';
+            window.print();
+            return;
+        }
         
         setTimeout(function() {
             html2canvas(element, {
@@ -2797,6 +2809,14 @@ th.hummus-th { color: #ffffff !important; }
         var text = generateExportText();
         if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text); }
         var element = document.getElementById('captureArea');
+        if (typeof window.html2canvas !== 'function') {
+            status.className = 'wechat-status show';
+            status.textContent = 'Text copied. Image export is unavailable offline; use Print > Save as PDF.';
+            btn.textContent = originalText;
+            btn.disabled = false;
+            window.print();
+            return;
+        }
         html2canvas(element, {
             scale: 1.5,
             useCORS: true,
