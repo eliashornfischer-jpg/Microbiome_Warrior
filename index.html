@@ -372,7 +372,7 @@ th.hummus-th { color: #ffffff !important; }
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
 <div class="header-right">
 <div class="week-selector"><label>📅 W</label><input type="number" id="weekNumber" value="27" min="1" max="53" disabled><span class="auto-week-badge">auto</span></div>
-<button class="btn-add-order-header" id="addBtnTop" type="button">➕ Add Order</button>
+
 </div>
 </div>
 
@@ -381,6 +381,7 @@ th.hummus-th { color: #ffffff !important; }
     <input id="customerName" placeholder="e.g. Anna" autocomplete="off" style="text-transform:capitalize;">
     <div class="suggestions-list" id="suggestionsList"></div>
 </div>
+<button class="btn-add-order-header" id="addBtnTop" type="button" style="width:100%;margin:8px 0 4px;">➕ Add Order</button>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
 <div>
@@ -569,6 +570,11 @@ th.hummus-th { color: #ffffff !important; }
 <!-- ====== ROUTE PLANNING ====== -->
 <div class="card">
 <div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">🧠 NEAREST NEIGHBOR</span></div>
+<div class="route-mode-switch" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0;">
+    <button type="button" id="routeModeFast" class="route-mode-btn" style="padding:9px 6px;border:2px solid #27ae60;border-radius:12px;background:#e8f5e9;color:#246b35;font-weight:800;font-size:0.65rem;">⚡ Shorter estimate</button>
+    <button type="button" id="routeModeSimple" class="route-mode-btn" style="padding:9px 6px;border:1px solid #d4c090;border-radius:12px;background:#fff;color:#6b4a1c;font-weight:800;font-size:0.65rem;">🧭 Easy to follow</button>
+</div>
+<div style="font-size:0.55rem;color:#8a6a2a;margin-bottom:6px;">Choose between a distance-improved order and a simple nearest-first order. Distances are estimates, not live road routing.</div>
 
 <div class="pickup-container">
     <div class="pickup-title">📦 PICKUP LIST <span class="count-badge" id="pickupCount">0</span></div>
@@ -849,6 +855,7 @@ th.hummus-th { color: #ffffff !important; }
     var watchId = null;
     var locationInitialized = false;
     var customerDatabase = {};
+    var routeMode = 'fast';
 
     // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
@@ -2306,7 +2313,7 @@ th.hummus-th { color: #ffffff !important; }
     }
 
     // ============ ROUTE OPTIMIZATION ============
-    function findOptimalRoundTrip(startAddr, customers) {
+    function findOptimalRoundTrip(startAddr, customers, improveDistance) {
         if (!customers || customers.length === 0) return [];
         if (customers.length === 1) { 
             var result = customers.slice(); 
@@ -2339,7 +2346,7 @@ th.hummus-th { color: #ffffff !important; }
         
         // Improve the nearest-neighbor order with 2-opt while keeping
         // the start and the final return destination fixed.
-        var improved = true;
+        var improved = !!improveDistance;
         var maxPasses = 100;
         while (improved && maxPasses-- > 0 && route.length > 2) {
             improved = false;
@@ -2466,7 +2473,7 @@ th.hummus-th { color: #ffffff !important; }
             return;
         }
         
-        var optimizedRoute = findOptimalRoundTrip(start, allCustomers);
+        var optimizedRoute = findOptimalRoundTrip(start, allCustomers, routeMode === 'fast');
         
         var totalDist = 0;
         optimizedRoute.forEach(function(c, index) {
@@ -2488,7 +2495,7 @@ th.hummus-th { color: #ffffff !important; }
         var routeDeliveries = optimizedRoute.filter(function(c) { return !c.isReturn; }).map(function(c) { return c.address; });
         
         var html = '<div style="font-weight:600;font-size:0.7rem;color:#27ae60;margin-bottom:6px;">📍 Start: ' + escapeHtml(start) + '</div>';
-        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">🧠 Nearest Neighbor Route (' + (optimizedRoute.length - 1) + ' stops)</div>';
+        html += '<div style="font-weight:600;font-size:0.65rem;color:#6b4a1c;margin-bottom:6px;">' + (routeMode === 'fast' ? '⚡ Distance-improved route' : '🧭 Simple nearest-first route') + ' (' + (optimizedRoute.length - 1) + ' stops)</div>';
         html += '<div style="font-weight:600;font-size:0.6rem;color:#e74c3c;margin-bottom:6px;">🏁 End: 🏠 LAKE FRONT GARDEN</div>';
         
         optimizedRoute.forEach(function(c, index) {
@@ -2528,7 +2535,7 @@ th.hummus-th { color: #ffffff !important; }
         appleMapsBtn.disabled = false;
         window._routeDeliveries = routeDeliveries;
         window._routeStart = start;
-        routeOptimizedInfo.textContent = '🧠 Nearest Neighbor: always goes to closest customer first (' + allCustomers.length + ' stops)';
+        routeOptimizedInfo.textContent = (routeMode === 'fast' ? '⚡ Distance-improved order' : '🧭 Nearest-first order') + ' (' + allCustomers.length + ' stops)';
         routeCompareInfo.textContent = '📍 ' + totalDistWithTraffic.toFixed(1) + ' km · ' + timeStr + ' | 🏁 🏠 Lake Front Garden';
     }
 
@@ -3219,13 +3226,24 @@ th.hummus-th { color: #ffffff !important; }
         render(); saveToLocal(); addHummusCount = 1; addHummusCountDisplay.textContent = addHummusCount;
     }
 
+    // Route planning alternatives
+    var routeModeFastBtn = $("routeModeFast"), routeModeSimpleBtn = $("routeModeSimple");
+    function setRouteMode(mode) {
+        routeMode = mode;
+        routeModeFastBtn.style.background = mode === 'fast' ? '#e8f5e9' : '#fff';
+        routeModeFastBtn.style.border = mode === 'fast' ? '2px solid #27ae60' : '1px solid #d4c090';
+        routeModeFastBtn.style.color = mode === 'fast' ? '#246b35' : '#6b4a1c';
+        routeModeSimpleBtn.style.background = mode === 'simple' ? '#e8f5e9' : '#fff';
+        routeModeSimpleBtn.style.border = mode === 'simple' ? '2px solid #27ae60' : '1px solid #d4c090';
+        routeModeSimpleBtn.style.color = mode === 'simple' ? '#246b35' : '#6b4a1c';
+        updateRoute();
+    }
+    routeModeFastBtn.addEventListener('click', function() { setRouteMode('fast'); });
+    routeModeSimpleBtn.addEventListener('click', function() { setRouteMode('simple'); });
+
     // ============ EVENT LISTENERS ============
     document.getElementById("addBtn").addEventListener("click", addOrder);
-    document.getElementById("addBtnTop").addEventListener("click", function(e) {
-        e.preventDefault();
-        customerName.scrollIntoView({behavior:'smooth', block:'center'});
-        setTimeout(function() { customerName.focus(); }, 400);
-    });
+    document.getElementById("addBtnTop").addEventListener("click", addOrder);
     addBreadAddBtn.addEventListener("click", addAddBreadOrder);
     addHummusAddBtn.addEventListener("click", addAddHummusOrder);
 
