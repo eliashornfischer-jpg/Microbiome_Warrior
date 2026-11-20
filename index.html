@@ -7,7 +7,6 @@
 <meta name="theme-color" content="#e2aa54">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-/* ====== KOMPLETTES CSS (unverändert) ====== */
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;min-height:100vh;display:flex;justify-content:center;padding:10px;background:radial-gradient(circle at 15% 20%,rgba(226,170,84,0.3),transparent 40%),radial-gradient(circle at 85% 25%,rgba(143,170,74,0.25),transparent 45%),linear-gradient(135deg,#f7f1dd,#e8d7a8,#d8c08a);background-size:200% 200%;animation:bgMove 20s ease infinite}
 @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -34,7 +33,6 @@ button:active{transform:scale(0.97)}
 .btn-save-history:active{transform:scale(0.95)}
 .btn-copy{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:4px 12px;margin:0;font-size:0.6rem;border-radius:16px;border:none;font-weight:700;cursor:pointer;flex-shrink:0}
 .btn-copy:active{transform:scale(0.95)}
-.btn-copy.copied{background:linear-gradient(135deg,#27ae60,#1e8449)}
 .btn-pdf{background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
 .btn-pdf:active{transform:scale(0.95)}
 .btn-copy-text{background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;width:auto;padding:8px 16px;margin:0;font-size:0.7rem;border-radius:20px;border:none;font-weight:700;cursor:pointer;transition:all 0.2s ease}
@@ -96,13 +94,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .salary-container{background:rgba(255,255,255,0.5);padding:12px 16px;border-radius:16px;margin-top:12px;border:2px solid #e2aa54}
 .salary-container .salary-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .salary-container .salary-header .salary-title{font-weight:800;font-size:0.8rem;color:#b87a2a;display:flex;align-items:center;gap:6px}
-.salary-container .salary-header .salary-title .salary-percent{font-size:0.7rem;color:#8a5e20;font-weight:400}
 .salary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:0.8rem}
 .salary-row .salary-label{font-weight:700;color:#6b4a1c}
 .salary-row .salary-amount{font-weight:800;color:#b87a2a;font-size:0.9rem}
 .salary-row .salary-amount .currency{font-size:0.7rem;color:#8a6a2a}
-.salary-copy-feedback{font-size:0.5rem;color:#27ae60;text-align:center;display:none;padding:4px 0}
-.salary-copy-feedback.show{display:block}
 .auto-week-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700;margin-left:4px}
 .add-section{background:rgba(226,170,84,0.08);border-radius:16px;padding:12px;margin-top:8px;border:2px dashed #d4c090}
 .add-section .add-title{font-size:0.7rem;font-weight:800;color:#b87a2a;margin-bottom:6px;display:flex;align-items:center;gap:6px}
@@ -122,14 +117,10 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .commission-order-row{display:flex;align-items:center;gap:8px;background:rgba(226,170,84,0.1);padding:6px 12px;border-radius:16px;margin-top:6px}
 .commission-order-row label{margin:0;font-size:0.7rem;display:flex;align-items:center;gap:5px;cursor:pointer;color:#6b4a1c}
 .commission-order-row input{width:16px;height:16px;margin:0}
-.no-hummus-tag{display:inline-block;background:#95a5a6;color:white;padding:0px 6px;border-radius:8px;font-size:0.5rem;font-weight:700}
-.comm-toggle{display:inline-flex;align-items:center;gap:4px;cursor:pointer;padding:2px 8px;border-radius:12px;font-size:0.55rem;font-weight:700;transition:all 0.2s;border:1px solid transparent;user-select:none;background:#e8e8e8;color:#555}
-.comm-toggle.active{background:#c0392b;color:white;border-color:#a93226}
-.comm-toggle.inactive{background:#e8e8e8;color:#555;border-color:#ccc}
-.comm-toggle .toggle-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.comm-toggle.active .toggle-dot{background:#2ecc71}
-.comm-toggle.inactive .toggle-dot{background:#95a5a6}
-.comm-toggle .toggle-label{font-size:0.5rem}
+.mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block}
+.mini-label{font-size:0.75rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:8px;padding:4px 8px;background:rgba(255,255,255,0.4);border-radius:16px;border:1px solid #e0d0a0;cursor:pointer}
+.mini-label input[type="checkbox"]{width:18px;height:18px;margin:0;flex-shrink:0;cursor:pointer}
+.mini-label span{font-size:0.7rem;font-weight:600;color:#6b4a1c}
 .route-container{background:rgba(46,204,113,0.08);border-radius:16px;padding:12px;margin-top:12px;border:2px solid #27ae60}
 .route-step{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(39,174,96,0.15);font-size:0.65rem}
 .route-step:last-child{border-bottom:none}
@@ -142,18 +133,12 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .route-step.return-home{background:rgba(39,174,96,0.08);border-radius:6px;padding-left:4px}
 .route-step.return-home .step-num{background:#2ecc71}
 .route-step .home-badge{background:#2ecc71;color:white;padding:0px 6px;border-radius:8px;font-size:0.45rem;font-weight:700;margin-left:4px}
-.route-step .mini-badge{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px}
 .route-empty{color:#b88c48;font-size:0.6rem;text-align:center;padding:8px}
 .route-input-group{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
 .route-input-group input{width:100%;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem}
 .route-input-group input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
 .route-start-row{display:flex;gap:6px;align-items:center}
 .route-start-row input{flex:1;padding:8px 12px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.75rem;margin:0;background:#f0f5eb}
-.route-start-row input:focus{outline:none;border-color:#27ae60;box-shadow:0 0 0 3px rgba(39,174,96,0.2)}
-.route-start-row .btn-locate{width:auto;padding:8px 12px;margin:0;font-size:0.65rem;border-radius:16px;white-space:nowrap;background:linear-gradient(135deg,#27ae60,#1e8449);color:white;border:none;cursor:pointer;transition:all 0.2s}
-.route-start-row .btn-locate:active{transform:scale(0.95)}
-.route-start-row .btn-locate.locating{background:linear-gradient(135deg,#f39c12,#e67e22)}
-.route-result{margin-top:10px}
 .route-apple-btn{width:100%;padding:14px;margin-top:8px;border-radius:20px;border:none;font-weight:700;font-size:0.8rem;background:linear-gradient(135deg,#007aff,#0055cc);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 12px rgba(0,122,255,0.3)}
 .route-apple-btn:active{transform:scale(0.97)}
 .route-apple-btn svg{width:20px;height:20px;fill:white}
@@ -161,94 +146,65 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .route-apple-btn .btn-icon{display:flex;align-items:center;justify-content:center}
 .route-apple-btn .btn-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
 .route-apple-btn .btn-text .sub{font-weight:400;font-size:0.55rem;opacity:0.8}
-.address-manager{font-size:0.6rem;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px dashed #d4c090}
-.address-manager .am-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:2px 0}
-.address-manager .am-header .am-label{font-weight:700;color:#6b4a1c;font-size:0.55rem}
-.address-manager .am-header .am-toggle{background:none;border:none;color:#8a6a2a;font-size:0.5rem;cursor:pointer;padding:2px 6px}
-.address-manager .am-body{display:none;margin-top:4px}
-.address-manager .am-body.open{display:block}
-.address-manager .am-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:3px}
-.address-manager .am-row input{flex:1;min-width:60px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
-.address-manager .am-row button{padding:4px 10px;font-size:0.55rem;margin:0;border-radius:12px;width:auto}
-.address-manager .am-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0}
-.address-manager .am-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700}
-.address-manager .am-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
-.customer-manager{font-size:0.6rem;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px dashed #d4c090}
-.customer-manager .cm-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:2px 0}
-.customer-manager .cm-header .cm-label{font-weight:700;color:#6b4a1c;font-size:0.55rem}
-.customer-manager .cm-header .cm-toggle{background:none;border:none;color:#8a6a2a;font-size:0.5rem;cursor:pointer;padding:2px 6px}
-.customer-manager .cm-body{display:none;margin-top:4px}
-.customer-manager .cm-body.open{display:block}
-.customer-manager .cm-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:3px}
-.customer-manager .cm-row input{flex:1;min-width:60px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
-.customer-manager .cm-row select{flex:0.7;min-width:50px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
-.customer-manager .cm-row button{padding:4px 10px;font-size:0.55rem;margin:0;border-radius:12px;width:auto}
-.customer-manager .cm-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0}
-.customer-manager .cm-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700}
-.customer-manager .cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
-.cm-comm-active{color:#27ae60;font-weight:700}
-.cm-comm-inactive{color:#95a5a6}
-.cm-comm-list{background:rgba(46,204,113,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.55rem;border:1px solid rgba(46,204,113,0.15)}
-.cm-comm-list .cm-comm-item{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
-.cm-comm-list .cm-comm-item:last-child{border-bottom:none}
-.cm-comm-list .cm-comm-item .name{font-weight:600;color:#27ae60}
-.cm-comm-list .cm-comm-item .detail{color:#6b4a1c;font-size:0.5rem}
-.cm-comm-list .cm-comm-empty{color:#b88c48;text-align:center;padding:4px;font-size:0.5rem}
-.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(231,76,60,0.15)}
-.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.provision-row .provision-label{font-weight:700;color:#e74c3c}
-.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
-.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px;border:1px solid rgba(46,204,113,0.15)}
-.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
-.share-row .share-label{font-weight:700;color:#27ae60}
-.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
-.auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center}
-.route-no-distance{font-size:0.55rem;color:#8a6a2a;margin-top:4px;text-align:center}
-.address-stats{font-size:0.5rem;color:#8a6a2a}
-.route-start-container{position:relative}
-.route-start-container input{padding-right:70px}
-.route-start-container .start-badge{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:0.5rem;background:#27ae60;color:white;padding:2px 8px;border-radius:10px}
-.optimized-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.45rem;font-weight:700;margin-left:4px}
+.route-google-btn{width:100%;padding:14px;margin-top:6px;border-radius:20px;border:none;font-weight:700;font-size:0.8rem;background:linear-gradient(135deg,#4285F4,#1a73e8);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 12px rgba(66,133,244,0.3)}
+.route-google-btn:active{transform:scale(0.97)}
+.route-google-btn:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none}
 .route-optimized{background:rgba(39,174,96,0.08);border-radius:10px;padding:4px 10px;margin-top:4px;font-size:0.55rem;color:#27ae60;text-align:center;border:1px solid rgba(39,174,96,0.15)}
-.route-compare{background:rgba(52,152,219,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.5rem;color:#6b4a1c;text-align:center;border:1px dashed rgba(52,152,219,0.2)}
-.location-status{font-size:0.55rem;padding:4px 8px;border-radius:12px;display:none;text-align:center;margin-top:4px}
-.location-status.show{display:block}
-.location-status.success{background:#d5f5e3;color:#27ae60}
-.location-status.error{background:#fadbd8;color:#e74c3c}
-.mini-tag{background:#e67e22;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px;display:inline-block}
-.mini-label{font-size:0.75rem;font-weight:600;color:#6b4a1c;display:flex;align-items:center;gap:8px;padding:4px 8px;background:rgba(255,255,255,0.4);border-radius:16px;border:1px solid #e0d0a0;cursor:pointer}
-.mini-label input[type="checkbox"]{width:18px;height:18px;margin:0;flex-shrink:0;cursor:pointer}
-.mini-label span{font-size:0.7rem;font-weight:600;color:#6b4a1c}
 .pickup-container{background:rgba(231,76,60,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(231,76,60,0.15)}
 .pickup-container .pickup-title{font-size:0.7rem;font-weight:800;color:#e74c3c;display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .pickup-container .pickup-title .count-badge{background:#e74c3c;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem}
 .pickup-container .pickup-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
 .pickup-container .pickup-row input{flex:1;min-width:80px;padding:6px 10px;border-radius:16px;border:1px solid #e0d0a0;font-size:0.65rem;margin:0}
-.pickup-container .pickup-row input:focus{outline:none;border-color:#e74c3c;box-shadow:0 0 0 3px rgba(231,76,60,0.15)}
 .pickup-container .pickup-row button{padding:6px 14px;border-radius:16px;border:none;font-weight:700;font-size:0.65rem;background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;cursor:pointer;margin:0;white-space:nowrap}
-.pickup-container .pickup-row button:active{transform:scale(0.95)}
 .pickup-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .pickup-list .pickup-item{display:flex;align-items:center;gap:4px;background:rgba(231,76,60,0.08);padding:2px 10px;border-radius:12px;font-size:0.55rem;border:1px solid rgba(231,76,60,0.1)}
 .pickup-list .pickup-item .name{font-weight:600;color:#c0392b}
-.pickup-list .pickup-item .del{color:#c0392b;cursor:pointer;font-weight:700;margin-left:4px;padding:0 2px}
-.pickup-list .pickup-item .del:hover{color:#e74c3c}
+.pickup-list .pickup-item .del{color:#c0392b;cursor:pointer;font-weight:700;margin-left:4px}
 .pickup-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
+.address-manager,.customer-manager{font-size:0.6rem;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px dashed #d4c090}
+.am-header,.cm-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:2px 0}
+.am-label,.cm-label{font-weight:700;color:#6b4a1c;font-size:0.55rem}
+.am-toggle,.cm-toggle{background:none;border:none;color:#8a6a2a;font-size:0.5rem;cursor:pointer;padding:2px 6px}
+.am-body,.cm-body{display:none;margin-top:4px}
+.am-body.open,.cm-body.open{display:block}
+.am-row,.cm-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:3px}
+.am-row input,.cm-row input{flex:1;min-width:60px;padding:4px 8px;font-size:0.6rem;border-radius:12px;border:1px solid #e0d0a0;margin:0}
+.am-row button,.cm-row button{padding:4px 10px;font-size:0.55rem;margin:0;border-radius:12px;width:auto}
+.am-tag,.cm-tag{display:inline-block;background:rgba(226,170,84,0.15);padding:1px 8px;border-radius:10px;margin:2px;font-size:0.55rem;border:1px solid #e0d0a0}
+.am-tag .del,.cm-tag .del{color:#c0392b;cursor:pointer;margin-left:4px;font-weight:700}
+.am-empty,.cm-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:4px}
+.cm-comm-active{color:#27ae60;font-weight:700}
+.cm-comm-inactive{color:#95a5a6}
+.cm-comm-list{background:rgba(46,204,113,0.06);border-radius:8px;padding:4px 8px;margin-top:4px;font-size:0.55rem}
+.cm-comm-item{display:flex;justify-content:space-between;padding:2px 0}
+.cm-comm-empty{color:#b88c48;text-align:center;padding:4px;font-size:0.5rem}
+.provision-container{background:rgba(231,76,60,0.06);padding:8px 12px;border-radius:12px;margin-top:6px}
+.provision-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.provision-row .provision-label{font-weight:700;color:#e74c3c}
+.provision-row .provision-amount{font-weight:800;color:#e74c3c;font-size:0.8rem}
+.share-container{background:rgba(46,204,113,0.06);padding:8px 12px;border-radius:12px;margin-top:6px}
+.share-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:0.7rem}
+.share-row .share-label{font-weight:700;color:#27ae60}
+.share-row .share-amount{font-weight:800;color:#27ae60;font-size:0.8rem}
+.auto-route-info{font-size:0.55rem;color:#6b4a1c;padding:4px 8px;background:#f0e5cd;border-radius:8px;margin-top:4px;text-align:center}
+.optimized-badge{display:inline-block;background:#27ae60;color:white;padding:0px 8px;border-radius:10px;font-size:0.45rem;font-weight:700;margin-left:4px}
+.location-status{font-size:0.55rem;padding:4px 8px;border-radius:12px;display:none;text-align:center;margin-top:4px}
+.location-status.show{display:block}
+.location-status.success{background:#d5f5e3;color:#27ae60}
+.location-status.error{background:#fadbd8;color:#e74c3c}
 .history-container{background:rgba(52,152,219,0.06);border-radius:16px;padding:12px;margin-top:12px;border:1px solid rgba(52,152,219,0.15)}
-.history-container .history-title{font-size:0.7rem;font-weight:800;color:#2c3e50;display:flex;align-items:center;gap:6px;margin-bottom:6px;cursor:pointer}
-.history-container .history-title .count-badge{background:#3498db;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem}
-.history-container .history-title .arrow{font-size:0.6rem;transition:transform 0.3s}
-.history-container .history-title .arrow.open{transform:rotate(180deg)}
+.history-title{font-size:0.7rem;font-weight:800;color:#2c3e50;display:flex;align-items:center;gap:6px;margin-bottom:6px;cursor:pointer}
+.history-title .count-badge{background:#3498db;color:white;padding:0px 8px;border-radius:10px;font-size:0.5rem}
+.history-title .arrow{font-size:0.6rem;transition:transform 0.3s}
+.history-title .arrow.open{transform:rotate(180deg)}
 .history-body{display:none;margin-top:6px}
 .history-body.open{display:block}
 .history-item{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;border-bottom:1px solid rgba(0,0,0,0.04);font-size:0.55rem}
-.history-item:last-child{border-bottom:none}
 .history-item .week{font-weight:700;color:#2c3e50}
 .history-item .orders{color:#6b4a1c}
 .history-item .total{font-weight:700;color:#27ae60}
 .history-empty{color:#b88c48;font-size:0.5rem;text-align:center;padding:6px}
-.history-item .pickup-count{color:#e74c3c;font-size:0.45rem;margin-left:4px}
 .history-summary{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.3);border-radius:10px;font-size:0.5rem}
-.history-summary .stat{display:flex;align-items:center;gap:3px}
 .history-summary .stat .val{font-weight:700;color:#27ae60}
 .history-summary .stat .val.pickup{color:#e74c3c}
 .auto-save-notification{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#27ae60;color:white;padding:12px 24px;border-radius:16px;font-weight:700;font-size:0.8rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);display:none;text-align:center;max-width:90%;animation:slideDown 0.5s ease}
@@ -259,46 +215,38 @@ td{padding:8px 4px;text-align:center;border-bottom:1px solid #f0e2c8}
 .suggestions-list{position:absolute;top:100%;left:0;right:0;background:white;border-radius:16px;border:1px solid #e0d0a0;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:200px;overflow-y:auto;z-index:1000;display:none}
 .suggestions-list.show{display:block}
 .suggestion-item{padding:8px 14px;cursor:pointer;font-size:0.75rem;border-bottom:1px solid #f5f0e0;display:flex;justify-content:space-between;align-items:center}
-.suggestion-item:last-child{border-bottom:none}
 .suggestion-item:hover{background:#fef9e7}
 .suggestion-item .suggestion-name{font-weight:700;color:#2a1a08}
 .suggestion-item .suggestion-detail{font-size:0.6rem;color:#8a6a2a}
 .suggestion-item .suggestion-badge{background:#e2aa54;color:#2a1a08;padding:0px 8px;border-radius:10px;font-size:0.5rem;font-weight:700}
 .nav-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;position:sticky;top:0;z-index:100;background:rgba(247,241,221,0.95);padding:6px;border-radius:16px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
 .nav-bar button{width:auto;padding:5px 12px;font-size:0.6rem;border-radius:12px;margin:0;background:linear-gradient(135deg,#f2b357,#d6993a);color:#2a1a08;font-weight:800}
-.nav-bar button:active{transform:scale(0.95)}
 #scrollTopBtn{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f2b357,#d6993a);border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:999;display:none;color:#2a1a08;font-weight:900}
-#scrollTopBtn:active{transform:scale(0.9)}
-@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.btn-wechat,.btn-wechat-img,.btn-pdf,.btn-screenshot,.btn-copy-text,.btn-email-export,.btn-json-export,.btn-csv-export,.nav-bar,#scrollTopBtn{display:none}}
+@media print{body{background:white;padding:0}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.export-buttons,.nav-bar,#scrollTopBtn{display:none}}
 
-/* ====== READABILITY FIX ====== */
 body { color: #3b2a16; }
 .card { background: rgba(255,255,255,0.96) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-.card, .card p, .card label, .card small, .card span, .card .hint, .card .subtext, .card .table-title { text-shadow: none; }
 label, .table-title { color: #553713; }
 input, select, textarea { color: #2a1a08 !important; background: #ffffff !important; }
 input::placeholder, textarea::placeholder { color: #777777 !important; opacity: 1; }
-input[type="checkbox"] { -webkit-appearance: none !important; appearance: none !important; width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; padding: 0 !important; margin: 0 6px 0 0 !important; border: 1.5px solid #a58a5c !important; border-radius: 4px !important; background: #ffffff !important; background-color: #ffffff !important; color-scheme: light; display: inline-grid !important; place-content: center; vertical-align: middle; cursor: pointer; box-shadow: none !important; flex: 0 0 18px; }
-input[type="checkbox"]:checked { background: #218c50 !important; background-color: #218c50 !important; border-color: #176d3d !important; }
+input[type="checkbox"] { -webkit-appearance: none !important; appearance: none !important; width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; padding: 0 !important; margin: 0 6px 0 0 !important; border: 1.5px solid #a58a5c !important; border-radius: 4px !important; background: #ffffff !important; display: inline-grid !important; place-content: center; vertical-align: middle; cursor: pointer; flex: 0 0 18px; }
+input[type="checkbox"]:checked { background: #218c50 !important; border-color: #176d3d !important; }
 input[type="checkbox"]:checked::before { content: "✓"; color: #ffffff; font-size: 14px; line-height: 1; font-weight: 900; }
-input[type="checkbox"]:focus-visible { outline: 2px solid #d6993a !important; outline-offset: 2px; }
 .scrollable { background: #ffffff !important; border-radius: 14px; overflow-x: auto; }
-table { background: #ffffff !important; opacity: 1 !important; color: #2a1a08 !important; }
-tbody, tbody tr, tbody td { background-color: #ffffff !important; color: #2a1a08 !important; opacity: 1 !important; }
+table { background: #ffffff !important; color: #2a1a08 !important; }
+tbody, tbody tr, tbody td { background-color: #ffffff !important; color: #2a1a08 !important; }
 td { border-color: #eadfc8 !important; }
-th { opacity: 1 !important; }
 th.bread-th, th.summary-th { color: #2a1a08 !important; }
 th.hummus-th { color: #ffffff !important; }
 
-/* ====== DELIVERED / NAV FIX STYLES ====== */
-.btn-delivered{background:linear-gradient(135deg,#27ae60,#1e8449)!important;color:white!important;border:none!important;border-radius:12px!important;padding:3px 10px!important;font-size:0.55rem!important;font-weight:800!important;cursor:pointer!important;width:auto!important;margin:0!important;flex-shrink:0!important;transition:all 0.2s!important}
-.btn-delivered:active{transform:scale(0.9)!important}
+/* DELIVERED FIX */
+.btn-delivered{background:linear-gradient(135deg,#27ae60,#1e8449)!important;color:white!important;border:none!important;border-radius:12px!important;padding:3px 10px!important;font-size:0.55rem!important;font-weight:800!important;cursor:pointer!important;width:auto!important;margin:0!important;flex-shrink:0!important}
 .btn-delivered.done{background:linear-gradient(135deg,#95a5a6,#7f8c8d)!important;opacity:0.7!important}
 .route-step.delivered{opacity:0.45!important;text-decoration:line-through!important;background:rgba(149,165,166,0.1)!important}
 .route-step.delivered .step-num{background:#95a5a6!important}
 .delivered-badge{background:#95a5a6;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px}
-.reset-delivered-btn{background:linear-gradient(135deg,#e67e22,#d35400);color:white;border:none;border-radius:12px;padding:4px 12px;font-size:0.55rem;font-weight:800;cursor:pointer;margin-top:6px;width:100%}
-.reset-delivered-btn:active{transform:scale(0.97)}
+.reset-delivered-btn{background:linear-gradient(135deg,#e67e22,#d35400);color:white;border:none;border-radius:12px;padding:6px 12px;font-size:0.55rem;font-weight:800;cursor:pointer;margin-top:8px;width:100%}
+.dist-badge{background:#3498db;color:white;padding:0px 6px;border-radius:8px;font-size:0.4rem;font-weight:700;margin-left:4px}
 </style>
 </head>
 <body>
@@ -306,7 +254,6 @@ th.hummus-th { color: #ffffff !important; }
 
 <div id="screenshotStatus"></div>
 
-<!-- NAVIGATION BAR (FIXED: IDs statt Index) -->
 <div class="nav-bar">
     <button onclick="scrollToCard('orderCard')">📝 Order</button>
     <button onclick="scrollToCard('ordersCard')">📋 Orders</button>
@@ -317,7 +264,7 @@ th.hummus-th { color: #ffffff !important; }
 
 <div id="autoSaveNotification" class="auto-save-notification"></div>
 
-<!-- ====== ORDER CARD ====== -->
+<!-- ORDER CARD -->
 <div class="card" id="orderCard">
 <div class="header-row">
 <div class="header-left"><h1>Microbiome Warrior</h1></div>
@@ -350,20 +297,20 @@ th.hummus-th { color: #ffffff !important; }
     <label>Size</label>
     <select id="breadSize">
         <option value="S">S (2 pcs)</option>
-        <option value="S+">S+ (3 pcs + Hummus) ¥134/268/368/398/428</option>
+        <option value="S+">S+ (3 pcs + Hummus)</option>
         <option value="M">M (5 pcs)</option>
-        <option value="M+">M+ (6 pcs, same price as M, no hummus)</option>
+        <option value="M+">M+ (6 pcs)</option>
         <option value="L">L (8 pcs)</option>
         <option value="XM">XM (9 pcs)</option>
         <option value="XL">XL (11 pcs)</option>
-        <option value="XL+">XL+ (12 pcs, same price as XL, no hummus)</option>
+        <option value="XL+">XL+ (12 pcs)</option>
     </select>
 </div>
 </div>
 
 <div class="commission-order-row">
 <label><input type="checkbox" id="commissionCheckbox"> 💰 Commission active (13.5% Share)</label>
-<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5% for this order)</span>
+<span style="font-size:0.55rem;color:#8a6a2a;">(15% → 13.5%)</span>
 </div>
 
 <div class="checkbox-group" style="margin-top:4px;">
@@ -382,11 +329,7 @@ th.hummus-th { color: #ffffff !important; }
 </div>
 <div><label>Size</label>
     <select id="hummusSize">
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XM">XM</option>
-        <option value="XL">XL</option>
+        <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XM">XM</option><option value="XL">XL</option>
     </select>
 </div>
 </div>
@@ -401,10 +344,10 @@ th.hummus-th { color: #ffffff !important; }
 </div>
 </div>
 
-<!-- ====== ADD BREAD ====== -->
+<!-- ADD BREAD -->
 <div class="card">
 <div class="add-section">
-<div class="add-title">➕ ADD BREAD (no name, no commission, free)</div>
+<div class="add-title">➕ ADD BREAD (free)</div>
 <div class="add-row">
 <select id="addBreadType"><option value="88er">88er</option><option value="150er">150er</option><option value="188er">188er</option><option value="200er">200er</option><option value="208er">208er</option></select>
 <label class="mini-label"><input type="checkbox" id="addBreadMiniCheckbox"><span>🥖 Mini</span></label>
@@ -417,10 +360,10 @@ th.hummus-th { color: #ffffff !important; }
 </div>
 </div>
 
-<!-- ====== ADD HUMMUS ====== -->
+<!-- ADD HUMMUS -->
 <div class="card">
 <div class="add-section" style="border-color:#8faa4a;">
-<div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (no name, no commission, free)</div>
+<div class="add-title" style="color:#6d8a30;">🫒 ADD HUMMUS (free)</div>
 <div class="add-row">
 <select id="addHummusType"><option value="hummus">🫒 Hummus</option><option value="yingyang">☯️ Ying & Yang</option></select>
 <select id="addHummusSize" style="flex:0.7;min-width:60px;"><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XM">XM</option><option value="XL">XL</option></select>
@@ -433,24 +376,24 @@ th.hummus-th { color: #ffffff !important; }
 </div>
 </div>
 
-<!-- ====== ORDER OVERVIEW ====== -->
+<!-- ORDERS OVERVIEW -->
 <div class="card" id="ordersCard">
 <div style="display:flex;justify-content:space-between;align-items:center;"><h2>📋 Orders (CNY)</h2><span class="week-badge" id="weekBadge">Week 27</span></div>
 
 <div class="table-title bread-title">🥖 Bread Orders</div>
-<div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍 Country</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Hummus</th><th class="bread-th">Share</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
+<div class="scrollable"><table><thead><th class="bread-th">#</th><th class="bread-th">Name</th><th class="bread-th">🌍</th><th class="bread-th">Variety</th><th class="bread-th">Size</th><th class="bread-th">pcs</th><th class="bread-th">Price</th><th class="bread-th">Hummus</th><th class="bread-th">Share</th><th class="bread-th"></th></thead><tbody id="breadTableBody"><tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr></tbody></table></div>
 
-<div class="table-title" style="color:#b87a2a;margin-top:12px;">📊 BREAD SUMMARY (grouped by variety)</div>
-<div class="scrollable"><table><thead><th class="summary-th">Variety</th><th class="summary-th">Total Orders</th><th class="summary-th">Total pcs</th><th class="summary-th">Mini</th></thead><tbody id="breadSummaryBody"><tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr></tbody></table></div>
+<div class="table-title" style="color:#b87a2a;margin-top:12px;">📊 BREAD SUMMARY</div>
+<div class="scrollable"><table><thead><th class="summary-th">Variety</th><th class="summary-th">Orders</th><th class="summary-th">pcs</th><th class="summary-th">Mini</th></thead><tbody id="breadSummaryBody"><tr><td colspan="4" style="text-align:center">No orders yet</td></tr></tbody></table></div>
 
-<div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary (free)</div>
-<div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">Total pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr></tbody></table></div>
+<div class="table-title" style="color:#b87a2a;margin-top:12px;">➕ ADD Bread Summary</div>
+<div class="scrollable"><table><thead><th class="bread-th">Variety</th><th class="bread-th">pcs</th><th class="bread-th"></th></thead><tbody id="addBreadSummaryBody"><tr><td colspan="3" style="text-align:center">No ADD bread yet</td></tr></tbody></table></div>
 
-<div class="table-title hummus-title" style="margin-top:12px;">🫒 HUMMUS SUMMARY (all orders)</div>
-<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Size</th><th class="hummus-th">Total pcs</th></thead><tbody id="hummusSummaryBody"><tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr></tbody></table></div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 HUMMUS SUMMARY</div>
+<div class="scrollable"><table><thead><th class="hummus-th">Type</th><th class="hummus-th">Size</th><th class="hummus-th">Total</th></thead><tbody id="hummusSummaryBody"><tr><td colspan="3" style="text-align:center">No hummus yet</td></tr></tbody></table></div>
 
-<div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Orders Detail (free)</div>
-<div class="scrollable"><table><thead><th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">🌍 Country</th><th class="hummus-th">Variety</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th></thead><tbody id="hummusTableBody"><tr><td colspan="7" style="text-align:center">No hummus orders 🫒</td></tr></tbody></table></div>
+<div class="table-title hummus-title" style="margin-top:12px;">🫒 Hummus Detail</div>
+<div class="scrollable"><table><thead><th class="hummus-th">#</th><th class="hummus-th">Name</th><th class="hummus-th">🌍</th><th class="hummus-th">Size</th><th class="hummus-th">Type</th><th class="hummus-th"></th></thead><tbody id="hummusTableBody"><tr><td colspan="6" style="text-align:center">No hummus 🫒</td></tr></tbody></table></div>
 
 <div style="display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:4px;">
 <span class="total-sum" id="hummusCount" style="background:#8faa4a;padding:2px 16px;color:white;">🫒 0</span>
@@ -461,8 +404,6 @@ th.hummus-th { color: #ffffff !important; }
     <button class="btn-screenshot" id="screenshotBtn2">📸 Screenshot</button>
     <button class="btn-pdf" id="pdfBtn">📄 PDF</button>
     <button class="btn-copy-text" id="copyTextBtn">📋 Copy Text</button>
-    <button class="btn-wechat" id="wechatCopyBtn">💬 WeChat</button>
-    <button class="btn-wechat-img" id="wechatImageBtn">📸 WeChat Img</button>
     <button class="btn-email-export" id="emailExportBtn">📧 Email</button>
     <button class="btn-json-export" id="jsonExportBtn">💾 JSON</button>
     <button class="btn-csv-export" id="csvExportBtn">📊 CSV</button>
@@ -474,28 +415,26 @@ th.hummus-th { color: #ffffff !important; }
         <span class="salary-title">💰 FINANCIAL OVERVIEW</span>
         <button class="btn-copy" id="salaryCopyBtn" onclick="copySalary()">📋 Copy</button>
     </div>
-    <div id="salaryContent">
-        <div class="salary-row">
-            <span class="salary-label">👤 Share (15% / 13.5%)</span>
-            <span class="salary-amount" id="shareAmount">0 <span class="currency">¥</span></span>
+    <div class="salary-row">
+        <span class="salary-label">👤 Share (15% / 13.5%)</span>
+        <span class="salary-amount" id="shareAmount">0 <span class="currency">¥</span></span>
+    </div>
+    <div class="provision-container">
+        <div class="provision-row">
+            <span class="provision-label">💼 Provision (10%)</span>
+            <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
         </div>
-        <div class="provision-container">
-            <div class="provision-row">
-                <span class="provision-label">💼 Provision (10% of customers with Commission)</span>
-                <span class="provision-amount" id="provisionAmount">0 <span class="currency">¥</span></span>
-            </div>
-        </div>
-        <div class="share-container">
-            <div class="share-row">
-                <span class="share-label">📊 Total Revenue</span>
-                <span class="share-amount" id="totalRevenueDisplay">0 <span class="currency">¥</span></span>
-            </div>
+    </div>
+    <div class="share-container">
+        <div class="share-row">
+            <span class="share-label">📊 Total Revenue</span>
+            <span class="share-amount" id="totalRevenueDisplay">0 <span class="currency">¥</span></span>
         </div>
     </div>
 </div>
 </div>
 
-<!-- ====== PREPARATION ====== -->
+<!-- PREPARATION -->
 <div class="card" id="prepCard">
 <h2>📦 PREPARATION</h2>
 <h3>🥣 88er Base Mix</h3>
@@ -503,24 +442,19 @@ th.hummus-th { color: #ffffff !important; }
 <h3>🔥 THERMOMIX MAX · per 1 time (13 pcs)</h3>
 <div class="scrollable"><table><thead><th>Variety</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody><tr><td>88er</td><td>745g</td><td>0g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>150er</td><td>650g</td><td>97g</td><td>0g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>188er</td><td>630g</td><td>97g</td><td>15g</td><td>0g</td><td class="water-cell">360g</td></tr><tr><td>200er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr><tr><td>208er</td><td>620g</td><td>97g</td><td>15g</td><td>13g</td><td class="water-cell">360g</td></tr></tbody></table></div>
 <h3>📦 REST QUANTITY · per 1 pcs</h3>
-<div class="scrollable"><table id="perPcsTable"><thead><th>Variety</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="perPcsRow"></tbody></table></div>
-<h3>📊 TOTAL · times / pcs</h3>
-<div class="total-flex"><div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div><div><strong>🔢 pcs (Rest)</strong><table><tbody id="pcsTableBody"></tbody></table></div></div>
+<div class="scrollable"><table><thead><th>Variety</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="perPcsRow"></tbody></table></div>
+<h3>📊 TOTAL</h3>
+<div class="total-flex"><div><strong>⏱️ times (13 pcs)</strong><table><tbody id="timesTableBody"></tbody></table></div><div><strong>🔢 pcs</strong><table><tbody id="pcsTableBody"></tbody></table></div></div>
 <h3>🔥 CALCULATED THERMOMIX CHARGE</h3>
 <div class="scrollable"><table><thead><th>Variety</th><th>time</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="calculatedThermomixTable"></tbody></table></div>
 <h3>📦 CALCULATED REST QUANTITY</h3>
 <div class="scrollable"><table><thead><th>Variety</th><th>pcs</th><th>88er</th><th>138er</th><th>150er</th><th>188/200/208er</th><th>Water</th></thead><tbody id="calculatedRestTable"></tbody><tfoot id="calculatedRestFooter"></tfoot></table></div>
-<div class="info-text">💡 1 time = 13 pcs (full batch) | Mini: half price & half pcs | Hummus: free</div>
+<div class="info-text">💡 1 time = 13 pcs | Mini: half | Hummus: free</div>
 </div>
 
-<!-- ====== ROUTE PLANNING ====== -->
+<!-- ROUTE PLANNING -->
 <div class="card" id="routeCard">
 <div style="font-weight:800;font-size:0.9rem;color:#27ae60;margin-bottom:8px;">🚚 ROUTE PLANNING <span class="optimized-badge">🧠 NEAREST NEIGHBOR</span></div>
-<div class="route-mode-switch" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0;">
-    <button type="button" id="routeModeFast" class="route-mode-btn" style="padding:9px 6px;border:2px solid #27ae60;border-radius:12px;background:#e8f5e9;color:#246b35;font-weight:800;font-size:0.65rem;">⚡ Shorter estimate</button>
-    <button type="button" id="routeModeSimple" class="route-mode-btn" style="padding:9px 6px;border:1px solid #d4c090;border-radius:12px;background:#fff;color:#6b4a1c;font-weight:800;font-size:0.65rem;">🧭 Easy to follow</button>
-</div>
-<div style="font-size:0.55rem;color:#8a6a2a;margin-bottom:6px;">Choose between a distance-improved order and a simple nearest-first order. Distances are estimates, not live road routing.</div>
 
 <div class="pickup-container">
     <div class="pickup-title">📦 PICKUP LIST <span class="count-badge" id="pickupCount">0</span></div>
@@ -533,54 +467,42 @@ th.hummus-th { color: #ffffff !important; }
 
 <div class="address-manager">
     <div class="am-header" id="addressToggle">
-        <span class="am-label">📌 Address Book <span class="address-stats" id="addressCount">(0 entries)</span></span>
+        <span class="am-label">📌 Address Book <span id="addressCount">(0)</span></span>
         <span class="am-toggle" id="addressToggleBtn">▼ Show</span>
     </div>
     <div class="am-body" id="addressBody">
         <div id="addressList"><div class="am-empty">No addresses saved yet</div></div>
         <div class="am-row">
             <input id="addressNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
-            <input id="addressAddrInput" placeholder="Address" style="flex:1.2;">
+            <input id="addressAddrInput" placeholder="Address (mit Bezirk!)" style="flex:1.2;">
             <button id="addAddressBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
         </div>
+        <div style="font-size:0.45rem;color:#8a6a2a;margin-top:2px;">💡 Tipp: Adresse mit Bezirk (z.B. „静安区") für korrekte Sortierung</div>
     </div>
 </div>
 
 <div class="customer-manager">
     <div class="cm-header" id="customerManagerToggle">
-        <span class="cm-label">👤 Customer Manager <span class="address-stats" id="customerCount">(0 entries)</span></span>
+        <span class="cm-label">👤 Customer Manager <span id="customerCount">(0)</span></span>
         <span class="cm-toggle" id="customerManagerToggleBtn">▼ Show</span>
     </div>
     <div class="cm-body" id="customerManagerBody">
         <div id="customerManagerList"><div class="cm-empty">No customers saved yet</div></div>
         <div class="cm-comm-list" id="commissionList">
             <div style="font-weight:700;font-size:0.55rem;color:#27ae60;margin-bottom:4px;">💰 Customers with Commission:</div>
-            <div id="commissionListItems"><div class="cm-comm-empty">No customers with commission</div></div>
+            <div id="commissionListItems"><div class="cm-comm-empty">None</div></div>
         </div>
         <div class="cm-row">
             <input id="cmNameInput" placeholder="Name" style="flex:0.8;text-transform:capitalize;">
-            <input id="cmCountryInput" placeholder="Country" style="flex:1;text-transform:capitalize;">
-            <select id="cmCommissionSelect" style="flex:0.6;min-width:50px;">
-                <option value="true">💰 Yes</option>
-                <option value="false">❌ No</option>
-            </select>
+            <input id="cmCountryInput" placeholder="Country" style="flex:1;">
+            <select id="cmCommissionSelect" style="flex:0.6;"><option value="true">💰 Yes</option><option value="false">❌ No</option></select>
             <button id="addCustomerBtn" style="background:#27ae60;color:white;padding:4px 10px;">➕</button>
         </div>
-        <div style="font-size:0.5rem;color:#8a6a2a;margin-top:4px;text-align:center;">💡 Save customer data manually - auto-fills when typing name</div>
     </div>
 </div>
 
-<div class="route-input-group">
-<label style="font-size:0.7rem;color:#6b4a1c;margin-bottom:2px;">📍 Start: My Location <span style="color:#27ae60;font-weight:700;">(auto-detected)</span></label>
-<div class="route-start-row">
-    <input id="routeStart" placeholder="Getting location..." value="📍 Loading location..." readonly style="background:#f0f5eb;font-weight:600;color:#27ae60;">
-    <button class="btn-locate" id="locateBtn" style="display:none;">📍 Refresh</button>
-</div>
-<div id="locationStatus" class="location-status"></div>
-</div>
-
 <div style="margin-top:8px;background:rgba(46,204,113,0.06);border-radius:12px;padding:8px;border:1px solid #d4c090;">
-    <div style="font-weight:700;font-size:0.7rem;color:#27ae60;">📋 ORDERS FOR DELIVERY <span class="optimized-badge">🧠 Sorted by nearest</span></div>
+    <div style="font-weight:700;font-size:0.7rem;color:#27ae60;">📋 ORDERS FOR DELIVERY <span class="optimized-badge">🧠 Sorted</span></div>
     <div id="autoRouteList" style="font-size:0.6rem;padding:4px 0;color:#6b4a1c;">No orders yet</div>
 </div>
 
@@ -588,33 +510,36 @@ th.hummus-th { color: #ffffff !important; }
 <div class="route-empty">Add orders → route will auto-optimize</div>
 </div>
 
-<div class="route-optimized" id="routeOptimizedInfo">🧠 Nearest-Neighbor algorithm - always goes to closest customer first</div>
-<div class="route-compare" id="routeCompareInfo"></div>
+<div class="route-optimized" id="routeOptimizedInfo">🧠 Nearest-Neighbor algorithm</div>
 
 <button class="route-apple-btn" id="appleMapsBtn" disabled onclick="openAppleMapsDirect()">
     <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
-    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub">📍 End: 🏠 Lake Front Garden</span></span>
+    <span class="btn-text"><span>🗺️ Open in Apple Maps</span><span class="sub">📍 Alle Stops in Reihenfolge</span></span>
 </button>
-<div class="auto-route-info">✅ Route ends at 🏠 Lake Front Garden</div>
 
-<!-- DELIVERED RESET -->
+<button class="route-google-btn" id="googleMapsBtn" disabled onclick="openGoogleMapsDirect()">
+    <span style="font-size:1rem;">🗺️</span>
+    <span class="btn-text"><span>Open in Google Maps</span><span class="sub">📍 Alle Stops (Android/Web)</span></span>
+</button>
+
+<div class="auto-route-info">✅ Route endet bei 🏠 Lake Front Garden</div>
+
 <button class="reset-delivered-btn" id="resetDeliveredBtn" onclick="resetDeliveredStops()">🔄 Reset all "Delivered" markers</button>
 </div>
 
-<!-- ====== HISTORY ====== -->
+<!-- HISTORY -->
 <div class="card" id="historyCard">
 <div class="history-container">
     <div class="history-title" id="historyToggle">
         <span>📊 WEEKLY HISTORY</span>
         <span class="count-badge" id="historyCount">0</span>
         <span class="arrow" id="historyArrow">▼</span>
-        <span style="font-size:0.45rem;color:#27ae60;margin-left:auto;">🔄 auto-saved</span>
     </div>
     <div class="history-body" id="historyBody">
         <div id="historyList"><div class="history-empty">No history yet</div></div>
-        <div class="history-summary" id="historySummary">
-            <span class="stat">📋 Total Orders: <span class="val" id="histTotalOrders">0</span></span>
-            <span class="stat">💰 Total Revenue: <span class="val" id="histTotalRevenue">0 ¥</span></span>
+        <div class="history-summary">
+            <span class="stat">📋 Total: <span class="val" id="histTotalOrders">0</span></span>
+            <span class="stat">💰 Revenue: <span class="val" id="histTotalRevenue">0 ¥</span></span>
             <span class="stat">📦 Pickups: <span class="val pickup" id="histTotalPickups">0</span></span>
             <span class="stat">📅 Weeks: <span class="val" id="histTotalWeeks">0</span></span>
         </div>
@@ -622,7 +547,7 @@ th.hummus-th { color: #ffffff !important; }
 </div>
 </div>
 
-<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 Original recipe | 200er & 208er share same recipe | CNY | 10% Provision (nur bei Commission) | 1 Hummus pro Kunde</footer>
+<footer style="text-align:center;font-size:0.55rem;color:#c29d5a;margin-top:8px;">🌾 CNY | 10% Provision | 1 Hummus pro Kunde</footer>
 </div>
 
 <button id="scrollTopBtn">↑</button>
@@ -631,70 +556,84 @@ th.hummus-th { color: #ffffff !important; }
 (function() {
     'use strict';
 
-    // ============ NAVIGATION FIX ============
+    // ============ NAVIGATION ============
     window.scrollToCard = function(id) {
         var el = document.getElementById(id);
         if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
     };
 
-    // ============ DELIVERED-STOPS (NAV ONLY) ============
-    function stopKey(name, isPickup) {
-        return (isPickup ? 'pickup:' : 'delivery:') + String(name || '').trim().toLowerCase();
+    // ============ BEZIRK-KOORDINATEN (Shanghai) ============
+    var bezirkCoords = {
+        'qingpu':   { lat: 31.1497, lng: 121.1244 },
+        'jingan':   { lat: 31.2286, lng: 121.4486 },
+        'huangpu':  { lat: 31.2317, lng: 121.4846 },
+        'xuhui':    { lat: 31.1883, lng: 121.4370 },
+        'pudong':   { lat: 31.2216, lng: 121.5440 },
+        'changning':{ lat: 31.2204, lng: 121.4240 },
+        'hongkou':  { lat: 31.2646, lng: 121.5050 },
+        'yangpu':   { lat: 31.2595, lng: 121.5260 },
+        'minhang':  { lat: 31.1128, lng: 121.3817 },
+        'baoshan':  { lat: 31.4053, lng: 121.4894 },
+        'jiading':  { lat: 31.3835, lng: 121.2655 },
+        'songjiang':{ lat: 31.0322, lng: 121.2277 },
+        'putuo':    { lat: 31.2496, lng: 121.3963 },
+        'zhabei':   { lat: 31.2533, lng: 121.4650 },
+        'luwan':    { lat: 31.2150, lng: 121.4700 },
+        'unknown':  { lat: 31.2304, lng: 121.4737 }
+    };
+    var HOME_COORDS = { lat: 31.1497, lng: 121.1244 };
+
+    function haversine(lat1, lng1, lat2, lng2) {
+        var R = 6371;
+        var dLat = (lat2 - lat1) * Math.PI / 180;
+        var dLng = (lng2 - lng1) * Math.PI / 180;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    window.markDelivered = function(name, isPickup) {
-        var key = stopKey(name, isPickup);
-        deliveredStops[key] = true;
-        saveDeliveredStops();
-        updateRoute();
-    };
-
-    window.unmarkDelivered = function(name, isPickup) {
-        var key = stopKey(name, isPickup);
-        delete deliveredStops[key];
-        saveDeliveredStops();
-        updateRoute();
-    };
-
-    window.resetDeliveredStops = function() {
-        if (Object.keys(deliveredStops).length === 0) { alert('No delivered markers to reset.'); return; }
-        if (confirm('Reset all "Delivered" markers? Orders will NOT be deleted.')) {
-            deliveredStops = {};
-            saveDeliveredStops();
-            updateRoute();
-        }
-    };
-
-    function saveDeliveredStops() {
-        try { localStorage.setItem("microbiome_delivered_stops", JSON.stringify(deliveredStops)); } catch(e) {}
+    function getBezirk(adresse) {
+        if (!adresse) return 'unknown';
+        var a = adresse.toLowerCase();
+        if (a.includes('青浦') || a.includes('qingpu') || a.includes('huqingping') || a.includes('1517') || a.includes('lake front')) return 'qingpu';
+        if (a.includes('静安') || a.includes('jingan')) return 'jingan';
+        if (a.includes('黄浦') || a.includes('huangpu')) return 'huangpu';
+        if (a.includes('徐汇') || a.includes('xuhui')) return 'xuhui';
+        if (a.includes('浦东') || a.includes('pudong')) return 'pudong';
+        if (a.includes('长宁') || a.includes('changning')) return 'changning';
+        if (a.includes('虹口') || a.includes('hongkou')) return 'hongkou';
+        if (a.includes('杨浦') || a.includes('yangpu')) return 'yangpu';
+        if (a.includes('闵行') || a.includes('minhang')) return 'minhang';
+        if (a.includes('宝山') || a.includes('baoshan')) return 'baoshan';
+        if (a.includes('嘉定') || a.includes('jiading')) return 'jiading';
+        if (a.includes('松江') || a.includes('songjiang')) return 'songjiang';
+        if (a.includes('普陀') || a.includes('putuo')) return 'putuo';
+        if (a.includes('闸北') || a.includes('zhabei')) return 'zhabei';
+        if (a.includes('卢湾') || a.includes('luwan')) return 'luwan';
+        return 'unknown';
     }
 
-    function loadDeliveredStops() {
-        try {
-            var ds = localStorage.getItem("microbiome_delivered_stops");
-            deliveredStops = ds ? JSON.parse(ds) : {};
-        } catch(e) { deliveredStops = {}; }
+    function coordsForAddress(addr) {
+        return bezirkCoords[getBezirk(addr || '')] || bezirkCoords['unknown'];
     }
 
-    // ============ LÄNDER-FLAGGEN ============
+    // ============ LÄNDER ============
     var countryFlags = {
-        'germany':'🇩🇪','deutschland':'🇩🇪','china':'🇨🇳','usa':'🇺🇸','united states':'🇺🇸','america':'🇺🇸',
-        'uk':'🇬🇧','united kingdom':'🇬🇧','england':'🇬🇧','britain':'🇬🇧','france':'🇫🇷','italy':'🇮🇹',
+        'germany':'🇩🇪','deutschland':'🇩🇪','china':'🇨🇳','usa':'🇺🇸','united states':'🇺🇸',
+        'uk':'🇬🇧','united kingdom':'🇬🇧','england':'🇬🇧','france':'🇫🇷','italy':'🇮🇹',
         'spain':'🇪🇸','portugal':'🇵🇹','netherlands':'🇳🇱','holland':'🇳🇱','belgium':'🇧🇪','switzerland':'🇨🇭',
         'austria':'🇦🇹','sweden':'🇸🇪','norway':'🇳🇴','denmark':'🇩🇰','finland':'🇫🇮','japan':'🇯🇵',
         'south korea':'🇰🇷','korea':'🇰🇷','india':'🇮🇳','brazil':'🇧🇷','australia':'🇦🇺','canada':'🇨🇦',
         'mexico':'🇲🇽','south africa':'🇿🇦','russia':'🇷🇺','turkey':'🇹🇷','greece':'🇬🇷','ireland':'🇮🇪',
-        'poland':'🇵🇱','czech':'🇨🇿','czech republic':'🇨🇿','hungary':'🇭🇺','uae':'🇦🇪','united arab emirates':'🇦🇪',
-        'saudi arabia':'🇸🇦','israel':'🇮🇱','singapore':'🇸🇬','malaysia':'🇲🇾','thailand':'🇹🇭','vietnam':'🇻🇳',
-        'philippines':'🇵🇭','indonesia':'🇮🇩','new zealand':'🇳🇿','argentina':'🇦🇷','chile':'🇨🇱','colombia':'🇨🇴',
-        'peru':'🇵🇪','egypt':'🇪🇬','morocco':'🇲🇦','nigeria':'🇳🇬','kenya':'🇰🇪'
+        'poland':'🇵🇱','czech':'🇨🇿','hungary':'🇭🇺','uae':'🇦🇪','israel':'🇮🇱','singapore':'🇸🇬',
+        'malaysia':'🇲🇾','thailand':'🇹🇭','vietnam':'🇻🇳','philippines':'🇵🇭','indonesia':'🇮🇩',
+        'new zealand':'🇳🇿','argentina':'🇦🇷','chile':'🇨🇱','colombia':'🇨🇴','peru':'🇵🇪','egypt':'🇪🇬'
     };
     function getCountryFlag(name) {
         if (!name) return '';
         var lower = name.toLowerCase().trim();
-        for (var key in countryFlags) {
-            if (lower === key || lower.includes(key)) return countryFlags[key];
-        }
+        for (var key in countryFlags) { if (lower === key || lower.includes(key)) return countryFlags[key]; }
         return '';
     }
 
@@ -703,10 +642,9 @@ th.hummus-th { color: #ffffff !important; }
     var combos = [];
     function getComboItems(type) {
         if (type === '88-200') {
-            return [{variety:'88er',size:'S',price:102,pcs:2},{variety:'150er',size:'S',price:208,pcs:2},{variety:'188er',size:'S',price:288,pcs:2},{variety:'200er',size:'S',price:308,pcs:2}];
-        } else {
-            return [{variety:'150er',size:'S',price:208,pcs:2},{variety:'188er',size:'S',price:288,pcs:2},{variety:'200er',size:'S',price:308,pcs:2},{variety:'208er',size:'S',price:328,pcs:2}];
+            return [{variety:'88er'},{variety:'150er'},{variety:'188er'},{variety:'200er'}];
         }
+        return [{variety:'150er'},{variety:'188er'},{variety:'200er'},{variety:'208er'}];
     }
 
     // ============ WEEK ============
@@ -715,11 +653,10 @@ th.hummus-th { color: #ffffff !important; }
         var today = new Date(); today.setHours(0,0,0,0);
         var diffDays = Math.floor((today.getTime()-startDate.getTime())/(1000*60*60*24));
         var weekNum = Math.floor(diffDays/7)+1;
-        if (weekNum<1) weekNum=1; if (weekNum>53) weekNum=53;
-        return weekNum;
+        return Math.min(53, Math.max(1, weekNum));
     }
 
-    // ============ PRICE DB ============
+    // ============ PRICES ============
     var priceDB = {
         "88er":{"S":102,"S+":134,"M":190,"M+":190,"L":278,"XM":308,"XL":350,"XL+":350},
         "150er":{"S":208,"S+":268,"M":402,"M+":402,"L":596,"XM":658,"XL":766,"XL+":766},
@@ -739,65 +676,16 @@ th.hummus-th { color: #ffffff !important; }
         var r = recipeFor13[type];
         return {mix88:r.mix88/13,mix138:r.mix138/13,mix150:r.mix150/13,mix188_200_208:r.mix188_200_208/13,water:r.water/13};
     }
-
     var HOME_ADDRESS = "Lake Front Garden, Huqingping Highway 1517, Shanghai";
 
-    // ============ DISTANCES ============
-    var realDistances = {
-        'qingpu':{'qingpu':0,'jingan':32,'huangpu':38,'xuhui':35,'pudong':45,'changning':28,'hongkou':40,'yangpu':42,'minhang':22,'baoshan':50,'jiading':30,'songjiang':18,'putuo':30,'zhabei':35,'luwan':36,'unknown':30},
-        'jingan':{'qingpu':32,'jingan':0,'huangpu':5,'xuhui':6,'pudong':12,'changning':4,'hongkou':5,'yangpu':8,'minhang':15,'baoshan':18,'jiading':25,'songjiang':28,'putuo':5,'zhabei':4,'luwan':4,'unknown':12},
-        'huangpu':{'qingpu':38,'jingan':5,'huangpu':0,'xuhui':4,'pudong':8,'changning':6,'hongkou':4,'yangpu':7,'minhang':16,'baoshan':20,'jiading':28,'songjiang':30,'putuo':6,'zhabei':5,'luwan':2,'unknown':12},
-        'xuhui':{'qingpu':35,'jingan':6,'huangpu':4,'xuhui':0,'pudong':10,'changning':5,'hongkou':7,'yangpu':9,'minhang':12,'baoshan':22,'jiading':26,'songjiang':22,'putuo':6,'zhabei':7,'luwan':3,'unknown':12},
-        'pudong':{'qingpu':45,'jingan':12,'huangpu':8,'xuhui':10,'pudong':0,'changning':14,'hongkou':10,'yangpu':8,'minhang':20,'baoshan':25,'jiading':32,'songjiang':35,'putuo':14,'zhabei':12,'luwan':9,'unknown':16},
-        'changning':{'qingpu':28,'jingan':4,'huangpu':6,'xuhui':5,'pudong':14,'changning':0,'hongkou':6,'yangpu':9,'minhang':12,'baoshan':20,'jiading':22,'songjiang':24,'putuo':4,'zhabei':5,'luwan':5,'unknown':12},
-        'hongkou':{'qingpu':40,'jingan':5,'huangpu':4,'xuhui':7,'pudong':10,'changning':6,'hongkou':0,'yangpu':4,'minhang':18,'baoshan':15,'jiading':26,'songjiang':32,'putuo':6,'zhabei':3,'luwan':4,'unknown':12},
-        'yangpu':{'qingpu':42,'jingan':8,'huangpu':7,'xuhui':9,'pudong':8,'changning':9,'hongkou':4,'yangpu':0,'minhang':20,'baoshan':12,'jiading':28,'songjiang':34,'putuo':9,'zhabei':6,'luwan':8,'unknown':14},
-        'minhang':{'qingpu':22,'jingan':15,'huangpu':16,'xuhui':12,'pudong':20,'changning':12,'hongkou':18,'yangpu':20,'minhang':0,'baoshan':28,'jiading':18,'songjiang':12,'putuo':14,'zhabei':16,'luwan':15,'unknown':14},
-        'baoshan':{'qingpu':50,'jingan':18,'huangpu':20,'xuhui':22,'pudong':25,'changning':20,'hongkou':15,'yangpu':12,'minhang':28,'baoshan':0,'jiading':15,'songjiang':38,'putuo':18,'zhabei':14,'luwan':20,'unknown':18},
-        'jiading':{'qingpu':30,'jingan':25,'huangpu':28,'xuhui':26,'pudong':32,'changning':22,'hongkou':26,'yangpu':28,'minhang':18,'baoshan':15,'jiading':0,'songjiang':25,'putuo':20,'zhabei':22,'luwan':27,'unknown':20},
-        'songjiang':{'qingpu':18,'jingan':28,'huangpu':30,'xuhui':22,'pudong':35,'changning':24,'hongkou':32,'yangpu':34,'minhang':12,'baoshan':38,'jiading':25,'songjiang':0,'putuo':26,'zhabei':30,'luwan':28,'unknown':22},
-        'putuo':{'qingpu':30,'jingan':5,'huangpu':6,'xuhui':6,'pudong':14,'changning':4,'hongkou':6,'yangpu':9,'minhang':14,'baoshan':18,'jiading':20,'songjiang':26,'putuo':0,'zhabei':4,'luwan':5,'unknown':12},
-        'zhabei':{'qingpu':35,'jingan':4,'huangpu':5,'xuhui':7,'pudong':12,'changning':5,'hongkou':3,'yangpu':6,'minhang':16,'baoshan':14,'jiading':22,'songjiang':30,'putuo':4,'zhabei':0,'luwan':5,'unknown':12},
-        'luwan':{'qingpu':36,'jingan':4,'huangpu':2,'xuhui':3,'pudong':9,'changning':5,'hongkou':4,'yangpu':8,'minhang':15,'baoshan':20,'jiading':27,'songjiang':28,'putuo':5,'zhabei':5,'luwan':0,'unknown':12},
-        'unknown':{'qingpu':25,'jingan':12,'huangpu':12,'xuhui':12,'pudong':16,'changning':12,'hongkou':12,'yangpu':14,'minhang':14,'baoshan':18,'jiading':20,'songjiang':22,'putuo':12,'zhabei':12,'luwan':12,'unknown':0}
-    };
-    function getBezirk(adresse) {
-        if (!adresse) return 'unknown';
-        if (adresse.includes('青浦') || adresse.includes('qingpu') || adresse.includes('Huqingping') || adresse.includes('1517') || adresse.includes('Lake Front')) return 'qingpu';
-        if (adresse.includes('静安') || adresse.includes('jingan')) return 'jingan';
-        if (adresse.includes('黄浦') || adresse.includes('huangpu')) return 'huangpu';
-        if (adresse.includes('徐汇') || adresse.includes('xuhui')) return 'xuhui';
-        if (adresse.includes('浦东') || adresse.includes('pudong')) return 'pudong';
-        if (adresse.includes('长宁') || adresse.includes('changning')) return 'changning';
-        if (adresse.includes('虹口') || adresse.includes('hongkou')) return 'hongkou';
-        if (adresse.includes('杨浦') || adresse.includes('yangpu')) return 'yangpu';
-        if (adresse.includes('闵行') || adresse.includes('minhang')) return 'minhang';
-        if (adresse.includes('宝山') || adresse.includes('baoshan')) return 'baoshan';
-        if (adresse.includes('嘉定') || adresse.includes('jiading')) return 'jiading';
-        if (adresse.includes('松江') || adresse.includes('songjiang')) return 'songjiang';
-        if (adresse.includes('普陀') || adresse.includes('putuo')) return 'putuo';
-        if (adresse.includes('闸北') || adresse.includes('zhabei')) return 'zhabei';
-        if (adresse.includes('卢湾') || adresse.includes('luwan')) return 'luwan';
-        return 'unknown';
-    }
-    function getDistance(addr1, addr2) {
-        if (!addr1 || !addr2) return 12;
-        var bez1 = getBezirk(addr1), bez2 = getBezirk(addr2);
-        if (realDistances[bez1] && realDistances[bez1][bez2] !== undefined) return realDistances[bez1][bez2];
-        return 12;
-    }
-
-    // ============ DATA STORE ============
+    // ============ DATA ============
     var breadOrders = [], hummusOrders = [], addBreadOrders = [], addHummusOrders = [], pickupList = [], addressBook = {};
     var deliveredStops = {};
     var nextId = 1, currentWeek = calculateCurrentWeek(), addBreadCount = 1, addHummusCount = 1;
     var weekHistory = {};
-    var currentLocation = null;
     var customerDatabase = {};
-    var routeMode = 'fast';
     var routeLastComputed = [];
 
-    // ============ DOM REFS ============
     var $ = function(id) { return document.getElementById(id); };
     var customerName = $("customerName");
     var breadType = $("breadType"), breadSize = $("breadSize"), miniCheckbox = $("miniCheckbox");
@@ -809,20 +697,17 @@ th.hummus-th { color: #ffffff !important; }
     var hummusTableBody = $("hummusTableBody"), totalSpan = $("totalPriceSum"), hummusCountSpan = $("hummusCount");
     var weekNumber = $("weekNumber"), weekBadge = $("weekBadge");
     var addBreadType = $("addBreadType"), addBreadMiniCheckbox = $("addBreadMiniCheckbox");
-    var addBreadCountDisplay = $("addBreadCountDisplay"), addBreadMinusBtn = $("addBreadMinusBtn");
-    var addBreadPlusBtn = $("addBreadPlusBtn"), addBreadAddBtn = $("addBreadAddBtn");
-    var addBreadOrdersList = $("addBreadOrdersList"), addHummusType = $("addHummusType");
-    var addHummusSize = $("addHummusSize"), addHummusCountDisplay = $("addHummusCountDisplay");
-    var addHummusMinusBtn = $("addHummusMinusBtn"), addHummusPlusBtn = $("addHummusPlusBtn");
-    var addHummusAddBtn = $("addHummusAddBtn"), addHummusOrdersList = $("addHummusOrdersList");
+    var addBreadCountDisplay = $("addBreadCountDisplay");
+    var addHummusType = $("addHummusType"), addHummusSize = $("addHummusSize");
+    var addHummusCountDisplay = $("addHummusCountDisplay");
     var shareAmount = $("shareAmount"), provisionAmount = $("provisionAmount");
     var totalRevenueDisplay = $("totalRevenueDisplay");
-    var routeStart = $("routeStart");
-    var routeResult = $("routeResult"), appleMapsBtn = $("appleMapsBtn"), autoRouteList = $("autoRouteList");
+    var routeResult = $("routeResult"), appleMapsBtn = $("appleMapsBtn"), googleMapsBtn = $("googleMapsBtn");
+    var autoRouteList = $("autoRouteList");
     var addressList = $("addressList"), addressNameInput = $("addressNameInput");
     var addressAddrInput = $("addressAddrInput"), addAddressBtn = $("addAddressBtn");
     var addressCount = $("addressCount");
-    var routeOptimizedInfo = $("routeOptimizedInfo"), routeCompareInfo = $("routeCompareInfo");
+    var routeOptimizedInfo = $("routeOptimizedInfo");
     var pickupNameInput = $("pickupNameInput"), addPickupBtn = $("addPickupBtn");
     var pickupListEl = $("pickupList"), pickupCount = $("pickupCount");
     var historyList = $("historyList"), historyCount = $("historyCount");
@@ -833,11 +718,8 @@ th.hummus-th { color: #ffffff !important; }
     var calculatedThermomixTable = $("calculatedThermomixTable"), calculatedRestTable = $("calculatedRestTable");
     var calculatedRestFooter = $("calculatedRestFooter"), perPcsRow = $("perPcsRow");
     var resetTableBtn = $("resetTableBtn"), saveHistoryBtn = $("saveHistoryBtn");
-    var wechatCopyBtn = $("wechatCopyBtn"), wechatImageBtn = $("wechatImageBtn"), wechatStatus = $("wechatStatus");
-    var screenshotBtn2 = $("screenshotBtn2");
     var pdfBtn = $("pdfBtn"), copyTextBtn = $("copyTextBtn");
     var emailExportBtn = $("emailExportBtn"), jsonExportBtn = $("jsonExportBtn"), csvExportBtn = $("csvExportBtn");
-    var locateBtn = $("locateBtn"), locationStatus = $("locationStatus");
     var suggestionsList = $("suggestionsList");
     var autoSaveNotification = $("autoSaveNotification");
     var cmNameInput = $("cmNameInput"), cmCountryInput = $("cmCountryInput");
@@ -848,12 +730,42 @@ th.hummus-th { color: #ffffff !important; }
     var screenshotStatus = $("screenshotStatus");
     var scrollTopBtn = $("scrollTopBtn");
 
-    window.addEventListener('scroll', function() {
-        scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-    });
+    window.addEventListener('scroll', function() { scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none'; });
     scrollTopBtn.addEventListener('click', function() { window.scrollTo({top:0, behavior:'smooth'}); });
 
-    // ============ CUSTOMER MANAGER ============
+    // ============ DELIVERED STOPS ============
+    function stopKey(name, isPickup) {
+        return (isPickup ? 'pickup:' : 'delivery:') + String(name || '').trim().toLowerCase();
+    }
+    window.markDelivered = function(name, isPickup) {
+        deliveredStops[stopKey(name, isPickup)] = true;
+        saveDeliveredStops();
+        updateRoute();
+    };
+    window.unmarkDelivered = function(name, isPickup) {
+        delete deliveredStops[stopKey(name, isPickup)];
+        saveDeliveredStops();
+        updateRoute();
+    };
+    window.resetDeliveredStops = function() {
+        if (Object.keys(deliveredStops).length === 0) { alert('No delivered markers to reset.'); return; }
+        if (confirm('Reset all "Delivered" markers? Orders will NOT be deleted.')) {
+            deliveredStops = {};
+            saveDeliveredStops();
+            updateRoute();
+        }
+    };
+    function saveDeliveredStops() {
+        try { localStorage.setItem("microbiome_delivered_stops", JSON.stringify(deliveredStops)); } catch(e) {}
+    }
+    function loadDeliveredStops() {
+        try {
+            var ds = localStorage.getItem("microbiome_delivered_stops");
+            deliveredStops = ds ? JSON.parse(ds) : {};
+        } catch(e) { deliveredStops = {}; }
+    }
+
+    // ============ CUSTOMER DB ============
     function loadCustomerDatabase() {
         try { var data = localStorage.getItem("microbiome_customers"); customerDatabase = data ? JSON.parse(data) : {}; }
         catch(e) { customerDatabase = {}; }
@@ -865,16 +777,15 @@ th.hummus-th { color: #ffffff !important; }
     }
     function renderCustomerManager() {
         var keys = Object.keys(customerDatabase);
-        customerCount.textContent = '(' + keys.length + ' entries)';
+        customerCount.textContent = '(' + keys.length + ')';
         if (keys.length === 0) { customerManagerList.innerHTML = '<div class="cm-empty">No customers saved yet</div>'; return; }
         var html = '';
         keys.forEach(function(name) {
             var data = customerDatabase[name];
             var country = data.country || '';
-            var flag = getCountryFlag(country);
-            var shareLabel = data.defaultCommission ? '13.5% + Prov.' : '15%';
+            var shareLabel = data.defaultCommission ? '13.5%' : '15%';
             var commClass = data.defaultCommission ? 'cm-comm-active' : 'cm-comm-inactive';
-            html += '<span class="cm-tag">' + escapeHtml(name) + ' ' + flag + ' ' + escapeHtml(country) + ' <span class="' + commClass + '">Share ' + shareLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
+            html += '<span class="cm-tag">' + escapeHtml(name) + ' ' + getCountryFlag(country) + ' ' + escapeHtml(country) + ' <span class="' + commClass + '">' + shareLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
         });
         customerManagerList.innerHTML = html;
         document.querySelectorAll('.cm-tag .del').forEach(function(el) {
@@ -891,8 +802,7 @@ th.hummus-th { color: #ffffff !important; }
         var html = '';
         commCustomers.forEach(function(name) {
             var data = customerDatabase[name];
-            var flag = getCountryFlag(data.country || '');
-            html += '<div class="cm-comm-item"><span class="name">' + escapeHtml(name) + '</span><span class="detail">' + flag + ' ' + escapeHtml(data.country || '') + ' · ' + (data.totalOrders || 0) + ' orders</span></div>';
+            html += '<div class="cm-comm-item"><span class="name">' + escapeHtml(name) + '</span><span class="detail">' + getCountryFlag(data.country || '') + ' ' + escapeHtml(data.country || '') + ' · ' + (data.totalOrders || 0) + ' orders</span></div>';
         });
         commissionListItems.innerHTML = html;
     }
@@ -920,8 +830,6 @@ th.hummus-th { color: #ffffff !important; }
                 if (data.lastOrders && data.lastOrders.length > 0) {
                     var last = data.lastOrders[data.lastOrders.length - 1];
                     lastOrderText = last.breadType + ' ' + last.size + (last.isMini ? ' Mini' : '');
-                    if (last.hummusType && last.hummusType !== 'none') lastOrderText += ' + 🫒';
-                    if (last.hasCommission) lastOrderText += ' 💰';
                 }
                 suggestions.push({ name:name, country:data.country||'', lastOrder:lastOrderText, totalOrders:data.totalOrders||0, lastWeek:data.lastWeek||0, lastHummus:data.lastHummus||null, defaultCommission:data.defaultCommission||false });
             }
@@ -934,38 +842,29 @@ th.hummus-th { color: #ffffff !important; }
         var html = '';
         suggestions.forEach(function(s) {
             var isCurrentWeek = s.lastWeek === currentWeek;
-            var weekBadge = isCurrentWeek ? ' <span class="suggestion-badge">🔥 aktuell</span>' : '';
-            var hummusIcon = s.lastHummus ? ' 🫒' : '';
-            var commIcon = s.defaultCommission ? ' 💰' : '';
+            var weekBadge = isCurrentWeek ? ' <span class="suggestion-badge">🔥</span>' : '';
             var flag = getCountryFlag(s.country);
-            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-country="' + escapeHtml(s.country) + '" data-hummus-type="' + (s.lastHummus?s.lastHummus.type:'') + '" data-hummus-size="' + (s.lastHummus?s.lastHummus.size:'') + '" data-commission="' + (s.defaultCommission?'true':'false') + '"><div><span class="suggestion-name">' + escapeHtml(s.name) + '</span> <span style="font-size:0.5rem;color:#8a6a2a;">' + flag + ' ' + (s.country||'') + '</span>' + weekBadge + '</div><div class="suggestion-detail">' + (s.lastOrder||'Neu') + hummusIcon + commIcon + ' · ' + s.totalOrders + 'x</div></div>';
+            html += '<div class="suggestion-item" data-name="' + escapeHtml(s.name) + '" data-hummus-type="' + (s.lastHummus?s.lastHummus.type:'') + '" data-hummus-size="' + (s.lastHummus?s.lastHummus.size:'') + '" data-commission="' + (s.defaultCommission?'true':'false') + '"><div><span class="suggestion-name">' + escapeHtml(s.name) + '</span> <span style="font-size:0.5rem;color:#8a6a2a;">' + flag + ' ' + (s.country||'') + '</span>' + weekBadge + '</div><div class="suggestion-detail">' + (s.lastOrder||'Neu') + ' · ' + s.totalOrders + 'x</div></div>';
         });
         suggestionsList.innerHTML = html;
         suggestionsList.className = 'suggestions-list show';
         suggestionsList.querySelectorAll('.suggestion-item').forEach(function(item) {
             item.addEventListener('click', function() {
-                var name = this.dataset.name;
-                var hummusTypeVal = this.dataset.hummusType;
-                var hummusSizeVal = this.dataset.hummusSize;
-                var commission = this.dataset.commission === 'true';
-                customerName.value = name;
-                commissionCheckbox.checked = commission;
+                customerName.value = this.dataset.name;
+                commissionCheckbox.checked = this.dataset.commission === 'true';
                 suggestionsList.className = 'suggestions-list';
-                customerName.focus();
-                autoFillLastOrder(name, hummusTypeVal, hummusSizeVal, commission);
+                autoFillLastOrder(this.dataset.name, this.dataset.hummusType, this.dataset.hummusSize, this.dataset.commission === 'true');
             });
         });
     }
-    function autoFillLastOrder(name, hummusTypeVal, hummusSizeVal, commission) {
-        if (!customerDatabase[name] || !customerDatabase[name].lastOrders) return;
-        var lastOrders = customerDatabase[name].lastOrders;
-        if (lastOrders.length === 0) return;
-        var last = lastOrders[lastOrders.length - 1];
+    function autoFillLastOrder(name, hType, hSize, commission) {
+        if (!customerDatabase[name] || !customerDatabase[name].lastOrders || customerDatabase[name].lastOrders.length === 0) return;
+        var last = customerDatabase[name].lastOrders[customerDatabase[name].lastOrders.length - 1];
         breadType.value = last.breadType || '88er';
         breadSize.value = last.size || 'S';
         miniCheckbox.checked = last.isMini || false;
-        commissionCheckbox.checked = commission !== undefined ? commission : (last.hasCommission || false);
-        if (hummusTypeVal && hummusTypeVal !== 'none') { hummusType.value = hummusTypeVal; hummusSize.value = hummusSizeVal || 'S'; }
+        commissionCheckbox.checked = commission;
+        if (hType && hType !== 'none') { hummusType.value = hType; hummusSize.value = hSize || 'S'; }
     }
     function updateCustomerDatabase(name, country, order) {
         if (!customerDatabase[name]) {
@@ -974,19 +873,17 @@ th.hummus-th { color: #ffffff !important; }
         if (country && !customerDatabase[name].country) customerDatabase[name].country = country;
         if (order.hummusType && order.hummusType !== 'none') customerDatabase[name].lastHummus = { type: order.hummusType, size: order.hummusSize || 'S' };
         if (order.hasCommission !== undefined) customerDatabase[name].defaultCommission = order.hasCommission;
-        var orderEntry = { week: currentWeek, breadType: order.breadType, size: order.size, isMini: order.isMini||false, hummusType: order.hummusType||'none', hummusSize: order.hummusSize||'S', hasCommission: order.hasCommission||false };
-        if (!customerDatabase[name].lastOrders) customerDatabase[name].lastOrders = [];
-        customerDatabase[name].lastOrders.push(orderEntry);
+        customerDatabase[name].lastOrders.push({ week: currentWeek, breadType: order.breadType, size: order.size, isMini: order.isMini||false, hummusType: order.hummusType||'none', hummusSize: order.hummusSize||'S', hasCommission: order.hasCommission||false });
         if (customerDatabase[name].lastOrders.length > 10) customerDatabase[name].lastOrders.shift();
         customerDatabase[name].totalOrders = (customerDatabase[name].totalOrders || 0) + 1;
         customerDatabase[name].lastWeek = currentWeek;
         saveCustomerDatabase();
     }
 
+    // ============ PRICE HELPERS ============
     function getStückpreis(sorte, größe) {
         var preis = priceDB[sorte]?.[größe] || 0;
-        var stückzahl = sizeToPcs[größe] || 1;
-        return preis / stückzahl;
+        return preis / (sizeToPcs[größe] || 1);
     }
     function getCustomerPrice(name) {
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && o.name === name; });
@@ -1007,44 +904,35 @@ th.hummus-th { color: #ffffff !important; }
             else if (totalPcs >= 10) size = 'XL';
             var sortenMap = {};
             otherOrders.forEach(function(o) {
-                var sorte = o.breadType;
-                var pcs = getChargeablePcsForOrder(o);
-                if (!sortenMap[sorte]) sortenMap[sorte] = 0;
-                sortenMap[sorte] += pcs;
+                if (!sortenMap[o.breadType]) sortenMap[o.breadType] = 0;
+                sortenMap[o.breadType] += getChargeablePcsForOrder(o);
             });
             for (var sorte in sortenMap) totalPrice += getStückpreis(sorte, size) * sortenMap[sorte];
         }
         return Math.round(totalPrice);
     }
-    function toggleCommission(orderId) {
+    window.toggleCommission = function(orderId) {
         var order = breadOrders.find(function(o) { return o.id === orderId; });
-        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) { order.hasCommission = !order.hasCommission; render(); saveToLocal(); }
-    }
+        if (order && !order.isAdd && !order.isAddBread && !order.isCombo) {
+            order.hasCommission = !order.hasCommission;
+            render();
+        }
+    };
     function updateFinancialDisplay() {
-        var totalRevenue = 0, customers = new Set(), totalWithShare = 0, totalWithoutShare = 0, shareCustomers = 0, normalCustomers = 0, totalProvisionRevenue = 0;
+        var totalRev = 0, customers = new Set(), totalWithShare = 0, totalWithoutShare = 0, shareCustomers = 0, normalCustomers = 0, totalProvRevenue = 0;
         breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo) customers.add(o.name); });
         customers.forEach(function(name) {
             var price = getCustomerPrice(name);
-            totalRevenue += price;
-            var hasCommission = false;
-            breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo && o.name === name && o.hasCommission) hasCommission = true; });
-            if (customerDatabase[name] && customerDatabase[name].defaultCommission) hasCommission = true;
-            if (hasCommission) { totalWithShare += price; totalProvisionRevenue += price; shareCustomers++; }
+            totalRev += price;
+            var hasComm = false;
+            breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo && o.name === name && o.hasCommission) hasComm = true; });
+            if (customerDatabase[name] && customerDatabase[name].defaultCommission) hasComm = true;
+            if (hasComm) { totalWithShare += price; totalProvRevenue += price; shareCustomers++; }
             else { totalWithoutShare += price; normalCustomers++; }
         });
-        var share = (totalWithShare * 0.135) + (totalWithoutShare * 0.15);
-        var provision = totalProvisionRevenue * 0.10;
-        shareAmount.textContent = Math.round(share);
-        provisionAmount.textContent = Math.round(provision);
-        totalRevenueDisplay.textContent = Math.round(totalRevenue);
-        var statusInfo = '';
-        if (shareCustomers > 0 && normalCustomers > 0) statusInfo = ' (mix: ' + shareCustomers + '×13.5% + ' + normalCustomers + '×15%)';
-        else if (shareCustomers > 0) statusInfo = ' (13.5%)';
-        else if (normalCustomers > 0) statusInfo = ' (15%)';
-        var shareLabel = document.querySelector('.salary-row .salary-label');
-        if (shareLabel) shareLabel.textContent = '👤 Share' + statusInfo;
-        var provLabel = document.querySelector('.provision-row .provision-label');
-        if (provLabel) provLabel.textContent = '💼 Provision (10% von ' + shareCustomers + ' Kunden mit Commission)';
+        shareAmount.textContent = Math.round((totalWithShare * 0.135) + (totalWithoutShare * 0.15));
+        provisionAmount.textContent = Math.round(totalProvRevenue * 0.10);
+        totalRevenueDisplay.textContent = Math.round(totalRev);
     }
     function getCustomerHummus(name) {
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && o.name === name; });
@@ -1053,80 +941,35 @@ th.hummus-th { color: #ffffff !important; }
         if (!hasHummus) return null;
         var totalPcs = 0;
         orders.forEach(function(o) { totalPcs += getPcsForOrder(o); });
-        var hummusSizeVal = 'S';
-        if (totalPcs >= 4 && totalPcs <= 6) hummusSizeVal = 'M';
-        else if (totalPcs >= 7 && totalPcs <= 9) hummusSizeVal = 'L';
-        else if (totalPcs >= 10) hummusSizeVal = 'XL';
-        var hasHighVariety = orders.some(function(o) { return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er'; });
-        var hummusTypeVal = hasHighVariety ? 'yingyang' : 'hummus';
-        if (hummusTypeVal === 'yingyang' && hummusSizeVal === 'S') hummusSizeVal = 'M';
-        return { type: hummusTypeVal, size: hummusSizeVal };
+        var hSize = 'S';
+        if (totalPcs >= 4 && totalPcs <= 6) hSize = 'M';
+        else if (totalPcs >= 7 && totalPcs <= 9) hSize = 'L';
+        else if (totalPcs >= 10) hSize = 'XL';
+        var hasHigh = orders.some(function(o) { return o.breadType === '188er' || o.breadType === '200er' || o.breadType === '208er'; });
+        var hType = hasHigh ? 'yingyang' : 'hummus';
+        if (hType === 'yingyang' && hSize === 'S') hSize = 'M';
+        return { type: hType, size: hSize };
     }
     function getCustomerDetails(name) {
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && o.name === name; });
         if (orders.length === 0) return null;
         var totalPcs = 0;
         orders.forEach(function(o) { totalPcs += getPcsForOrder(o); });
-        var size = 'S';
-        if (totalPcs >= 4 && totalPcs <= 6) size = 'M';
-        else if (totalPcs >= 7 && totalPcs <= 9) size = 'L';
-        else if (totalPcs >= 10) size = 'XL';
-        var details = [], totalPrice = 0;
-        var sPlusOrders = orders.filter(function(o) { return o.size === 'S+'; });
-        var otherOrders = orders.filter(function(o) { return o.size !== 'S+'; });
-        sPlusOrders.forEach(function(o) {
-            var basePrice = priceDB[o.breadType]?.['S+'] || 0;
-            var actualPrice = o.isMini ? basePrice / 2 : basePrice;
-            totalPrice += actualPrice;
-            details.push({ sorte: o.breadType, pcs: 3, stückpreis: actualPrice / 3, price: actualPrice, isSPlus: true });
-        });
-        if (otherOrders.length > 0) {
-            var otherPcs = 0;
-            otherOrders.forEach(function(o) { otherPcs += getChargeablePcsForOrder(o); });
-            var otherSize = 'S';
-            if (otherPcs >= 4 && otherPcs <= 6) otherSize = 'M';
-            else if (otherPcs >= 7 && otherPcs <= 9) otherSize = 'L';
-            else if (otherPcs >= 10) otherSize = 'XL';
-            var otherSortenMap = {}, otherActualSortenMap = {};
-            otherOrders.forEach(function(o) {
-                var sorte = o.breadType;
-                var chargeablePcs = getChargeablePcsForOrder(o);
-                var actualPcs = getPcsForOrder(o);
-                if (!otherSortenMap[sorte]) otherSortenMap[sorte] = 0;
-                if (!otherActualSortenMap[sorte]) otherActualSortenMap[sorte] = 0;
-                otherSortenMap[sorte] += chargeablePcs;
-                otherActualSortenMap[sorte] += actualPcs;
-            });
-            for (var sorte in otherSortenMap) {
-                var chargedPcs = otherSortenMap[sorte];
-                var actualPcs = otherActualSortenMap[sorte];
-                var stückpreis = getStückpreis(sorte, otherSize);
-                var price = stückpreis * chargedPcs;
-                totalPrice += price;
-                details.push({ sorte: sorte, pcs: actualPcs, chargedPcs: chargedPcs, stückpreis: stückpreis, price: price, isSPlus: false });
-            }
-        }
         var hummus = getCustomerHummus(name);
-        var hasCommission = false;
-        if (customerDatabase[name] && customerDatabase[name].defaultCommission) hasCommission = true;
-        orders.forEach(function(o) { if (o.hasCommission) hasCommission = true; });
-        return { totalPcs:totalPcs, size:size, totalPrice:Math.round(totalPrice), details:details, orderCount:orders.length, isMini:orders[0].isMini||false, hummus:hummus, hasCommission:hasCommission };
+        var hasComm = false;
+        if (customerDatabase[name] && customerDatabase[name].defaultCommission) hasComm = true;
+        orders.forEach(function(o) { if (o.hasCommission) hasComm = true; });
+        return { totalPcs: totalPcs, totalPrice: getCustomerPrice(name), hummus: hummus, hasCommission: hasComm };
     }
 
     window.copySalary = function() {
         var total = totalRevenue();
         var share = Math.round(total * 0.15);
-        var provision = Math.round(provisionRevenue() * 0.10);
-        var text = '👤 Share: ' + share + ' ¥\n💼 Provision (10% von Commission-Kunden): ' + provision + ' ¥\n📊 Total Revenue: ' + Math.round(total) + ' ¥';
+        var prov = Math.round(provisionRevenue() * 0.10);
+        var text = '👤 Share: ' + share + ' ¥\n💼 Provision: ' + prov + ' ¥\n📊 Total: ' + Math.round(total) + ' ¥';
         var btn = document.getElementById('salaryCopyBtn');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function() { btn.textContent = '✅'; setTimeout(function() { btn.textContent = '📋 Copy'; }, 2000); });
-        } else {
-            var textarea = document.createElement('textarea');
-            textarea.value = text; textarea.style.position = 'fixed'; textarea.style.left = '-9999px';
-            document.body.appendChild(textarea); textarea.select();
-            try { document.execCommand('copy'); btn.textContent = '✅'; setTimeout(function() { btn.textContent = '📋 Copy'; }, 2000); } catch(e) {}
-            document.body.removeChild(textarea);
         }
     };
     function totalRevenue() {
@@ -1137,10 +980,9 @@ th.hummus-th { color: #ffffff !important; }
     }
     function provisionRevenue() {
         var sum = 0, customers = new Set();
-        breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo && o.hasCommission) customers.add(o.name); });
         breadOrders.forEach(function(o) {
             if (!o.isAdd && !o.isAddBread && !o.isCombo) {
-                if (customerDatabase[o.name] && customerDatabase[o.name].defaultCommission) customers.add(o.name);
+                if (o.hasCommission || (customerDatabase[o.name] && customerDatabase[o.name].defaultCommission)) customers.add(o.name);
             }
         });
         customers.forEach(function(name) { sum += getCustomerPrice(name); });
@@ -1155,10 +997,10 @@ th.hummus-th { color: #ffffff !important; }
     cmNameInput.addEventListener('blur', function() { this.value = capitalizeName(this.value.trim()); });
     addressAddrInput.addEventListener('blur', function() { this.value = lowerCaseAddress(this.value.trim()); });
 
-    addBreadMinusBtn.addEventListener('click', function() { if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; } });
-    addBreadPlusBtn.addEventListener('click', function() { if (addBreadCount < 99) { addBreadCount++; addBreadCountDisplay.textContent = addBreadCount; } });
-    addHummusMinusBtn.addEventListener('click', function() { if (addHummusCount > 1) { addHummusCount--; addHummusCountDisplay.textContent = addHummusCount; } });
-    addHummusPlusBtn.addEventListener('click', function() { if (addHummusCount < 99) { addHummusCount++; addHummusCountDisplay.textContent = addHummusCount; } });
+    $("addBreadMinusBtn").addEventListener('click', function() { if (addBreadCount > 1) { addBreadCount--; addBreadCountDisplay.textContent = addBreadCount; } });
+    $("addBreadPlusBtn").addEventListener('click', function() { if (addBreadCount < 99) { addBreadCount++; addBreadCountDisplay.textContent = addBreadCount; } });
+    $("addHummusMinusBtn").addEventListener('click', function() { if (addHummusCount > 1) { addHummusCount--; addHummusCountDisplay.textContent = addHummusCount; } });
+    $("addHummusPlusBtn").addEventListener('click', function() { if (addHummusCount < 99) { addHummusCount++; addHummusCountDisplay.textContent = addHummusCount; } });
 
     function updateWeekDisplay() { currentWeek = calculateCurrentWeek(); weekNumber.value = currentWeek; weekBadge.textContent = 'Week ' + currentWeek; }
     updateWeekDisplay();
@@ -1177,98 +1019,46 @@ th.hummus-th { color: #ffffff !important; }
         }
     });
 
-    function takeScreenshot(btn, statusEl) {
-        var element = document.getElementById('captureArea');
-        var status = statusEl || screenshotStatus || wechatStatus;
-        var button = btn || screenshotBtn2;
-        var originalText = button.textContent;
-        if (status) { status.className = 'show'; status.textContent = '⏳ Generating...'; }
-        button.textContent = '⏳ Loading...'; button.style.opacity = '0.7';
+    $("screenshotBtn2").addEventListener('click', function() {
+        var status = wechatStatus || screenshotStatus;
         if (typeof window.html2canvas !== 'function') {
-            if (status) { status.textContent = 'Image export unavailable offline. Use Print > Save as PDF.'; status.className = 'show'; }
-            button.textContent = originalText; button.style.opacity = '1';
+            alert('Image export unavailable. Use Print > Save as PDF.');
             window.print(); return;
         }
-        setTimeout(function() {
-            html2canvas(element, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#f7f1dd', logging: false, width: element.scrollWidth, height: element.scrollHeight, windowWidth: element.scrollWidth, windowHeight: element.scrollHeight, onclone: function(doc) { var el = doc.getElementById('captureArea'); if (el) { el.style.transform = 'none'; el.style.overflow = 'visible'; el.style.maxWidth = '100%'; } } })
-            .then(function(canvas) {
-                try {
-                    var link = document.createElement('a');
-                    link.download = 'microbiome_week_' + currentWeek + '.png';
-                    link.href = canvas.toDataURL('image/png');
-                    document.body.appendChild(link); link.click(); document.body.removeChild(link);
-                    if (status) { status.textContent = '✅ Downloaded! Week ' + currentWeek; status.className = 'show success'; }
-                    button.textContent = '✅ Done!'; button.style.opacity = '1';
-                    setTimeout(function() { if (status) { status.className = ''; status.textContent = ''; } button.textContent = originalText; button.style.opacity = '1'; }, 4000);
-                } catch(e) {
-                    if (status) { status.textContent = '❌ Error saving'; status.className = 'show error'; }
-                    button.textContent = '❌ Error'; button.style.opacity = '1';
-                    setTimeout(function() { if (status) { status.className = ''; status.textContent = ''; } button.textContent = originalText; button.style.opacity = '1'; }, 4000);
-                }
-            }).catch(function(error) {
-                if (status) { status.textContent = '❌ Error: ' + (error.message || 'unknown'); status.className = 'show error'; }
-                button.textContent = '❌ Error'; button.style.opacity = '1';
-                setTimeout(function() { if (status) { status.className = ''; status.textContent = ''; } button.textContent = originalText; button.style.opacity = '1'; }, 4000);
-            });
-        }, 500);
-    }
-    screenshotBtn2.addEventListener('click', function() { takeScreenshot(this, wechatStatus); });
+        html2canvas(document.getElementById('captureArea'), {scale:2, useCORS:true, backgroundColor:'#f7f1dd'}).then(function(canvas) {
+            var link = document.createElement('a');
+            link.download = 'microbiome_week_' + currentWeek + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    });
     pdfBtn.addEventListener('click', function() { window.print(); });
     copyTextBtn.addEventListener('click', function() {
         var text = generateExportText();
-        var btn = this, originalText = btn.textContent;
+        var btn = this, orig = btn.textContent;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(function() {
-                btn.textContent = '✅ Copied!'; btn.style.background = '#27ae60';
-                setTimeout(function() { btn.textContent = originalText; btn.style.background = ''; }, 2000);
-                alert('✅ Copied to clipboard!');
-            }).catch(function() { fallbackCopyText(text, btn, originalText); });
-        } else { fallbackCopyText(text, btn, originalText); }
+            navigator.clipboard.writeText(text).then(function() { btn.textContent = '✅ Copied!'; setTimeout(function() { btn.textContent = orig; }, 2000); });
+        }
     });
-    function fallbackCopyText(text, btn, originalText) {
-        var textarea = document.createElement('textarea');
-        textarea.value = text; textarea.style.position = 'fixed'; textarea.style.left = '-9999px';
-        document.body.appendChild(textarea); textarea.select();
-        try { document.execCommand('copy'); btn.textContent = '✅ Copied!'; btn.style.background = '#27ae60'; setTimeout(function() { btn.textContent = originalText; btn.style.background = ''; }, 2000); alert('✅ Copied to clipboard!'); }
-        catch(e) { alert('❌ Could not copy. Please copy manually:\n\n' + text.substring(0, 300) + '...'); }
-        document.body.removeChild(textarea);
-    }
     emailExportBtn.addEventListener('click', function() {
-        var subject = 'Microbiome Warrior - Week ' + currentWeek;
-        var body = generateExportText();
-        window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        window.location.href = 'mailto:?subject=' + encodeURIComponent('Microbiome Week ' + currentWeek) + '&body=' + encodeURIComponent(generateExportText());
     });
     jsonExportBtn.addEventListener('click', function() {
-        var data = { week: currentWeek, date: new Date().toISOString(), orders: breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; }), combos: combos, totalRevenue: totalRevenue(), share: shareAmount.textContent, provision: provisionAmount.textContent, preparation: getTotalRequirements() };
-        var json = JSON.stringify(data, null, 2);
-        var blob = new Blob([json], {type: 'application/json'});
+        var data = { week: currentWeek, orders: breadOrders, combos: combos, totalRevenue: totalRevenue(), share: shareAmount.textContent, provision: provisionAmount.textContent };
+        var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a'); a.href = url; a.download = 'microbiome_week_' + currentWeek + '.json'; a.click();
         URL.revokeObjectURL(url);
     });
     csvExportBtn.addEventListener('click', function() {
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
-        if (orders.length === 0 && combos.length === 0) { alert('No orders to export'); return; }
+        if (orders.length === 0 && combos.length === 0) { alert('No orders'); return; }
         var lines = ['Name,Country,Variety,Size,Mini,pcs,Price,Hummus'];
         orders.forEach(function(o) {
-            var pcs = getPcsForOrder(o);
-            var price = getPriceForOrder(o);
-            var hummus = o.hummusType && o.hummusType !== 'none' ? o.hummusType + ' ' + o.hummusSize : 'none';
-            lines.push([o.name,o.country||'',o.breadType,o.size,o.isMini?'Yes':'No',pcs,Math.round(price),hummus].join(','));
+            lines.push([o.name,o.country||'',o.breadType,o.size,o.isMini?'Yes':'No',getPcsForOrder(o),Math.round(getPriceForOrder(o)),o.hummusType||'none'].join(','));
         });
-        combos.forEach(function(c) {
-            var typeLabel = c.type === '88-200' ? '88-200' : '150-208';
-            var mini = c.isMini ? 'Yes' : 'No';
-            lines.push([c.name + ' (Combo)',c.country||'',typeLabel,'Combo',mini,'8',Math.round(c.price),'none'].join(','));
-        });
-        var total = totalRevenue();
-        var share = Math.round(total * 0.15);
-        var provision = Math.round(provisionRevenue() * 0.10);
-        lines.push('TOTAL,,, , ,' + Math.round(total));
-        lines.push('SHARE,,, , ,' + share);
-        lines.push('PROVISION,,, , ,' + provision);
-        var csv = lines.join('\n');
-        var blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+        lines.push('TOTAL,,, , ,' + Math.round(totalRevenue()));
+        var blob = new Blob(['\uFEFF' + lines.join('\n')], {type:'text/csv;charset=utf-8;'});
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a'); a.href = url; a.download = 'microbiome_week_' + currentWeek + '.csv'; a.click();
         URL.revokeObjectURL(url);
@@ -1290,10 +1080,10 @@ th.hummus-th { color: #ffffff !important; }
     hummusType.addEventListener('change', function() {
         var sizeVal = breadSize.value;
         if (sizeVal === 'M+' || sizeVal === 'XL+') { this.value = 'none'; hummusSize.value = 'S'; yingYangInfo.classList.remove('show'); return; }
-        if (this.value === 'yingyang') yingYangInfo.classList.add('show');
-        else yingYangInfo.classList.remove('show');
+        if (this.value === 'yingyang') yingYangInfo.classList.add('show'); else yingYangInfo.classList.remove('show');
     });
 
+    // ============ ADDRESS BOOK ============
     function loadAddressBook() {
         try {
             var data = localStorage.getItem("microbiome_address_book");
@@ -1305,11 +1095,15 @@ th.hummus-th { color: #ffffff !important; }
     function saveAddressBook() { try { localStorage.setItem("microbiome_address_book", JSON.stringify(addressBook)); } catch(e) {} renderAddressBook(); }
     function renderAddressBook() {
         var keys = Object.keys(addressBook);
-        addressCount.textContent = '(' + keys.length + ' entries)';
+        addressCount.textContent = '(' + keys.length + ')';
         if (keys.length === 0) addressList.innerHTML = '<div class="am-empty">No addresses saved yet</div>';
         else {
             var html = '';
-            keys.forEach(function(name) { html += '<span class="am-tag">' + escapeHtml(name) + ' → ' + escapeHtml(addressBook[name] || '') + ' <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>'; });
+            keys.forEach(function(name) {
+                var bez = getBezirk(addressBook[name] || '');
+                var bezLabel = bez === 'unknown' ? '⚠️' : '✓ ' + bez;
+                html += '<span class="am-tag">' + escapeHtml(name) + ' → ' + escapeHtml(addressBook[name] || '') + ' <span style="color:#8a6a2a;font-size:0.45rem;">' + bezLabel + '</span> <span class="del" data-name="' + escapeHtml(name) + '">✖</span></span>';
+            });
             addressList.innerHTML = html;
             document.querySelectorAll('.am-tag .del').forEach(function(el) {
                 el.addEventListener('click', function() { var name = this.dataset.name; delete addressBook[name]; saveAddressBook(); updateRoute(); });
@@ -1317,6 +1111,7 @@ th.hummus-th { color: #ffffff !important; }
         }
     }
 
+    // ============ PICKUPS ============
     function loadPickups() { try { var data = localStorage.getItem("microbiome_pickups"); pickupList = data ? JSON.parse(data) : []; } catch(e) { pickupList = []; } renderPickups(); }
     function savePickups() { try { localStorage.setItem("microbiome_pickups", JSON.stringify(pickupList)); } catch(e) {} renderPickups(); }
     function renderPickups() {
@@ -1338,43 +1133,29 @@ th.hummus-th { color: #ffffff !important; }
         pickupList.push(name); savePickups(); pickupNameInput.value = ''; pickupNameInput.focus(); updateRoute();
     }
 
+    // ============ HISTORY ============
     function loadHistory() { try { var data = localStorage.getItem("microbiome_history"); weekHistory = data ? JSON.parse(data) : {}; } catch(e) { weekHistory = {}; } renderHistory(); }
-    function saveHistory() {
-        try { localStorage.setItem("microbiome_history", JSON.stringify(weekHistory)); }
-        catch(e) { showNotification('❌ Could not save history!', true); }
-        renderHistory();
-    }
-    function saveCurrentWeekToHistory(showNotificationFlag) {
+    function saveHistory() { try { localStorage.setItem("microbiome_history", JSON.stringify(weekHistory)); } catch(e) {} renderHistory(); }
+    function saveCurrentWeekToHistory(showNotif) {
         var week = currentWeek;
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread; });
-        var pickups = pickupList.length;
-        if (orders.length === 0 && pickups === 0) {
-            if (showNotificationFlag) showNotification('⚠️ No orders or pickups to save for Week ' + week, true);
-            return false;
-        }
-        var totalRevenueValue = 0, totalPcs = 0, customers = new Set();
-        orders.forEach(function(o) {
-            totalRevenueValue += getCustomerPrice(o.name);
-            totalPcs += getPcsForOrder(o);
-            customers.add(o.name);
-        });
+        if (orders.length === 0 && pickupList.length === 0) { if (showNotif) showNotification('⚠️ No orders or pickups', true); return false; }
+        var totalRev = 0, totalPcs = 0, customers = new Set();
+        orders.forEach(function(o) { totalRev += getCustomerPrice(o.name); totalPcs += getPcsForOrder(o); customers.add(o.name); });
         if (!weekHistory[week]) weekHistory[week] = { orders:0, revenue:0, pcs:0, customers:0, pickups:0 };
         weekHistory[week].orders = orders.length;
-        weekHistory[week].revenue = Math.round(totalRevenueValue);
+        weekHistory[week].revenue = Math.round(totalRev);
         weekHistory[week].pcs = Math.round(totalPcs);
         weekHistory[week].customers = customers.size;
-        weekHistory[week].pickups = pickups;
+        weekHistory[week].pickups = pickupList.length;
         saveHistory();
-        if (showNotificationFlag) showNotification('✅ Week ' + week + ' saved!\n📋 Orders: ' + orders.length + '\n🍞 pcs: ' + Math.round(totalPcs) + '\n💰 Revenue: ' + Math.round(totalRevenueValue) + ' ¥\n👤 Customers: ' + customers.size + '\n📦 Pickups: ' + pickups);
+        if (showNotif) showNotification('✅ Week ' + week + ' saved!');
         breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; pickupList = []; combos = []; deliveredStops = {};
         nextId = 1;
         try {
-            localStorage.removeItem("microbiome_bread");
-            localStorage.removeItem("microbiome_hummus");
-            localStorage.removeItem("microbiome_add_bread");
-            localStorage.removeItem("microbiome_add_hummus");
-            localStorage.removeItem("microbiome_combos");
-            localStorage.removeItem("microbiome_pickups");
+            localStorage.removeItem("microbiome_bread"); localStorage.removeItem("microbiome_hummus");
+            localStorage.removeItem("microbiome_add_bread"); localStorage.removeItem("microbiome_add_hummus");
+            localStorage.removeItem("microbiome_combos"); localStorage.removeItem("microbiome_pickups");
             localStorage.removeItem("microbiome_delivered_stops");
         } catch(e) {}
         updateWeekDisplay(); render(); saveToLocal(); savePickups(); updateRoute();
@@ -1383,28 +1164,24 @@ th.hummus-th { color: #ffffff !important; }
     function renderHistory() {
         var weeks = Object.keys(weekHistory).sort(function(a, b) { return parseInt(b) - parseInt(a); });
         historyCount.textContent = weeks.length;
-        if (weeks.length === 0) historyList.innerHTML = '<div class="history-empty">No history yet. Save a week to see it here!</div>';
+        if (weeks.length === 0) historyList.innerHTML = '<div class="history-empty">No history yet</div>';
         else {
-            var html = '', totalOrders = 0, totalRevenueVal = 0, totalPickups = 0, totalPcs = 0;
+            var html = '', tOrd = 0, tRev = 0, tPick = 0;
             weeks.forEach(function(week) {
-                var data = weekHistory[week];
-                totalOrders += data.orders || 0; totalRevenueVal += data.revenue || 0; totalPickups += data.pickups || 0; totalPcs += data.pcs || 0;
-                html += '<div class="history-item"><span class="week">📅 Week ' + week + '</span><span class="orders">📋 ' + (data.orders||0) + ' orders · 👤 ' + (data.customers||0) + ' customers · 🍞' + (data.pcs||0) + ' pcs' + (data.pickups ? ' <span class="pickup-count">📦 +' + data.pickups + '</span>' : '') + '</span><span class="total">💰 ' + (data.revenue||0).toFixed(0) + ' ¥</span></div>';
+                var d = weekHistory[week];
+                tOrd += d.orders || 0; tRev += d.revenue || 0; tPick += d.pickups || 0;
+                html += '<div class="history-item"><span class="week">📅 W' + week + '</span><span class="orders">' + (d.orders||0) + ' orders · ' + (d.pcs||0) + ' pcs</span><span class="total">💰 ' + (d.revenue||0) + ' ¥</span></div>';
             });
             historyList.innerHTML = html;
-            histTotalOrders.textContent = totalOrders; histTotalRevenue.textContent = totalRevenueVal.toFixed(0) + ' ¥'; histTotalPickups.textContent = totalPickups; histTotalWeeks.textContent = weeks.length;
+            histTotalOrders.textContent = tOrd; histTotalRevenue.textContent = tRev + ' ¥'; histTotalPickups.textContent = tPick; histTotalWeeks.textContent = weeks.length;
         }
     }
-
-    function showNotification(message, isError) {
-        var notif = autoSaveNotification;
-        notif.textContent = message;
-        notif.className = 'auto-save-notification show';
-        if (isError) notif.classList.add('error'); else notif.classList.remove('error');
-        clearTimeout(notif._hideTimeout);
-        notif._hideTimeout = setTimeout(function() { notif.className = 'auto-save-notification'; }, isError ? 10000 : 8000);
+    function showNotification(msg, isErr) {
+        autoSaveNotification.textContent = msg;
+        autoSaveNotification.className = 'auto-save-notification show' + (isErr ? ' error' : '');
+        clearTimeout(autoSaveNotification._t);
+        autoSaveNotification._t = setTimeout(function() { autoSaveNotification.className = 'auto-save-notification'; }, isErr ? 8000 : 5000);
     }
-
     function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>"']/g, function(m) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
 
     function getPcsForOrder(order) {
@@ -1425,77 +1202,53 @@ th.hummus-th { color: #ffffff !important; }
         return order.isMini ? basePrice / 2 : basePrice;
     }
     function totalHummusCount() {
-        var customersWithHummus = new Set();
-        breadOrders.forEach(function(o) {
-            if (!o.isAdd && !o.isAddBread && o.hummusType && o.hummusType !== 'none') customersWithHummus.add(o.name);
-        });
-        return customersWithHummus.size;
+        var s = new Set();
+        breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && o.hummusType && o.hummusType !== 'none') s.add(o.name); });
+        return s.size;
     }
     function getTotalPcsPerType() {
         var totals = {"88er":0,"150er":0,"188er":0,"200er":0,"208er":0};
         breadOrders.forEach(function(o) {
             if (o.isCombo) {
-                var comboItems = getComboItems(o.comboType);
-                comboItems.forEach(function(item) {
-                    var p = o.isMini ? 1 : 2;
-                    totals[item.variety] = (totals[item.variety] || 0) + p;
-                });
+                getComboItems(o.comboType).forEach(function(item) { totals[item.variety] = (totals[item.variety]||0) + (o.isMini ? 1 : 2); });
             } else if (!o.isAdd && !o.isAddBread) {
-                totals[o.breadType] = (totals[o.breadType] || 0) + getPcsForOrder(o);
+                totals[o.breadType] = (totals[o.breadType]||0) + getPcsForOrder(o);
             }
         });
-        addBreadOrders.forEach(function(o) {
-            totals[o.breadType] = (totals[o.breadType] || 0) + getPcsForOrder(o);
-        });
+        addBreadOrders.forEach(function(o) { totals[o.breadType] = (totals[o.breadType]||0) + getPcsForOrder(o); });
         return totals;
     }
     function getTotalRequirements() {
-        var pcsPerType = getTotalPcsPerType();
-        var totals = {mix88:0,mix138:0,mix150:0,mix188_200_208:0,water:0};
-        for (var type in pcsPerType) {
-            if (pcsPerType[type] > 0 && recipeFor13[type]) {
-                var perPcs = getPerPcs(type);
-                var pcs = pcsPerType[type];
-                totals.mix88 += perPcs.mix88 * pcs;
-                totals.mix138 += perPcs.mix138 * pcs;
-                totals.mix150 += perPcs.mix150 * pcs;
-                totals.mix188_200_208 += perPcs.mix188_200_208 * pcs;
-                totals.water += perPcs.water * pcs;
+        var pcs = getTotalPcsPerType();
+        var t = {mix88:0, mix138:0, mix150:0, mix188_200_208:0, water:0};
+        for (var type in pcs) {
+            if (pcs[type] > 0 && recipeFor13[type]) {
+                var p = getPerPcs(type);
+                t.mix88 += p.mix88 * pcs[type];
+                t.mix138 += p.mix138 * pcs[type];
+                t.mix150 += p.mix150 * pcs[type];
+                t.mix188_200_208 += p.mix188_200_208 * pcs[type];
+                t.water += p.water * pcs[type];
             }
         }
-        totals.boxes = Math.ceil(totals.mix88 / 1400);
-        return totals;
+        t.boxes = Math.ceil(t.mix88 / 1400);
+        return t;
     }
 
-    // ============ EXPORT TEXT ============
     function generateExportText() {
-        var lines = [];
-        lines.push('🧬 MICROBIOME WARRIOR — WEEK ' + currentWeek);
-        lines.push('================================');
+        var lines = ['🧬 MICROBIOME WARRIOR — WEEK ' + currentWeek, '================================'];
         var customers = new Set();
         breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo) customers.add(o.name); });
         customers.forEach(function(name) {
-            var details = getCustomerDetails(name);
-            if (!details) return;
+            var d = getCustomerDetails(name);
+            if (!d) return;
             lines.push('');
-            lines.push('👤 ' + name + (details.hasCommission ? ' 💰' : ''));
-            details.details.forEach(function(d) {
-                lines.push('   🥖 ' + d.sorte + ' · ' + d.pcs + ' pcs · ' + Math.round(d.price) + ' ¥');
-            });
-            if (details.hummus) lines.push('   🫒 ' + (details.hummus.type === 'yingyang' ? 'Ying & Yang' : 'Hummus') + ' ' + details.hummus.size);
-            lines.push('   💰 Total: ' + details.totalPrice + ' ¥');
-        });
-        combos.forEach(function(c) {
-            lines.push('');
-            lines.push('👤 ' + c.name + ' (Combo ' + c.type + ')');
-            lines.push('   🥖 Combo · ' + (c.isMini ? 'Mini' : '8 pcs') + ' · ' + Math.round(c.price) + ' ¥');
+            lines.push('👤 ' + name + (d.hasCommission ? ' 💰' : ''));
+            lines.push('   🥖 ' + d.totalPcs + ' pcs · ' + d.totalPrice + ' ¥');
+            if (d.hummus) lines.push('   🫒 ' + (d.hummus.type === 'yingyang' ? 'Ying & Yang' : 'Hummus') + ' ' + d.hummus.size);
         });
         lines.push('');
-        lines.push('================================');
-        lines.push('📊 TOTAL REVENUE: ' + Math.round(totalRevenue()) + ' ¥');
-        lines.push('👤 SHARE: ' + shareAmount.textContent + ' ¥');
-        lines.push('💼 PROVISION: ' + provisionAmount.textContent + ' ¥');
-        lines.push('🫒 HUMMUS: ' + totalHummusCount() + ' total');
+        lines.push('📊 TOTAL: ' + Math.round(totalRevenue()) + ' ¥');
         return lines.join('\n');
     }
 
@@ -1515,78 +1268,64 @@ th.hummus-th { color: #ffffff !important; }
         updateRoute();
         saveToLocal();
     }
-
     function renderBreadTable() {
         var orders = breadOrders.filter(function(o) { return !o.isAdd && !o.isAddBread && !o.isCombo; });
-        if (orders.length === 0) { breadTableBody.innerHTML = '<tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr>'; return; }
-        var html = '';
-        orders.forEach(function(o, idx) {
+        if (orders.length === 0 && combos.length === 0) { breadTableBody.innerHTML = '<tr><td colspan="10" style="text-align:center">No bread orders 🥖</td></tr>'; return; }
+        var html = '', idx = 0;
+        orders.forEach(function(o) {
+            idx++;
             var pcs = getPcsForOrder(o);
             var price = getPriceForOrder(o);
             var hummus = o.hummusType && o.hummusType !== 'none' ? (o.hummusType === 'yingyang' ? '☯️' : '🫒') + ' ' + o.hummusSize : '—';
-            var flag = getCountryFlag(o.country || '');
-            var shareBadge = o.hasCommission ? '<span class="comm-toggle active" onclick="toggleCommission(' + o.id + ')"><span class="toggle-dot"></span><span class="toggle-label">13.5%</span></span>' : '<span class="comm-toggle inactive" onclick="toggleCommission(' + o.id + ')"><span class="toggle-dot"></span><span class="toggle-label">15%</span></span>';
-            html += '<tr><td>' + (idx + 1) + '</td><td>' + escapeHtml(o.name) + (o.isMini ? ' <span class="mini-tag">Mini</span>' : '') + '</td><td>' + flag + ' ' + escapeHtml(o.country || '') + '</td><td>' + o.breadType + '</td><td>' + o.size + '</td><td>' + pcs + '</td><td>' + Math.round(price) + ' ¥</td><td>' + hummus + '</td><td>' + shareBadge + '</td><td><button class="delete-btn" onclick="deleteOrder(' + o.id + ')">✖</button></td></tr>';
+            var shareBadge = o.hasCommission ? '<span style="color:#c0392b;font-weight:700">13.5%</span>' : '<span style="color:#95a5a6">15%</span>';
+            html += '<tr><td>' + idx + '</td><td>' + escapeHtml(o.name) + (o.isMini ? ' <span class="mini-tag">Mini</span>' : '') + '</td><td>' + getCountryFlag(o.country||'') + '</td><td>' + o.breadType + '</td><td>' + o.size + '</td><td>' + pcs + '</td><td>' + Math.round(price) + '¥</td><td>' + hummus + '</td><td>' + shareBadge + '</td><td><button class="delete-btn" onclick="deleteOrder(' + o.id + ')">✖</button></td></tr>';
+        });
+        combos.forEach(function(c) {
+            idx++;
+            html += '<tr><td>' + idx + '</td><td>' + escapeHtml(c.name) + '</td><td>' + getCountryFlag(c.country||'') + '</td><td>🧩 ' + c.comboType + '</td><td>Combo</td><td>' + (c.isMini?4:8) + '</td><td>' + Math.round(c.price) + '¥</td><td>—</td><td>—</td><td><button class="delete-btn" onclick="deleteCombo(' + c.id + ')">✖</button></td></tr>';
         });
         breadTableBody.innerHTML = html;
-        // combo orders
-        combos.forEach(function(c, idx) {
-            var flag = getCountryFlag(c.country || '');
-            var comboPcs = c.isMini ? 4 : 8;
-            breadTableBody.innerHTML += '<tr><td>' + (orders.length + idx + 1) + '</td><td>' + escapeHtml(c.name) + (c.isMini ? ' <span class="mini-tag">Mini</span>' : '') + '</td><td>' + flag + ' ' + escapeHtml(c.country || '') + '</td><td>🧩 Combo ' + c.type + '</td><td>Combo</td><td>' + comboPcs + '</td><td>' + Math.round(c.price) + ' ¥</td><td>—</td><td>' + (c.hasCommission ? '13.5%' : '15%') + '</td><td><button class="delete-btn" onclick="deleteCombo(' + c.id + ')">✖</button></td></tr>';
-        });
     }
     function renderBreadSummary() {
         var summary = {};
         breadOrders.forEach(function(o) {
             if (o.isCombo) {
-                var comboItems = getComboItems(o.comboType);
-                comboItems.forEach(function(item) {
+                getComboItems(o.comboType).forEach(function(item) {
                     if (!summary[item.variety]) summary[item.variety] = {orders:0, pcs:0, mini:0};
-                    summary[item.variety].orders += 1;
-                    summary[item.variety].pcs += o.isMini ? 1 : 2;
-                    if (o.isMini) summary[item.variety].mini += 1;
+                    summary[item.variety].orders++; summary[item.variety].pcs += o.isMini ? 1 : 2;
+                    if (o.isMini) summary[item.variety].mini++;
                 });
             } else if (!o.isAdd && !o.isAddBread) {
                 if (!summary[o.breadType]) summary[o.breadType] = {orders:0, pcs:0, mini:0};
-                summary[o.breadType].orders += 1;
-                summary[o.breadType].pcs += getPcsForOrder(o);
-                if (o.isMini) summary[o.breadType].mini += 1;
+                summary[o.breadType].orders++; summary[o.breadType].pcs += getPcsForOrder(o);
+                if (o.isMini) summary[o.breadType].mini++;
             }
         });
         var keys = Object.keys(summary);
-        if (keys.length === 0) { breadSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No bread orders yet</td></tr>'; return; }
+        if (keys.length === 0) { breadSummaryBody.innerHTML = '<tr><td colspan="4" style="text-align:center">No orders</td></tr>'; return; }
         var html = '';
         keys.forEach(function(k) { html += '<tr><td>' + k + '</td><td>' + summary[k].orders + '</td><td>' + summary[k].pcs + '</td><td>' + summary[k].mini + '</td></tr>'; });
         breadSummaryBody.innerHTML = html;
     }
     function renderAddBreadSummary() {
-        if (addBreadOrders.length === 0) { addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread orders yet</td></tr>'; return; }
+        if (addBreadOrders.length === 0) { addBreadSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No ADD bread</td></tr>'; return; }
         var summary = {};
-        addBreadOrders.forEach(function(o) { if (!summary[o.breadType]) summary[o.breadType] = 0; summary[o.breadType] += getPcsForOrder(o); });
+        addBreadOrders.forEach(function(o) { summary[o.breadType] = (summary[o.breadType]||0) + getPcsForOrder(o); });
         var html = '';
         Object.keys(summary).forEach(function(k) { html += '<tr><td>' + k + '</td><td>' + summary[k] + '</td><td></td></tr>'; });
         addBreadSummaryBody.innerHTML = html;
     }
     function renderHummusSummary() {
-        var summary = {};
-        var customers = new Set();
+        var summary = {}, customers = new Set();
         breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread) customers.add(o.name); });
         customers.forEach(function(name) {
             var h = getCustomerHummus(name);
-            if (h) {
-                var key = h.type + '_' + h.size;
-                if (!summary[key]) summary[key] = { type: h.type, size: h.size, count: 0 };
-                summary[key].count += 1;
-            }
+            if (h) { var key = h.type + '_' + h.size; if (!summary[key]) summary[key] = {type:h.type, size:h.size, count:0}; summary[key].count++; }
         });
         var keys = Object.keys(summary);
-        if (keys.length === 0) { hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus orders yet</td></tr>'; return; }
+        if (keys.length === 0) { hummusSummaryBody.innerHTML = '<tr><td colspan="3" style="text-align:center">No hummus</td></tr>'; return; }
         var html = '';
-        keys.forEach(function(k) {
-            var s = summary[k];
-            html += '<tr><td>' + (s.type === 'yingyang' ? '☯️ Ying & Yang' : '🫒 Hummus') + '</td><td>' + s.size + '</td><td>' + s.count + '</td></tr>';
-        });
+        keys.forEach(function(k) { var s = summary[k]; html += '<tr><td>' + (s.type==='yingyang'?'☯️':'🫒') + '</td><td>' + s.size + '</td><td>' + s.count + '</td></tr>'; });
         hummusSummaryBody.innerHTML = html;
     }
     function renderHummusTable() {
@@ -1597,30 +1336,25 @@ th.hummus-th { color: #ffffff !important; }
             var h = getCustomerHummus(name);
             if (h) {
                 var order = breadOrders.find(function(o) { return o.name === name; });
-                rows.push({ name: name, country: order ? order.country : '', type: h.type, size: h.size });
+                rows.push({name:name, country:order?order.country:'', type:h.type, size:h.size});
             }
         });
-        if (rows.length === 0) { hummusTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center">No hummus orders 🫒</td></tr>'; return; }
+        if (rows.length === 0 && addHummusOrders.length === 0) { hummusTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center">No hummus</td></tr>'; return; }
         var html = '';
-        rows.forEach(function(r, idx) {
-            html += '<tr><td>' + (idx + 1) + '</td><td>' + escapeHtml(r.name) + '</td><td>' + getCountryFlag(r.country) + ' ' + escapeHtml(r.country) + '</td><td>—</td><td>' + r.size + '</td><td>' + (r.type === 'yingyang' ? '☯️' : '🫒') + '</td><td></td></tr>';
-        });
-        // add hummus orders
-        addHummusOrders.forEach(function(o) {
-            html += '<tr><td>+</td><td style="color:#8faa4a">ADD</td><td>—</td><td>—</td><td>' + o.size + '</td><td>' + (o.hummusType === 'yingyang' ? '☯️' : '🫒') + '</td><td><button class="delete-btn" onclick="deleteAddHummus(' + o.id + ')">✖</button></td></tr>';
-        });
+        rows.forEach(function(r, idx) { html += '<tr><td>' + (idx+1) + '</td><td>' + escapeHtml(r.name) + '</td><td>' + getCountryFlag(r.country) + '</td><td>' + r.size + '</td><td>' + (r.type==='yingyang'?'☯️':'🫒') + '</td><td></td></tr>'; });
+        addHummusOrders.forEach(function(o) { html += '<tr><td>+</td><td>ADD</td><td>—</td><td>' + o.size + '</td><td>' + (o.hummusType==='yingyang'?'☯️':'🫒') + '</td><td><button class="delete-btn" onclick="deleteAddHummus(' + o.id + ')">✖</button></td></tr>'; });
         hummusTableBody.innerHTML = html;
     }
     function renderAddBreadOrdersList() {
-        if (addBreadOrders.length === 0) { addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread orders yet</span>'; return; }
+        if (addBreadOrders.length === 0) { addBreadOrdersList.innerHTML = '<span style="color:#b88c48;">No added bread yet</span>'; return; }
         var html = '';
-        addBreadOrders.forEach(function(o) { html += '<span class="add-item">' + o.breadType + ' ' + (o.isMini ? 'Mini' : '') + ' <span class="qty">×1</span><span class="del" onclick="deleteAddBread(' + o.id + ')">✖</span></span>'; });
+        addBreadOrders.forEach(function(o) { html += '<span class="add-item">' + o.breadType + ' ' + (o.isMini?'Mini':'') + ' <span class="del" onclick="deleteAddBread(' + o.id + ')">✖</span></span>'; });
         addBreadOrdersList.innerHTML = html;
     }
     function renderAddHummusOrdersList() {
-        if (addHummusOrders.length === 0) { addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus orders yet</span>'; return; }
+        if (addHummusOrders.length === 0) { addHummusOrdersList.innerHTML = '<span style="color:#b88c48;">No added hummus yet</span>'; return; }
         var html = '';
-        addHummusOrders.forEach(function(o) { html += '<span class="add-item">' + (o.hummusType === 'yingyang' ? '☯️' : '🫒') + ' ' + o.size + ' <span class="qty">×1</span><span class="del" onclick="deleteAddHummus(' + o.id + ')">✖</span></span>'; });
+        addHummusOrders.forEach(function(o) { html += '<span class="add-item">' + (o.hummusType==='yingyang'?'☯️':'🫒') + ' ' + o.size + ' <span class="del" onclick="deleteAddHummus(' + o.id + ')">✖</span></span>'; });
         addHummusOrdersList.innerHTML = html;
     }
     function renderPreparation() {
@@ -1629,97 +1363,99 @@ th.hummus-th { color: #ffffff !important; }
         var perPcsHtml = '';
         Object.keys(recipeFor13).forEach(function(type) {
             var p = getPerPcs(type);
-            perPcsHtml += '<tr><td>' + type + '</td><td>' + p.mix88.toFixed(1) + 'g</td><td>' + p.mix138.toFixed(1) + 'g</td><td>' + p.mix150.toFixed(1) + 'g</td><td>' + p.mix188_200_208.toFixed(1) + 'g</td><td class="water-cell">' + p.water.toFixed(1) + 'g</td></tr>';
+            perPcsHtml += '<tr><td>' + type + '</td><td>' + p.mix88.toFixed(1) + '</td><td>' + p.mix138.toFixed(1) + '</td><td>' + p.mix150.toFixed(1) + '</td><td>' + p.mix188_200_208.toFixed(1) + '</td><td class="water-cell">' + p.water.toFixed(1) + '</td></tr>';
         });
         perPcsRow.innerHTML = perPcsHtml;
-        // times + pcs
-        var pcsPerType = getTotalPcsPerType();
+        var pcs = getTotalPcsPerType();
         var timesHtml = '', pcsHtml = '';
-        Object.keys(pcsPerType).forEach(function(type) {
-            if (pcsPerType[type] > 0) {
-                timesHtml += '<tr><td>' + type + '</td><td>' + (pcsPerType[type] / 13).toFixed(2) + '</td></tr>';
-                pcsHtml += '<tr><td>' + type + '</td><td>' + pcsPerType[type] + '</td></tr>';
-            }
+        Object.keys(pcs).forEach(function(type) {
+            if (pcs[type] > 0) { timesHtml += '<tr><td>' + type + '</td><td>' + (pcs[type]/13).toFixed(2) + '</td></tr>'; pcsHtml += '<tr><td>' + type + '</td><td>' + pcs[type] + '</td></tr>'; }
         });
         timesTableBody.innerHTML = timesHtml || '<tr><td colspan="2">—</td></tr>';
         pcsTableBody.innerHTML = pcsHtml || '<tr><td colspan="2">—</td></tr>';
-        // calculated thermomix
-        var thermomixHtml = '';
-        Object.keys(pcsPerType).forEach(function(type) {
-            if (pcsPerType[type] > 0 && recipeFor13[type]) {
-                var times = pcsPerType[type] / 13;
-                var r = recipeFor13[type];
-                thermomixHtml += '<tr><td>' + type + '</td><td>' + times.toFixed(2) + '</td><td>' + Math.round(r.mix88 * times) + 'g</td><td>' + Math.round(r.mix138 * times) + 'g</td><td>' + Math.round(r.mix150 * times) + 'g</td><td>' + Math.round(r.mix188_200_208 * times) + 'g</td><td class="water-cell">' + Math.round(r.water * times) + 'g</td></tr>';
+        var thermHtml = '';
+        Object.keys(pcs).forEach(function(type) {
+            if (pcs[type] > 0 && recipeFor13[type]) {
+                var t = pcs[type] / 13, r = recipeFor13[type];
+                thermHtml += '<tr><td>' + type + '</td><td>' + t.toFixed(2) + '</td><td>' + Math.round(r.mix88*t) + '</td><td>' + Math.round(r.mix138*t) + '</td><td>' + Math.round(r.mix150*t) + '</td><td>' + Math.round(r.mix188_200_208*t) + '</td><td class="water-cell">' + Math.round(r.water*t) + '</td></tr>';
             }
         });
-        calculatedThermomixTable.innerHTML = thermomixHtml || '<tr><td colspan="7">—</td></tr>';
-        // calculated rest
+        calculatedThermomixTable.innerHTML = thermHtml || '<tr><td colspan="7">—</td></tr>';
         var restHtml = '';
-        Object.keys(pcsPerType).forEach(function(type) {
-            if (pcsPerType[type] > 0) {
-                var pcs = pcsPerType[type];
-                var fullBatches = Math.floor(pcs / 13);
-                var rest = pcs % 13;
-                var p = getPerPcs(type);
-                restHtml += '<tr><td>' + type + '</td><td>' + rest + '</td><td>' + (p.mix88 * rest).toFixed(1) + 'g</td><td>' + (p.mix138 * rest).toFixed(1) + 'g</td><td>' + (p.mix150 * rest).toFixed(1) + 'g</td><td>' + (p.mix188_200_208 * rest).toFixed(1) + 'g</td><td class="water-cell">' + (p.water * rest).toFixed(1) + 'g</td></tr>';
+        Object.keys(pcs).forEach(function(type) {
+            if (pcs[type] > 0) {
+                var rest = pcs[type] % 13, p = getPerPcs(type);
+                restHtml += '<tr><td>' + type + '</td><td>' + rest + '</td><td>' + (p.mix88*rest).toFixed(1) + '</td><td>' + (p.mix138*rest).toFixed(1) + '</td><td>' + (p.mix150*rest).toFixed(1) + '</td><td>' + (p.mix188_200_208*rest).toFixed(1) + '</td><td class="water-cell">' + (p.water*rest).toFixed(1) + '</td></tr>';
             }
         });
         calculatedRestTable.innerHTML = restHtml || '<tr><td colspan="7">—</td></tr>';
-        calculatedRestFooter.innerHTML = '<tr><td colspan="2"><strong>Total</strong></td><td><strong>' + Math.round(req.mix88) + 'g</strong></td><td><strong>' + Math.round(req.mix138) + 'g</strong></td><td><strong>' + Math.round(req.mix150) + 'g</strong></td><td><strong>' + Math.round(req.mix188_200_208) + 'g</strong></td><td class="water-cell"><strong>' + Math.round(req.water) + 'g</strong></td></tr>';
+        calculatedRestFooter.innerHTML = '<tr><td colspan="2"><strong>Total</strong></td><td><strong>' + Math.round(req.mix88) + '</strong></td><td><strong>' + Math.round(req.mix138) + '</strong></td><td><strong>' + Math.round(req.mix150) + '</strong></td><td><strong>' + Math.round(req.mix188_200_208) + '</strong></td><td class="water-cell"><strong>' + Math.round(req.water) + '</strong></td></tr>';
     }
 
-    // ============ ROUTE (REKONSTRUIERT, mit Delivered-Filter) ============
+    // ============ ROUTE OPTIMIZATION (NEAREST NEIGHBOR) ============
     function updateRoute() {
-        var deliveryStops = [];
-        var customers = new Set();
+        var deliveryStops = [], customers = new Set();
         breadOrders.forEach(function(o) { if (!o.isAdd && !o.isAddBread && !o.isCombo) customers.add(o.name); });
         customers.forEach(function(name) {
-            var addr = addressBook[name] || '';
-            deliveryStops.push({ name: name, isPickup: false, address: addr, details: getCustomerDetails(name) });
+            deliveryStops.push({ name: name, isPickup: false, address: addressBook[name] || '', details: getCustomerDetails(name) });
         });
-        var pickupStops = pickupList.map(function(name) { return { name: name, isPickup: true, address: addressBook[name] || '', details: null }; });
+        var pickupStops = pickupList.map(function(name) {
+            return { name: name, isPickup: true, address: addressBook[name] || '', details: null };
+        });
         var allStops = deliveryStops.concat(pickupStops);
         var activeStops = allStops.filter(function(s) { return !deliveredStops[stopKey(s.name, s.isPickup)]; });
         var deliveredCount = allStops.length - activeStops.length;
 
-        // sort by nearest neighbor from home
+        // Nearest-Neighbor-Sortierung ab HOME
         var sorted = [];
         if (activeStops.length > 0) {
-            var current = HOME_ADDRESS;
+            var currentCoords = HOME_COORDS;
             var remaining = activeStops.slice();
             while (remaining.length > 0) {
-                var best = 0, bestDist = Infinity;
+                var bestIdx = 0, bestDist = Infinity;
                 for (var i = 0; i < remaining.length; i++) {
-                    var d = getDistance(current, remaining[i].address || '');
-                    if (d < bestDist) { bestDist = d; best = i; }
+                    var c = coordsForAddress(remaining[i].address || '');
+                    var d = haversine(currentCoords.lat, currentCoords.lng, c.lat, c.lng);
+                    if (d < bestDist) { bestDist = d; bestIdx = i; }
                 }
-                sorted.push(remaining[best]);
-                current = remaining[best].address || '';
-                remaining.splice(best, 1);
+                var chosen = remaining[bestIdx];
+                chosen._dist = bestDist;
+                sorted.push(chosen);
+                currentCoords = coordsForAddress(chosen.address || '');
+                remaining.splice(bestIdx, 1);
             }
         }
         routeLastComputed = sorted;
 
-        // render auto route list
+        // Gesamtdistanz
+        var totalDist = 0, prev = HOME_COORDS;
+        sorted.forEach(function(s) {
+            var c = coordsForAddress(s.address || '');
+            totalDist += haversine(prev.lat, prev.lng, c.lat, c.lng);
+            prev = c;
+        });
+        totalDist += haversine(prev.lat, prev.lng, HOME_COORDS.lat, HOME_COORDS.lng);
+
+        // Auto-Route-Liste
         if (activeStops.length === 0 && deliveredCount === 0) {
             autoRouteList.innerHTML = 'No orders yet';
             routeResult.innerHTML = '<div class="route-empty">Add orders → route will auto-optimize</div>';
-            appleMapsBtn.disabled = true;
+            appleMapsBtn.disabled = true; googleMapsBtn.disabled = true;
+            routeOptimizedInfo.textContent = '🧠 No stops';
             return;
         }
         var autoHtml = '';
         sorted.forEach(function(s, idx) {
-            autoHtml += '<div class="route-step' + (s.isPickup ? ' pickup' : '') + '"><span class="step-num">' + (idx + 1) + '</span><span class="step-name">' + escapeHtml(s.name) + (s.isPickup ? ' <span class="pickup-badge">PICKUP</span>' : '') + '</span><span class="step-detail">' + (s.address ? getBezirk(s.address) : 'unknown') + '</span></div>';
+            var distLabel = s._dist ? s._dist.toFixed(1) + ' km' : '';
+            autoHtml += '<div class="route-step' + (s.isPickup ? ' pickup' : '') + '"><span class="step-num">' + (idx+1) + '</span><span class="step-name">' + escapeHtml(s.name) + (s.isPickup ? ' <span class="pickup-badge">PICKUP</span>' : '') + ' <span class="dist-badge">' + distLabel + '</span></span><span class="step-detail">' + (s.address ? getBezirk(s.address) : 'no addr') + '</span></div>';
         });
         autoRouteList.innerHTML = autoHtml || '<span style="color:#b88c48;">All stops delivered ✅</span>';
 
-        // render route result with Delivered-Buttons
+        // Route-Result mit Delivered-Buttons
         var routeHtml = '';
         sorted.forEach(function(s, idx) {
-            var isDelivered = false;
-            routeHtml += '<div class="route-step' + (s.isPickup ? ' pickup' : '') + '"><span class="step-num">' + (idx + 1) + '</span><span class="step-name">' + escapeHtml(s.name) + (s.isPickup ? ' <span class="pickup-badge">PICKUP</span>' : '') + '</span><span class="step-detail">' + (s.details ? s.details.totalPrice + ' ¥' : '') + '</span><button class="btn-delivered" onclick="markDelivered(\'' + escapeHtml(s.name) + '\',' + s.isPickup + ')">✅</button></div>';
+            routeHtml += '<div class="route-step' + (s.isPickup ? ' pickup' : '') + '"><span class="step-num">' + (idx+1) + '</span><span class="step-name">' + escapeHtml(s.name) + (s.isPickup ? ' <span class="pickup-badge">PICKUP</span>' : '') + '</span><span class="step-detail">' + (s.details ? s.details.totalPrice + ' ¥' : '') + '</span><button class="btn-delivered" onclick="markDelivered(\'' + escapeHtml(s.name) + '\',' + s.isPickup + ')">✅</button></div>';
         });
-        // delivered stops (greyed out)
         allStops.forEach(function(s) {
             if (deliveredStops[stopKey(s.name, s.isPickup)]) {
                 routeHtml += '<div class="route-step delivered' + (s.isPickup ? ' pickup' : '') + '"><span class="step-num">✓</span><span class="step-name">' + escapeHtml(s.name) + (s.isPickup ? ' <span class="pickup-badge">PICKUP</span>' : '') + ' <span class="delivered-badge">DELIVERED</span></span><button class="btn-delivered done" onclick="unmarkDelivered(\'' + escapeHtml(s.name) + '\',' + s.isPickup + ')">↩️</button></div>';
@@ -1729,81 +1465,82 @@ th.hummus-th { color: #ffffff !important; }
         routeResult.innerHTML = routeHtml;
 
         appleMapsBtn.disabled = sorted.length === 0;
-        routeOptimizedInfo.textContent = '🧠 ' + sorted.length + ' active stop(s)' + (deliveredCount > 0 ? ' · ' + deliveredCount + ' delivered (hidden)' : '');
+        googleMapsBtn.disabled = sorted.length === 0;
+        routeOptimizedInfo.textContent = '🧠 ' + sorted.length + ' stop(s) · ~' + totalDist.toFixed(1) + ' km total' + (deliveredCount > 0 ? ' · ' + deliveredCount + ' delivered' : '');
     }
 
+    // ============ APPLE MAPS MULTI-STOP ============
     window.openAppleMapsDirect = function() {
         if (routeLastComputed.length === 0) { alert('No active stops.'); return; }
-        var stops = routeLastComputed.map(function(s) { return s.address || s.name; });
-        stops.push(HOME_ADDRESS);
-        var url = 'https://maps.apple.com/?daddr=' + encodeURIComponent(stops.join(' to: '));
+        var addresses = routeLastComputed.map(function(s) {
+            var addr = s.address || '';
+            if (!addr) {
+                var bez = getBezirk(s.name);
+                addr = s.name + (bez !== 'unknown' ? ' ' + bez : ' Shanghai');
+            }
+            return addr;
+        });
+        var routeParts = [HOME_ADDRESS].concat(addresses).concat([HOME_ADDRESS]);
+        var daddr = routeParts.join(' to: ');
+        var url = 'https://maps.apple.com/?daddr=' + encodeURIComponent(daddr) + '&dirflg=d';
         window.open(url, '_blank');
     };
 
-    // ============ ADD / DELETE ORDERS ============
+    // ============ GOOGLE MAPS MULTI-STOP ============
+    window.openGoogleMapsDirect = function() {
+        if (routeLastComputed.length === 0) { alert('No active stops.'); return; }
+        var addresses = routeLastComputed.map(function(s) {
+            var addr = s.address || '';
+            if (!addr) {
+                var bez = getBezirk(s.name);
+                addr = s.name + (bez !== 'unknown' ? ' ' + bez : ' Shanghai');
+            }
+            return addr;
+        });
+        if (addresses.length === 0) { alert('No addresses.'); return; }
+        // Google Maps: waypoints = alle Zwischenstopps (max 10), letzter als destination
+        var origin = HOME_ADDRESS;
+        var destination = HOME_ADDRESS;
+        var waypoints = addresses.join('|');
+        var url = 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(origin) +
+                  '&destination=' + encodeURIComponent(destination) +
+                  '&waypoints=' + encodeURIComponent(waypoints) +
+                  '&travelmode=driving';
+        window.open(url, '_blank');
+    };
+
+    // ============ ORDER FUNCTIONS ============
     function addOrder() {
         var name = capitalizeName(customerName.value.trim());
         if (!name) { alert('Please enter a customer name.'); return; }
         var country = '';
         if (customerDatabase[name] && customerDatabase[name].country) country = customerDatabase[name].country;
-
-        var typeVal = breadType.value;
-        var sizeVal = breadSize.value;
-        var isMini = miniCheckbox.checked;
-        var hasCommission = commissionCheckbox.checked;
-        var hType = hummusType.value;
-        var hSize = hummusSize.value;
-
+        var typeVal = breadType.value, sizeVal = breadSize.value;
+        var isMini = miniCheckbox.checked, hasComm = commissionCheckbox.checked;
         if (typeVal === 'combo-88-200' || typeVal === 'combo-150-208') {
             var comboType = typeVal === 'combo-88-200' ? '88-200' : '150-208';
-            var comboPrice = comboPrices[comboType];
-            if (isMini) comboPrice = comboPrice / 2;
-            var comboOrder = { id: nextId++, name: name, country: country, type: comboType, comboType: comboType, price: comboPrice, isMini: isMini, hasCommission: hasCommission, isCombo: true };
-            combos.push(comboOrder);
+            var comboPrice = comboPrices[comboType] / (isMini ? 2 : 1);
+            combos.push({ id: nextId++, name: name, country: country, comboType: comboType, price: comboPrice, isMini: isMini, hasCommission: hasComm, isCombo: true });
         } else {
-            var order = { id: nextId++, name: name, country: country, breadType: typeVal, size: sizeVal, isMini: isMini, hasCommission: hasCommission, hummusType: hType, hummusSize: hSize };
+            var order = { id: nextId++, name: name, country: country, breadType: typeVal, size: sizeVal, isMini: isMini, hasCommission: hasComm, hummusType: hummusType.value, hummusSize: hummusSize.value };
             breadOrders.push(order);
             updateCustomerDatabase(name, country, order);
         }
-        customerName.value = '';
-        miniCheckbox.checked = false;
-        commissionCheckbox.checked = false;
+        customerName.value = ''; miniCheckbox.checked = false; commissionCheckbox.checked = false;
         render();
     }
-    window.deleteOrder = function(id) {
-        breadOrders = breadOrders.filter(function(o) { return o.id !== id; });
-        render();
-    };
-    window.deleteCombo = function(id) {
-        combos = combos.filter(function(c) { return c.id !== id; });
-        render();
-    };
-    window.deleteAddBread = function(id) {
-        addBreadOrders = addBreadOrders.filter(function(o) { return o.id !== id; });
-        render();
-    };
-    window.deleteAddHummus = function(id) {
-        addHummusOrders = addHummusOrders.filter(function(o) { return o.id !== id; });
-        render();
-    };
+    window.deleteOrder = function(id) { breadOrders = breadOrders.filter(function(o) { return o.id !== id; }); render(); };
+    window.deleteCombo = function(id) { combos = combos.filter(function(c) { return c.id !== id; }); render(); };
+    window.deleteAddBread = function(id) { addBreadOrders = addBreadOrders.filter(function(o) { return o.id !== id; }); render(); };
+    window.deleteAddHummus = function(id) { addHummusOrders = addHummusOrders.filter(function(o) { return o.id !== id; }); render(); };
 
     function addAddBread() {
-        var typeVal = addBreadType.value;
-        var isMini = addBreadMiniCheckbox.checked;
-        var count = addBreadCount;
-        for (var i = 0; i < count; i++) {
-            addBreadOrders.push({ id: nextId++, breadType: typeVal, isMini: isMini, isAddBread: true });
-        }
+        for (var i = 0; i < addBreadCount; i++) addBreadOrders.push({ id: nextId++, breadType: addBreadType.value, isMini: addBreadMiniCheckbox.checked, isAddBread: true });
         addBreadCount = 1; addBreadCountDisplay.textContent = '1'; addBreadMiniCheckbox.checked = false;
         render();
     }
     function addAddHummus() {
-        var typeVal = addHummusType.value;
-        var sizeVal = addHummusSize.value;
-        var count = addHummusCount;
-        for (var i = 0; i < count; i++) {
-            addHummusOrders.push({ id: nextId++, hummusType: typeVal, size: sizeVal, isAdd: true });
-        }
+        for (var i = 0; i < addHummusCount; i++) addHummusOrders.push({ id: nextId++, hummusType: addHummusType.value, size: addHummusSize.value, isAdd: true });
         addHummusCount = 1; addHummusCountDisplay.textContent = '1';
         render();
     }
@@ -1835,8 +1572,8 @@ th.hummus-th { color: #ffffff !important; }
     // ============ EVENT LISTENERS ============
     $("addBtn").addEventListener('click', addOrder);
     addBtnTop.addEventListener('click', addOrder);
-    addBreadAddBtn.addEventListener('click', addAddBread);
-    addHummusAddBtn.addEventListener('click', addAddHummus);
+    $("addBreadAddBtn").addEventListener('click', addAddBread);
+    $("addHummusAddBtn").addEventListener('click', addAddHummus);
     resetTableBtn.addEventListener('click', function() {
         if (confirm('Delete ALL orders, combos and pickups? (History remains)')) {
             breadOrders = []; hummusOrders = []; addBreadOrders = []; addHummusOrders = []; combos = []; pickupList = []; deliveredStops = {};
@@ -1852,32 +1589,26 @@ th.hummus-th { color: #ffffff !important; }
         if (!name || !addr) { alert('Please enter name and address.'); return; }
         addressBook[name] = addr; saveAddressBook();
         addressNameInput.value = ''; addressAddrInput.value = ''; updateRoute();
+        var bez = getBezirk(addr);
+        if (bez === 'unknown') alert('⚠️ Hinweis: Kein Bezirk erkannt in der Adresse.\nDie Sortierung nutzt dann das Stadtzentrum.\n\nTipp: Bezirk hinzufügen (z.B. „静安区") für präzise Route.');
     });
     addCustomerBtn.addEventListener('click', addCustomerManually);
     customerName.addEventListener('input', function() { showSuggestions(this.value); });
     customerName.addEventListener('focus', function() { if (this.value) showSuggestions(this.value); });
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.suggestions-container')) suggestionsList.className = 'suggestions-list';
-    });
+    document.addEventListener('click', function(e) { if (!e.target.closest('.suggestions-container')) suggestionsList.className = 'suggestions-list'; });
 
-    // toggles
-    var cmOpen = false, addressOpen = false, historyOpen = false;
+    var cmOpen = false, addrOpen = false, histOpen = false;
     $("customerManagerToggle").addEventListener('click', function() { cmOpen = !cmOpen; $("customerManagerBody").classList.toggle('open'); $("customerManagerToggleBtn").innerHTML = cmOpen ? '▲ Hide' : '▼ Show'; });
-    $("addressToggle").addEventListener('click', function() { addressOpen = !addressOpen; $("addressBody").classList.toggle('open'); $("addressToggleBtn").innerHTML = addressOpen ? '▲ Hide' : '▼ Show'; });
-    $("historyToggle").addEventListener('click', function() { historyOpen = !historyOpen; $("historyBody").classList.toggle('open'); $("historyArrow").classList.toggle('open'); });
+    $("addressToggle").addEventListener('click', function() { addrOpen = !addrOpen; $("addressBody").classList.toggle('open'); $("addressToggleBtn").innerHTML = addrOpen ? '▲ Hide' : '▼ Show'; });
+    $("historyToggle").addEventListener('click', function() { histOpen = !histOpen; $("historyBody").classList.toggle('open'); $("historyArrow").classList.toggle('open'); });
 
-    // route mode
-    $("routeModeFast").addEventListener('click', function() { routeMode = 'fast'; this.style.border = '2px solid #27ae60'; this.style.background = '#e8f5e9'; this.style.color = '#246b35'; $("routeModeSimple").style.border = '1px solid #d4c090'; $("routeModeSimple").style.background = '#fff'; $("routeModeSimple").style.color = '#6b4a1c'; updateRoute(); });
-    $("routeModeSimple").addEventListener('click', function() { routeMode = 'simple'; this.style.border = '2px solid #27ae60'; this.style.background = '#e8f5e9'; this.style.color = '#246b35'; $("routeModeFast").style.border = '1px solid #d4c090'; $("routeModeFast").style.background = '#fff'; $("routeModeFast").style.color = '#6b4a1c'; updateRoute(); });
-
-    // init
+    // INIT
     loadCustomerDatabase();
     loadAddressBook();
     loadPickups();
     loadHistory();
     loadFromLocal();
     render();
-    routeStart.value = '📍 ' + HOME_ADDRESS;
     updateRoute();
 })();
 </script>
